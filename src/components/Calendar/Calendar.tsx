@@ -1,0 +1,108 @@
+import React, { useState } from 'react';
+import styled from 'styled-components/native';
+import moment from 'moment';
+import { Text } from 'components/Typography/Typography';
+import SelectableDay from './SelectableDay';
+import MonthSelector from './MonthSelector';
+import { colors } from 'utils/colors';
+import SelectableCell from './SelectableCell';
+
+interface CalendarProps {
+  selectedDate: moment.Moment;
+  onSelectDate?: (date: moment.Moment) => void;
+}
+
+const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate }) => {
+
+  const today = moment();
+  const [month, setMonth] = useState(selectedDate.month());
+
+  // Go to the last Sunday of previous month
+  const iteratingDay = moment(month + 1, 'MM').subtract(1, 'month').endOf('month').startOf('week');
+  iteratingDay.subtract(1, 'day');
+
+  const firstSundayOfNextMonth = moment(month + 1, 'MM').endOf('month')
+  const numOfWeeks = firstSundayOfNextMonth.diff(iteratingDay, 'days') / 7;
+
+
+  const renderWeeks = () => {
+    const weeks = [];
+    for (let i = 0; i < numOfWeeks; i++) {
+      weeks.push((
+        <Row key={i}>
+          {[1, 2, 3, 4, 5, 6, 7].map(j => {
+            iteratingDay.add(1, 'day');
+            const isSelectable = iteratingDay.month() === month && iteratingDay.isSameOrAfter(today, 'day');
+            const isSelected = iteratingDay.isSame(selectedDate, 'day');
+            const date = iteratingDay.clone();
+            return (
+              <SelectableCell key={j} onSelect={onSelectDate} disabled={!isSelectable} selected={isSelected} date={date} >
+                <CenteredText>{date.date()}</CenteredText>
+              </SelectableCell>
+            )
+          })}
+        </Row >
+      ))
+    }
+    return weeks;
+  }
+
+  return (
+    <CalendarContainer>
+      <MonthSelector month={month} onMonthChange={setMonth} />
+      <HeaderRow>
+        <Cell><HeaderLabel>L</HeaderLabel></Cell>
+        <Cell><HeaderLabel>M</HeaderLabel></Cell>
+        <Cell><HeaderLabel>M</HeaderLabel></Cell>
+        <Cell><HeaderLabel>J</HeaderLabel></Cell>
+        <Cell><HeaderLabel>V</HeaderLabel></Cell>
+        <Cell><HeaderLabel>S</HeaderLabel></Cell>
+        <Cell><HeaderLabel>D</HeaderLabel></Cell>
+      </HeaderRow>
+      <RowsContainer>
+        {renderWeeks()}
+      </RowsContainer>
+    </CalendarContainer>
+  )
+}
+
+export default Calendar;
+
+const Row = styled.View`
+  border-top-width: 1px;
+  border-color: #F1F3F4;
+  display: flex;
+  flex-direction: row;
+`
+
+const HeaderRow = styled(Row)`
+  border-top-width: 0;
+`
+
+
+const Cell = styled.View`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  textAlign: center;
+  padding: 10px;
+  borderRadius: 4px;
+`
+
+const CalendarContainer = styled.View`
+  background-color: white;
+  border-radius: 10px;
+`
+
+const RowsContainer = styled.View``
+
+const CenteredText = styled.Text`
+  textAlign: center;
+  flex: 1;
+`
+
+const HeaderLabel = styled(CenteredText)`
+  color: rgba(0,0,0,0.54);
+`

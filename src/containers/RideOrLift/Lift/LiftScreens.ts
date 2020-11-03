@@ -1,0 +1,7 @@
+
+export enum LiftScreens {
+  LIFT_WHERE_TO = 'LIFT_WHERE_TO',
+  LIFT_WHERE_FROM = 'LIFT_WHERE_FROM',
+  HOW_MANY = 'HOW_MANY',
+  WHEN = 'WHEN'
+}
