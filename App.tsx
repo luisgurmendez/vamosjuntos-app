@@ -6,6 +6,7 @@ import useInitStorage from 'hooks/useInitStorage';
 import moment from 'moment';
 import localization from 'moment/locale/es';
 import AppStack from 'containers/AppStack';
+import { View } from 'react-native';
 
 moment.updateLocale('es', localization);
 

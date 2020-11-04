@@ -29,9 +29,9 @@ const NumberSelect: React.FC<NumberSelectProps> = ({ count, min = 0, max = 20, o
 
   return (
     <Container>
-      <PressableIcon onPress={handleDecrement} name="minus" color={colors.main} size={50} />
+      <PressableIcon onPress={handleDecrement} name="minus" color={count === min ? colors.invalid : colors.main} size={50} />
       <Count>{count}</Count>
-      <PressableIcon onPress={handleIncrement} name="plus" color={colors.main} size={50} />
+      <PressableIcon onPress={handleIncrement} name="plus" color={count === max ? colors.invalid : colors.main} size={50} />
     </Container>
   );
 }

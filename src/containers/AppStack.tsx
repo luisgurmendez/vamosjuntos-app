@@ -14,11 +14,12 @@ const AppStack: React.FC = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerBackTitle: 'Atras'
+        headerBackTitle: 'Atras',
+        headerShown: false
       }}>
-      <Stack.Screen options={{ headerShown: false, title: "DedoOLevantar" }} name={Screens.RIDE_OR_LIFT} component={RideOrLift} />
-      <Stack.Screen options={{ headerShown: false, title: "Lift" }} name={Screens.LIFT} component={LiftStack} />
-      <Stack.Screen options={{ headerShown: false, title: "Inicio de sesion" }} name={Screens.LOGIN} component={Login} />
+      <Stack.Screen name={Screens.RIDE_OR_LIFT} component={RideOrLift} />
+      <Stack.Screen name={Screens.LIFT} component={LiftStack} />
+      <Stack.Screen name={Screens.LOGIN} component={Login} />
     </Stack.Navigator>
   )
 }

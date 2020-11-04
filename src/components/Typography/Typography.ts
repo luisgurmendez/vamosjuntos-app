@@ -26,3 +26,7 @@ export const Body = styled(Text)``
 export const SmallBody = styled(Text)`
   font-size: 12px;
 `
+export const PlainInput = styled.TextInput`
+  fontFamily: Roboto;
+  color:${colors.black};
+`

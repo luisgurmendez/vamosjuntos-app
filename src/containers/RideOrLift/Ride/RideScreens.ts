@@ -1,8 +1,6 @@
 
-export enum LiftScreens {
+export enum RideScreens {
   WHERE_TO = 'WHERE_TO',
   WHERE_FROM = 'WHERE_FROM',
-  HOW_MANY = 'HOW_MANY',
   WHEN = 'WHEN',
-  PRICE = 'PRICE'
 }

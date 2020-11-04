@@ -1,14 +1,18 @@
 import React from 'react';
 import Wizard from 'components/Wizard/Wizard';
 import SelectAddressForm from 'containers/RideOrLift/common/SelectAddressForm';
-import { LiftScreens } from '../LiftScreens';
 
-const WhereFrom: React.FC = () => {
+interface WhereProps {
+  nextScreen: string;
+  title?: string;
+}
+
+const WhereFrom: React.FC<WhereProps> = ({ nextScreen, title = '¿De donde salis?' }) => {
 
   const handleSelectAddress = () => { }
 
   return (
-    <Wizard title="¿De donde salis?" nextScreen={LiftScreens.HOW_MANY}>
+    <Wizard title={title} nextScreen={nextScreen}>
       <SelectAddressForm onSelectAddress={handleSelectAddress} />
     </Wizard>
   )

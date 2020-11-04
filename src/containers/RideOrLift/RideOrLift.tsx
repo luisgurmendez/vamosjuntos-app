@@ -20,7 +20,7 @@ const RideOrLift: React.FC = () => {
 
   return (
     <Container>
-      <StyledTitle>Hoy vas a ...</StyledTitle>
+      <StyledTitle>¿Que vas a hacer?</StyledTitle>
       <OptionsContainer>
         <StyledOption
           onPress={handleRidePress}

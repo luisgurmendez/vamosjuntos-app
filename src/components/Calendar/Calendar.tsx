@@ -32,12 +32,13 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate }) => {
         <Row key={i}>
           {[1, 2, 3, 4, 5, 6, 7].map(j => {
             iteratingDay.add(1, 'day');
-            const isSelectable = iteratingDay.month() === month && iteratingDay.isSameOrAfter(today, 'day');
+            const isInThisMonth = iteratingDay.month() === month;
+            const isSelectable = isInThisMonth && iteratingDay.isSameOrAfter(today, 'day');
             const isSelected = iteratingDay.isSame(selectedDate, 'day');
             const date = iteratingDay.clone();
             return (
               <SelectableCell key={j} onSelect={onSelectDate} disabled={!isSelectable} selected={isSelected} date={date} >
-                <CenteredText>{date.date()}</CenteredText>
+                <CenteredText>{isInThisMonth ? date.date() : null}</CenteredText>
               </SelectableCell>
             )
           })}
@@ -69,8 +70,6 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate }) => {
 export default Calendar;
 
 const Row = styled.View`
-  border-top-width: 1px;
-  border-color: #F1F3F4;
   display: flex;
   flex-direction: row;
 `
@@ -78,7 +77,6 @@ const Row = styled.View`
 const HeaderRow = styled(Row)`
   border-top-width: 0;
 `
-
 
 const Cell = styled.View`
   flex: 1;
@@ -88,7 +86,6 @@ const Cell = styled.View`
   justify-content: flex-start;
   textAlign: center;
   padding: 10px;
-  borderRadius: 4px;
 `
 
 const CalendarContainer = styled.View`

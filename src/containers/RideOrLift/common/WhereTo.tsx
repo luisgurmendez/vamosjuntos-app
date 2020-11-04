@@ -1,15 +1,19 @@
 import React from 'react';
 import Wizard from 'components/Wizard/Wizard';
 import SelectAddressForm from 'containers/RideOrLift/common/SelectAddressForm';
-import { LiftScreens } from '../LiftScreens';
 
-const WhereTo: React.FC = () => {
+interface WhereToProps {
+  nextScreen: string;
+  title?: string;
+}
+
+const WhereTo: React.FC<WhereToProps> = ({ nextScreen, title = '¿A donde vas?' }) => {
 
   const handleSelectAddress = () => {
 
   }
   return (
-    <Wizard nextScreen={LiftScreens.LIFT_WHERE_FROM} title="¿A donde vas?">
+    <Wizard nextScreen={nextScreen} title={title}>
       <SelectAddressForm onSelectAddress={handleSelectAddress} />
     </Wizard>
   )

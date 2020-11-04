@@ -35,7 +35,7 @@ const SavedAddressList: React.FC<SavedAddressListProps> = () => {
     console.log('clicked!')
   }
 
-  const savedAddress = savedAddressFactory.buildList(100);
+  const savedAddress = savedAddressFactory.buildList(4);
 
   return (
     <FlatList
