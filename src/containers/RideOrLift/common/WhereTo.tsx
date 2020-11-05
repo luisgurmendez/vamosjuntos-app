@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Wizard from 'components/Wizard/Wizard';
 import SelectAddressForm from 'containers/RideOrLift/common/SelectAddressForm';
+import { Address } from 'types/models';
 
 interface WhereToProps {
   nextScreen: string;
@@ -9,12 +10,15 @@ interface WhereToProps {
 
 const WhereTo: React.FC<WhereToProps> = ({ nextScreen, title = '¿A donde vas?' }) => {
 
-  const handleSelectAddress = () => {
+  const [selectedAddress, setSelectedAddress] = useState<Address | undefined>(undefined);
 
+  const handleSelectAddress = (address: Address) => {
+    setSelectedAddress(address);
   }
+
   return (
     <Wizard nextScreen={nextScreen} title={title}>
-      <SelectAddressForm onSelectAddress={handleSelectAddress} />
+      <SelectAddressForm selectedAddress={selectedAddress} onSelectAddress={handleSelectAddress} />
     </Wizard>
   )
 }

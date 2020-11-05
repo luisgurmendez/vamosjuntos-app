@@ -47,7 +47,6 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({ open, onClose, 
       }
       timeoutRef.current = setTimeout(() => {
          const address = addressFactory.build();
-         console.log(address);
          setPossibleAddress(address)
          setIsFetchingAddress(false);
       }, 500) as unknown as number
@@ -68,7 +67,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({ open, onClose, 
             <Box mt='lg' mb='lg'>
                {isFetchingAddress ? <Loading size={20} color={colors.black} /> : <DisplayAddress address={possibleAddress!} />}
             </Box>
-            <Button disabled={possibleAddress === undefined} onPress={handleSelectAddress}>Elegir</Button>
+            <Button disabled={isFetchingAddress || possibleAddress === undefined} onPress={handleSelectAddress}>Elegir</Button>
          </SelectedLocationDisplay>
       </Modal>
    )

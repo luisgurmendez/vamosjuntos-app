@@ -34,7 +34,7 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate }) => {
             iteratingDay.add(1, 'day');
             const isInThisMonth = iteratingDay.month() === month;
             const isSelectable = isInThisMonth && iteratingDay.isSameOrAfter(today, 'day');
-            const isSelected = iteratingDay.isSame(selectedDate, 'day');
+            const isSelected = iteratingDay.isSame(selectedDate, 'day') && isInThisMonth;
             const date = iteratingDay.clone();
             return (
               <SelectableCell key={j} onSelect={onSelectDate} disabled={!isSelectable} selected={isSelected} date={date} >

@@ -10,10 +10,6 @@ const Login: React.FC = () => {
       <Title>Login</Title>
       <BackArrow />
       <BackArrow />
-      <BackArrow />
-      <BackArrow />
-      <BackArrow />
-      <BackArrow />
     </Container>
   );
 }

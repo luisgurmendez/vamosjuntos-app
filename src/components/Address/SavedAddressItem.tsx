@@ -1,33 +1,36 @@
 import { Box } from 'components/Box/Box';
 import RemovableItem from 'components/RemovableItem/RemovableItem';
-import { Body } from 'components/Typography/Typography';
 import React from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { SavedAddress } from 'types/storage';
 import { colors } from 'utils/colors';
-import Address from './Address';
 import AddressName from './AddressName';
 
 interface SavedAddressItemProps {
   onPress?: () => void;
+  onRemove?: () => void;
   item: SavedAddress;
 }
 
-const SavedAddressItem: React.FC<SavedAddressItemProps> = ({ item, onPress }) => {
+const SavedAddressItem: React.FC<SavedAddressItemProps> = ({ item, onRemove, onPress }) => {
 
   const handleRemoveItem = () => {
-    console.log('removed!')
+    onRemove && onRemove();
+  }
+
+  const handlePress = () => {
+    onPress && onPress();
   }
 
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
+    <TouchableOpacity onPress={handlePress}>
       <StyledBox pt="md" pb="md">
         <RemovableItem onRemove={handleRemoveItem}>
           <AddressName address={item.address} name={item.name} />
         </RemovableItem>
       </StyledBox>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   )
 }
 

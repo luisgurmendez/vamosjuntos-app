@@ -1,48 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, FlatList } from 'react-native';
-import Storage from 'storage/Storage';
 import SavedAddressItem from './SavedAddressItem';
-import savedAddressFactory from 'factories/savedAddress';
-import { ScrollView } from 'react-native-gesture-handler';
-import styled from 'styled-components/native';
 import { SavedAddress } from 'types/storage';
-
-interface Address { }
+import savedAddressFactory from 'factories/savedAddress';
 
 interface SavedAddressListProps {
-  onSelectAddress?: (address: Address) => void;
+  onSelectAddress?: (address: SavedAddress) => void;
+  onRemoveAddress?: (address: SavedAddress) => void;
+  savedAddresses?: SavedAddress[];
 }
 
-const SavedAddressList: React.FC<SavedAddressListProps> = () => {
-  const [addresses, setAddresses] = useState<Address[]>([]);
-  const [fetchingAddresses, setFetchingAddresses] = useState(false);
+const SavedAddressList: React.FC<SavedAddressListProps> = ({ savedAddresses = savedAddressFactory.buildList(30), onRemoveAddress, onSelectAddress }) => {
 
-  useEffect(() => {
-    const getAddresses = async () => {
-      setFetchingAddresses(true)
-      const addresses = await Storage.getItem<Address[]>('addresses');
-      if (addresses) {
-        setAddresses(addresses)
-      }
-      setFetchingAddresses(true)
-    }
-
-    getAddresses();
-
-  }, [])
-
-  const handleSavedAddressPress = () => {
-    console.log('clicked!')
+  const handleSavedAddressPress = (address: SavedAddress) => {
+    onSelectAddress && onSelectAddress(address)
   }
 
-  const savedAddress = savedAddressFactory.buildList(4);
+  const handleRemoveAddressItem = (address: SavedAddress) => {
+    onRemoveAddress && onRemoveAddress(address)
+
+  }
 
   return (
     <FlatList
       showsVerticalScrollIndicator={false}
-      data={savedAddress}
+      data={savedAddresses}
       keyExtractor={(_, i) => i.toString()}
-      renderItem={({ item }) => <SavedAddressItem key={item.address.address} item={item} onPress={handleSavedAddressPress} />}
+      renderItem={({ item }) => <SavedAddressItem key={item.address.address} onRemove={() => handleRemoveAddressItem(item)} item={item} onPress={() => handleSavedAddressPress(item)} />}
     />
   )
 }

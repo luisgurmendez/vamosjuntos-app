@@ -7,17 +7,46 @@ import SaveAddress from 'components/Address/SaveAddress';
 import { Box } from 'components/Box/Box';
 import SavedAddressList from 'components/Address/SavedAddressList';
 import { Subtitle } from 'components/Typography/Typography';
-import { View } from 'react-native';
+import Storage from 'storage/Storage';
 import styled from 'styled-components/native';
+import { SavedAddress } from 'types/storage';
+import useGetFromStorage from 'hooks/useGetFromStorage';
+import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 
 interface SelectAddressFormProps {
-  onSelectAddress: (address?: Address) => void;
+  onSelectAddress: (address: Address) => void;
+  selectedAddress?: Address | undefined;
 }
 
-const SelectAddressForm: React.FC<SelectAddressFormProps> = () => {
+const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, onSelectAddress }) => {
 
-  const [selectedAddress, setSelectedAddress] = useState<Address | undefined>(undefined);
+  const [isNewAddress, setIsNewAddress] = useState(true);
   const [selectAddressOpen, setSelectAddressOpen] = useState(false);
+  const [savedAddresses, isGettingSavedAddresses, setSavedAddress] = useGetFromStorage<SavedAddress[]>(Storage.ADDRESSES, []);
+
+  const handleSelectAddressFromMap = (address: Address) => {
+    setIsNewAddress(true);
+    onSelectAddress && onSelectAddress(address);
+  }
+
+  const handleSelectSavedAddress = (sa: SavedAddress) => {
+    setIsNewAddress(false);
+    onSelectAddress && onSelectAddress(sa.address);
+  }
+
+  const handleRemoveSavedAddress = (address: SavedAddress) => {
+    const newAddresses = savedAddresses.filter(sa => sa.id !== address.id);
+    console.log(address);
+    console.log(savedAddresses);
+    console.log(newAddresses);
+
+    setSavedAddress(newAddresses);
+    Storage.setItem(Storage.ADDRESSES, newAddresses);
+
+
+    // remove from state;
+    // remove from storage;
+  }
 
   return (
     <Container>
@@ -27,18 +56,20 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = () => {
           <Box mb="md">
             <DisplayAddress address={selectedAddress} />
           </Box>
-          <SaveAddress />
+          {isNewAddress && <SaveAddress address={selectedAddress} />}
         </Box>
       }
-      <SavedAddressesContainer mt="lg">
-        <Box mb="md">
-          <Subtitle>
-            Direcciónes guardadas
-        </Subtitle>
-        </Box>
-        <SavedAddressList />
-      </SavedAddressesContainer>
-      <SelectAddressModal onSelectAddress={setSelectedAddress} onClose={() => setSelectAddressOpen(false)} open={selectAddressOpen} />
+      {savedAddresses.length > 0 &&
+        <SavedAddressesContainer mt="lg">
+          <Box mb="md">
+            <Subtitle>
+              Direcciónes guardadas
+            </Subtitle>
+          </Box>
+          <SavedAddressList savedAddresses={savedAddresses} onRemoveAddress={handleRemoveSavedAddress} onSelectAddress={handleSelectSavedAddress} />
+        </SavedAddressesContainer>
+      }
+      <SelectAddressModal onSelectAddress={handleSelectAddressFromMap} onClose={() => setSelectAddressOpen(false)} open={selectAddressOpen} />
     </Container>
   )
 }

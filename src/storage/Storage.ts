@@ -6,9 +6,11 @@ interface StorageAPI {
 
 type ErrorCallback = (error?: Error) => void
 
+
 class Storage {
 
   public static CREATED = 'created';
+  public static ADDRESSES = 'addresses';
 
   static async isInitialized() {
     const created = await AsyncStorage.getItem(this.CREATED);
@@ -19,6 +21,7 @@ class Storage {
     const inited = await Storage.isInitialized();
     if (!inited) {
       await AsyncStorage.setItem(Storage.CREATED, 'true');
+      await AsyncStorage.setItem(Storage.ADDRESSES, '[]');
     }
   }
 

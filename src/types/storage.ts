@@ -1,6 +1,12 @@
 import { Address } from "./models";
 
-export interface SavedAddress {
+interface WithId {
+  id: string;
+}
+
+export interface SavedAddress extends WithId {
   name: string;
   address: Address;
 }
+
+export type Addresses = SavedAddress[];

@@ -6,7 +6,8 @@ import useInitStorage from 'hooks/useInitStorage';
 import moment from 'moment';
 import localization from 'moment/locale/es';
 import AppStack from 'containers/AppStack';
-import { View } from 'react-native';
+import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
+import Toaster from 'components/Toaster/Toaster';
 
 moment.updateLocale('es', localization);
 
@@ -17,7 +18,10 @@ const App = () => {
   return (
     <NavigationContainer>
       <MapProvider>
-        <AppStack />
+        <Toaster />
+        <DismissKeyboard>
+          <AppStack />
+        </DismissKeyboard>
       </MapProvider>
     </NavigationContainer>
   );
