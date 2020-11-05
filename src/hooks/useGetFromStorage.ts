@@ -1,5 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Toaster from "components/Toaster/Toaster";
 import { useEffect, useState } from "react";
 import Storage from 'storage/Storage';
 
@@ -12,7 +10,6 @@ function useGetFromStorage<T>(key: string, defaultValue: T): [T, boolean, (v: T)
     const getValue = async () => {
       setIsGettingValue(true)
       const _value = await Storage.getItem<T>(key);
-      Toaster.info({ message: JSON.stringify(_value) })
       if (_value) {
         setValue(_value)
       }

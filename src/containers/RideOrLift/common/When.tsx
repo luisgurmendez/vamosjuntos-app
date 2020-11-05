@@ -3,13 +3,12 @@ import Wizard from 'components/Wizard/Wizard';
 import moment from 'moment';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { LiftScreens } from '../Lift/LiftScreens';
 import { Subtitle, Text } from 'components/Typography/Typography';
-import { View } from 'react-native';
 import HourInput from 'components/Input/HourInput';
 import KeyboardShift from 'components/Keyboard/KeyboardShift';
 import { Box } from 'components/Box/Box';
 import { ScrollView } from 'react-native-gesture-handler';
+import { getDateText } from 'utils/date';
 
 interface WhenProps {
   nextScreen: string;
@@ -62,16 +61,3 @@ const Container = styled.View`
 const MarginedSubtitle = styled(Subtitle)`
   margin-bottom: 16px;
 `
-
-
-const getDateText = (date: moment.Moment): string => {
-  if (moment().date() === date.date()) {
-    return 'Hoy';
-  }
-
-  if (moment().add(1, 'day').date() === date.date()) {
-    return 'Mañana';
-  }
-
-  return date.format('[El] dddd DD [de] MMMM');
-}
