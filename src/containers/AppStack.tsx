@@ -17,8 +17,8 @@ const AppStack: React.FC = () => {
         headerBackTitle: 'Atras',
         headerShown: false
       }}>
-      <Stack.Screen name={Screens.RIDE_OR_LIFT} component={RideOrLift} />
       <Stack.Screen name={Screens.LOGIN} component={Login} />
+      <Stack.Screen name={Screens.RIDE_OR_LIFT} component={RideOrLift} />
       <Stack.Screen name={Screens.LIFT} component={LiftStack} />
     </Stack.Navigator>
   )

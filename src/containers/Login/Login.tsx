@@ -1,15 +1,14 @@
 import React from 'react';
 import { Title } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
-import BackArrow from 'components/Back/BackArrow';
+import LoginForm from './LoginForm';
 
 const Login: React.FC = () => {
 
   return (
     <Container>
       <Title>Login</Title>
-      <BackArrow />
-      <BackArrow />
+      <LoginForm />
     </Container>
   );
 }
