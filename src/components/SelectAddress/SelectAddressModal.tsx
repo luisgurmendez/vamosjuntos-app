@@ -53,7 +53,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({ open, onClose, 
    }
 
    return (
-      <Modal isVisible={open} coverScreen style={{ margin: 0 }} hasBackdrop={false}>
+      <Modal isVisible={open} useNativeDriver={false} coverScreen style={{ margin: 0 }} hasBackdrop={false}>
          <Content>
             <CloseContainer>
                <Icon onPress={onClose} size={30} name={'x'} color={colors.black} />

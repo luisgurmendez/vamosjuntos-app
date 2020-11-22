@@ -70,7 +70,6 @@ const Header = styled.View`
 
 const Container = styled.SafeAreaView`
   flex: 1;
-  padding: 16px;
 `
 
 const Content = styled.View`
