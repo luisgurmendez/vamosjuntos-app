@@ -6,6 +6,7 @@ import RideOrLift from './RideOrLift/RideOrLift';
 import Login from './Login/Login';
 import { Screens } from './Screens';
 import LiftStack from './RideOrLift/Lift/Lift';
+import Profile from './Profile/Profile';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ const AppStack: React.FC = () => {
         headerBackTitle: 'Atras',
         headerShown: false
       }}>
+      <Stack.Screen name={Screens.PROFILE} component={Profile} />
       <Stack.Screen name={Screens.LOGIN} component={Login} />
       <Stack.Screen name={Screens.RIDE_OR_LIFT} component={RideOrLift} />
       <Stack.Screen name={Screens.LIFT} component={LiftStack} />

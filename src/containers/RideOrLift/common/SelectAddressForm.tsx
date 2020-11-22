@@ -11,7 +11,6 @@ import Storage from 'storage/Storage';
 import styled from 'styled-components/native';
 import { SavedAddress } from 'types/storage';
 import useGetFromStorage from 'hooks/useGetFromStorage';
-import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 
 interface SelectAddressFormProps {
   onSelectAddress: (address: Address) => void;

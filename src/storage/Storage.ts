@@ -1,16 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SavedAddress } from 'types/storage';
+import { Tokens } from 'types/tokens';
 
 interface StorageAPI {
   created: boolean;
+  addresses: SavedAddress[];
+  tokens: Tokens;
 }
 
 type ErrorCallback = (error?: Error) => void
-
 
 class Storage {
 
   public static CREATED = 'created';
   public static ADDRESSES = 'addresses';
+  public static TOKENS = 'tokens';
 
   static async isInitialized() {
     const created = await AsyncStorage.getItem(this.CREATED);
@@ -22,6 +26,7 @@ class Storage {
     if (!inited) {
       await AsyncStorage.setItem(Storage.CREATED, 'true');
       await AsyncStorage.setItem(Storage.ADDRESSES, '[]');
+      await AsyncStorage.setItem(Storage.TOKENS, '{}');
     }
   }
 
@@ -72,8 +77,3 @@ class Storage {
   }
 }
 export default Storage;
-
-export const initStorage = async () => {
-  await Storage.init();
-}
-

@@ -3,5 +3,6 @@ export enum Screens {
   RIDE_OR_LIFT = 'RIDE_OR_LIFT',
   LIFT = 'LIFT',
   LOGIN = 'LOGIN',
-  REGISTER = 'REGISTER'
+  REGISTER = 'REGISTER',
+  PROFILE = 'PROFILE'
 }

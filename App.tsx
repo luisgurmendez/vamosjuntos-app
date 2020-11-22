@@ -19,9 +19,7 @@ const App = () => {
     <NavigationContainer>
       <MapProvider>
         <Toaster />
-        <DismissKeyboard>
-          <AppStack />
-        </DismissKeyboard>
+        <AppStack />
       </MapProvider>
     </NavigationContainer>
   );

@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import Storage, { initStorage } from 'storage/Storage';
+import Storage from 'storage/Storage';
 
 function useInitStorage() {
 
   useEffect(() => {
-    initStorage();
+    Storage.init();
     // Storage.clear();
-  }, [initStorage])
+  }, [Storage.init])
 }
 
 export default useInitStorage;

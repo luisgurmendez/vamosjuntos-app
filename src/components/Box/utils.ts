@@ -3,7 +3,7 @@
 export type Size = 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xlg' | 'xxlg' | 'xxxlg' | 'xxxxlg'
 
 const spacing = 1; // to easily change spacing
-export const sizeToPx = (size: Size) => {
+export const sizeToPx = (size?: Size) => {
   const sizePixelMap: { [s in Size]: number } = {
     xxs: 2 * spacing,
     xs: 4 * spacing,
@@ -15,5 +15,6 @@ export const sizeToPx = (size: Size) => {
     xxxlg: 48 * spacing,
     xxxxlg: 64 * spacing
   }
-  return sizePixelMap[size] || 0;
+
+  return size ? sizePixelMap[size] || 0 : 0;
 }

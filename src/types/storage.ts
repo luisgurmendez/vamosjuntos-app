@@ -10,3 +10,8 @@ export interface SavedAddress extends WithId {
 }
 
 export type Addresses = SavedAddress[];
+
+export interface Tokens {
+  token: string;
+  refreshToken: string;
+}

@@ -4,9 +4,10 @@ import TextInput from 'components/TextInput/TextInput';
 import Toaster from 'components/Toaster/Toaster';
 import { Formik } from 'formik';
 import React from 'react';
-import { View } from 'react-native';
 import styled from 'styled-components/native';
 import * as Yup from 'yup';
+import Storage from 'storage/Storage';
+import MarginedChildren from 'components/Box/MarginedChildren';
 
 const LoginFormSchema = Yup.object().shape({
   username: Yup.string().required('Username required'),
@@ -20,19 +21,15 @@ const LoginForm: React.FC = () => {
     password: ''
   }
 
-
   const handleLogin = async (values: any) => {
-    console.log('loginn')
     try {
       const tokens = await login(values.username, values.password);
-      console.log(tokens);
+      await Storage.setItem(Storage.TOKENS, tokens);
       Toaster.info({ message: tokens?.token })
     } catch (e) {
       console.error(e);
     }
   }
-
-
 
   return (
     <Container>
@@ -42,23 +39,27 @@ const LoginForm: React.FC = () => {
         onSubmit={handleLogin}
       >
         {({ handleChange, isSubmitting, handleSubmit, values, errors, }) => (
-          <Border>
-            <TextInput
-              error={errors["username"]}
-              textContentType="username"
-              onChangeText={handleChange('username')}
-              value={values.username}
-            />
-            <TextInput
-              error={errors["password"]}
-              secureTextEntry
-              onChangeText={handleChange('password')}
-              value={values.password}
-            />
-            <Button loading={isSubmitting} onPress={handleSubmit} >
+          <FormContent>
+            <MarginedChildren mV="md">
+              <TextInput
+                error={errors["username"]}
+                textContentType="username"
+                onChangeText={handleChange('username')}
+                value={values.username}
+              />
+
+              <TextInput
+                error={errors["password"]}
+                secureTextEntry
+                onChangeText={handleChange('password')}
+                value={values.password}
+              />
+            </MarginedChildren>
+
+            <Button loading={isSubmitting} onPress={handleSubmit}>
               Login
             </Button>
-          </Border>
+          </FormContent>
         )}
       </Formik>
     </Container>
@@ -67,13 +68,6 @@ const LoginForm: React.FC = () => {
 
 export default LoginForm;
 
+const Container = styled.View``
 
-const Container = styled.View`
-`
-
-const Border = styled.View`
-  borderWidth: 1px;
-  borderColor: red;
-  display: flex;
-  flexDirection:column;
-`
+const FormContent = styled.View``
