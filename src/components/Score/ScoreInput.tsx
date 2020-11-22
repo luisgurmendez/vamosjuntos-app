@@ -20,8 +20,10 @@ const ScoreInput: React.FC<ScoreInputProps> = ({ score, onChange }) => {
   const handleScoreChange = (value: number) => {
     if (value !== _score) {
       setValue(value);
+      onChange && onChange(value)
     } else {
       setValue(0);
+      onChange && onChange(0)
     }
   }
 

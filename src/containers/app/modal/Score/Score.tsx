@@ -8,24 +8,14 @@ import { View } from 'react-native';
 export default function Score() {
 
   const [score, setS] = useState(1);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setS(Math.random() * 5)
-    }, 2000)
-
-    return () => clearInterval(interval)
-  }, [])
+  const handleChange = (v: number) => {
+    setS((v + score) / 2)
+  }
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Title>Score!</Title>
-      <ScoreInput />
-      <ScoreDisplay score={1} />
-      <ScoreDisplay score={2} />
-      <ScoreDisplay score={3} />
-      <ScoreDisplay score={4} />
-      <ScoreDisplay score={5} />
+      <ScoreInput onChange={handleChange} />
       <ScoreDisplay score={score} />
     </View>
   );

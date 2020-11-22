@@ -52,6 +52,11 @@ const PlusBtn: React.FC = () => {
     navigation.push(Screens.LIFT);
   }
 
+  const handleOpenScore = () => {
+    setShowMenu(false);
+    navigation.push(Screens.SCORE);
+  }
+
   return (
     <PlusButtonContainer>
       <Portal>
@@ -65,7 +70,7 @@ const PlusBtn: React.FC = () => {
             label=""
             icon="thumb-up"
           />
-          <OptionButton onPress={handleOpenModals} label="" icon="car" />
+          <OptionButton onPress={handleOpenScore} label="" icon="car" />
         </RadialButtonGroup>
         <Backdrop show={showMenu} opacity={0.3} onClose={() => setShowMenu(false)} />
       </Portal>

@@ -17,9 +17,9 @@ const AppNavigation: React.FC = () => {
         headerBackTitle: 'Atras',
         headerShown: false
       }}>
-      <Stack.Screen name={Screens.SCORE} component={Score} />
       <Stack.Screen name={Screens.TABS} component={TabsNavigation} />
       <Stack.Screen name={Screens.LIFT} component={LiftStack} />
+      <Stack.Screen name={Screens.SCORE} component={Score} />
       <Stack.Screen name={Screens.RIDE} component={Profile} />
     </Stack.Navigator>
   )
