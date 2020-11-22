@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
-import { Animated, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { Animated, TouchableOpacity } from 'react-native';
 import { useAnimation } from 'react-native-animation-hooks';
 
 const ANIAMTION_DURATION = 200;
 
 interface PressAnimationProps {
   disabled?: boolean;
+  onPress?: () => void;
 }
 
-const PressAnimation: React.FC<PressAnimationProps> = ({ disabled = false, children }) => {
+const PressAnimation: React.FC<PressAnimationProps> = ({ onPress, disabled = false, children }) => {
 
   const [pressing, setPressing] = useState(false);
 
@@ -20,31 +20,34 @@ const PressAnimation: React.FC<PressAnimationProps> = ({ disabled = false, child
     useNativeDriver: false
   })
 
-  const handlePressIn = () => { console.log('pressing!'); setPressing(true); }
-  const handlePressOut = () => setPressing(false);
+  const handlePressIn = () => {
+    setPressing(true);
+  }
+  const handlePressOut = () => {
+    setPressing(false);
+    onPress && onPress()
+  };
 
   const animatedStyles = {
     transform: [{
       scaleX: animation.interpolate({
         inputRange: [0, 1],
-        outputRange: [1, 0.95]
+        outputRange: [1, 0.90]
       })
     },
     {
       scaleY: animation.interpolate({
         inputRange: [0, 1],
-        outputRange: [1, 0.95]
+        outputRange: [1, 0.90]
       })
     }]
   }
 
   return (
-    <TouchableOpacity activeOpacity={1} onPress={handlePressIn} onPressOut={handlePressOut}>
-      <TouchableWithoutFeedback>
-        <Animated.View style={animatedStyles}>
-          {children}
-        </Animated.View>
-      </TouchableWithoutFeedback>
+    <TouchableOpacity activeOpacity={1} onPressIn={handlePressIn} onPressOut={handlePressOut}>
+      <Animated.View style={animatedStyles}>
+        {children}
+      </Animated.View>
     </TouchableOpacity>
   )
 }

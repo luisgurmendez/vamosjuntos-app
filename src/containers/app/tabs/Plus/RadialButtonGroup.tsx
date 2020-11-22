@@ -6,7 +6,7 @@ import { FAST_ANIMATION_DURATION } from 'utils/animation';
 
 interface RadialButtonGroupProps extends Stylable<ViewStyle> {
   distance?: number;
-  show?: boolean;
+  show?: boolean; // To make in & out animation
 }
 
 const RadialButtonGroup: React.FC<RadialButtonGroupProps> = ({ children, show = false, style, distance = 100 }) => {

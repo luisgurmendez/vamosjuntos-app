@@ -2,7 +2,7 @@ import { login } from 'api/adedo';
 import Button from 'components/Button/Button';
 import TextInput from 'components/TextInput/TextInput';
 import Toaster from 'components/Toaster/Toaster';
-import { Formik } from 'formik';
+import { Formik, useFormikContext } from 'formik';
 import React from 'react';
 import styled from 'styled-components/native';
 import * as Yup from 'yup';
@@ -38,7 +38,7 @@ const LoginForm: React.FC = () => {
         initialValues={initialValues}
         onSubmit={handleLogin}
       >
-        {({ handleChange, isSubmitting, handleSubmit, values, errors, }) => (
+        {({ handleChange, isSubmitting, handleSubmit, values, errors }) => (
           <FormContent>
             <MarginedChildren mV="md">
               <TextInput

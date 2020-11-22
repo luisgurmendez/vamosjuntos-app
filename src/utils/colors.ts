@@ -7,7 +7,8 @@ export const colors = {
   border: '#e3e3e3',
   white: '#fff',
   black: 'rgb(5, 71, 82)',
-  gray: '#888'
+  gray: '#888',
+  yellow: '#FDCC0D'
 }
 
 export function alpha(color: string, alphaNumber: number | string) {

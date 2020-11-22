@@ -1,6 +1,7 @@
 enum Screens {
   LIFT = 'LIFT',
-  RIDE = 'RIDE'
+  RIDE = 'RIDE',
+  SCORE = 'SCORE'
 };
 
 export default Screens;

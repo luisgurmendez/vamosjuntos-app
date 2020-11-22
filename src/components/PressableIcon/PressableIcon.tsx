@@ -6,12 +6,13 @@ import { colors } from 'utils/colors';
 
 interface PressableIconProps extends IconProps {
   onPress?: () => void;
+  activeOpacity?: number;
 }
 
-const PressableIcon: React.FC<PressableIconProps> = ({ onPress, style, ...iconProps }) => {
+const PressableIcon: React.FC<PressableIconProps> = ({ activeOpacity = 0.3, onPress, style, ...iconProps }) => {
 
   return (
-    <TouchableOpacity style={style} onPress={onPress}>
+    <TouchableOpacity activeOpacity={activeOpacity} style={style} onPress={onPress}>
       <Icon color={colors.black} {...iconProps} />
     </TouchableOpacity>
   )
