@@ -12,7 +12,6 @@ const Login: React.FC = () => {
   const navigation: StackNavigationAPI = useNavigation<any>();
 
   const handleGoTOHome = () => {
-    Toaster.info({ title: "Heyyy" })
     navigation.navigate(Screens.APP);
   };
 

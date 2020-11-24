@@ -5,13 +5,17 @@ import { View } from 'react-native';
 import StartSVG from './Start';
 import { colors } from 'utils/colors';
 
-interface ScoreInputProps {
+interface Size {
+  size?: number;
+}
+
+interface ScoreInputProps extends Size {
   score?: number;
 }
 
 const ICON_SIZE = 60;
 
-const ScoreInput: React.FC<ScoreInputProps> = ({ score = 0.5 }) => {
+const ScoreInput: React.FC<ScoreInputProps> = ({ size = ICON_SIZE, score = 0.5 }) => {
   const getScoreValueForItem = (itemIndex: number) => {
     const s = score - itemIndex + 1;
     return s > 0 ? s : 0;
@@ -20,10 +24,10 @@ const ScoreInput: React.FC<ScoreInputProps> = ({ score = 0.5 }) => {
   return (
     <Container>
       {[1, 2, 3, 4, 5].map((v) => (
-        <IconContainer>
-          <Icon name="star" color={colors.yellow} key={v} size={ICON_SIZE} />
-          <Painted score={getScoreValueForItem(v)}>
-            <StartSVG fill={colors.yellow} key={v} color={colors.yellow} size={ICON_SIZE} />
+        <IconContainer key={v} size={size}>
+          <Icon name="star" color={colors.yellow} key={v} size={size} />
+          <Painted size={size} score={getScoreValueForItem(v)}>
+            <StartSVG fill={colors.yellow} key={v} color={colors.yellow} size={size} />
           </Painted>
         </IconContainer>
       ))}
@@ -39,14 +43,14 @@ const Container = styled.View`
 `;
 
 // Float between 0 - 1;
-const Painted = styled.View<{ score: number }>`
-  width: ${(props) => props.score * ICON_SIZE}px;
+const Painted = styled.View<ScoreInputProps>`
+  width: ${(props) => props.score! * props.size!}px;
   margin-top: 1px;
   position: absolute;
   overflow: hidden;
 `;
 
-const IconContainer = styled.View`
-  width: ${ICON_SIZE};
-  height: ${ICON_SIZE};
+const IconContainer = styled.View<Size>`
+  width: ${props => props.size!}px;
+  height: ${props => props.size!}px;
 `;

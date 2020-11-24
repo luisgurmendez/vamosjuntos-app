@@ -51,6 +51,7 @@ const PlusButtonTouchable = styled.TouchableOpacity`
   position: absolute;
   align-self: center;
   bottom: 30px;
+  border-radius: 30px;
   z-index: 200;
 `;
 

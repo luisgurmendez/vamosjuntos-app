@@ -75,19 +75,19 @@ class Toaster extends React.Component<ToasterProps, ToasterState> {
     return id;
   }
 
-  public static alert(options: ToastPropsBase): number {
+  public static alert(options: ToastPropsBase | string): number {
     return Toaster.toast({ variant: ToastVariant.ALERT, ...Toaster.getToastParams(options) });
   }
 
-  static success(options: ToastPropsBase): number {
+  static success(options: ToastPropsBase | string): number {
     return Toaster.toast({ variant: ToastVariant.SUCCESS, ...Toaster.getToastParams(options) });
   }
 
-  static warn(options: ToastPropsBase): number {
+  static warn(options: ToastPropsBase | string): number {
     return Toaster.toast({ variant: ToastVariant.WARN, ...Toaster.getToastParams(options) });
   }
 
-  static info(options: ToastPropsBase): number {
+  static info(options: ToastPropsBase | string): number {
     return Toaster.toast({ variant: ToastVariant.INFO, ...Toaster.getToastParams(options) });
   }
 

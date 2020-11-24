@@ -7,12 +7,13 @@ import StartSVG from './Start';
 
 interface ScoreInputProps {
   score?: number;
+  size?: number;
   onChange?: (score: number) => void;
 }
 
 const ICON_SIZE = 60;
 
-const ScoreInput: React.FC<ScoreInputProps> = ({ score, onChange }) => {
+const ScoreInput: React.FC<ScoreInputProps> = ({ size = ICON_SIZE, score, onChange }) => {
   const [value, setValue] = useState(0);
 
   const _score = score !== undefined ? score : value;
@@ -30,8 +31,8 @@ const ScoreInput: React.FC<ScoreInputProps> = ({ score, onChange }) => {
   return (
     <Container>
       {[1, 2, 3, 4, 5].map((v) => (
-        <PressAnimation onPress={() => handleScoreChange(v)}>
-          <StartSVG color={colors.yellow} size={ICON_SIZE} fill={v <= _score ? colors.yellow : 'none'} />
+        <PressAnimation key={v} onPress={() => handleScoreChange(v)}>
+          <StartSVG color={colors.yellow} size={size} fill={v <= _score ? colors.yellow : 'none'} />
         </PressAnimation>
       ))}
     </Container>
