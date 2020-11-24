@@ -10,7 +10,6 @@ interface PressAnimationProps {
 }
 
 const PressAnimation: React.FC<PressAnimationProps> = ({ onPress, disabled = false, children }) => {
-
   const [pressing, setPressing] = useState(false);
 
   const animation = useAnimation({
@@ -18,38 +17,38 @@ const PressAnimation: React.FC<PressAnimationProps> = ({ onPress, disabled = fal
     toValue: !disabled && pressing ? 1 : 0,
     duration: ANIAMTION_DURATION,
     useNativeDriver: false
-  })
+  });
 
   const handlePressIn = () => {
     setPressing(true);
-  }
+  };
   const handlePressOut = () => {
     setPressing(false);
-    onPress && onPress()
+    onPress && onPress();
   };
 
   const animatedStyles = {
-    transform: [{
-      scaleX: animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [1, 0.90]
-      })
-    },
-    {
-      scaleY: animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [1, 0.90]
-      })
-    }]
-  }
+    transform: [
+      {
+        scaleX: animation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [1, 0.9]
+        })
+      },
+      {
+        scaleY: animation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [1, 0.9]
+        })
+      }
+    ]
+  };
 
   return (
     <TouchableOpacity activeOpacity={1} onPressIn={handlePressIn} onPressOut={handlePressOut}>
-      <Animated.View style={animatedStyles}>
-        {children}
-      </Animated.View>
+      <Animated.View style={animatedStyles}>{children}</Animated.View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 export default PressAnimation;

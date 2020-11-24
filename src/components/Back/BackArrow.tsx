@@ -8,7 +8,6 @@ interface ArrowBackProps {
 }
 
 const BackArrow: React.FC<ArrowBackProps> = ({ onBack }) => {
-
   const navigation: StackNavigationAPI = useNavigation<any>();
 
   const handleBack = () => {
@@ -17,11 +16,9 @@ const BackArrow: React.FC<ArrowBackProps> = ({ onBack }) => {
     } else {
       navigation.pop();
     }
-  }
+  };
 
-  return (
-    <PressableIcon size={40} color="#4285F4" name={"arrow-left"} onPress={handleBack} />
-  )
-}
+  return <PressableIcon size={40} color="#4285F4" name={'arrow-left'} onPress={handleBack} />;
+};
 
 export default BackArrow;

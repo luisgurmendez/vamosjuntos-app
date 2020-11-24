@@ -7,17 +7,14 @@ interface AddNewMarkerProps {
 }
 
 const SelectAddressMarker: React.FC<AddNewMarkerProps> = ({ lifted = true }) => {
-
   let draggingStyle = { backgroundColor: colors.main };
 
   if (lifted) {
-    draggingStyle = { backgroundColor: alpha(colors.main, 0.5) }
+    draggingStyle = { backgroundColor: alpha(colors.main, 0.5) };
   }
 
-  return (
-    <View pointerEvents="none" style={[styles.marker, draggingStyle]} />
-  )
-}
+  return <View pointerEvents="none" style={[styles.marker, draggingStyle]} />;
+};
 
 const styles = {
   marker: {

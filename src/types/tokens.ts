@@ -1,4 +1,3 @@
-
 export type JWT = string;
 
 export interface Tokens {

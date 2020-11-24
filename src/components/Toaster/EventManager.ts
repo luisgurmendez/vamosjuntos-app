@@ -1,4 +1,3 @@
-
 class EventManager {
   private eventList = new Map();
 
@@ -17,9 +16,7 @@ class EventManager {
       return false;
     }
 
-    this.eventList
-      .get(event)
-      .forEach((callback: any) => setTimeout(() => callback.call(this, ...args), 0));
+    this.eventList.get(event).forEach((callback: any) => setTimeout(() => callback.call(this, ...args), 0));
 
     return this;
   }

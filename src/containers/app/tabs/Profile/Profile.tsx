@@ -1,16 +1,13 @@
 import { Title } from 'components/Typography/Typography';
 import React, { useRef, useState } from 'react';
-import { Animated, Image, Dimensions, NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native';
+import { Animated, Dimensions, Image, NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import { DeviceDimensions } from 'utils/device';
 // import img from 'assets/cabral7.jpeg';
-interface ProfileProps {
-
-}
+interface ProfileProps { }
 
 const Profile: React.FC<ProfileProps> = () => {
-
   const [scrollY] = useState(new Animated.Value(0));
 
   const handleScroll =
@@ -22,9 +19,11 @@ const Profile: React.FC<ProfileProps> = () => {
         {
           nativeEvent: { contentOffset: { y: scrollY } }
         }
-      ], {
-      useNativeDriver: true
-    })
+      ],
+      {
+        useNativeDriver: true
+      }
+    );
   // }
 
   const coverContainerScaleAnimation = scrollY.interpolate({ inputRange: [-100, 0, 1000], outputRange: [2, 1, 1] });
@@ -42,45 +41,44 @@ const Profile: React.FC<ProfileProps> = () => {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Title>Perfil!</Title>
     </View>
-  )
-}
+  );
+};
 export default Profile;
 
-
 const Container = styled(Animated.ScrollView)`
-flex: 1;
-width: 100%;
-height: 100%;
-borderWidth: 1px;
-borderColor: red;
-`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border-width: 1px;
+  border-color: red;
+`;
 
 const CoverContainer = styled.View`
-  backgroundColor: ${colors.main};
+  background-color: ${colors.main};
   height: 200px;
-`
+`;
 const AnimatedCoverContainer = Animated.createAnimatedComponent(CoverContainer);
 
 const ProfileImageContainer = styled.View`
   position: relative;
   margin-left: 24px;
-  zIndex: 60;
-`
+  z-index: 60;
+`;
 const ProfileImage = styled.View`
-  zIndex: 60;
+  z-index: 60;
   width: 160px;
   height: 160px;
-  borderRadius: 80px;
-  backgroundColor: lightgray;
+  border-radius: 80px;
+  background-color: lightgray;
   position: absolute;
-  borderWidth: 3px;
-  borderColor: white;
-`
+  border-width: 3px;
+  border-color: white;
+`;
 const AnimatedProfileImage = Animated.createAnimatedComponent(ProfileImage);
 
 const Content = styled.View`
   flex-grow: 1;
-  backgroundColor: lightblue;
+  background-color: lightblue;
   padding-top: 80px;
-  minHeight: ${2 * DeviceDimensions.height}px;
-`
+  min-height: ${2 * DeviceDimensions.height}px;
+`;

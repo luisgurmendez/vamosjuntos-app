@@ -32,9 +32,7 @@ export default class PortalConsumer extends React.Component<Props> {
 
   private checkManager() {
     if (!this.props.manager) {
-      throw new Error(
-        'Looks like you forgot to wrap your root component with `PortalHost`'
-      );
+      throw new Error('Looks like you forgot to wrap your root component with `PortalHost`');
     }
   }
 

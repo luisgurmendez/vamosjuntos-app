@@ -5,12 +5,12 @@ import MapView from 'react-native-maps';
 
 export class MapProvider extends React.Component<{}, MapState> {
   state: MapState = {
-    maps: {},
+    maps: {}
   };
 
   addMap = (mapId: string, map: MapView) => {
     const maps: IdsToMaps = {
-      ...this.state.maps,
+      ...this.state.maps
     };
     maps[mapId] = map;
     this.setState({ maps });
@@ -18,7 +18,7 @@ export class MapProvider extends React.Component<{}, MapState> {
 
   removeMap = (mapId: string) => {
     const maps: IdsToMaps = {
-      ...this.state.maps,
+      ...this.state.maps
     };
     delete maps[mapId];
     this.setState({ maps });
@@ -30,9 +30,8 @@ export class MapProvider extends React.Component<{}, MapState> {
         value={{
           maps: this.state.maps,
           addMap: this.addMap,
-          removeMap: this.removeMap,
-        }}
-      >
+          removeMap: this.removeMap
+        }}>
         {this.props.children}
       </MapContext.Provider>
     );

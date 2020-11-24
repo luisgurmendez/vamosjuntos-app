@@ -12,38 +12,31 @@ import MarginedChildren from 'components/Box/MarginedChildren';
 const RegisterFormSchema = Yup.object().shape({
   username: Yup.string().required('Username required'),
   password: Yup.string().required('Password required')
-})
+});
 
 const RegisterForm: React.FC = () => {
-
   const initialValues = {
     username: '',
     password: ''
-  }
+  };
 
-  const handleRegister = async (values: any) => {
-
-  }
+  const handleRegister = async (values: any) => {};
 
   return (
     <Container>
-      <Formik
-        validationSchema={RegisterFormSchema}
-        initialValues={initialValues}
-        onSubmit={handleRegister}
-      >
-        {({ handleChange, isSubmitting, handleSubmit, values, errors, }) => (
+      <Formik validationSchema={RegisterFormSchema} initialValues={initialValues} onSubmit={handleRegister}>
+        {({ handleChange, isSubmitting, handleSubmit, values, errors }) => (
           <FormContent>
             <MarginedChildren mV="md">
               <TextInput
-                error={errors["username"]}
+                error={errors.username}
                 textContentType="username"
                 onChangeText={handleChange('username')}
                 value={values.username}
               />
 
               <TextInput
-                error={errors["password"]}
+                error={errors.password}
                 secureTextEntry
                 onChangeText={handleChange('password')}
                 value={values.password}
@@ -57,11 +50,11 @@ const RegisterForm: React.FC = () => {
         )}
       </Formik>
     </Container>
-  )
-}
+  );
+};
 
 export default RegisterForm;
 
-const Container = styled.View``
+const Container = styled.View``;
 
-const FormContent = styled.View``
+const FormContent = styled.View``;

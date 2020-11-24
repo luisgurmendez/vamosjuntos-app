@@ -10,8 +10,13 @@ interface SelectableCellProps {
   disabled?: boolean;
 }
 
-const SelectableCell: React.FC<SelectableCellProps> = ({ children, date, onSelect, selected = false, disabled = false }) => {
-
+const SelectableCell: React.FC<SelectableCellProps> = ({
+  children,
+  date,
+  onSelect,
+  selected = false,
+  disabled = false
+}) => {
   const handleCellSelect = !disabled ? () => onSelect && onSelect(date) : undefined;
 
   return (
@@ -21,11 +26,11 @@ const SelectableCell: React.FC<SelectableCellProps> = ({ children, date, onSelec
           <ColorDecorator selected={selected} disabled={disabled}>
             {children}
           </ColorDecorator>
-        </SelectedIndicator >
+        </SelectedIndicator>
       </CellTouchable>
     </Container>
-  )
-}
+  );
+};
 
 export default SelectableCell;
 
@@ -44,15 +49,15 @@ const defineColor = (props: ColorDecoratorProps): string => {
   }
 
   return colors.black;
-}
+};
 
 const ColorDecorator = styled.Text<ColorDecoratorProps>`
-  color: ${props => defineColor(props)};
+  color: ${(props) => defineColor(props)};
   flex: 1;
   align-items: center;
   justify-content: center;
   flex-direction: row;
-`
+`;
 
 const Container = styled.View`
   align-items: center;
@@ -62,7 +67,7 @@ const Container = styled.View`
   flex: 1;
   flex-direction: row;
   position: relative;
-`
+`;
 interface Selectable {
   selected: boolean;
 }
@@ -71,13 +76,12 @@ const SelectedIndicator = styled.View<Selectable>`
   text-align: center;
   display: flex;
   justify-content: center;
-  ${props => props.selected ? `backgroundColor: ${colors.main}` : 'transparent'};
+  ${(props) => (props.selected ? `backgroundColor: ${colors.main}` : 'transparent')};
   flex-direction: row;
   width: 32px;
   height: 32px;
   border-radius: 16px;
-`
-
+`;
 
 const CellTouchable = styled.TouchableOpacity`
   align-items: center;
@@ -87,15 +91,15 @@ const CellTouchable = styled.TouchableOpacity`
   flex: 1;
   flex-direction: row;
   padding: 4px;
-`
+`;
 
 const Cell = styled.View`
-flex: 1;
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: flex-start;
-textAlign: center;
-padding: 10px;
-borderRadius: 4px;
-`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 10px;
+  border-radius: 4px;
+`;

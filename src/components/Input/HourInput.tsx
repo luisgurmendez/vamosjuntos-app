@@ -11,18 +11,17 @@ interface HourInputProps extends TextInputProps {
  * This component expects value with the format HH:mm
  */
 const HourInput: React.FC<HourInputProps> = ({ onHourChange, value, ...props }) => {
-
   const [innerValue, setInnerValue] = useState(value);
 
   useEffect(() => {
     setInnerValue(value);
-  }, [setInnerValue, value])
+  }, [setInnerValue, value]);
 
   const handleHourChange = (hour: string) => {
     let _hour = hour;
 
     if (_hour.length === 2 && innerValue?.length === 1) {
-      _hour += ':'
+      _hour += ':';
     }
 
     if (_hour.length === 3 && _hour[2] !== ':') {
@@ -36,21 +35,31 @@ const HourInput: React.FC<HourInputProps> = ({ onHourChange, value, ...props }) 
     }
 
     setInnerValue(_hour);
-  }
+  };
 
   const handleBlur = () => {
     if (!isValidHourString(innerValue)) {
       onHourChange && onHourChange(10, 0);
     }
-  }
+  };
 
   const handleFocus = () => {
     setInnerValue(value);
-  }
+  };
 
   return (
-    <TextInput {...props} onFocus={handleFocus} clearButtonMode={'never'} onBlur={handleBlur} keyboardType='numeric' value={innerValue} onChangeText={handleHourChange} placeholder="HH:mm" maxLength={5} />
-  )
-}
+    <TextInput
+      {...props}
+      onFocus={handleFocus}
+      clearButtonMode={'never'}
+      onBlur={handleBlur}
+      keyboardType="numeric"
+      value={innerValue}
+      onChangeText={handleHourChange}
+      placeholder="HH:mm"
+      maxLength={5}
+    />
+  );
+};
 
 export default HourInput;

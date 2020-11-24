@@ -18,55 +18,65 @@ interface SelectAddressFormProps {
 }
 
 const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, onSelectAddress }) => {
-
   const [isNewAddress, setIsNewAddress] = useState(true);
   const [selectAddressOpen, setSelectAddressOpen] = useState(false);
-  const [savedAddresses, isGettingSavedAddresses, setSavedAddress] = useGetFromStorage<SavedAddress[]>(Storage.ADDRESSES, []);
+  const [savedAddresses, isGettingSavedAddresses, setSavedAddress] = useGetFromStorage<SavedAddress[]>(
+    Storage.ADDRESSES,
+    []
+  );
 
   const handleSelectAddressFromMap = (address: Address) => {
     setIsNewAddress(true);
     onSelectAddress && onSelectAddress(address);
-  }
+  };
 
   const handleSelectSavedAddress = (sa: SavedAddress) => {
     setIsNewAddress(false);
     onSelectAddress && onSelectAddress(sa.address);
-  }
+  };
 
   const handleRemoveSavedAddress = (address: SavedAddress) => {
-    const newAddresses = savedAddresses.filter(sa => sa.id !== address.id);
+    const newAddresses = savedAddresses.filter((sa) => sa.id !== address.id);
 
     setSavedAddress(newAddresses);
     Storage.setItem(Storage.ADDRESSES, newAddresses);
     // remove from state;
     // remove from storage;
-  }
+  };
 
   return (
     <Container>
-      <Button icon="map" onPress={() => setSelectAddressOpen(true)} type="secondary">Elegir en el mapa</Button>
-      {selectedAddress &&
+      <Button icon="map" onPress={() => setSelectAddressOpen(true)} type="secondary">
+        Elegir en el mapa
+      </Button>
+      {selectedAddress && (
         <Box mb="lg" mt="lg">
           <Box mb="md">
             <DisplayAddress address={selectedAddress} />
           </Box>
           {isNewAddress && <SaveAddress address={selectedAddress} />}
         </Box>
-      }
-      {savedAddresses.length > 0 &&
+      )}
+      {savedAddresses.length > 0 && (
         <SavedAddressesContainer mt="lg">
           <Box mb="md">
-            <Subtitle>
-              Direcciónes guardadas
-            </Subtitle>
+            <Subtitle>Direcciónes guardadas</Subtitle>
           </Box>
-          <SavedAddressList savedAddresses={savedAddresses} onRemoveAddress={handleRemoveSavedAddress} onSelectAddress={handleSelectSavedAddress} />
+          <SavedAddressList
+            savedAddresses={savedAddresses}
+            onRemoveAddress={handleRemoveSavedAddress}
+            onSelectAddress={handleSelectSavedAddress}
+          />
         </SavedAddressesContainer>
-      }
-      <SelectAddressModal onSelectAddress={handleSelectAddressFromMap} onClose={() => setSelectAddressOpen(false)} open={selectAddressOpen} />
+      )}
+      <SelectAddressModal
+        onSelectAddress={handleSelectAddressFromMap}
+        onClose={() => setSelectAddressOpen(false)}
+        open={selectAddressOpen}
+      />
     </Container>
-  )
-}
+  );
+};
 
 export default SelectAddressForm;
 
@@ -74,8 +84,8 @@ const Container = styled.View`
   flex: 1;
   display: flex;
   margin-bottom: 8px;
-`
+`;
 
 const SavedAddressesContainer = styled(Box)`
   flex: 1;
-`
+`;

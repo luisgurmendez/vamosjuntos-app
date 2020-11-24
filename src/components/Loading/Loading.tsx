@@ -1,6 +1,5 @@
-
 import React, { Component } from 'react';
-import { View, Animated, Easing } from 'react-native';
+import { Animated, Easing, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface LoaderProps {
@@ -17,23 +16,22 @@ const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 class Loading extends Component<LoaderProps, LoaderState> {
   constructor(props: any) {
     super(props);
-    this.state = { spinAnim: new Animated.Value(0) }
+    this.state = { spinAnim: new Animated.Value(0) };
   }
 
   componentDidMount() {
-    Animated.loop(Animated.timing(
-      this.state.spinAnim,
-      {
+    Animated.loop(
+      Animated.timing(this.state.spinAnim, {
         toValue: 1,
         duration: 1800,
         easing: Easing.linear,
         useNativeDriver: true
-      }
-    )).start();
+      })
+    ).start();
   }
 
   render() {
-    const { size = 25, color = "white" } = this.props;
+    const { size = 25, color = 'white' } = this.props;
 
     const spin = this.state.spinAnim.interpolate({
       inputRange: [0, 1],

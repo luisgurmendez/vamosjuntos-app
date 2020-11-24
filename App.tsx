@@ -13,7 +13,6 @@ enableScreens();
 moment.updateLocale('es', localization);
 
 const App = () => {
-
   useInitStorage();
 
   return (
@@ -24,7 +23,6 @@ const App = () => {
       </MapProvider>
     </NavigationContainer>
   );
-}
+};
 
 export default App;
-

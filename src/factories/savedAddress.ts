@@ -8,4 +8,3 @@ export default Factory.define<SavedAddress>(({ sequence }) => ({
   name: 'Casa',
   id: randomId()
 }));
-

@@ -8,10 +8,9 @@ interface StorageAPI {
   tokens: Tokens;
 }
 
-type ErrorCallback = (error?: Error) => void
+type ErrorCallback = (error?: Error) => void;
 
 class Storage {
-
   public static CREATED = 'created';
   public static ADDRESSES = 'addresses';
   public static TOKENS = 'tokens';
@@ -39,9 +38,9 @@ class Storage {
     if (inited) {
       try {
         const stringifiedValue = JSON.stringify(value);
-        await AsyncStorage.setItem(key, stringifiedValue)
+        await AsyncStorage.setItem(key, stringifiedValue);
       } catch (e) {
-        await Storage.setStringItem(key, value as unknown as string)
+        await Storage.setStringItem(key, (value as unknown) as string);
       }
     }
   }

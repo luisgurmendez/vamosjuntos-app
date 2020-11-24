@@ -15,90 +15,99 @@ import useZoomToLocation from 'hooks/useZoomToLocation';
 import addressFactory from 'factories/address';
 
 interface SelectAddressModalProps {
-   open: boolean;
-   onClose?: () => void;
-   onSelectAddress?: (address: Address) => void;
-   mapId?: string;
+  open: boolean;
+  onClose?: () => void;
+  onSelectAddress?: (address: Address) => void;
+  mapId?: string;
 }
 
-const SelectAddressModal: React.FC<SelectAddressModalProps> = ({ open, onClose, onSelectAddress, mapId = 'SelectAddressMapId' }) => {
+const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
+  open,
+  onClose,
+  onSelectAddress,
+  mapId = 'SelectAddressMapId'
+}) => {
+  const [isMovingMap, setIsMovingMap] = useState(false);
+  const [isFetchingAddress, setIsFetchingAddress] = useState(true);
+  const [possibleAddress, setPossibleAddress] = useState<Address | undefined>(undefined);
 
-   const [isMovingMap, setIsMovingMap] = useState(false);
-   const [isFetchingAddress, setIsFetchingAddress] = useState(true);
-   const [possibleAddress, setPossibleAddress] = useState<Address | undefined>(undefined);
+  useZoomToLocation(mapId);
 
-   useZoomToLocation(mapId);
+  const timeoutRef = useRef<number | null>(null);
 
-   const timeoutRef = useRef<number | null>(null)
+  const handleSelectAddress = () => {
+    if (possibleAddress) {
+      onSelectAddress && onSelectAddress(possibleAddress);
+      onClose && onClose();
+    }
+  };
 
-   const handleSelectAddress = () => {
-      if (possibleAddress) {
-         onSelectAddress && onSelectAddress(possibleAddress);
-         onClose && onClose();
-      }
-   }
+  const handleLocationChange = () => {
+    setIsFetchingAddress(true);
+    setIsMovingMap(false);
 
-   const handleLocationChange = () => {
-      setIsFetchingAddress(true);
-      setIsMovingMap(false);
+    if (timeoutRef.current) {
+      clearInterval(timeoutRef.current);
+    }
+    timeoutRef.current = (setTimeout(() => {
+      const address = addressFactory.build();
+      setPossibleAddress(address);
+      setIsFetchingAddress(false);
+    }, 500) as unknown) as number;
+  };
 
-      if (timeoutRef.current) {
-         clearInterval(timeoutRef.current)
-      }
-      timeoutRef.current = setTimeout(() => {
-         const address = addressFactory.build();
-         setPossibleAddress(address)
-         setIsFetchingAddress(false);
-      }, 500) as unknown as number
-   }
-
-   return (
-      <Modal isVisible={open} useNativeDriver={false} coverScreen style={{ margin: 0 }} hasBackdrop={false}>
-         <Content>
-            <CloseContainer>
-               <Icon onPress={onClose} size={30} name={'x'} color={colors.black} />
-            </CloseContainer>
-            <Map onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={handleLocationChange} mapId={mapId}>
-               <SelectAddressMarker lifted={isMovingMap} />
-            </Map>
-         </Content>
-         <SelectedLocationDisplay>
-            <GrayedBody>Arrastra el mapa para colocar el marcador</GrayedBody>
-            <Box mt='lg' mb='lg'>
-               {isFetchingAddress ? <Loading size={20} color={colors.black} /> : <DisplayAddress address={possibleAddress!} />}
-            </Box>
-            <Button disabled={isFetchingAddress || possibleAddress === undefined} onPress={handleSelectAddress}>Elegir</Button>
-         </SelectedLocationDisplay>
-      </Modal>
-   )
-
-}
+  return (
+    <Modal isVisible={open} useNativeDriver={false} coverScreen style={{ margin: 0 }} hasBackdrop={false}>
+      <Content>
+        <CloseContainer>
+          <Icon onPress={onClose} size={30} name={'x'} color={colors.black} />
+        </CloseContainer>
+        <Map onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={handleLocationChange} mapId={mapId}>
+          <SelectAddressMarker lifted={isMovingMap} />
+        </Map>
+      </Content>
+      <SelectedLocationDisplay>
+        <GrayedBody>Arrastra el mapa para colocar el marcador</GrayedBody>
+        <Box mt="lg" mb="lg">
+          {isFetchingAddress ? (
+            <Loading size={20} color={colors.black} />
+          ) : (
+              <DisplayAddress address={possibleAddress!} />
+            )}
+        </Box>
+        <Button disabled={isFetchingAddress || possibleAddress === undefined} onPress={handleSelectAddress}>
+          Elegir
+        </Button>
+      </SelectedLocationDisplay>
+    </Modal>
+  );
+};
 
 export default SelectAddressModal;
 
 const CloseContainer = styled.SafeAreaView`
-   position: absolute;
-   margin-left: 24px;
-   zIndex: 10;
-`
+  position: absolute;
+  margin-left: 24px;
+  z-index: 10;
+`;
 
 const Content = styled.View`
-   backgroundColor: white;
-   flex: 1;
-`
+  background-color: white;
+  flex: 1;
+`;
 
 const SelectedLocationDisplay = styled.View`
-   width: 100%;
-   padding: 16px 24px 24px 24px;
-   backgroundColor: ${colors.white};
-   display: flex;
-   flex-direction: column;
-   height: 180px;
-   justify-content: space-between;
-`
+  width: 100%;
+  padding: 16px 24px 24px 24px;
+  background-color: ${colors.white};
+  display: flex;
+  flex-direction: column;
+  height: 180px;
+  justify-content: space-between;
+`;
 
 const GrayedBody = styled(Body)`
-   color: ${colors.gray};
-   width: 100%;
-   text-align: center;
-`
+  color: ${colors.gray};
+  width: 100%;
+  text-align: center;
+`;

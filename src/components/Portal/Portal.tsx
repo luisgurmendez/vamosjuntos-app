@@ -1,8 +1,6 @@
-
 import * as React from 'react';
 import PortalConsumer from './PortalConsumer';
 import PortalHost, { PortalContext, PortalMethods } from './PortalHost';
-
 
 /**
  * Portal allows to render a component at a different place in the parent tree.
@@ -32,13 +30,9 @@ class Portal extends React.Component {
 
     return (
       <PortalContext.Consumer>
-        {(manager) => (
-          <PortalConsumer manager={manager as PortalMethods}>
-            {children}
-          </PortalConsumer>
-        )}
+        {(manager) => <PortalConsumer manager={manager as PortalMethods}>{children}</PortalConsumer>}
       </PortalContext.Consumer>
-    )
+    );
   }
 }
 

@@ -17,22 +17,21 @@ interface WhenProps {
 }
 
 const When: React.FC<WhenProps> = ({ date = moment(), nextScreen, onDateChange }) => {
-
   const handleHourChange = (hour: number, mins: number) => {
     const _date = date.clone();
     _date.set({ hour: hour, minutes: mins });
     onDateChange && onDateChange(_date);
-  }
+  };
 
   const handleDateChange = (value: moment.Moment) => {
     const _date = date.clone();
     _date.set({ date: value.date(), month: value.month() });
     onDateChange && onDateChange(_date);
-  }
+  };
 
   return (
     <Wizard nextScreen={nextScreen} title="¿Cuando?">
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }} >
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
         <KeyboardShift>
           <Container>
             <Box mt="xxlg">
@@ -47,8 +46,8 @@ const When: React.FC<WhenProps> = ({ date = moment(), nextScreen, onDateChange }
         </KeyboardShift>
       </ScrollView>
     </Wizard>
-  )
-}
+  );
+};
 
 export default When;
 
@@ -56,8 +55,8 @@ const Container = styled.View`
   flex: 1;
   justify-content: flex-start;
   width: 100%;
-`
+`;
 
 const MarginedSubtitle = styled(Subtitle)`
   margin-bottom: 16px;
-`
+`;

@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled from 'styled-components/native';
 
 interface AbsolutePositionedProps {
   top?: string;
@@ -8,11 +8,11 @@ interface AbsolutePositionedProps {
 }
 
 const AbsolutePositioned = styled.View<AbsolutePositionedProps>`
-  zIndex: 10;
+  z-index: 10;
   position: absolute;
-  ${props => props.top !== undefined && `top: ${props.top};`}
-  ${props => props.bottom !== undefined && `bottom: ${props.bottom};`}
-  ${props => props.left !== undefined && `left: ${props.left};`}
-  ${props => props.right !== undefined && `right: ${props.right};`}
-`
+  ${(props) => props.top !== undefined && `top: ${props.top};`}
+  ${(props) => props.bottom !== undefined && `bottom: ${props.bottom};`}
+  ${(props) => props.left !== undefined && `left: ${props.left};`}
+  ${(props) => props.right !== undefined && `right: ${props.right};`}
+`;
 export default AbsolutePositioned;

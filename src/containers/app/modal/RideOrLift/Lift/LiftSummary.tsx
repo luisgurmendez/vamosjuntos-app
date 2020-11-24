@@ -2,14 +2,9 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 const LiftSummary: React.FC = () => {
-
-  return (
-    <Container>
-
-    </Container>
-  )
-}
+  return <Container />;
+};
 
 export default LiftSummary;
 
-const Container = styled.View``
+const Container = styled.View``;

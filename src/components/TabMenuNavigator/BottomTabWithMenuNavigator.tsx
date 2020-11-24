@@ -1,18 +1,21 @@
 import * as React from 'react';
 import {
-  useNavigationBuilder,
-  TabRouter,
-  createNavigatorFactory,
   DefaultNavigatorOptions,
+  TabRouter,
   TabRouterOptions,
+  createNavigatorFactory,
+  useNavigationBuilder
 } from '@react-navigation/native';
 import { BottomTabView, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { BottomTabNavigationConfig, BottomTabNavigationOptions } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
+import {
+  BottomTabNavigationConfig,
+  BottomTabNavigationOptions
+} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import PortalHost from './Portal/PortalHost';
 import MenuPlaceholderScreen, { MenuOptions, MenuProps } from './Menu';
 
 export interface TabMenuNavigationProps {
-  menuOptions: MenuProps
+  menuOptions: MenuProps;
 }
 
 // The props accepted by the component is a combination of 3 things
@@ -20,7 +23,6 @@ export type TabMenuNavigatorProps = DefaultNavigatorOptions<BottomTabNavigationO
   TabRouterOptions &
   BottomTabNavigationConfig &
   TabMenuNavigationProps;
-
 
 const TabNavigator = createBottomTabNavigator();
 
@@ -32,16 +34,15 @@ const TabMenuNavigator: React.FC<TabMenuNavigatorProps> = ({
   menuOptions,
   ...rest
 }) => {
-
   if (React.Children.count(children) % 2 !== 0) {
-    console.warn(`This navigatior works better if you have a pair number of tabs.`)
+    console.warn(`This navigatior works better if you have a pair number of tabs.`);
   }
 
-  const childrenWithMenuScreen: any = React.Children.toArray(children)
+  const childrenWithMenuScreen: any = React.Children.toArray(children);
   childrenWithMenuScreen.splice(
     childrenWithMenuScreen.length / 2,
     0,
-    (<TabNavigator.Screen name="Menu" options={MenuOptions(menuOptions)} component={MenuPlaceholderScreen} />)
+    <TabNavigator.Screen name="Menu" options={MenuOptions(menuOptions)} component={MenuPlaceholderScreen} />
   );
 
   const { state, descriptors, navigation } = useNavigationBuilder(TabRouter, {
@@ -53,17 +54,11 @@ const TabMenuNavigator: React.FC<TabMenuNavigatorProps> = ({
 
   return (
     <PortalHost>
-      <BottomTabView
-        {...rest}
-        state={state}
-        navigation={navigation}
-        descriptors={descriptors}
-      />
+      <BottomTabView {...rest} state={state} navigation={navigation} descriptors={descriptors} />
     </PortalHost>
   );
-}
+};
 
 const createBottomTabWithMenuNavigator = createNavigatorFactory(TabMenuNavigator);
 
 export default createBottomTabWithMenuNavigator;
-

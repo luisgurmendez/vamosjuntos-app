@@ -9,21 +9,15 @@ interface InputErrorMessageProps {
 }
 
 const InputErrorMessage: React.FC<InputErrorMessageProps> = ({ msg, show }) => {
-
   if (show) {
-    return (
-      <ErrorText>
-        {msg}
-      </ErrorText>
-    )
+    return <ErrorText>{msg}</ErrorText>;
   }
 
-  return null
-}
+  return null;
+};
 
 export default InputErrorMessage;
 
 const ErrorText = styled(Text)`
   color: ${colors.danger};
-  
-`
+`;

@@ -22,7 +22,7 @@ const AppNavigation: React.FC = () => {
       <Stack.Screen name={Screens.SCORE} component={Score} />
       <Stack.Screen name={Screens.RIDE} component={Profile} />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
 export default AppNavigation;

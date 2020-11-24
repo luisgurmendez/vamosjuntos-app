@@ -9,11 +9,11 @@ export const colors = {
   black: 'rgb(5, 71, 82)',
   gray: '#888',
   yellow: '#FDCC0D'
-}
+};
 
 export function alpha(color: string, alphaNumber: number | string) {
   if (typeof alphaNumber === 'string' && alphaNumber.length === 2) {
-    return color + alphaNumber
+    return color + alphaNumber;
   } else if (typeof alphaNumber === 'number') {
     const alphaHexNum = parseInt((alphaNumber * 255).toString());
     return color + alphaHexNum.toString(16);

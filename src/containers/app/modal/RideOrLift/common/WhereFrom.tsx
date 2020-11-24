@@ -9,18 +9,17 @@ interface WhereProps {
 }
 
 const WhereFrom: React.FC<WhereProps> = ({ nextScreen, title = '¿De donde salis?' }) => {
-
   const [selectedAddress, setSelectedAddress] = useState<Address | undefined>(undefined);
 
   const handleSelectAddress = (address: Address) => {
     setSelectedAddress(address);
-  }
+  };
 
   return (
     <Wizard title={title} nextScreen={nextScreen}>
       <SelectAddressForm selectedAddress={selectedAddress} onSelectAddress={handleSelectAddress} />
     </Wizard>
-  )
-}
+  );
+};
 
 export default WhereFrom;

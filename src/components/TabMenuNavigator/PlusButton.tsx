@@ -13,41 +13,30 @@ interface PlusButtonProps {
   animationDisabled?: boolean;
 }
 
-const PlusButton: React.FC<PlusButtonProps> = ({
-  style,
-  active,
-  onPress,
-  animationDisabled = false
-}) => {
-
+const PlusButton: React.FC<PlusButtonProps> = ({ style, active, onPress, animationDisabled = false }) => {
   const animation = useAnimation({
     type: 'timing',
     toValue: active ? 1 : 0,
     duration: FAST_ANIMATION_DURATION,
-    useNativeDriver: true,
-  })
+    useNativeDriver: true
+  });
 
   const getPlusButtonAnimation = () => {
     if (animationDisabled) {
-      return {}
+      return {};
     } else {
-      return { transform: [{ rotate: animation.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '45deg'] }) }] }
+      return { transform: [{ rotate: animation.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '45deg'] }) }] };
     }
-  }
+  };
 
   return (
     <Circle>
-      <AnimatedPlusButton
-        style={[getPlusButtonAnimation(), style]}
-        activeOpacity={1}
-        onPress={onPress}
-      >
+      <AnimatedPlusButton style={[getPlusButtonAnimation(), style]} activeOpacity={1} onPress={onPress}>
         <PlusSvg size={30} color={'white'} />
       </AnimatedPlusButton>
     </Circle>
-
-  )
-}
+  );
+};
 
 export default PlusButton;
 
@@ -55,14 +44,14 @@ const PlusButtonTouchable = styled.TouchableOpacity`
   padding: 15px;
   width: 60px;
   height: 60px;
-  backgroundColor: #4285F4;
+  background-color: #4285f4;
   display: flex;
-  align-items:center;
+  align-items: center;
   justify-content: center;
   position: absolute;
   align-self: center;
   bottom: 30px;
-  zIndex: 200;
-`
+  z-index: 200;
+`;
 
 const AnimatedPlusButton = Animated.createAnimatedComponent(PlusButtonTouchable);

@@ -6,7 +6,6 @@ interface CircleProps {
 }
 
 const Circle: React.FC<CircleProps> = ({ w = true, children }) => {
-
   const [radius, setRadius] = useState(0);
 
   const handleLayout = (event: LayoutChangeEvent) => {
@@ -15,11 +14,11 @@ const Circle: React.FC<CircleProps> = ({ w = true, children }) => {
     } else {
       setRadius(event.nativeEvent.layout.height / 2);
     }
-  }
+  };
 
   const circleStyle: StyleProp<ViewStyle> = {
-    borderRadius: radius,
-  }
+    borderRadius: radius
+  };
 
   if (radius !== 0) {
     if (w) {
@@ -29,18 +28,17 @@ const Circle: React.FC<CircleProps> = ({ w = true, children }) => {
     }
   }
 
-  const childrenCount = React.Children.count(children)
+  const childrenCount = React.Children.count(children);
 
   if (childrenCount > 1) {
     return children;
   }
 
-  return React.Children.map<any, any>(children, c => {
-    if (c && typeof c !== "string") {
-      return React.cloneElement(c, { onLayout: handleLayout, style: [...c.props.style, circleStyle] })
+  return React.Children.map<any, any>(children, (c) => {
+    if (c && typeof c !== 'string') {
+      return React.cloneElement(c, { onLayout: handleLayout, style: [...c.props.style, circleStyle] });
     }
-  })
-
-}
+  });
+};
 
 export default Circle;

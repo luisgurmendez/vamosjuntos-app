@@ -5,5 +5,5 @@ import Icon from 'react-native-vector-icons/Feather';
 export const NotificationsTabOptions: BottomTabNavigationOptions = {
   tabBarLabel: 'Alertas',
   tabBarIcon: ({ focused, size, color }) => <Icon name="bell" size={size} color={color} />,
-  tabBarBadge: undefined, // TODO como hacer esto??
-}
+  tabBarBadge: undefined // TODO como hacer esto??
+};

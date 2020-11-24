@@ -12,7 +12,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const Stack = createNativeStackNavigator();
 
 const LiftStack: React.FC = () => {
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Stack.Navigator
@@ -20,26 +19,14 @@ const LiftStack: React.FC = () => {
           headerBackTitle: 'Atras',
           headerShown: false
         }}>
-        <Stack.Screen
-          name={LiftScreens.WHERE_TO}
-          component={LiftWhereTo}
-        />
-        <Stack.Screen
-          name={LiftScreens.WHERE_FROM}
-          component={LiftWhereFrom} />
-        <Stack.Screen
-          name={LiftScreens.HOW_MANY}
-          component={HowMany} />
-        <Stack.Screen
-          name={LiftScreens.WHEN}
-          component={LiftWhen} />
-        <Stack.Screen
-          name={LiftScreens.PRICE}
-          component={Price} />
+        <Stack.Screen name={LiftScreens.WHERE_TO} component={LiftWhereTo} />
+        <Stack.Screen name={LiftScreens.WHERE_FROM} component={LiftWhereFrom} />
+        <Stack.Screen name={LiftScreens.HOW_MANY} component={HowMany} />
+        <Stack.Screen name={LiftScreens.WHEN} component={LiftWhen} />
+        <Stack.Screen name={LiftScreens.PRICE} component={Price} />
       </Stack.Navigator>
     </SafeAreaView>
-
-  )
-}
+  );
+};
 
 export default LiftStack;

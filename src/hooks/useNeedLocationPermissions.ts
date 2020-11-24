@@ -6,15 +6,12 @@ import { PERMISSIONS } from 'react-native-permissions';
 function useNeedLocationPermissions() {
   const hasLocationPerms = useCheckAndRequestPermission(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
   useEffect(() => {
-
     if (hasLocationPerms !== undefined) {
       if (!hasLocationPerms) {
-        Toaster.alert({ message: "Tenes que habilitar los permisos de ubicacion" })
+        Toaster.alert({ message: 'Tenes que habilitar los permisos de ubicacion' });
       }
     }
-
-  }, [hasLocationPerms])
+  }, [hasLocationPerms]);
 }
 
-export default useNeedLocationPermissions
-
+export default useNeedLocationPermissions;

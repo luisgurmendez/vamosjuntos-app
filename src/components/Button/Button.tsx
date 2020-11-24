@@ -19,7 +19,7 @@ interface ButtonProps {
   onPress?: () => void;
   icon?: string;
   children: React.ReactNode;
-  type?: ButtonType
+  type?: ButtonType;
   loading?: boolean;
   disabled?: boolean;
   style?: any;
@@ -34,7 +34,6 @@ const Button: React.FC<ButtonProps> = ({
   disabled = false,
   loading = false
 }) => {
-
   const [pressing, setPressing] = useState(false);
 
   const animation = useAnimation({
@@ -42,14 +41,13 @@ const Button: React.FC<ButtonProps> = ({
     toValue: !disabled && pressing ? 1 : 0,
     duration: ANIAMTION_DURATION,
     useNativeDriver: false
-  })
-
+  });
 
   if (style === undefined) {
     style = {
       container: {},
       text: {}
-    }
+    };
   }
 
   const handleOnPress = () => {
@@ -57,7 +55,7 @@ const Button: React.FC<ButtonProps> = ({
     if (onPress) {
       onPress();
     }
-  }
+  };
 
   const buttonStyles = getDisabledStyles(disabled) || getStylesByType(type);
 
@@ -67,47 +65,55 @@ const Button: React.FC<ButtonProps> = ({
   const iconColor: string = (buttonStyles?.text?.color as string) || '#fff';
 
   return (
-    <ButtonContainer style={[buttonStyles.container, {
-      transform: [{
-        scaleX: animation.interpolate({
-          inputRange: [0, 1],
-          outputRange: [1, 0.95]
-        })
-      },
-      {
-        scaleY: animation.interpolate({
-          inputRange: [0, 1],
-          outputRange: [1, 0.95]
-        })
-      }
-      ]
-    }, style,]}>
-      <TouchableButton disabled={disabled} onPressIn={handlePressIn} onPressOut={handlePressOut} onPress={handleOnPress}>
-        {loading ?
+    <ButtonContainer
+      style={[
+        buttonStyles.container,
+        {
+          transform: [
+            {
+              scaleX: animation.interpolate({
+                inputRange: [0, 1],
+                outputRange: [1, 0.95]
+              })
+            },
+            {
+              scaleY: animation.interpolate({
+                inputRange: [0, 1],
+                outputRange: [1, 0.95]
+              })
+            }
+          ]
+        },
+        style
+      ]}>
+      <TouchableButton
+        disabled={disabled}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        onPress={handleOnPress}>
+        {loading ? (
           <Loading />
-          :
+        ) : (
           <>
             {icon !== undefined && <Icon name={icon} size={25} color={iconColor} />}
-            <ButtonText style={buttonStyles.text}>
-              {children}
-            </ButtonText>
+            <ButtonText style={buttonStyles.text}>{children}</ButtonText>
           </>
-        }
+        )}
       </TouchableButton>
     </ButtonContainer>
-  )
-}
+  );
+};
 
 export default Button;
 
 const ButtonContainer = styled(Animated.View)`
   width: 100%;
-  borderRadius: 10px;
-  display:flex;
+  border-radius: 10px;
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const TouchableButton = styled.TouchableOpacity`
   flex-grow: 1;
@@ -115,7 +121,7 @@ const TouchableButton = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const ButtonText = styled(Text)`
   font-size: 18px;
@@ -123,32 +129,31 @@ const ButtonText = styled(Text)`
   padding: 4px;
   text-align: center;
   align-items: center;
-`
+`;
 
 const getDisabledStyles = (disabled: boolean): ButtonStyles | undefined => {
   if (disabled) {
     return {
       container: {
-        backgroundColor: colors.invalid,
+        backgroundColor: colors.invalid
       },
       text: {
         color: colors.white
       }
-    }
+    };
   }
-  return undefined
-}
+  return undefined;
+};
 
 const getStylesByType = (type: ButtonType): ButtonStyles => {
-
   const primaryColor: ButtonStyles = {
     container: {
-      backgroundColor: colors.main,
+      backgroundColor: colors.main
     },
     text: {
       color: colors.white
     }
-  }
+  };
 
   switch (type) {
     case 'primary':
@@ -156,23 +161,23 @@ const getStylesByType = (type: ButtonType): ButtonStyles => {
     case 'secondary':
       return {
         container: {
-          backgroundColor: colors.white,
+          backgroundColor: colors.white
         },
         text: {
           color: colors.black
         }
-      }
+      };
     case 'danger':
       return {
         container: {
-          backgroundColor: colors.danger,
+          backgroundColor: colors.danger
         },
         text: {
           color: colors.white
         }
-      }
+      };
     default: {
-      return primaryColor
+      return primaryColor;
     }
   }
-}
+};

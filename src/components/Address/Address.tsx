@@ -11,7 +11,6 @@ interface AddressProps {
 }
 
 const Address: React.FC<AddressProps> = ({ address }) => {
-
   return (
     <Container>
       <Icon size={20} color={colors.black} name="map-pin" />
@@ -20,8 +19,8 @@ const Address: React.FC<AddressProps> = ({ address }) => {
         <Body>{renderAddressDetails(address)}</Body>
       </AddressContainer>
     </Container>
-  )
-}
+  );
+};
 
 export default Address;
 
@@ -29,10 +28,10 @@ const AddressContainer = styled.View`
   display: flex;
   flex-direction: column;
   margin-left: 16px;
-`
+`;
 
 const Container = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-`
+`;

@@ -15,7 +15,6 @@ interface SaveAddressProps {
 }
 
 const SaveAddress: React.FC<SaveAddressProps> = ({ address }) => {
-
   const [saveAddress, setSaveAddress] = useState(false);
   const [addressName, setAddressName] = useState<string | undefined>(undefined);
 
@@ -28,7 +27,7 @@ const SaveAddress: React.FC<SaveAddressProps> = ({ address }) => {
         await Storage.setItem(Storage.ADDRESSES, addresses);
       }
     }
-  }
+  };
 
   return (
     <SaveAddressContainer>
@@ -38,15 +37,15 @@ const SaveAddress: React.FC<SaveAddressProps> = ({ address }) => {
       </SwitchContainer>
       {saveAddress && <TextInput onChangeText={setAddressName} onBlur={handleSaveAddress} placeholder="Nombre" />}
     </SaveAddressContainer>
-  )
-}
+  );
+};
 
 export default SaveAddress;
 
 const SaveAddressContainer = styled.View`
   display: flex;
   flex-direction: column;
-`
+`;
 
 const SwitchContainer = styled.View`
   display: flex;
@@ -54,8 +53,8 @@ const SwitchContainer = styled.View`
   flex-direction: row;
   align-items: center;
   margin-bottom: 8px;
-`
+`;
 
 const MarginedBody = styled(Body)`
   margin-right: 12px;
-`
+`;

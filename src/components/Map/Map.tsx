@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  StyleSheet,
-} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { StyleSheet } from 'react-native';
 import MapView, { MapViewProps } from 'react-native-maps';
 import styled from 'styled-components/native';
 import MapContext from './MapContext';
@@ -12,7 +10,6 @@ interface MapProps extends MapViewProps {
 }
 
 const Map: React.FC<MapProps> = ({ children, renderMarkers, mapId, ...mapProps }) => {
-
   const { addMap, removeMap } = React.useContext(MapContext);
   const map = useRef<MapView>(null);
 
@@ -22,26 +19,25 @@ const Map: React.FC<MapProps> = ({ children, renderMarkers, mapId, ...mapProps }
     }
     return () => {
       removeMap(mapId);
-    }
+    };
   }, [map.current, addMap, removeMap]);
 
   return (
     <MapContainer>
       <MapView
-        userLocationAnnotationTitle=''
+        userLocationAnnotationTitle=""
         showsCompass={false}
         followsUserLocation={false}
         showsUserLocation={true}
         style={styles.map}
         ref={map}
-        {...mapProps}
-      >
+        {...mapProps}>
         {renderMarkers && renderMarkers()}
       </MapView>
       {children}
     </MapContainer>
-  )
-}
+  );
+};
 
 export default Map;
 
@@ -51,7 +47,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 0
   }
 });
 
@@ -59,4 +55,4 @@ const MapContainer = styled.View`
   width: 100%;
   flex: 1;
   position: relative;
-`
+`;

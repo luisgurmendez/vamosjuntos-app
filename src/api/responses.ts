@@ -1,5 +1,5 @@
-import { Ride } from "types/models";
-import { Tokens } from "types/tokens";
+import { Ride } from 'types/models';
+import { Tokens } from 'types/tokens';
 
 interface BaseResponse {
   success: boolean;

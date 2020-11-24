@@ -6,14 +6,15 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationAPI } from 'types/StackNavigationAPI';
 import { Screens } from 'containers/Screens';
 import Button from 'components/Button/Button';
+import Toaster from 'components/Toaster/Toaster';
 
 const Login: React.FC = () => {
-
-  const navigation: StackNavigationAPI = useNavigation<any>()
+  const navigation: StackNavigationAPI = useNavigation<any>();
 
   const handleGoTOHome = () => {
+    Toaster.info({ title: "Heyyy" })
     navigation.navigate(Screens.APP);
-  }
+  };
 
   return (
     <Container>
@@ -22,7 +23,7 @@ const Login: React.FC = () => {
       <Button onPress={handleGoTOHome}>Go to Home</Button>
     </Container>
   );
-}
+};
 
 export default Login;
 
@@ -30,5 +31,4 @@ const Container = styled.SafeAreaView`
   align-items: center;
   justify-content: center;
   background-color: #f1f1f1;
-`
-
+`;

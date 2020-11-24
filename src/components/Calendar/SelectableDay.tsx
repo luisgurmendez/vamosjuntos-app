@@ -12,7 +12,6 @@ interface SelectableDayProps {
 }
 
 const SelectableDay: React.FC<SelectableDayProps> = ({ date, onSelect, selected, disabled }) => {
-
   const handleDaySelect = !disabled ? () => onSelect && onSelect(date) : undefined;
 
   return (
@@ -23,8 +22,8 @@ const SelectableDay: React.FC<SelectableDayProps> = ({ date, onSelect, selected,
         </ColorDecorator>
       </TouchableOpacity>
     </SelectableContainer>
-  )
-}
+  );
+};
 
 export default SelectableDay;
 
@@ -43,19 +42,19 @@ const defineColor = (props: ColorDecoratorProps): string => {
   }
 
   return colors.black;
-}
+};
 
 const ColorDecorator = styled.Text<ColorDecoratorProps>`
-  color: ${props => defineColor(props)};
+  color: ${(props) => defineColor(props)};
   flex: 1;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const CenteredText = styled.Text`
-  textAlign: center;
+  text-align: center;
   flex: 1;
-`
+`;
 
 const SelectableContainer = styled.View`
   align-items: center;
@@ -65,4 +64,4 @@ const SelectableContainer = styled.View`
   flex: 1;
   align-self: stretch;
   height: 16px;
-`
+`;

@@ -8,14 +8,13 @@ interface RemovableItemProps {
 }
 
 const RemovableItem: React.FC<RemovableItemProps> = ({ children, onRemove }) => {
-
   return (
     <Container>
       {children}
-      <PressableIcon onPress={onRemove} name='x' size={20} color={colors.gray} />
+      <PressableIcon onPress={onRemove} name="x" size={20} color={colors.gray} />
     </Container>
-  )
-}
+  );
+};
 
 export default RemovableItem;
 
@@ -24,4 +23,4 @@ const Container = styled.View`
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
-`
+`;

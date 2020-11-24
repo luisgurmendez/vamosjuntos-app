@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 type State = {
-  portals: Array<{
+  portals: {
     key: number;
     children: React.ReactNode;
-  }>;
+  }[];
 };
 
 /**
@@ -13,12 +13,12 @@ type State = {
  */
 export default class PortalManager extends React.PureComponent<{}, State> {
   state: State = {
-    portals: [],
+    portals: []
   };
 
   mount = (key: number, children: React.ReactNode) => {
     this.setState((state) => ({
-      portals: [...state.portals, { key, children }],
+      portals: [...state.portals, { key, children }]
     }));
   };
 
@@ -29,12 +29,12 @@ export default class PortalManager extends React.PureComponent<{}, State> {
           return { ...item, children };
         }
         return item;
-      }),
+      })
     }));
 
   unmount = (key: number) =>
     this.setState((state) => ({
-      portals: state.portals.filter((item) => item.key !== key),
+      portals: state.portals.filter((item) => item.key !== key)
     }));
 
   render() {
@@ -45,8 +45,7 @@ export default class PortalManager extends React.PureComponent<{}, State> {
           false /* Need collapsable=false here to clip the elevations, otherwise they appear above sibling components */
         }
         pointerEvents="box-none"
-        style={StyleSheet.absoluteFill}
-      >
+        style={StyleSheet.absoluteFill}>
         {children}
       </View>
     ));

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import PortalManager from './PortalManager';
 
 type Props = {
@@ -66,9 +66,7 @@ export default class PortalHost extends React.Component<Props> {
       this.manager.update(key, children);
     } else {
       const op = { type: 'mount', key, children };
-      const index = this.queue.findIndex(
-        (o) => o.type === 'mount' || (o.type === 'update' && o.key === key)
-      );
+      const index = this.queue.findIndex((o) => o.type === 'mount' || (o.type === 'update' && o.key === key));
 
       if (index > -1) {
         // @ts-ignore
@@ -97,15 +95,10 @@ export default class PortalHost extends React.Component<Props> {
         value={{
           mount: this.mount,
           update: this.update,
-          unmount: this.unmount,
-        }}
-      >
+          unmount: this.unmount
+        }}>
         {/* Need collapsable=false here to clip the elevations, otherwise they appear above Portal components */}
-        <View
-          style={styles.container}
-          collapsable={false}
-          pointerEvents="box-none"
-        >
+        <View style={styles.container} collapsable={false} pointerEvents="box-none">
           {this.props.children}
         </View>
         <PortalManager ref={this.setManager} />
@@ -116,6 +109,6 @@ export default class PortalHost extends React.Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
+    flex: 1
+  }
 });

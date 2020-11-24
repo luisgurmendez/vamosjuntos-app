@@ -20,27 +20,27 @@ const ScoreInput: React.FC<ScoreInputProps> = ({ score, onChange }) => {
   const handleScoreChange = (value: number) => {
     if (value !== _score) {
       setValue(value);
-      onChange && onChange(value)
+      onChange && onChange(value);
     } else {
       setValue(0);
-      onChange && onChange(0)
+      onChange && onChange(0);
     }
-  }
+  };
 
   return (
     <Container>
-      {[1, 2, 3, 4, 5].map(v => (
+      {[1, 2, 3, 4, 5].map((v) => (
         <PressAnimation onPress={() => handleScoreChange(v)}>
           <StartSVG color={colors.yellow} size={ICON_SIZE} fill={v <= _score ? colors.yellow : 'none'} />
         </PressAnimation>
       ))}
     </Container>
-  )
-}
+  );
+};
 
 export default ScoreInput;
 
 const Container = styled.View`
   display: flex;
   flex-direction: row;
-`
+`;

@@ -18,7 +18,7 @@ const AuthNavigation: React.FC = () => {
       <Stack.Screen name={Screens.LOGIN} component={Login} />
       <Stack.Screen name={Screens.REGISTER} component={Register} />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
 export default AuthNavigation;

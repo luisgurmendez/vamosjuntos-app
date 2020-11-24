@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 
 export const getDateText = (date: moment.Moment): string => {
   if (moment().isSame(date, 'day')) {
@@ -10,4 +10,4 @@ export const getDateText = (date: moment.Moment): string => {
   }
 
   return date.format('[El] dddd DD [de] MMMM');
-}
+};

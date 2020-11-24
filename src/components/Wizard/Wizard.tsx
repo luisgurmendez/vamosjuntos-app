@@ -25,7 +25,6 @@ const Wizard: React.FC<WizardProps> = ({
   nextDisabled = false,
   children
 }) => {
-
   const navigation: StackNavigationAPI = useNavigation<any>();
 
   const handleNext = () => {
@@ -36,7 +35,7 @@ const Wizard: React.FC<WizardProps> = ({
     } else {
       onNext();
     }
-  }
+  };
 
   return (
     <Container>
@@ -46,16 +45,16 @@ const Wizard: React.FC<WizardProps> = ({
           <Title>{title}</Title>
           <View />
         </Header>
-        <Content>
-          {children}
-        </Content>
+        <Content>{children}</Content>
         <Footer>
-          <Button disabled={nextDisabled} onPress={handleNext}>{nextText}</Button>
+          <Button disabled={nextDisabled} onPress={handleNext}>
+            {nextText}
+          </Button>
         </Footer>
       </PaddingContainer>
     </Container>
-  )
-}
+  );
+};
 
 export default Wizard;
 
@@ -65,22 +64,22 @@ const Header = styled.View`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  zIndex: 100;
-`
+  z-index: 100;
+`;
 
 const Container = styled.SafeAreaView`
   flex: 1;
-`
+`;
 
 const Content = styled.View`
   flex: 1;
-`
+`;
 
 const Footer = styled.View`
   width: 100%;
-`
+`;
 
 const PaddingContainer = styled.View`
   padding: 0px 24px;
   flex: 1;
-`
+`;

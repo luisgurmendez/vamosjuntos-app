@@ -1,9 +1,9 @@
 import AUTH_SCREENS from './auth/Screens';
-import APP_SCREENS from "./app/Screens";
+import APP_SCREENS from './app/Screens';
 
 enum ROOT_SCREENS {
   APP = 'APP',
-  AUTH = 'AUTH',
+  AUTH = 'AUTH'
 }
 
 export type Screen = AUTH_SCREENS | ROOT_SCREENS;

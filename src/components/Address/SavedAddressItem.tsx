@@ -14,14 +14,13 @@ interface SavedAddressItemProps {
 }
 
 const SavedAddressItem: React.FC<SavedAddressItemProps> = ({ item, onRemove, onPress }) => {
-
   const handleRemoveItem = () => {
     onRemove && onRemove();
-  }
+  };
 
   const handlePress = () => {
     onPress && onPress();
-  }
+  };
 
   return (
     <TouchableOpacity onPress={handlePress}>
@@ -31,12 +30,12 @@ const SavedAddressItem: React.FC<SavedAddressItemProps> = ({ item, onRemove, onP
         </RemovableItem>
       </StyledBox>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 export default SavedAddressItem;
 
 const StyledBox = styled(Box)`
-  borderTopWidth: 1px;
-  borderTopColor: ${colors.border};
-`
+  border-top-width: 1px;
+  border-top-color: ${colors.border};
+`;

@@ -1,4 +1,4 @@
-import { Address } from "./models";
+import { Address } from './models';
 
 interface WithId {
   id: string;

@@ -11,18 +11,17 @@ interface AddressNameProps {
 }
 
 const AddressName: React.FC<AddressNameProps> = ({ name, address }) => {
-
   return (
     <Container>
       <LargeBody>{name}</LargeBody>
       <Body>{renderAddressDetails(address)}</Body>
     </Container>
-  )
-}
+  );
+};
 
 export default AddressName;
 
 const Container = styled.View`
   display: flex;
   flex-direction: column;
-`
+`;

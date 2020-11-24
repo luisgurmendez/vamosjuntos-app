@@ -12,44 +12,39 @@ import MarginedChildren from 'components/Box/MarginedChildren';
 const LoginFormSchema = Yup.object().shape({
   username: Yup.string().required('Username required'),
   password: Yup.string().required('Password required')
-})
+});
 
 const LoginForm: React.FC = () => {
-
   const initialValues = {
     username: '',
     password: ''
-  }
+  };
 
   const handleLogin = async (values: any) => {
     try {
       const tokens = await login(values.username, values.password);
       await Storage.setItem(Storage.TOKENS, tokens);
-      Toaster.info({ message: tokens?.token })
+      Toaster.info({ message: tokens?.token });
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   return (
     <Container>
-      <Formik
-        validationSchema={LoginFormSchema}
-        initialValues={initialValues}
-        onSubmit={handleLogin}
-      >
+      <Formik validationSchema={LoginFormSchema} initialValues={initialValues} onSubmit={handleLogin}>
         {({ handleChange, isSubmitting, handleSubmit, values, errors }) => (
           <FormContent>
             <MarginedChildren mV="md">
               <TextInput
-                error={errors["username"]}
+                error={errors.username}
                 textContentType="username"
                 onChangeText={handleChange('username')}
                 value={values.username}
               />
 
               <TextInput
-                error={errors["password"]}
+                error={errors.password}
                 secureTextEntry
                 onChangeText={handleChange('password')}
                 value={values.password}
@@ -63,11 +58,11 @@ const LoginForm: React.FC = () => {
         )}
       </Formik>
     </Container>
-  )
-}
+  );
+};
 
 export default LoginForm;
 
-const Container = styled.View``
+const Container = styled.View``;
 
-const FormContent = styled.View``
+const FormContent = styled.View``;

@@ -8,14 +8,12 @@ import Portal from './Portal/Portal';
 import PlusButton from './PlusButton';
 
 export default function MenuPlaceholderScreen() {
-  return (
-    null
-  );
+  return null;
 }
 
 export interface MenuButtonProps {
   active?: boolean;
-  onPress?: () => void
+  onPress?: () => void;
 }
 
 export interface MenuItemsPositionerProps {
@@ -45,17 +43,17 @@ interface MenuOptionsConfig {
   backdrop?: boolean;
   backdropOpacity?: number;
   menu: string[];
-  RenderMenuItem: React.ComponentType<ItemProps>
+  RenderMenuItem: React.ComponentType<ItemProps>;
 }
 
 export const MenuOptions = (options: MenuOptionsConfig): BottomTabNavigationOptions => ({
   tabBarLabel: '',
   tabBarIcon: ({ focused, size, color }) => null,
   tabBarBadge: undefined, // TODO como hacer esto??
-  tabBarButton: () => <Menu {...options} />,
-})
+  tabBarButton: () => <Menu {...options} />
+});
 
-export interface MenuProps extends MenuOptionsConfig { }
+export type MenuProps = MenuOptionsConfig;
 
 const Menu: React.FC<MenuProps> = ({
   MenuButton,
@@ -72,34 +70,40 @@ const Menu: React.FC<MenuProps> = ({
   backdrop = true,
   backdropOpacity = 0.3
 }) => {
-
   const [showMenuInner, setShowMenuInner] = useState(false);
   const _showMenu = showMenu !== undefined ? showMenu : showMenuInner;
 
   const handleMenuButtonPress = () => {
-    setShowMenuInner(s => !s);
+    setShowMenuInner((s) => !s);
     onMenuButtonPress && onMenuButtonPress();
-  }
+  };
 
-  const _menuButton = MenuButton === undefined ? (
-    <PlusButton
-      active={_showMenu}
-      animationDisabled={menuButtonAnimationDisabled}
-      onPress={handleMenuButtonPress}
-      style={menuButtonStyle}
-    />) :
-    (
+  const _menuButton =
+    MenuButton === undefined ? (
+      <PlusButton
+        active={_showMenu}
+        animationDisabled={menuButtonAnimationDisabled}
+        onPress={handleMenuButtonPress}
+        style={menuButtonStyle}
+      />
+    ) : (
       <MenuButton active={_showMenu} onPress={handleMenuButtonPress} />
-    )
+    );
 
-  const _menuItems = MenuItemsPositioner === undefined ? (
-    <MenuRadialPositioner show={_showMenu} elipsis={menuItemsDistanceElipsis} radius={menuItemsDistance}>
-      {menu.map(m => <RenderMenuItem key={m} item={m} onCloseMenu={() => setShowMenuInner(false)} />)}
-    </MenuRadialPositioner>
-  ) :
-    <MenuItemsPositioner show={_showMenu} >
-      {menu.map(m => <RenderMenuItem key={m} item={m} onCloseMenu={() => setShowMenuInner(false)} />)}
-    </MenuItemsPositioner>
+  const _menuItems =
+    MenuItemsPositioner === undefined ? (
+      <MenuRadialPositioner show={_showMenu} elipsis={menuItemsDistanceElipsis} radius={menuItemsDistance}>
+        {menu.map((m) => (
+          <RenderMenuItem key={m} item={m} onCloseMenu={() => setShowMenuInner(false)} />
+        ))}
+      </MenuRadialPositioner>
+    ) : (
+      <MenuItemsPositioner show={_showMenu}>
+        {menu.map((m) => (
+          <RenderMenuItem key={m} item={m} onCloseMenu={() => setShowMenuInner(false)} />
+        ))}
+      </MenuItemsPositioner>
+    );
 
   return (
     <MenuContainer style={menuContainerStyle}>
@@ -109,12 +113,12 @@ const Menu: React.FC<MenuProps> = ({
         {backdrop && <Backdrop show={_showMenu} opacity={backdropOpacity} onClose={() => setShowMenuInner(false)} />}
       </Portal>
     </MenuContainer>
-  )
-}
+  );
+};
 
 const MenuContainer = styled.View`
   position: relative;
   flex: 1;
   justify-content: center;
   flex-direction: row;
-`
+`;

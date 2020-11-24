@@ -10,19 +10,31 @@ interface MonthSelectorProps {
   onMonthChange: (month: number) => void;
 }
 
-const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+const months = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre'
+];
 
 const MonthSelector: React.FC<MonthSelectorProps> = ({ month, onMonthChange }) => {
-
   const handleIncrementMonth = () => {
     const newMonth = (month + 1) % 12;
     onMonthChange(newMonth);
-  }
+  };
 
   const handleDecrementMonth = () => {
     const newMonth = month === 0 ? 11 : month - 1;
     onMonthChange(newMonth);
-  }
+  };
 
   return (
     <Container>
@@ -30,8 +42,8 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({ month, onMonthChange }) =
       <MonthText>{months[month]}</MonthText>
       <StyledPressableIcon onPress={handleIncrementMonth} name="chevron-right" size={16} />
     </Container>
-  )
-}
+  );
+};
 
 export default MonthSelector;
 
@@ -45,12 +57,12 @@ const Container = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
 const MonthText = styled(Text)`
-  fontSize: 18px;
-`
+  font-size: 18px;
+`;
 
 const StyledPressableIcon = styled(PressableIcon)`
   padding: 12px;
-`
+`;

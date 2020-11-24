@@ -6,11 +6,10 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
 export default function Score() {
-
   const [score, setS] = useState(1);
   const handleChange = (v: number) => {
-    setS((v + score) / 2)
-  }
+    setS((v + score) / 2);
+  };
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

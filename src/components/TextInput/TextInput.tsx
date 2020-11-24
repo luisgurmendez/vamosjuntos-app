@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { TextInput as NativeTextInput, TextInputProps as NativeTextInputProps } from 'react-native'
+import { TextInput as NativeTextInput, TextInputProps as NativeTextInputProps } from 'react-native';
 import { colors } from 'utils/colors';
 import { SmallBody } from 'components/Typography/Typography';
 import { View } from 'react-native';
@@ -10,7 +10,6 @@ interface TextInputProps extends NativeTextInputProps {
 }
 
 const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(({ error, ...textInputProps }, forwardedRef) => {
-
   const showError = error !== undefined;
 
   return (
@@ -25,9 +24,8 @@ const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(({ error, ..
       />
       {showError && <ErrorText>{error}</ErrorText>}
     </View>
-  )
-}
-)
+  );
+});
 
 export default TextInput;
 
@@ -36,20 +34,15 @@ interface TextInputBaseProps {
 }
 
 const TextInputBase = styled.TextInput<TextInputBaseProps>`
-  backgroundColor: #e3e3e3;
+  background-color: #e3e3e3;
   padding: 10px 8px;
-  borderRadius: 4px;
-  fontSize: 16px;
-  fontFamily: Roboto;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: Roboto;
   color: ${colors.black};
-  ${props => props.error && `borderColor: ${colors.danger}; borderWidth: 1px;`};
-`
+  ${(props) => props.error && `borderColor: ${colors.danger}; borderWidth: 1px;`};
+`;
 
 const ErrorText = styled(SmallBody)`
   color: ${colors.danger};
-`
-
-
-
-
-
+`;

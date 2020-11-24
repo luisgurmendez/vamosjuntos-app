@@ -7,35 +7,37 @@ import { DeviceDimensions } from 'utils/device';
 
 interface BackdropProps {
   show?: boolean;
-  onClose?: () => void
+  onClose?: () => void;
   opacity?: number;
 }
 
 const Backdrop: React.FC<BackdropProps> = ({ show, opacity = 0.5, onClose }) => {
-
   const animation = useAnimation({
     type: 'timing',
     initialValue: 0,
     toValue: show ? opacity : 0,
     duration: FAST_ANIMATION_DURATION,
-    useNativeDriver: true,
-  })
+    useNativeDriver: true
+  });
 
   const handleBackdropPress = () => {
     onClose && onClose();
-  }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={handleBackdropPress}>
       <BackdropAnimated
         pointerEvents={show ? 'auto' : 'box-none'}
-        style={[{
-          backgroundColor: 'black',
-          opacity: animation
-        }]} />
+        style={[
+          {
+            backgroundColor: 'black',
+            opacity: animation
+          }
+        ]}
+      />
     </TouchableWithoutFeedback>
-  )
-}
+  );
+};
 
 export default Backdrop;
 
@@ -47,5 +49,5 @@ const BackdropAnimated = Animated.createAnimatedComponent(styled.View`
   right: 0;
   width: ${DeviceDimensions.width}px;
   height: ${DeviceDimensions.height}px;
-  zIndex: 2;
+  z-index: 2;
 `);

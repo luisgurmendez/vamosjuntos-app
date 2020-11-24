@@ -12,32 +12,29 @@ interface AEAPProps {
 }
 
 const AnimatedEntranceAndPositioner: React.FC<AEAPProps> = ({ show, bottom, left, c }) => {
-
   const animation = useAnimation({
     type: 'timing',
     initialValue: 0,
     toValue: show ? 1 : 0,
     duration: FAST_ANIMATION_DURATION,
-    useNativeDriver: true,
-  })
+    useNativeDriver: true
+  });
 
   const animatedStyles = {
-    position: 'absolute' as 'absolute',
+    position: 'absolute' as const,
     bottom: bottom,
     left: left,
     transform: [
       { translateX: animation.interpolate({ inputRange: [0, 1], outputRange: [-left, 0] }) },
-      { translateY: animation.interpolate({ inputRange: [0, 1], outputRange: [bottom, 0] }) },
+      { translateY: animation.interpolate({ inputRange: [0, 1], outputRange: [bottom, 0] }) }
     ]
-  }
+  };
 
   return (
     <Animated.View style={animatedStyles}>
-      <TranslatedMenuItem>
-        {c}
-      </TranslatedMenuItem>
+      <TranslatedMenuItem>{c}</TranslatedMenuItem>
     </Animated.View>
-  )
-}
+  );
+};
 
 export default AnimatedEntranceAndPositioner;

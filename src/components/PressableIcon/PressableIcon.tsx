@@ -10,12 +10,11 @@ interface PressableIconProps extends IconProps {
 }
 
 const PressableIcon: React.FC<PressableIconProps> = ({ activeOpacity = 0.3, onPress, style, ...iconProps }) => {
-
   return (
     <TouchableOpacity activeOpacity={activeOpacity} style={style} onPress={onPress}>
       <Icon color={colors.black} {...iconProps} />
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 export default PressableIcon;

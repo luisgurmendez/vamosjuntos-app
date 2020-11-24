@@ -6,16 +6,17 @@ interface ErrorHandlerProps {
 }
 
 const ErrorHandler: React.FC<ErrorHandlerProps> = ({ error }) => {
-
   useEffect(() => {
     if (error !== undefined) {
       Toaster.alert({
-        title: 'Error', message: error, hideAfter: 7000
-      })
+        title: 'Error',
+        message: error,
+        hideAfter: 7000
+      });
     }
-  }, [error])
+  }, [error]);
 
-  return null
-}
+  return null;
+};
 
 export default ErrorHandler;

@@ -14,12 +14,12 @@ export interface MapApi {
   removeMap: (mapId: string) => void;
 }
 
-export interface MapContextState extends MapState, MapApi { }
+export interface MapContextState extends MapState, MapApi {}
 
 const MapContext = React.createContext<MapContextState>({
   maps: {},
-  addMap: () => { },
-  removeMap: () => { },
+  addMap: () => {},
+  removeMap: () => {}
 });
 
 export default MapContext;

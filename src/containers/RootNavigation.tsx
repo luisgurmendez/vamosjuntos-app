@@ -19,7 +19,7 @@ const RootNavigation: React.FC = () => {
       <Stack.Screen name={Screens.AUTH} component={AuthNavigation} />
       <Stack.Screen name={Screens.APP} component={AppNavigation} />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
 export default RootNavigation;

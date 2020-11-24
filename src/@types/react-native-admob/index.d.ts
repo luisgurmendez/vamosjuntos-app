@@ -1,4 +1,3 @@
-
 declare module 'react-native-admob' {
   export interface AdMobBannerProps {
     adSize: string;
@@ -14,4 +13,3 @@ declare module 'react-native-admob' {
 
   export const AdMobBanner: React.FC<AdMobBannerProps> & AdMobBannerStatic;
 }
-

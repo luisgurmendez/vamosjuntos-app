@@ -1,6 +1,6 @@
 enum AUTH_SCREENS {
   LOGIN = 'LOGIN',
-  REGISTER = 'REGISTER',
+  REGISTER = 'REGISTER'
 }
 
-export default AUTH_SCREENS
+export default AUTH_SCREENS;

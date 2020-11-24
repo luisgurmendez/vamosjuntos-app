@@ -14,12 +14,11 @@ interface ToasterState {
   messages: ToastMessage[];
 }
 
-interface ToastPropsBase extends Omit<ToastMessage, 'id' | 'variant' | 'onDismiss'> { }
+type ToastPropsBase = Omit<ToastMessage, 'id' | 'variant' | 'onDismiss'>;
 
 interface ToasterProps { }
 
-class Toaster extends React.Component<ToasterProps, ToasterState>{
-
+class Toaster extends React.Component<ToasterProps, ToasterState> {
   static mounted = false;
   static queue: any = [];
   static toastId = 0;
@@ -30,14 +29,11 @@ class Toaster extends React.Component<ToasterProps, ToasterState>{
 
     this.state = {
       messages: []
-    }
+    };
   }
 
   componentDidMount = () => {
-    eventManager.on(ToasterAction.SHOW, this.handleShowMessage).on(
-      ToasterAction.DISMISS,
-      this.handleDismissMessage
-    );
+    eventManager.on(ToasterAction.SHOW, this.handleShowMessage).on(ToasterAction.DISMISS, this.handleDismissMessage);
 
     Toaster.queue.forEach(({ action, params }: { action: any; params: any }) => {
       eventManager.emit(action, params);
@@ -45,7 +41,7 @@ class Toaster extends React.Component<ToasterProps, ToasterState>{
 
     Toaster.mounted = true;
     Toaster.queue = [];
-  }
+  };
 
   componentWillUnmount() {
     eventManager.off(ToasterAction.SHOW);
@@ -54,13 +50,13 @@ class Toaster extends React.Component<ToasterProps, ToasterState>{
 
   handleShowMessage = (messageParams: any) => {
     this.setState((prevState, props) => ({
-      messages: [...prevState.messages, messageParams],
+      messages: [...prevState.messages, messageParams]
     }));
   };
 
   handleDismissMessage = (id: number) => {
     this.setState((prevState, _props) => ({
-      messages: prevState.messages.filter((msg) => msg.id !== id),
+      messages: prevState.messages.filter((msg) => msg.id !== id)
     }));
   };
 
@@ -72,44 +68,52 @@ class Toaster extends React.Component<ToasterProps, ToasterState>{
     }
   }
 
-  static toast(params: any): number {
+  static toast(params: ToastPropsBase & { variant: ToastVariant }): number {
+    params.hideAfter = params.hideAfter || Toaster.defaultHideAfter;
     const id = Toaster.toastId++;
     Toaster.queueToast({ id, ...params });
     return id;
   }
 
-  public static alert({ title, message, hideAfter = Toaster.defaultHideAfter }: ToastPropsBase): number {
-    return Toaster.toast({ variant: ToastVariant.ALERT, message, title, hideAfter });
+  public static alert(options: ToastPropsBase): number {
+    return Toaster.toast({ variant: ToastVariant.ALERT, ...Toaster.getToastParams(options) });
   }
 
-  static success({ title, message, hideAfter = Toaster.defaultHideAfter }: ToastPropsBase): number {
-    return Toaster.toast({ variant: ToastVariant.SUCCESS, message, title, hideAfter });
+  static success(options: ToastPropsBase): number {
+    return Toaster.toast({ variant: ToastVariant.SUCCESS, ...Toaster.getToastParams(options) });
   }
 
-  static warn({ title, message, hideAfter = Toaster.defaultHideAfter }: ToastPropsBase): number {
-    return Toaster.toast({ variant: ToastVariant.WARN, message, title, hideAfter });
+  static warn(options: ToastPropsBase): number {
+    return Toaster.toast({ variant: ToastVariant.WARN, ...Toaster.getToastParams(options) });
   }
 
-  static info({ title, message, hideAfter = Toaster.defaultHideAfter }: ToastPropsBase): number {
-    return Toaster.toast({ variant: ToastVariant.INFO, message, title, hideAfter });
+  static info(options: ToastPropsBase): number {
+    return Toaster.toast({ variant: ToastVariant.INFO, ...Toaster.getToastParams(options) });
   }
 
   static dismiss(id: number): void {
     eventManager.emit(ToasterAction.DISMISS, id);
   }
 
+  private static getToastParams(options: ToastPropsBase | string): ToastPropsBase {
+    if (typeof options === 'string') {
+      return {
+        title: options
+      }
+    }
+    return options
+  }
+
   render() {
     return (
       <ToasterContainer pointerEvents="box-none">
         <>
-          {this.state.messages.map(message => {
-            return (
-              <Toast key={message.id} {...message} onDismiss={Toaster.dismiss} />
-            )
+          {this.state.messages.map((message) => {
+            return <Toast key={message.id} {...message} onDismiss={Toaster.dismiss} />;
           })}
         </>
       </ToasterContainer>
-    )
+    );
   }
 }
 
@@ -127,4 +131,4 @@ const ToasterContainer = styled.View`
   justify-content: flex-start;
   flex-direction: column;
   padding: 20px;
-`
+`;
