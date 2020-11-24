@@ -1,26 +1,25 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Notifications, { NotificationsTabOptions } from './Notifications';
 import Configuration, { ConfigurationTabOptions } from './Configuration';
-import Plus, { PlusOptions } from './Plus/Plus';
 import Travels, { TravelsTabOptions } from './Travels';
 import Profile, { ProfileTabOptions } from './Profile';
-import PortalHost from 'components/Portal/PortalHost';
+import createBottomTabWithMenuNavigator from 'components/TabMenuNavigator/BottomTabWithMenuNavigator';
+import { RenderItemMenu } from './Menu/Menu';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabWithMenuNavigator();
 
 const TabsNavigation: React.FC = () => {
-  return (
-    <PortalHost>
-      <Tab.Navigator tabBarOptions={{ showLabel: true }}>
-        <Tab.Screen name="Travels" options={TravelsTabOptions} component={Travels} />
-        <Tab.Screen name="Notification" options={NotificationsTabOptions} component={Notifications} />
-        <Tab.Screen name="Plus" options={PlusOptions} component={Plus} />
-        <Tab.Screen name="Profile" options={ProfileTabOptions} component={Profile} />
-        <Tab.Screen name="Settings" options={ConfigurationTabOptions} component={Configuration} />
-      </Tab.Navigator>
-    </PortalHost>
 
+  return (
+    <Tab.Navigator menuOptions={{
+      RenderMenuItem: RenderItemMenu,
+      menu: ['lift', 'ride']
+    }} tabBarOptions={{ showLabel: true }}>
+      <Tab.Screen name="Travels" options={TravelsTabOptions} component={Travels} />
+      <Tab.Screen name="Notification" options={NotificationsTabOptions} component={Notifications} />
+      <Tab.Screen name="Profile" options={ProfileTabOptions} component={Profile} />
+      <Tab.Screen name="Settings" options={ConfigurationTabOptions} component={Configuration} />
+    </Tab.Navigator>
   );
 }
-export default TabsNavigation; 
+export default TabsNavigation;

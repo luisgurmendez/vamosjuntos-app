@@ -6,7 +6,7 @@ import { FAST_ANIMATION_DURATION } from 'utils/animation';
 
 interface RadialButtonGroupProps extends Stylable<ViewStyle> {
   distance?: number;
-  show?: boolean; // To make in & out animation
+  show?: boolean; // To make in & out animation 
 }
 
 const RadialButtonGroup: React.FC<RadialButtonGroupProps> = ({ children, show = false, style, distance = 100 }) => {
@@ -15,7 +15,6 @@ const RadialButtonGroup: React.FC<RadialButtonGroupProps> = ({ children, show = 
   const shiftedDegs = 180 / (numberOfButtons + 1);
   const [showing, setShowing] = useState(false);
 
-  //TODO: How to make this reutilizable useInOutAnimation / or a component?
   useEffect(() => {
     if (show) {
       setShowing(true)
