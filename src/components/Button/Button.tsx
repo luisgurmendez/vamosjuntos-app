@@ -52,7 +52,7 @@ const Button: React.FC<ButtonProps> = ({
 
   const handleOnPress = () => {
     Keyboard.dismiss();
-    if (onPress) {
+    if (!loading && onPress) {
       onPress();
     }
   };
@@ -94,11 +94,11 @@ const Button: React.FC<ButtonProps> = ({
         {loading ? (
           <Loading />
         ) : (
-          <>
-            {icon !== undefined && <Icon name={icon} size={25} color={iconColor} />}
-            <ButtonText style={buttonStyles.text}>{children}</ButtonText>
-          </>
-        )}
+            <>
+              {icon !== undefined && <Icon name={icon} size={25} color={iconColor} />}
+              <ButtonText style={buttonStyles.text}>{children}</ButtonText>
+            </>
+          )}
       </TouchableButton>
     </ButtonContainer>
   );

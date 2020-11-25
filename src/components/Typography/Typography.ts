@@ -23,10 +23,14 @@ export const LargeBody = styled(Text)`
 
 export const Body = styled(Text)``;
 
+export const Bold = styled.Text`
+  font-weight: bold;
+`
+
 export const SmallBody = styled(Text)`
   font-size: 12px;
 `;
 export const PlainInput = styled.TextInput`
-font-family: Roboto;
+  font-family: Roboto;
   color: ${colors.black};
 `;

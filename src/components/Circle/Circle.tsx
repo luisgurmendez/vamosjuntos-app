@@ -36,7 +36,9 @@ const Circle: React.FC<CircleProps> = ({ w = true, children }) => {
 
   return React.Children.map<any, any>(children, (c) => {
     if (c && typeof c !== 'string') {
-      return React.cloneElement(c, { onLayout: handleLayout, style: [...c.props.style, circleStyle] });
+      const _styles = c.props.style ? c.props.style : {};
+      console.log(_styles);
+      return React.cloneElement(c, { onLayout: handleLayout, style: [_styles, circleStyle] });
     }
   });
 };

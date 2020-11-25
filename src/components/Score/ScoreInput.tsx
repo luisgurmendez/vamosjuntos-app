@@ -28,11 +28,15 @@ const ScoreInput: React.FC<ScoreInputProps> = ({ size = ICON_SIZE, score, onChan
     }
   };
 
+  const getColor = (v: number) => {
+    return v <= _score ? colors.yellow : colors.border;
+  }
+
   return (
     <Container>
       {[1, 2, 3, 4, 5].map((v) => (
         <PressAnimation key={v} onPress={() => handleScoreChange(v)}>
-          <StartSVG color={colors.yellow} size={size} fill={v <= _score ? colors.yellow : 'none'} />
+          <StartSVG color={getColor(v)} size={size} fill={getColor(v)} />
         </PressAnimation>
       ))}
     </Container>

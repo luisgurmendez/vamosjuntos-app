@@ -1,5 +1,5 @@
-import { StyleProp } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
-export interface Stylable<T> {
+export interface Stylable<T = ViewStyle> {
   style?: StyleProp<T>;
 }
