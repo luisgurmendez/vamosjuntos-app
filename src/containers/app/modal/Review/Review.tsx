@@ -5,6 +5,7 @@ import Toaster from 'components/Toaster/Toaster';
 import ReviewForm from './ReviewForm';
 import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
 import { useNavigation } from '@react-navigation/native';
+import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 
 const Review: React.FC = () => {
 
@@ -18,10 +19,12 @@ const Review: React.FC = () => {
 
   return (
     <Container>
-      <ProfilePicContainer>
-        <ProfilePicPlaceholder size={150} />
-      </ProfilePicContainer>
-      <ReviewForm onSubmit={handleSubmitReview} />
+      <DismissKeyboard>
+        <ProfilePicContainer>
+          <ProfilePicPlaceholder size={150} />
+        </ProfilePicContainer>
+        <ReviewForm onSubmit={handleSubmitReview} />
+      </DismissKeyboard>
     </Container>
   );
 }

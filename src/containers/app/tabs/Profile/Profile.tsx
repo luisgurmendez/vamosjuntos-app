@@ -7,18 +7,25 @@ import ScoreDisplay from 'components/Score/Score'
 import { View } from 'react-native';
 import CommentList from 'components/Comment/CommentList';
 import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
+import { setShowCamera } from 'state/camera/actions';
+import { useDispatch } from 'react-redux';
 
 interface ProfileProps { }
 
 const Profile: React.FC<ProfileProps> = () => {
 
+  const dispatch = useDispatch();
+
+  const handleOpenCamera = () => {
+    dispatch(setShowCamera(true));
+  }
 
   return (
     <Container>
       <Header>
         <ProfileImageContainer>
           <ProfilePicPlaceholder size={160} />
-          <EditProfilePicButton />
+          <EditProfilePicButton onPress={handleOpenCamera} />
         </ProfileImageContainer>
         <ProfileDetailsContainer>
           <View>

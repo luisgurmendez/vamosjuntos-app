@@ -15,6 +15,7 @@ const TabsNavigation: React.FC = () => {
         RenderMenuItem: RenderItemMenu,
         menu: ['lift', 'ride']
       }}
+
       tabBarOptions={{ showLabel: true }}>
       <Tab.Screen name="Travels" options={TravelsTabOptions} component={Travels} />
       <Tab.Screen name="Notification" options={NotificationsTabOptions} component={Notifications} />

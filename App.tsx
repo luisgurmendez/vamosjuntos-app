@@ -8,6 +8,9 @@ import localization from 'moment/locale/es';
 import RootNavigation from 'containers/RootNavigation';
 import Toaster from 'components/Toaster/Toaster';
 import { enableScreens } from 'react-native-screens';
+import store from 'state/store';
+import { Provider } from 'react-redux';
+import Camera from 'components/Camera/Camera';
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -17,10 +20,13 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <MapProvider>
-        <Toaster />
-        <RootNavigation />
-      </MapProvider>
+      <Provider store={store}>
+        <MapProvider>
+          <Camera />
+          <Toaster />
+          <RootNavigation />
+        </MapProvider>
+      </Provider>
     </NavigationContainer>
   );
 };
