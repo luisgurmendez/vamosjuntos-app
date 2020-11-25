@@ -16,9 +16,9 @@ export const RenderItemMenu: React.FC<RenderItemMenuProps> = ({ item, onCloseMen
     navigation.push(Screens.LIFT);
   };
 
-  const handleOpenScore = () => {
+  const handleOpenReview = () => {
     onCloseMenu();
-    navigation.push(Screens.SCORE);
+    navigation.push(Screens.REVIEW);
   };
 
   switch (item) {
@@ -32,7 +32,7 @@ export const RenderItemMenu: React.FC<RenderItemMenuProps> = ({ item, onCloseMen
         />
       );
     case 'lift':
-      return <OptionButton onPress={handleOpenScore} label="" icon="car" />;
+      return <OptionButton onPress={handleOpenReview} label="" icon="car" />;
   }
 
   return <View style={{ width: 50, height: 50, backgroundColor: 'red', borderRadius: 25 }} />;

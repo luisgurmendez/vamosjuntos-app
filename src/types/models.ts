@@ -39,3 +39,10 @@ export interface Ride {
   whereFrom: Address;
   status: RideStatus;
 }
+
+
+export interface Comment {
+  user: string; //TODO for now
+  comment: string;
+  score: number;
+}
