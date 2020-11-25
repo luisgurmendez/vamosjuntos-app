@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Feather';
 import { colors } from 'utils/colors';
-import Map from 'components/Map/Map';
 import SelectAddressMarker from './SelectAddressMarker';
 import { Body } from 'components/Typography/Typography';
 import Button from 'components/Button/Button';
@@ -13,6 +12,7 @@ import Loading from 'components/Loading/Loading';
 import { Address } from 'types/models';
 import useZoomToLocation from 'hooks/useZoomToLocation';
 import addressFactory from 'factories/address';
+import Map from 'components/Map/Map';
 
 interface SelectAddressModalProps {
   open: boolean;

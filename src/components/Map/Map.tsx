@@ -1,25 +1,28 @@
+import { Stylable } from 'components/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import MapView, { MapViewProps } from 'react-native-maps';
 import styled from 'styled-components/native';
 import MapContext from './MapContext';
 
-interface MapProps extends MapViewProps {
-  mapId: string;
+export interface MapProps extends MapViewProps, Stylable {
+  mapId?: string;
   renderMarkers?: () => React.ReactNode;
 }
 
-const Map: React.FC<MapProps> = ({ children, renderMarkers, mapId, ...mapProps }) => {
+const Map: React.FC<MapProps> = ({ children, style, renderMarkers, mapId, ...mapProps }) => {
   const { addMap, removeMap } = React.useContext(MapContext);
   const map = useRef<MapView>(null);
 
   useEffect(() => {
-    if (map.current !== null) {
+    if (mapId !== undefined && map.current !== null) {
       addMap(mapId, map.current);
+
+      return () => {
+        removeMap(mapId);
+      };
     }
-    return () => {
-      removeMap(mapId);
-    };
+
   }, [map.current, addMap, removeMap]);
 
   return (
@@ -41,6 +44,12 @@ const Map: React.FC<MapProps> = ({ children, renderMarkers, mapId, ...mapProps }
 
 export default Map;
 
+const MapContainer = styled.View`
+  width: 100%;
+  flex: 1;
+  position: relative;
+`;
+
 const styles = StyleSheet.create({
   map: {
     position: 'absolute',
@@ -50,9 +59,3 @@ const styles = StyleSheet.create({
     bottom: 0
   }
 });
-
-const MapContainer = styled.View`
-  width: 100%;
-  flex: 1;
-  position: relative;
-`;

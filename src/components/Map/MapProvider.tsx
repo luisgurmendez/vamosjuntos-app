@@ -9,19 +9,25 @@ export class MapProvider extends React.Component<{}, MapState> {
   };
 
   addMap = (mapId: string, map: MapView) => {
-    const maps: IdsToMaps = {
-      ...this.state.maps
-    };
-    maps[mapId] = map;
-    this.setState({ maps });
+
+    this.setState((state) => {
+      const maps: IdsToMaps = {
+        ...state.maps
+      };
+      maps[mapId] = map;
+      return { maps }
+    });
   };
 
   removeMap = (mapId: string) => {
-    const maps: IdsToMaps = {
-      ...this.state.maps
-    };
-    delete maps[mapId];
-    this.setState({ maps });
+
+    this.setState((state) => {
+      const maps: IdsToMaps = {
+        ...state.maps
+      };
+      delete maps[mapId];
+      return { maps }
+    });
   };
 
   render() {
