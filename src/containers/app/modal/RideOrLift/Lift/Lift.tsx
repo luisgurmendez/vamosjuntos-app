@@ -8,6 +8,7 @@ import LiftWhen from './LiftForm/LiftWhen';
 import LiftWhereFrom from './LiftForm/LiftWhereFrom';
 import LiftWhereTo from './LiftForm/LiftWhereTo';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import LiftSummary from './LiftSummary';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,8 @@ const LiftStack: React.FC = () => {
         <Stack.Screen name={LiftScreens.HOW_MANY} component={HowMany} />
         <Stack.Screen name={LiftScreens.WHEN} component={LiftWhen} />
         <Stack.Screen name={LiftScreens.PRICE} component={Price} />
+        <Stack.Screen name={LiftScreens.SUMMARY} component={LiftSummary} />
+
       </Stack.Navigator>
     </SafeAreaView>
   );

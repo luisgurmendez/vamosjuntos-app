@@ -12,3 +12,8 @@ export interface GetRidesResponse extends BaseResponse {
 export interface LoginResponse extends BaseResponse, Tokens {
   message: string;
 }
+
+export interface AddressFromCoordsResponse extends BaseResponse {
+  city: string;
+  department: string;
+}

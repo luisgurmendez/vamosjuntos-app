@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 // import { RNCamera } from 'react-native-camera';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Feather';
 import Loading from 'components/Loading/Loading';
 import AbsolutePositioned from 'components/AbsolutePositioned/AbsolutePositioned';
 // import { setShowCamera } from 'state/camera/actions';
@@ -75,10 +75,8 @@ const Camera: React.FC<CameraProps> = ({ onImageChange, onCancel }) => {
             : <PreviewImageTaken resizeMode="cover" source={{ uri: image }} />} */}
 
           <CloseButtonContainer pointerEvents='box-none'>
-            <StyledIcon name="close" size={40} onPress={handleOnCancel} />
+            <StyledIcon name="x" size={40} onPress={handleOnCancel} />
           </CloseButtonContainer>
-
-
           <CameraActionsContainer>
             {image ? <StyledIcon name="check" size={40} onPress={handleAcceptImage} /> : <View />}
             {!image && <IconContainer onPress={!takingImage ? takePicture : undefined}>
@@ -121,7 +119,6 @@ const CameraActionsContainer = styled.View`
 const StyledIcon = styled(Icon)`
   backgroundColor: transparent;
   color: white;
-  top: 4px;
 `
 
 const IconContainer = styled.TouchableOpacity`

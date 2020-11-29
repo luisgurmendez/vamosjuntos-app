@@ -3,7 +3,7 @@ import NumberSelect from 'components/NumberSelect/NumberSelect';
 import Wizard from 'components/Wizard/Wizard';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { StackNavigationAPI } from 'types/StackNavigationAPI';
+import { StackNavigationAPI } from 'types/Navigation';
 import { LiftScreens } from '../LiftScreens';
 
 const HowMany: React.FC = () => {

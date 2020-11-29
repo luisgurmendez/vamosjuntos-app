@@ -3,7 +3,7 @@ import { Title } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
 import LoginForm from './LoginForm';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationAPI } from 'types/StackNavigationAPI';
+import { StackNavigationAPI } from 'types/Navigation';
 import { Screens } from 'containers/Screens';
 import Button from 'components/Button/Button';
 import Toaster from 'components/Toaster/Toaster';

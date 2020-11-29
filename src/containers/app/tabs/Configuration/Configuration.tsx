@@ -1,11 +1,46 @@
-import { Title } from 'components/Typography/Typography';
 import React from 'react';
-import { View } from 'react-native';
+import styled from 'styled-components/native';
+import Page from '../commons/Page';
+import AnonymusCommentOption from './options/AnonymusCommentOption';
+import HidePhoneOption from './options/HidePhoneOption';
+import HelpOption from './options/HelpOption';
+import AppVersionOption from './options/AppVersionOption';
+import SignoutOption from './options/SignoutOption';
 
-export default function Configuration() {
+interface ConfigurationProps { }
+
+const Configuration: React.FC<ConfigurationProps> = () => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Title>Configuration!</Title>
-    </View>
+    <Page title="Configuracion">
+      <Container>
+        <AnonymusCommentOption />
+        <HidePhoneOption />
+        <HelpOption />
+        <AppVersionOption />
+        <SignoutOption />
+      </Container>
+    </Page>
   );
 }
+
+
+export default Configuration;
+
+const Container = styled.ScrollView`
+  padding-horizontal: 8px;
+  padding-top: 24px;
+  flex: 1;
+`
+
+
+/**
+ * Configuraciones:
+ *  - Comentarios anonimos ?
+ *  - Cerrar sesion
+ *  - Acerca de (como ? icon arriba a la derecha)
+ *  - Ocultar numero de telefono
+ *  - App version
+ *  - notificaciones?
+ *  - Help
+ *
+ */

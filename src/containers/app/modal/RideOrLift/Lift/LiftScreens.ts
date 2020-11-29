@@ -3,5 +3,6 @@ export enum LiftScreens {
   WHERE_FROM = 'WHERE_FROM',
   HOW_MANY = 'HOW_MANY',
   WHEN = 'WHEN',
-  PRICE = 'PRICE'
+  PRICE = 'PRICE',
+  SUMMARY = 'SUMMARY'
 }

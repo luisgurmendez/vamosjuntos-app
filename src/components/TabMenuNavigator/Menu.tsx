@@ -68,7 +68,7 @@ const Menu: React.FC<MenuProps> = ({
   menuItemsDistanceElipsis,
   menuButtonAnimationDisabled = false,
   backdrop = true,
-  backdropOpacity = 0.3
+  backdropOpacity = 0.6
 }) => {
   const [showMenuInner, setShowMenuInner] = useState(false);
   const _showMenu = showMenu !== undefined ? showMenu : showMenuInner;
@@ -87,8 +87,8 @@ const Menu: React.FC<MenuProps> = ({
         style={menuButtonStyle}
       />
     ) : (
-      <MenuButton active={_showMenu} onPress={handleMenuButtonPress} />
-    );
+        <MenuButton active={_showMenu} onPress={handleMenuButtonPress} />
+      );
 
   const _menuItems =
     MenuItemsPositioner === undefined ? (
@@ -98,12 +98,12 @@ const Menu: React.FC<MenuProps> = ({
         ))}
       </MenuRadialPositioner>
     ) : (
-      <MenuItemsPositioner show={_showMenu}>
-        {menu.map((m) => (
-          <RenderMenuItem key={m} item={m} onCloseMenu={() => setShowMenuInner(false)} />
-        ))}
-      </MenuItemsPositioner>
-    );
+        <MenuItemsPositioner show={_showMenu}>
+          {menu.map((m) => (
+            <RenderMenuItem key={m} item={m} onCloseMenu={() => setShowMenuInner(false)} />
+          ))}
+        </MenuItemsPositioner>
+      );
 
   return (
     <MenuContainer style={menuContainerStyle}>

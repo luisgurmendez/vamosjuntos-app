@@ -6,7 +6,7 @@ enum APP_SCREENS {
   MODAL = 'MODAL'
 }
 
-export type AppScreen = APP_SCREENS | TABS | MODAL_SCREENS;
+export type AppScreen = APP_SCREENS | typeof TABS | MODAL_SCREENS;
 const AppScreens = { ...APP_SCREENS, ...TABS, ...MODAL_SCREENS };
 
 export default AppScreens;

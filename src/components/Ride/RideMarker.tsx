@@ -3,11 +3,11 @@ import styled from 'styled-components/native';
 import { LatLng, Marker } from 'react-native-maps';
 import { MarkerProps } from 'react-native-maps';
 
-interface OriginMarkerProps extends MarkerProps {
+interface RideMarkerProps extends MarkerProps {
   color: string;
 }
 
-const TravelMarker: React.FC<OriginMarkerProps> = ({ color, ...rest }) => {
+const RideMarker: React.FC<RideMarkerProps> = ({ color, ...rest }) => {
 
   return (
     <Marker
@@ -18,7 +18,7 @@ const TravelMarker: React.FC<OriginMarkerProps> = ({ color, ...rest }) => {
   )
 }
 
-export default TravelMarker;
+export default RideMarker;
 
 const Pin = styled.View<{ color: string }>`
   border-radius: 8px;

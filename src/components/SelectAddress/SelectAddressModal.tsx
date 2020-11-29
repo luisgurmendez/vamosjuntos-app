@@ -13,6 +13,9 @@ import { Address } from 'types/models';
 import useZoomToLocation from 'hooks/useZoomToLocation';
 import addressFactory from 'factories/address';
 import Map from 'components/Map/Map';
+import { Region } from 'react-native-maps';
+import { getAddressFromCoords, getCancelTokenSource } from 'api/adedo';
+import Axios, { CancelTokenSource } from 'axios';
 
 interface SelectAddressModalProps {
   open: boolean;
@@ -30,10 +33,9 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   const [isMovingMap, setIsMovingMap] = useState(false);
   const [isFetchingAddress, setIsFetchingAddress] = useState(true);
   const [possibleAddress, setPossibleAddress] = useState<Address | undefined>(undefined);
+  const cancelTokenSource = useRef<CancelTokenSource | undefined>(undefined);
 
   useZoomToLocation(mapId);
-
-  const timeoutRef = useRef<number | null>(null);
 
   const handleSelectAddress = () => {
     if (possibleAddress) {
@@ -42,18 +44,28 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
     }
   };
 
-  const handleLocationChange = () => {
+  const handleLocationChange = async (region: Region) => {
     setIsFetchingAddress(true);
     setIsMovingMap(false);
 
-    if (timeoutRef.current) {
-      clearInterval(timeoutRef.current);
+    if (cancelTokenSource.current !== undefined) {
+      console.log('calling cancel token')
+      cancelTokenSource.current.cancel();
     }
-    timeoutRef.current = (setTimeout(() => {
-      const address = addressFactory.build();
+
+    const _cancelTokenSource = getCancelTokenSource();
+    // _cancelTokenSource.token.reason = { message: 'chupame la verga' }
+    cancelTokenSource.current = _cancelTokenSource;
+
+    try {
+      const address = await getAddressFromCoords(region.latitude, region.longitude, { cancelToken: _cancelTokenSource.token })
+      cancelTokenSource.current = undefined;
       setPossibleAddress(address);
       setIsFetchingAddress(false);
-    }, 500) as unknown) as number;
+    } catch (e) {
+      console.log(e)
+    }
+
   };
 
   return (

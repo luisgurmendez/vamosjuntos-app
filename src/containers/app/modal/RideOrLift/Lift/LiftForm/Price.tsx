@@ -28,7 +28,7 @@ const Price: React.FC = () => {
   };
 
   return (
-    <Wizard nextScreen={LiftScreens.PRICE} title="¿Cuanto cobras?">
+    <Wizard nextScreen={LiftScreens.SUMMARY} title="¿Cuanto cobras?">
       <DismissKeyboard>
         <Container>
           <PriceInputContainer>

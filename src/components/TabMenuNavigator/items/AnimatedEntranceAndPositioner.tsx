@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated } from 'react-native';
+import { Animated, Easing } from 'react-native';
 import { useAnimation } from 'react-native-animation-hooks';
 import { FAST_ANIMATION_DURATION } from '../constants';
 import TranslatedMenuItem from './TranslatedMenuItem';

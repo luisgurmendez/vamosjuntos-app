@@ -1,10 +1,10 @@
 export interface Address {
   latitude: number;
   longitude: number;
-  address: string;
-  city: string;
-  department: string;
-  district: string;
+  address?: string;
+  city?: string;
+  department?: string;
+  district?: string;
 }
 
 export interface User {

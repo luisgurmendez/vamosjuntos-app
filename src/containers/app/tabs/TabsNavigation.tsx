@@ -1,10 +1,11 @@
 import React from 'react';
 import Notifications, { NotificationsTabOptions } from './Notifications';
 import Configuration, { ConfigurationTabOptions } from './Configuration';
-import Travels, { TravelsTabOptions } from './Travels';
+import RidesNavigation, { RidesTabOptions } from './Rides';
 import Profile, { ProfileTabOptions } from './Profile';
 import createBottomTabWithMenuNavigator from 'components/TabMenuNavigator/BottomTabWithMenuNavigator';
 import { RenderItemMenu } from './Menu/Menu';
+import { Screens } from 'containers/Screens';
 
 const Tab = createBottomTabWithMenuNavigator();
 
@@ -17,10 +18,10 @@ const TabsNavigation: React.FC = () => {
       }}
 
       tabBarOptions={{ showLabel: true }}>
-      <Tab.Screen name="Travels" options={TravelsTabOptions} component={Travels} />
-      <Tab.Screen name="Notification" options={NotificationsTabOptions} component={Notifications} />
-      <Tab.Screen name="Profile" options={ProfileTabOptions} component={Profile} />
-      <Tab.Screen name="Settings" options={ConfigurationTabOptions} component={Configuration} />
+      <Tab.Screen name={Screens.RIDES_TAB} options={RidesTabOptions} component={RidesNavigation} />
+      <Tab.Screen name={Screens.NOTIFICATIONS_TAB} options={NotificationsTabOptions} component={Notifications} />
+      <Tab.Screen name={Screens.PROFILE_TAB} options={ProfileTabOptions} component={Profile} />
+      <Tab.Screen name={Screens.SETTINGS_TAB} options={ConfigurationTabOptions} component={Configuration} />
     </Tab.Navigator>
   );
 };

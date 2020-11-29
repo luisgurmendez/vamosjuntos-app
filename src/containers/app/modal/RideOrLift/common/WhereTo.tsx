@@ -16,7 +16,7 @@ const WhereTo: React.FC<WhereToProps> = ({ nextScreen, title = '¿A donde vas?' 
   };
 
   return (
-    <Wizard nextScreen={nextScreen} title={title}>
+    <Wizard showBack={false} nextScreen={nextScreen} title={title}>
       <SelectAddressForm selectedAddress={selectedAddress} onSelectAddress={handleSelectAddress} />
     </Wizard>
   );
