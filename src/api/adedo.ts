@@ -4,7 +4,7 @@ import { Tokens } from 'types/tokens';
 import { AddressFromCoordsResponse, GetRidesResponse, LoginResponse } from './responses';
 
 const api = axios.create({
-  baseURL: 'http://192.168.1.4:80'
+  baseURL: 'http://192.168.1.14:80'
 });
 
 api.interceptors.response.use((response) => {

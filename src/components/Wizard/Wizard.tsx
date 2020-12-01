@@ -5,41 +5,52 @@ import PressableIcon from 'components/PressableIcon/PressableIcon';
 import { Title } from 'components/Typography/Typography';
 import { Screens } from 'containers/Screens';
 import React from 'react';
-import { View } from 'react-native';
+import { ButtonProps, View } from 'react-native';
 import styled from 'styled-components/native';
 import { StackNavigationAPI } from 'types/Navigation';
 import { colors } from 'utils/colors';
+
+interface ActionProps {
+  onPress?: () => void;
+  label?: string;
+  disabled?: boolean;
+  loading?: boolean;
+}
 
 interface WizardProps {
   title?: string;
   icon?: 'arrow' | 'close'
   showBack?: boolean;
   showClose?: boolean;
-  onNext?: () => void;
-  nextText?: string;
+  action?: ActionProps;
   nextScreen?: string;
-  nextDisabled?: boolean;
 }
 
 const Wizard: React.FC<WizardProps> = ({
   title,
   nextScreen,
-  onNext,
   showBack = true,
   showClose = true,
-  nextText = 'Siguiente',
-  nextDisabled = false,
+  action,
   children
 }) => {
   const navigation: StackNavigationAPI = useNavigation<any>();
 
+  const defaultActionProps = {
+    onPress: undefined,
+    label: 'Siguiente',
+    disabled: false,
+    loading: false,
+  };
+  const _action = { ...defaultActionProps, ...action }
+
   const handleNext = () => {
-    if (onNext === undefined) {
+    if (_action.onPress === undefined) {
       if (nextScreen) {
         navigation.push(nextScreen);
       }
     } else {
-      onNext();
+      _action.onPress();
     }
   };
 
@@ -51,17 +62,17 @@ const Wizard: React.FC<WizardProps> = ({
     <Container>
       <PaddingContainer>
         <Header>
-          <NavigationOptions>
-            {showBack ? <BackArrow /> : <Placeholder />}
-            {showClose ? <PressableIcon name="x" size={40} color={colors.black} onPress={handleClose} /> : <Placeholder />}
-          </NavigationOptions>
-          <Title>{title}</Title>
+          {/* <NavigationOptions> */}
+          {showBack ? <BackArrow /> : <Placeholder />}
+          {/* </NavigationOptions> */}
+          <ExpandedTitle>{title}</ExpandedTitle>
+          {showClose ? <PressableIcon name="x" size={40} color={colors.black} onPress={handleClose} /> : <Placeholder />}
           <View />
         </Header>
         <Content>{children}</Content>
         <Footer>
-          <Button disabled={nextDisabled} onPress={handleNext}>
-            {nextText}
+          <Button loading={_action.loading} disabled={_action.disabled} onPress={handleNext}>
+            {_action.label}
           </Button>
         </Footer>
       </PaddingContainer>
@@ -76,7 +87,7 @@ const Header = styled.View`
   padding: 8px 0px;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   z-index: 100;
 `;
 
@@ -98,7 +109,7 @@ const PaddingContainer = styled.View`
 `;
 
 const Placeholder = styled.View`
-  padding: 40px;
+  padding: 20px;
 `;
 
 const NavigationOptions = styled.View`
@@ -107,4 +118,9 @@ const NavigationOptions = styled.View`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+`
+
+const ExpandedTitle = styled(Title)`
+  flex-grow: 1;
+  text-align: center;
 `

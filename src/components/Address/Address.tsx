@@ -7,7 +7,7 @@ import { colors } from 'utils/colors';
 import { renderAddressDetails } from './utils';
 
 interface AddressProps {
-  address: AddressModel;
+  address?: AddressModel;
 }
 
 const Address: React.FC<AddressProps> = ({ address }) => {
@@ -15,7 +15,7 @@ const Address: React.FC<AddressProps> = ({ address }) => {
     <Container>
       <Icon size={20} color={colors.black} name="map-pin" />
       <AddressContainer>
-        <LargeBody>{address?.address}</LargeBody>
+        {address?.address !== undefined && <LargeBody>{address?.address}</LargeBody>}
         <Body>{renderAddressDetails(address)}</Body>
       </AddressContainer>
     </Container>
@@ -28,6 +28,7 @@ const AddressContainer = styled.View`
   display: flex;
   flex-direction: column;
   margin-left: 16px;
+  justify-content: center;
 `;
 
 const Container = styled.View`

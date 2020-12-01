@@ -1,12 +1,9 @@
-import { login } from 'api/adedo';
 import Button from 'components/Button/Button';
 import TextInput from 'components/TextInput/TextInput';
-import Toaster from 'components/Toaster/Toaster';
 import { Formik } from 'formik';
 import React from 'react';
 import styled from 'styled-components/native';
 import * as Yup from 'yup';
-import Storage from 'storage/Storage';
 import MarginedChildren from 'components/Box/MarginedChildren';
 
 const RegisterFormSchema = Yup.object().shape({
@@ -20,7 +17,7 @@ const RegisterForm: React.FC = () => {
     password: ''
   };
 
-  const handleRegister = async (values: any) => {};
+  const handleRegister = async (values: any) => { };
 
   return (
     <Container>

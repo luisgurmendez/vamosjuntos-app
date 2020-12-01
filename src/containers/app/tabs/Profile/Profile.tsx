@@ -1,5 +1,5 @@
 import SomeOtherNotification from 'components/Notifications/SomeOtherNotification';
-import { Subtitle } from 'components/Typography/Typography';
+import { LargeBody, Text, Subtitle } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
 import React from 'react';
 import EditProfilePicButton from './EditProfilePicButton';
@@ -9,6 +9,8 @@ import CommentList from 'components/Comment/CommentList';
 import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
 import { setShowCamera } from 'state/camera/actions';
 import { useDispatch } from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { colors } from 'utils/colors';
 
 interface ProfileProps { }
 
@@ -32,6 +34,16 @@ const Profile: React.FC<ProfileProps> = () => {
             <Subtitle>Luis Gurmendez</Subtitle>
             <ScoreDisplay score={4.3} size={20} />
           </View>
+          <RidesContainer>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon color={colors.black} name="thumb-up" size={25} />
+              <LargeBody style={{ color: colors.black }}>: 4</LargeBody>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon color={colors.black} name="car" size={25} />
+              <Text style={{ color: colors.black }}>: 1</Text>
+            </View>
+          </RidesContainer>
         </ProfileDetailsContainer>
       </Header>
       <Content>
@@ -63,7 +75,7 @@ const Header = styled.View`
 const ProfileDetailsContainer = styled.View`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   flex-grow: 1;
 `
 
@@ -72,3 +84,10 @@ const ProfileImageContainer = styled.View`
   margin-right: 24px;
 `;
 
+const RidesContainer = styled.View`
+  margin-top: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+`

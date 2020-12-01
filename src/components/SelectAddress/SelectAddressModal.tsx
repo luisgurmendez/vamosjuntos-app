@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components/native';
 import Modal from 'react-native-modal';
-import Icon from 'react-native-vector-icons/Feather';
+
 import { colors } from 'utils/colors';
 import SelectAddressMarker from './SelectAddressMarker';
 import { Body } from 'components/Typography/Typography';
@@ -16,6 +16,7 @@ import Map from 'components/Map/Map';
 import { Region } from 'react-native-maps';
 import { getAddressFromCoords, getCancelTokenSource } from 'api/adedo';
 import Axios, { CancelTokenSource } from 'axios';
+import PressableIcon from 'components/PressableIcon/PressableIcon';
 
 interface SelectAddressModalProps {
   open: boolean;
@@ -63,6 +64,10 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
       setPossibleAddress(address);
       setIsFetchingAddress(false);
     } catch (e) {
+      if (e.response && e.response.status === 404) {
+        setPossibleAddress(undefined);
+        setIsFetchingAddress(false);
+      }
       console.log(e)
     }
 
@@ -72,7 +77,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
     <Modal isVisible={open} useNativeDriver={false} coverScreen style={{ margin: 0 }} hasBackdrop={false}>
       <Content>
         <CloseContainer>
-          <Icon onPress={onClose} size={30} name={'x'} color={colors.black} />
+          <PressableIcon onPress={onClose} size={30} name={'x'} color={colors.black} />
         </CloseContainer>
         <Map onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={handleLocationChange} mapId={mapId}>
           <SelectAddressMarker lifted={isMovingMap} />

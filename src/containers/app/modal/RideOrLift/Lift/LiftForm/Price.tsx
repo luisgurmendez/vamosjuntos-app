@@ -1,38 +1,37 @@
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import { Body, PlainInput, Text } from 'components/Typography/Typography';
 import Wizard from 'components/Wizard/Wizard';
+import { useField, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
+import { roundToPrecision } from 'utils/math';
 import { LiftScreens } from '../LiftScreens';
 
-function roundToPrecision(value: number, precision = 10) {
-  return Math.round(value / precision) * precision;
-}
-
 const Price: React.FC = () => {
+
   const estimatedPrice = 300;
   const maxPrice = roundToPrecision(Math.round(estimatedPrice * 1.4), 10);
 
-  const [price, setPrice] = useState(estimatedPrice);
-  const priceTooHigh = price > estimatedPrice + 100;
+  const [price, priceMeta, priceHelpers] = useField<number>('price');
+  const priceTooHigh = price.value > estimatedPrice + 100;
+  const isFieldValid = priceMeta.error === undefined;
 
   const handlePriceChange = (value: string) => {
-    console.log(value);
     const newPrice = value !== '' ? parseInt(value) : 0;
     if (newPrice > maxPrice) {
-      setPrice(maxPrice);
+      priceHelpers.setValue(maxPrice);
     } else {
-      setPrice(newPrice);
+      priceHelpers.setValue(newPrice);
     }
   };
 
   return (
-    <Wizard nextScreen={LiftScreens.SUMMARY} title="¿Cuanto cobras?">
+    <Wizard action={{ disabled: !isFieldValid }} nextScreen={LiftScreens.SUMMARY} title="¿Cuanto cobras?">
       <DismissKeyboard>
         <Container>
           <PriceInputContainer>
-            <PriceInput onChangeText={handlePriceChange} value={`${price}`} keyboardType="numeric" maxLength={4} />
+            <PriceInput onChangeText={handlePriceChange} value={`${price.value}`} keyboardType="numeric" maxLength={4} />
             <PriceSignText>$</PriceSignText>
           </PriceInputContainer>
           {priceTooHigh && (

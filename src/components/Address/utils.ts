@@ -1,6 +1,7 @@
 import { Address } from 'types/models';
 
-export const renderAddressDetails = (address: Address) => {
+export const renderAddressDetails = (address: Address | undefined) => {
 
-  return `${address.department} ${address.city ? `- ${address.city}` : ''}`;
+
+  return address ? `${address.department} ${address.city ? `- ${address.city}` : ''}` : '-';
 };

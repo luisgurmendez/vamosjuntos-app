@@ -12,11 +12,13 @@ import { getDateText } from 'utils/date';
 
 interface WhenProps {
   nextScreen: string;
+  nextDisabled: boolean;
   date?: moment.Moment;
   onDateChange?: (date: moment.Moment) => void;
 }
 
-const When: React.FC<WhenProps> = ({ date = moment(), nextScreen, onDateChange }) => {
+const When: React.FC<WhenProps> = ({ date = moment(), nextScreen, nextDisabled, onDateChange }) => {
+
   const handleHourChange = (hour: number, mins: number) => {
     const _date = date.clone();
     _date.set({ hour: hour, minutes: mins });
@@ -30,7 +32,7 @@ const When: React.FC<WhenProps> = ({ date = moment(), nextScreen, onDateChange }
   };
 
   return (
-    <Wizard nextScreen={nextScreen} title="¿Cuando?">
+    <Wizard nextScreen={nextScreen} nextDisabled={nextDisabled} title="¿Cuando?">
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
         <KeyboardShift>
           <Container>

@@ -21,7 +21,7 @@ const Profile: React.FC<ProfileProps> = () => {
         }
       ],
       {
-        useNativeDriver: true
+        useNativeDriver: false
       }
     );
   // }

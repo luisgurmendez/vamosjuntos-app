@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Wizard from 'components/Wizard/Wizard';
 import SelectAddressForm from './SelectAddressForm';
+import { useField } from 'formik';
 import { Address } from 'types/models';
 
 interface WhereToProps {
@@ -9,15 +10,12 @@ interface WhereToProps {
 }
 
 const WhereTo: React.FC<WhereToProps> = ({ nextScreen, title = '¿A donde vas?' }) => {
-  const [selectedAddress, setSelectedAddress] = useState<Address | undefined>(undefined);
-
-  const handleSelectAddress = (address: Address) => {
-    setSelectedAddress(address);
-  };
+  const [whereTo, whereToMeta, whereToHelpers] = useField<Address>('whereTo');
+  const isFieldValid = whereToMeta.error === undefined
 
   return (
-    <Wizard showBack={false} nextScreen={nextScreen} title={title}>
-      <SelectAddressForm selectedAddress={selectedAddress} onSelectAddress={handleSelectAddress} />
+    <Wizard action={{ disabled: !isFieldValid }} showBack={false} nextScreen={nextScreen} title={title}>
+      <SelectAddressForm selectedAddress={whereTo.value} onSelectAddress={whereToHelpers.setValue} />
     </Wizard>
   );
 };

@@ -1,15 +1,30 @@
+import Button from 'components/Button/Button';
 import { Title } from 'components/Typography/Typography';
-import React from 'react';
+import Wizard from 'components/Wizard/Wizard';
+import { useFormikContext } from 'formik';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
+import Modal from 'react-native-modal';
+import { View } from 'react-native';
 
 const LiftSummary: React.FC = () => {
+
+  const { isValid, handleSubmit, validateForm, isSubmitting } = useFormikContext();
+
+  useEffect(() => {
+    validateForm()
+  }, [])
+
   return (
-    <Container>
-      <Title>Gracias por compartir un viaje :D !</Title>
-    </Container>
+    <Wizard action={{ disabled: !isValid, onPress: handleSubmit, label: 'Crear Viaje', loading: isSubmitting }} title="Ultimo paso!">
+      <View />
+    </Wizard>
   )
 };
 
 export default LiftSummary;
 
-const Container = styled.View``;
+const Container = styled.SafeAreaView`
+
+
+`;

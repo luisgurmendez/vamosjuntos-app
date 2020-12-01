@@ -1,18 +1,19 @@
-import { useNavigation } from '@react-navigation/native';
 import NumberSelect from 'components/NumberSelect/NumberSelect';
 import Wizard from 'components/Wizard/Wizard';
-import React, { useState } from 'react';
+import { useField } from 'formik';
+import React from 'react';
 import styled from 'styled-components/native';
-import { StackNavigationAPI } from 'types/Navigation';
 import { LiftScreens } from '../LiftScreens';
 
 const HowMany: React.FC = () => {
-  const [howMany, setHowMany] = useState(1);
+  const [howMany, howManyMeta, howManyHelpers] = useField<number>('howMany');
+
+  const isFieldValid = howManyMeta.error === undefined;
 
   return (
-    <Wizard nextScreen={LiftScreens.WHEN} title="¿A cuantos llevas?">
+    <Wizard action={{ disabled: !isFieldValid }} nextScreen={LiftScreens.WHEN} title="¿A cuantos llevas?">
       <Container>
-        <NumberSelect max={8} min={1} count={howMany} onChange={setHowMany} />
+        <NumberSelect max={8} min={1} count={howMany.value} onChange={howManyHelpers.setValue} />
       </Container>
     </Wizard>
   );
