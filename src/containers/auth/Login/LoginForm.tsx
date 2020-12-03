@@ -1,49 +1,44 @@
-import { login } from 'api/adedo';
 import Button from 'components/Button/Button';
 import TextInput from 'components/TextInput/TextInput';
-import Toaster from 'components/Toaster/Toaster';
-import { Formik, useFormikContext } from 'formik';
+import { Formik } from 'formik';
 import React from 'react';
 import styled from 'styled-components/native';
 import * as Yup from 'yup';
-import Storage from 'storage/Storage';
 import MarginedChildren from 'components/Box/MarginedChildren';
+import { LoginValues } from './Login';
 
 const LoginFormSchema = Yup.object().shape({
   username: Yup.string().required('Username required'),
   password: Yup.string().required('Password required')
 });
 
-const LoginForm: React.FC = () => {
-  const initialValues = {
+interface LoginFormProps {
+  onSuccessfullLogin: (values: LoginValues) => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onSuccessfullLogin }) => {
+
+  const initialValues: LoginValues = {
     username: '',
     password: ''
   };
 
-  const handleLogin = async (values: any) => {
-    try {
-      const tokens = await login(values.username, values.password);
-      await Storage.setItem(Storage.TOKENS, tokens);
-      Toaster.info({ message: tokens?.token });
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   return (
     <Container>
-      <Formik validationSchema={LoginFormSchema} initialValues={initialValues} onSubmit={handleLogin}>
+      <Formik<LoginValues> validationSchema={LoginFormSchema} initialValues={initialValues} onSubmit={onSuccessfullLogin}>
         {({ handleChange, isSubmitting, handleSubmit, values, errors }) => (
           <FormContent>
             <MarginedChildren mV="md">
               <TextInput
+                placeholder="Usuario"
                 error={errors.username}
                 textContentType="username"
                 onChangeText={handleChange('username')}
                 value={values.username}
               />
-
               <TextInput
+                placeholder="Contraseña"
                 error={errors.password}
                 secureTextEntry
                 onChangeText={handleChange('password')}
@@ -52,8 +47,8 @@ const LoginForm: React.FC = () => {
             </MarginedChildren>
 
             <Button loading={isSubmitting} onPress={handleSubmit}>
-              Login
-            </Button>
+              Ingresar
+              </Button>
           </FormContent>
         )}
       </Formik>

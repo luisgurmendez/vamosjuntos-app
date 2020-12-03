@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import Icon from 'react-native-vector-icons/Feather';
@@ -6,6 +6,8 @@ import Loading from 'components/Loading/Loading';
 import { Animated, Keyboard, TextStyle, ViewStyle } from 'react-native';
 import { Text } from 'components/Typography/Typography';
 import { useAnimation } from 'react-native-animation-hooks';
+import { BaseButtonProps } from './types';
+import { useSilentDisabled } from './utils';
 
 const ANIAMTION_DURATION = 200;
 export type ButtonType = 'primary' | 'secondary' | 'danger';
@@ -15,14 +17,9 @@ interface ButtonStyles {
   text: TextStyle;
 }
 
-interface ButtonProps {
-  onPress?: () => void;
-  icon?: string;
-  children: React.ReactNode;
+interface ButtonProps extends BaseButtonProps {
   type?: ButtonType;
-  loading?: boolean;
-  disabled?: boolean;
-  style?: any;
+  icon?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -35,6 +32,7 @@ const Button: React.FC<ButtonProps> = ({
   loading = false
 }) => {
   const [pressing, setPressing] = useState(false);
+  const [silentDisabled, setSilentDisabled] = useSilentDisabled()
 
   const animation = useAnimation({
     type: 'timing',
@@ -52,8 +50,9 @@ const Button: React.FC<ButtonProps> = ({
 
   const handleOnPress = () => {
     Keyboard.dismiss();
-    if (!loading && onPress) {
+    if (!loading && !silentDisabled && onPress) {
       onPress();
+      setSilentDisabled(true);
     }
   };
 

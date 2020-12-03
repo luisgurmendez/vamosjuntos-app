@@ -25,7 +25,9 @@ const MarginedChildren: React.FC<MarginedChildrenProps> = ({
   applyToLast = true,
   children
 }) => {
+  console.log(children)
   return React.Children.map<any, any>(children, (child, i) => {
+    console.log(child)
     if (child) {
       let marginedStyles: any = {
         margin: sizeToPx(m),

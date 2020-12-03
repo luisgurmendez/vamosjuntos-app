@@ -13,6 +13,7 @@ import Shadow from 'components/Shadow/Shadow';
 import Icon from 'react-native-vector-icons/Feather';
 import { getDateText } from 'utils/date';
 import moment from 'moment';
+import { StatusBar } from 'react-native';
 
 interface RideDetailsProps {
 }
@@ -46,6 +47,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ }) => {
 
   return (
     <Container>
+      <StatusBar hidden />
       <AbsoluteSafeArea>
         <PositionedPressableIcon onPress={handleClose} name="x" size={30} color={colors.black} />
       </AbsoluteSafeArea>

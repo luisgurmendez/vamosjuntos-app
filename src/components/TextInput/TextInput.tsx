@@ -9,11 +9,11 @@ interface TextInputProps extends NativeTextInputProps {
   error?: string;
 }
 
-const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(({ error, ...textInputProps }, forwardedRef) => {
+const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(({ error, style, ...textInputProps }, forwardedRef) => {
   const showError = error !== undefined;
 
   return (
-    <View>
+    <View style={style}>
       <TextInputBase
         ref={forwardedRef}
         autoCorrect={false}
