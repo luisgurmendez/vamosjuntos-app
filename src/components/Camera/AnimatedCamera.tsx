@@ -44,6 +44,7 @@ const AnimatedCamera: React.FC = ({ children }) => {
     return null;
   }
 
+
   return (
     <Animated.View style={{
       overflow: 'hidden',

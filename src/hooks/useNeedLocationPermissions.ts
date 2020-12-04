@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import { PERMISSIONS } from 'react-native-permissions';
 
 function useNeedLocationPermissions() {
-  const hasLocationPerms = useCheckAndRequestPermission(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+  const hasLocationPerms = useCheckAndRequestPermission(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+  console.log(hasLocationPerms);
   useEffect(() => {
     if (hasLocationPerms !== undefined) {
       if (!hasLocationPerms) {

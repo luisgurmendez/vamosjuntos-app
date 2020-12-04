@@ -7,13 +7,16 @@ import { useSilentDisabled } from './utils';
 import { Text } from 'components/Typography/Typography';
 import { colors } from 'utils/colors';
 
-interface PlainButtonProps extends BaseButtonProps { }
+interface PlainButtonProps extends BaseButtonProps {
+  color?: string;
+}
 
 const PlainButton: React.FC<PlainButtonProps> = ({
   loading,
   disabled,
   onPress,
   children,
+  color = colors.main,
   style
 }) => {
   const [silentDisabled, setSilentDisabled] = useSilentDisabled()
@@ -34,7 +37,7 @@ const PlainButton: React.FC<PlainButtonProps> = ({
       {loading ? (
         <Loading size={15} />
       ) : (
-          <ButtonText>{children}</ButtonText>
+          <ButtonText style={{ color: color }}>{children}</ButtonText>
         )}
     </TouchableButton>
   )

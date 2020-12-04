@@ -17,7 +17,7 @@ const AuthNavigation: React.FC = () => {
         headerShown: false
       }}>
       <Stack.Screen name={Screens.LOGIN} component={Login} />
-      <Stack.Screen options={{ headerShown: true }} name={Screens.REGISTER} component={Register} />
+      <Stack.Screen name={Screens.REGISTER} component={Register} />
       <Stack.Screen options={{ headerShown: true }} name={Screens.FORGOT_PASSWORD} component={ForgotPassword} />
     </Stack.Navigator>
   );

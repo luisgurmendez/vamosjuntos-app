@@ -21,7 +21,9 @@ export const LargeBody = styled(Text)`
   font-size: 20px;
 `;
 
-export const Body = styled(Text)``;
+export const Body = styled(Text)`
+  font-size: 16px;
+`;
 
 export const Bold = styled.Text`
   font-weight: bold;

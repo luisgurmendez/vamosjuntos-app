@@ -5,6 +5,7 @@ import { FAST_ANIMATION_DURATION } from 'utils/animation';
 import { useAnimation } from 'react-native-animation-hooks';
 import Circle from 'components/Circle/Circle';
 import PlusSvg from './PlusIcon';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface PlusButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -14,6 +15,9 @@ interface PlusButtonProps {
 }
 
 const PlusButton: React.FC<PlusButtonProps> = ({ style, active, onPress, animationDisabled = false }) => {
+  const paddings = useSafeAreaInsets();
+  const safeAreaPositioningStyles = { bottom: paddings.bottom };
+
   const animation = useAnimation({
     type: 'timing',
     toValue: active ? 1 : 0,
@@ -31,7 +35,7 @@ const PlusButton: React.FC<PlusButtonProps> = ({ style, active, onPress, animati
 
   return (
     <Circle>
-      <AnimatedPlusButton style={[getPlusButtonAnimation(), style]} activeOpacity={1} onPress={onPress}>
+      <AnimatedPlusButton style={[getPlusButtonAnimation(), style, safeAreaPositioningStyles]} activeOpacity={1} onPress={onPress}>
         <PlusSvg size={30} color={'white'} />
       </AnimatedPlusButton>
     </Circle>
@@ -50,7 +54,7 @@ const PlusButtonTouchable = styled.TouchableOpacity`
   justify-content: center;
   position: absolute;
   align-self: center;
-  bottom: 30px;
+  bottom: 0px;
   border-radius: 30px;
   z-index: 200;
 `;

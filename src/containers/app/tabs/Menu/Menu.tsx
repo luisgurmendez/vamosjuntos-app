@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import Button from 'components/Button/Button';
 import { Screens } from 'containers/Screens';
 import React from 'react';
 import { View } from 'react-native';
@@ -11,6 +12,7 @@ interface RenderItemMenuProps {
 
 export const RenderItemMenu: React.FC<RenderItemMenuProps> = ({ item, onCloseMenu }) => {
   const navigation: any = useNavigation();
+
   const handleOpenModals = () => {
     onCloseMenu();
     navigation.push(Screens.LIFT);

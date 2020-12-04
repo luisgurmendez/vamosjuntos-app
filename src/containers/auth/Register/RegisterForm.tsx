@@ -95,6 +95,8 @@ const RegisterForm: React.FC = () => {
 
 export default RegisterForm;
 
-const Container = styled.View``;
+const Container = styled.View`
+  flex: 1;
+`;
 
 const FormContent = styled.View``;

@@ -1,7 +1,7 @@
+import PlainButton from 'components/Button/PlainButton';
 import Toaster from 'components/Toaster/Toaster';
 import { Stylable } from 'components/types';
 import React from 'react'
-import { Button } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import ConfigurationOption from './commons/ConfigurationOption';
@@ -17,7 +17,7 @@ const SignoutOption: React.FC<SignoutOptionProps> = ({ }) => {
 
   return (
     <ConfigurationOption>
-      <StyledButton color={colors.danger} title="Cerrar Sesion" onPress={handleSignout} />
+      <StyledButton color={colors.danger} onPress={handleSignout} >Cerrar Sesion</StyledButton>
     </ConfigurationOption>
   )
 
@@ -25,6 +25,6 @@ const SignoutOption: React.FC<SignoutOptionProps> = ({ }) => {
 
 export default SignoutOption;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(PlainButton)`
   text-align: center;
 `

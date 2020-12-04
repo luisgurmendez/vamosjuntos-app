@@ -8,6 +8,7 @@ import { Text } from 'components/Typography/Typography';
 import { useAnimation } from 'react-native-animation-hooks';
 import { BaseButtonProps } from './types';
 import { useSilentDisabled } from './utils';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const ANIAMTION_DURATION = 200;
 export type ButtonType = 'primary' | 'secondary' | 'danger';
@@ -114,7 +115,7 @@ const ButtonContainer = styled(Animated.View)`
   align-items: center;
 `;
 
-const TouchableButton = styled.TouchableOpacity`
+const TouchableButton = styled(TouchableOpacity)`
   flex-grow: 1;
   padding: 12px;
   flex-direction: row;

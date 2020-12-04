@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import MarginedChildren from 'components/Box/MarginedChildren';
-import Ride from 'components/Ride/Ride';
+import RideBubble from 'components/Ride/RideBubble';
 import { Subtitle } from 'components/Typography/Typography';
 import { Screens } from 'containers/Screens';
 import React from 'react';
@@ -21,11 +21,11 @@ const Rides: React.FC = () => {
       <Container>
         <Subtitle>Pendientes</Subtitle>
         <MarginedChildren mt="md">
-          <Ride onPress={handleRidePress} id="1" />
-          <Ride id="2" />
-          <Ride id="3" />
-          <Ride id="4" />
-          <Ride id="5" />
+          <RideBubble onPress={handleRidePress} />
+          <RideBubble />
+          <RideBubble />
+          <RideBubble />
+          <RideBubble />
         </MarginedChildren>
       </Container>
     </Page>

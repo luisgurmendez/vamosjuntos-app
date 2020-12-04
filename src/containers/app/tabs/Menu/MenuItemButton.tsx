@@ -4,12 +4,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Body } from 'components/Typography/Typography';
 import { Animated } from 'react-native';
 import { colors } from 'utils/colors';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 interface FloatingButtonProps {
   icon: string;
-  onPress?: () => void;
+  onPress?: any // () => void;
   style?: any;
   label: string;
   iconStyle?: any;
@@ -31,7 +32,7 @@ const OptionButton: React.FC<FloatingButtonProps> = ({ style, icon, onPress, lab
 
 export default OptionButton;
 
-const OptionTouchable = styled.TouchableOpacity<{ size: number }>`
+const OptionTouchable = styled(TouchableOpacity) <{ size: number }>`
   width: ${(props) => props.size}px;
   height: ${(props) => props.size}px;
   background-color: white;

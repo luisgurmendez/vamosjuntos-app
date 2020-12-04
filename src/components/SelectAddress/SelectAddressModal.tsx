@@ -10,7 +10,7 @@ import DisplayAddress from 'components/Address/Address';
 import { Box } from 'components/Box/Box';
 import Loading from 'components/Loading/Loading';
 import { Address } from 'types/models';
-import useZoomToLocation from 'hooks/useZoomToLocation';
+// import useZoomToLocation from 'hooks/useZoomToLocation';
 import addressFactory from 'factories/address';
 import Map from 'components/Map/Map';
 import { Region } from 'react-native-maps';
@@ -36,7 +36,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   const [possibleAddress, setPossibleAddress] = useState<Address | undefined>(undefined);
   const cancelTokenSource = useRef<CancelTokenSource | undefined>(undefined);
 
-  useZoomToLocation(mapId);
+  // useZoomToLocation(mapId);
 
   const handleSelectAddress = () => {
     if (possibleAddress) {

@@ -19,6 +19,7 @@ const Profile: React.FC<ProfileProps> = () => {
   const dispatch = useDispatch();
 
   const handleOpenCamera = () => {
+    console.log('open cam!')
     dispatch(setShowCamera(true));
   }
 

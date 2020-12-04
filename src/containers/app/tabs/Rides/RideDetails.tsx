@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { getDateText } from 'utils/date';
 import moment from 'moment';
 import { StatusBar } from 'react-native';
+import RideSummary from 'components/Ride/RideSummary';
 
 interface RideDetailsProps {
 }
@@ -59,18 +60,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ }) => {
         />
       </MapContainer>
       <Content>
-        <LargeBody>{getDateText(moment().add(5, 'days'))} a las 8:00 pm</LargeBody>
-        <OriginDestinationContainer>
-          <AddressDisplay style={{ backgroundColor: alpha(colors.success, 0.1) }}>
-            <LargeBody>Maldonado,</LargeBody>
-            <LargeBody>Punta del este</LargeBody>
-          </AddressDisplay>
-          <Icon name="arrow-right" color={colors.main} size={30} />
-          <AddressDisplay style={{ backgroundColor: alpha(colors.danger, 0.1) }} >
-            <LargeBody>Maldonado</LargeBody>
-          </AddressDisplay>
-        </OriginDestinationContainer>
-
+        <RideSummary />
         <Subtitle>Conductor</Subtitle>
         <DriverContainer style={{ marginVertical: 8 }}>
           <ProfilePicPlaceholder size={50} />

@@ -11,6 +11,7 @@ import KeyboardShift from 'components/Keyboard/KeyboardShift';
 import { login } from 'api/adedo';
 import Storage from 'storage/Storage';
 import Toaster from 'components/Toaster/Toaster';
+import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 
 export interface LoginValues {
   username: string;
@@ -18,6 +19,7 @@ export interface LoginValues {
 }
 
 const Login: React.FC = () => {
+
   const navigation: StackNavigationAPI = useNavigation<any>();
 
   const handleSuccessfullLogin = async (values: LoginValues) => {
@@ -39,25 +41,26 @@ const Login: React.FC = () => {
   }
 
   return (
-    <Container>
-      <Header>
-        <PlainButton onPress={handleRegister}>
-          Registrate
+    <DismissKeyboard>
+      <Container>
+        <Header>
+          <PlainButton onPress={handleRegister}>
+            Registrate
         </PlainButton>
-      </Header>
-      <Content>
-        <KeyboardShift>
-          <CenteredContentBox mb="lg">
-            <Logo size={200} />
-          </CenteredContentBox>
-          <LoginForm onSuccessfullLogin={handleSuccessfullLogin} />
-          <PlainButton onPress={handleForgotPassword}>
-            Me olvide la contraseña 🤦🏼‍♂️
+        </Header>
+        <Content>
+          <KeyboardShift>
+            <CenteredContentBox mb="lg">
+              <Logo size={200} />
+            </CenteredContentBox>
+            <LoginForm onSuccessfullLogin={handleSuccessfullLogin} />
+            <PlainButton onPress={handleForgotPassword}>
+              Me olvide la contraseña 🤦🏼‍♂️
         </PlainButton>
-        </KeyboardShift>
-      </Content>
-
-    </Container>
+          </KeyboardShift>
+        </Content>
+      </Container>
+    </DismissKeyboard>
   );
 };
 
