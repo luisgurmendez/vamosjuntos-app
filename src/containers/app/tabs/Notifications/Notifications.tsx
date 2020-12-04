@@ -60,7 +60,6 @@ const Notifications: React.FC = () => {
           <SomeOtherNotification />
         </NotificationSection>
       </Container>
-
     </Page>
   );
 }

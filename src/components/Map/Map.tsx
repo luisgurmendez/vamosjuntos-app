@@ -12,10 +12,16 @@ export interface MapProps extends MapViewProps, Stylable {
 
 const Map: React.FC<MapProps> = ({ children, style, renderMarkers, mapId, ...mapProps }) => {
   const { addMap, removeMap } = React.useContext(MapContext);
+  const [mapReady, setMapReady] = useState(false);
   const map = useRef<MapView>(null);
 
+  const handleMapReady = () => {
+    setMapReady(true);
+  }
+
   useEffect(() => {
-    if (mapId !== undefined && map.current !== null) {
+    // only add the map when ready.
+    if (mapId !== undefined && map.current !== null && mapReady) {
       addMap(mapId, map.current);
 
       return () => {
@@ -23,7 +29,7 @@ const Map: React.FC<MapProps> = ({ children, style, renderMarkers, mapId, ...map
       };
     }
 
-  }, [map.current, addMap, removeMap]);
+  }, [map.current, addMap, removeMap, mapReady]);
 
   return (
     <MapContainer>
@@ -33,6 +39,7 @@ const Map: React.FC<MapProps> = ({ children, style, renderMarkers, mapId, ...map
         followsUserLocation={false}
         showsUserLocation={true}
         style={styles.map}
+        onMapReady={handleMapReady}
         ref={map}
         {...mapProps}>
         {renderMarkers && renderMarkers()}

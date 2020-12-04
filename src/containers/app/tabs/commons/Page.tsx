@@ -1,5 +1,6 @@
 import { Box } from 'components/Box/Box';
 import { Title } from 'components/Typography/Typography';
+import { usePlatform } from 'hooks/usePlatform';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 
@@ -9,8 +10,12 @@ interface PageProps {
 
 const Page: React.FC<PageProps> = ({ title, children }) => {
 
+  const { isAndroid } = usePlatform();
+
+  const marginBottomAndroidStyle = { marginBottom: 8 }
+
   return (
-    <Container>
+    <Container >
       <Header p={"md"}>
         <Title>
           {title}
@@ -19,7 +24,7 @@ const Page: React.FC<PageProps> = ({ title, children }) => {
       <Content>
         {children}
       </Content>
-    </Container>
+    </Container >
 
   )
 }
@@ -37,5 +42,5 @@ const Header = styled(Box)`
 
 `
 const Content = styled.View`
-  flex:1
+  flex:1;
 `

@@ -59,7 +59,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ }) => {
           renderMarkers={renderOriginDestinationMarkers}
         />
       </MapContainer>
-      <Content>
+      <Content contentContainerStyle={{ padding: 8, paddingBottom: 32 }}>
         <RideSummary />
         <Subtitle>Conductor</Subtitle>
         <DriverContainer style={{ marginVertical: 8 }}>

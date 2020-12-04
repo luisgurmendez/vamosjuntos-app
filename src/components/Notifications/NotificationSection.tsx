@@ -18,7 +18,6 @@ const NotificationSection: React.FC<NotificationSectionProps> = ({ section, chil
       </Box>
     </Container>
   )
-
 }
 
 export default NotificationSection;

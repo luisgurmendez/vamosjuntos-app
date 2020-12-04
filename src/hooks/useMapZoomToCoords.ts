@@ -8,10 +8,13 @@ function useMapZoomToCoords(mapId: string, coords: [LatLng, LatLng], padding: nu
   const edgePadding = { top: padding, left: padding, right: padding, bottom: padding }
 
   useEffect(() => {
+    console.log('run efect')
     if (map) {
-      map.fitToCoordinates(coords, { edgePadding, animated: false });
+      console.log('map !== undefined, running fit coords')
+      console.log(map);
+      map.fitToCoordinates(coords, { edgePadding });
     }
-  }, [mapId, coords])
+  }, [map, coords])
 
 }
 

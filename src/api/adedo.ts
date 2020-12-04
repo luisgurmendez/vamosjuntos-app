@@ -5,7 +5,7 @@ import { AddressFromCoordsResponse, GetRidesResponse, LoginResponse } from './re
 import Storage from 'storage/Storage';
 
 const api = axios.create({
-  baseURL: 'http://192.168.1.14:80'
+  baseURL: 'http://192.168.1.8:8080'
 });
 
 api.interceptors.response.use((response) => {

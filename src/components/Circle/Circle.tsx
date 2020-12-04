@@ -6,7 +6,7 @@ interface CircleProps {
 }
 
 const Circle: React.FC<CircleProps> = ({ w = true, children }) => {
-  const [radius, setRadius] = useState(0);
+  const [radius, setRadius] = useState(30);
 
   const handleLayout = (event: LayoutChangeEvent) => {
     if (w) {

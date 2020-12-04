@@ -43,22 +43,22 @@ const Login: React.FC = () => {
   return (
     <DismissKeyboard>
       <Container>
-        <Header>
-          <PlainButton onPress={handleRegister}>
-            Registrate
-        </PlainButton>
-        </Header>
-        <Content>
-          <KeyboardShift>
+        <KeyboardShift>
+          <Header>
+            <PlainButton onPress={handleRegister}>
+              Registrate
+            </PlainButton>
+          </Header>
+          <Content>
             <CenteredContentBox mb="lg">
               <Logo size={200} />
             </CenteredContentBox>
             <LoginForm onSuccessfullLogin={handleSuccessfullLogin} />
             <PlainButton onPress={handleForgotPassword}>
               Me olvide la contraseña 🤦🏼‍♂️
-        </PlainButton>
-          </KeyboardShift>
-        </Content>
+              </PlainButton>
+          </Content>
+        </KeyboardShift>
       </Container>
     </DismissKeyboard>
   );
@@ -78,6 +78,7 @@ const Content = styled.View`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding-horizontal: 16px;
 `
 
 const Header = styled.View`

@@ -1,3 +1,4 @@
+import { usePlatform } from 'hooks/usePlatform';
 import React, { useEffect, useRef } from 'react';
 import { Animated, Dimensions, Keyboard, StyleSheet, TextInput } from 'react-native';
 import DismissKeyboard from './DismissKeyboardView';
@@ -8,6 +9,7 @@ const ANIMATION_SPEED = 300;
 
 const KeyboardShift: React.FC = ({ children }) => {
   const shift = useRef(new Animated.Value(0)).current;
+  const { isAndroid } = usePlatform();
 
   const handleKeyboardDidHide = () => {
     Animated.timing(shift, {
@@ -21,6 +23,7 @@ const KeyboardShift: React.FC = ({ children }) => {
     const { height: windowHeight } = Dimensions.get('window');
     const keyboardHeight = event.endCoordinates.height;
     const focusedInputRef = TextInputState.currentlyFocusedInput();
+
     if (focusedInputRef) {
       focusedInputRef.measure((originX, originY, width, height, pageX, pageY) => {
         const fieldHeight = height;
@@ -39,14 +42,17 @@ const KeyboardShift: React.FC = ({ children }) => {
   };
 
   useEffect(() => {
-    const keyboardDidShowSub = Keyboard.addListener('keyboardWillShow', handleKeyboardDidShow);
-    const keyboardDidHideSub = Keyboard.addListener('keyboardWillHide', handleKeyboardDidHide);
+    const showEvent = isAndroid ? 'keyboardDidShow' : 'keyboardWillShow'
+    const hideEvent = isAndroid ? 'keyboardDidHide' : 'keyboardWillHide'
+
+    const keyboardDidShowSub = Keyboard.addListener(showEvent, handleKeyboardDidShow);
+    const keyboardDidHideSub = Keyboard.addListener(hideEvent, handleKeyboardDidHide);
 
     return () => {
       keyboardDidShowSub.remove();
       keyboardDidHideSub.remove();
     };
-  }, [handleKeyboardDidHide, handleKeyboardDidShow]);
+  }, [handleKeyboardDidHide, handleKeyboardDidShow, isAndroid]);
 
   return (
     <Animated.View style={[styles.container, { transform: [{ translateY: shift }] }]}>

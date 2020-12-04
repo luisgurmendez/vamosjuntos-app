@@ -30,4 +30,4 @@ const Container = styled.TouchableOpacity`
   overflow: hidden;
   width: 100%;
   background-color: white;
-  `
+`
