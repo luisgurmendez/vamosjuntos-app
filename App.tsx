@@ -11,6 +11,7 @@ import { enableScreens } from 'react-native-screens';
 import store from 'state/store';
 import { Provider } from 'react-redux';
 import Camera from 'components/Camera/Camera';
+import AppCrashHandler from 'containers/AppCrashHandler';
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -21,11 +22,11 @@ const App = () => {
   return (
     <NavigationContainer>
       <Provider store={store}>
-        <MapProvider>
-          <Camera />
-          <Toaster />
-          <RootNavigation />
-        </MapProvider>
+        <AppCrashHandler>
+          <MapProvider>
+            <RootNavigation />
+          </MapProvider>
+        </AppCrashHandler>
       </Provider>
     </NavigationContainer>
   );

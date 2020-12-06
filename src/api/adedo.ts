@@ -1,38 +1,7 @@
-import axios, { CancelToken } from 'axios';
-import { Address, Ride } from 'types/models';
-import { Tokens } from 'types/tokens';
-import { AddressFromCoordsResponse, GetRidesResponse, LoginResponse } from './responses';
-import Storage from 'storage/Storage';
-
-const api = axios.create({
-  baseURL: 'http://192.168.1.8:8080'
-});
-
-api.interceptors.response.use((response) => {
-  return response;
-});
-
-api.interceptors.request.use(async req => {
-  // TODO: move since this will exectue everytime user makes a request.
-  // Maybe use axios.defaults.headers.common['Authorization'] = token;  instead.
-  const accessToken = await Storage.getItem<Tokens>(Storage.TOKENS);
-  if (accessToken && Object.keys(accessToken).length !== 0) {
-    req.headers.Authorization = accessToken.token
-  }
-  return req;
-})
-
-export const getCancelTokenSource = () => {
-  return axios.CancelToken.source();
-}
-
-export const login = async (username: string, password: string): Promise<Tokens | undefined> => {
-  const response = await api.post<LoginResponse>('/auth/login', { username, password });
-  console.log(response.data.success);
-  if (response.data.success) {
-    return { token: response.data.token, refreshToken: response.data.refreshToken };
-  }
-};
+import { CancelToken } from 'axios';
+import { Address, Ride, User } from 'types/models';
+import { api } from './api';
+import { AddressFromCoordsResponse, GetRidesResponse } from './responses';
 
 export const getRides = async (): Promise<Ride[]> => {
   const response = await api.get<GetRidesResponse>('/ride/all');
@@ -42,9 +11,21 @@ export const getRides = async (): Promise<Ride[]> => {
   return [];
 };
 
-export const getAddressFromCoords = async (latitude: number, longitude: number, opts?: { cancelToken: CancelToken }): Promise<Address> => {
+export const ping = async () => {
+  api.get('/status');
+}
+
+export const getAddressFromCoords = async (
+  latitude: number,
+  longitude: number,
+  opts?: { cancelToken: CancelToken }
+): Promise<Address> => {
+  console.log('getAddrss')
   const latlng = { latitude: latitude, longitude: longitude }
-  const response = await api.get<AddressFromCoordsResponse>(`/address/geo?latitude=${latitude}&longitude=${longitude}`, { cancelToken: opts?.cancelToken });
+  const response = await api.get<AddressFromCoordsResponse>(
+    `/address/geo?latitude=${latitude}&longitude=${longitude}`,
+    { cancelToken: opts?.cancelToken }
+  );
   console.log(response);
   if (response.data) {
     return { ...latlng, city: response.data.city, department: response.data.department };

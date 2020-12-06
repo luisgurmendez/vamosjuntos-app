@@ -14,9 +14,10 @@ import { Address } from 'types/models';
 import addressFactory from 'factories/address';
 import Map from 'components/Map/Map';
 import { Region } from 'react-native-maps';
-import { getAddressFromCoords, getCancelTokenSource } from 'api/adedo';
+import { getAddressFromCoords } from 'api/adedo';
 import Axios, { CancelTokenSource } from 'axios';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
+import { getCancelTokenSource } from 'api/api';
 
 interface SelectAddressModalProps {
   open: boolean;
@@ -25,6 +26,8 @@ interface SelectAddressModalProps {
   mapId?: string;
 }
 
+
+//TODO cant close or select address FIX THIS, check past commits 47412b53a58fbb519fe7b545d3bbf50efb82e3ee
 const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   open,
   onClose,
@@ -55,7 +58,6 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
     }
 
     const _cancelTokenSource = getCancelTokenSource();
-    // _cancelTokenSource.token.reason = { message: 'chupame la verga' }
     cancelTokenSource.current = _cancelTokenSource;
 
     try {
@@ -74,12 +76,12 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   };
 
   return (
-    <Modal isVisible={open} useNativeDriver={false} coverScreen style={{ margin: 0 }} hasBackdrop={false}>
+    <Modal isVisible={open} useNativeDriver={false} coverScreen style={{ margin: 0, zIndex: 100 }} hasBackdrop={false}>
       <Content>
         <CloseContainer>
           <PressableIcon onPress={onClose} size={30} name={'x'} color={colors.black} />
         </CloseContainer>
-        <Map onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={handleLocationChange} mapId={mapId}>
+        <Map style={{ borderWidth: 3 }} onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={handleLocationChange} mapId={mapId}>
           <SelectAddressMarker lifted={isMovingMap} />
         </Map>
       </Content>
@@ -106,6 +108,7 @@ const CloseContainer = styled.SafeAreaView`
   position: absolute;
   margin-left: 24px;
   z-index: 10;
+  border-width:3px;
 `;
 
 const Content = styled.View`

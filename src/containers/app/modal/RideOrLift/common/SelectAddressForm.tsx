@@ -25,6 +25,12 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
     []
   );
 
+
+  const handleCloseAddressModal = () => {
+    console.log('presseddd')
+    setSelectAddressOpen(false)
+  }
+
   const handleSelectAddressFromMap = (address: Address) => {
     setIsNewAddress(true);
     onSelectAddress && onSelectAddress(address);
@@ -71,7 +77,7 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
       )}
       <SelectAddressModal
         onSelectAddress={handleSelectAddressFromMap}
-        onClose={() => setSelectAddressOpen(false)}
+        onClose={handleCloseAddressModal}
         open={selectAddressOpen}
       />
     </Container>

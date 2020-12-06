@@ -1,4 +1,4 @@
-import { Ride } from 'types/models';
+import { Ride, User } from 'types/models';
 import { Tokens } from 'types/tokens';
 
 interface BaseResponse {
@@ -16,4 +16,12 @@ export interface LoginResponse extends BaseResponse, Tokens {
 export interface AddressFromCoordsResponse extends BaseResponse {
   city: string;
   department: string;
+}
+
+export interface RegisterResponse extends BaseResponse {
+  user: User;
+}
+
+export interface ForgotPasswordResponse extends BaseResponse {
+
 }

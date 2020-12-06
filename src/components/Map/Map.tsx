@@ -32,7 +32,7 @@ const Map: React.FC<MapProps> = ({ children, style, renderMarkers, mapId, ...map
   }, [map.current, addMap, removeMap, mapReady]);
 
   return (
-    <MapContainer>
+    <MapContainer style={style}>
       <MapView
         userLocationAnnotationTitle=""
         showsCompass={false}

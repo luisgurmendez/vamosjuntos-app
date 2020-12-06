@@ -8,7 +8,7 @@ import PlainButton from 'components/Button/PlainButton';
 import { Box } from 'components/Box/Box';
 import Logo from 'components/Logo/Logo';
 import KeyboardShift from 'components/Keyboard/KeyboardShift';
-import { login } from 'api/adedo';
+import { login } from 'api/auth';
 import Storage from 'storage/Storage';
 import Toaster from 'components/Toaster/Toaster';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
