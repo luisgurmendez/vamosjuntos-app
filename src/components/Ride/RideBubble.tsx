@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Shadow from 'components/Shadow/Shadow';
-import RideSummary from './RideSummary';
+import RideDetailsSummary from './RideDetailsSummary';
 import { Stylable } from 'components/types';
 import { Ride } from 'types/models';
 
@@ -15,7 +15,7 @@ const RideBubble: React.FC<RideBubbleProps> = ({ style, ride, onPress }) => {
   return (
     <Shadow>
       <Container onPress={onPress} style={style}>
-        <RideSummary ride={ride} />
+        <RideDetailsSummary ride={ride} />
       </Container>
     </Shadow>
   );

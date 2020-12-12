@@ -3,7 +3,7 @@ import { Tokens } from 'types/tokens';
 import Storage from 'storage/Storage';
 
 export const api = axios.create({
-  baseURL: 'http://192.168.1.9:80'
+  baseURL: 'http://35.199.116.28:3000'
 });
 
 api.interceptors.response.use((response) => {

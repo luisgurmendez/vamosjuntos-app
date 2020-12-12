@@ -11,7 +11,7 @@ interface RideSummaryProps {
   ride?: Ride;
 }
 
-const RideSummary: React.FC<RideSummaryProps> = ({ ride }) => {
+const RideDetailsSummary: React.FC<RideSummaryProps> = ({ ride }) => {
 
   return (
     <Container>
@@ -30,7 +30,7 @@ const RideSummary: React.FC<RideSummaryProps> = ({ ride }) => {
   )
 }
 
-export default RideSummary;
+export default RideDetailsSummary;
 
 const Container = styled.View`
   display: flex;

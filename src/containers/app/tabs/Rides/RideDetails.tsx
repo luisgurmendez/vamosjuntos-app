@@ -5,16 +5,13 @@ import Map from 'components/Map/Map';
 import useMapZoomToCoords from 'hooks/useMapZoomToCoords';
 import useCleanScreenBeforeNavigationRemoval from 'hooks/useCleanScreenBeforeNavigationRemoval';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
-import { alpha, colors } from 'utils/colors';
+import { colors } from 'utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
-import { LargeBody, Subtitle } from 'components/Typography/Typography';
+import { Subtitle } from 'components/Typography/Typography';
 import Shadow from 'components/Shadow/Shadow';
-import Icon from 'react-native-vector-icons/Feather';
-import { getDateText } from 'utils/date';
-import moment from 'moment';
 import { StatusBar } from 'react-native';
-import RideSummary from 'components/Ride/RideSummary';
+import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
 
 interface RideDetailsProps {
 }
@@ -60,7 +57,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ }) => {
         />
       </MapContainer>
       <Content contentContainerStyle={{ padding: 8, paddingBottom: 32 }}>
-        <RideSummary />
+        <RideDetailsSummary />
         <Subtitle>Conductor</Subtitle>
         <DriverContainer style={{ marginVertical: 8 }}>
           <ProfilePicPlaceholder size={50} />

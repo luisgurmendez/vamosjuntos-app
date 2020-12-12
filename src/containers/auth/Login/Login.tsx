@@ -8,10 +8,12 @@ import PlainButton from 'components/Button/PlainButton';
 import { Box } from 'components/Box/Box';
 import Logo from 'components/Logo/Logo';
 import KeyboardShift from 'components/Keyboard/KeyboardShift';
-import { login } from 'api/auth';
+import { getUser, login } from 'api/auth';
 import Storage from 'storage/Storage';
 import Toaster from 'components/Toaster/Toaster';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
+import { useDispatch } from 'react-redux';
+import { setUser } from 'state/user/actions';
 
 export interface LoginValues {
   username: string;
@@ -21,12 +23,14 @@ export interface LoginValues {
 const Login: React.FC = () => {
 
   const navigation: StackNavigationAPI = useNavigation<any>();
+  const dispatch = useDispatch();
 
   const handleSuccessfullLogin = async (values: LoginValues) => {
     try {
       const tokens = await login(values.username, values.password);
       await Storage.setItem(Storage.TOKENS, tokens);
-      navigation.navigate(Screens.APP);
+      const user = await getUser();
+      dispatch(setUser(user))
     } catch (e) {
       Toaster.alert({ message: 'Contraseña o usuario incorrecta' });
     }

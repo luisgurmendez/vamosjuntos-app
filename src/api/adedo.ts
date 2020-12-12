@@ -1,7 +1,7 @@
 import { CancelToken } from 'axios';
-import { Address, Ride, User } from 'types/models';
+import { Address, Ride, User, Notification } from 'types/models';
 import { api } from './api';
-import { AddressFromCoordsResponse, GetRidesResponse } from './responses';
+import { AddressFromCoordsResponse, GetNotificationsResponse, GetRidesResponse } from './responses';
 
 export const getRides = async (): Promise<Ride[]> => {
   const response = await api.get<GetRidesResponse>('/ride/all');
@@ -20,7 +20,6 @@ export const getAddressFromCoords = async (
   longitude: number,
   opts?: { cancelToken: CancelToken }
 ): Promise<Address> => {
-  console.log('getAddrss')
   const latlng = { latitude: latitude, longitude: longitude }
   const response = await api.get<AddressFromCoordsResponse>(
     `/address/geo?latitude=${latitude}&longitude=${longitude}`,
@@ -32,5 +31,12 @@ export const getAddressFromCoords = async (
   }
 
   return latlng;
-
 }
+
+export const getNotifications = async (): Promise<Notification[]> => {
+  const response = await api.get<GetNotificationsResponse>('/notification/all');
+  if (response.data.success) {
+    return response.data.notifications;
+  }
+  return [];
+};

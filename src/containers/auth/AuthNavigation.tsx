@@ -10,6 +10,7 @@ enableScreens();
 const Stack = createNativeStackNavigator();
 
 const AuthNavigation: React.FC = () => {
+
   return (
     <Stack.Navigator
       screenOptions={{

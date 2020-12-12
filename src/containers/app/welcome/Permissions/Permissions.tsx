@@ -1,6 +1,5 @@
 import Toaster from 'components/Toaster/Toaster';
 import { Title } from 'components/Typography/Typography';
-import useCheckAndRequestPermission from 'hooks/useCheckAndRequestPermission';
 import useNeedLocationPermissions from 'hooks/useNeedLocationPermissions';
 import React, { useEffect } from 'react'
 import styled from 'styled-components/native';

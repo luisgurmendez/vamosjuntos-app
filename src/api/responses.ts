@@ -1,4 +1,4 @@
-import { Ride, User } from 'types/models';
+import { Ride, User, Notification } from 'types/models';
 import { Tokens } from 'types/tokens';
 
 interface BaseResponse {
@@ -7,6 +7,10 @@ interface BaseResponse {
 
 export interface GetRidesResponse extends BaseResponse {
   rides: Ride[];
+}
+
+export interface GetNotificationsResponse extends BaseResponse {
+  notifications: Notification[];
 }
 
 export interface LoginResponse extends BaseResponse, Tokens {
@@ -24,4 +28,10 @@ export interface RegisterResponse extends BaseResponse {
 
 export interface ForgotPasswordResponse extends BaseResponse {
 
+}
+
+export interface RefreshTokenResponse extends BaseResponse, Tokens { }
+
+export interface GetUserResponse extends BaseResponse {
+  user: User;
 }

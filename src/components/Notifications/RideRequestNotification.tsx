@@ -4,11 +4,14 @@ import { Body, Bold } from 'components/Typography/Typography';
 import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
+import { Notification } from 'types/models';
 import { colors } from 'utils/colors';
 
-interface RideRequestNotification extends Stylable { }
+interface RideRequestNotification extends Stylable {
+  notification: Notification;
+}
 
-const RideRequestNotification: React.FC<RideRequestNotification> = ({ style }) => {
+const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, notification }) => {
 
   return (
     <Container style={style}>

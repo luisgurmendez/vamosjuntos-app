@@ -1,16 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
-import { Box } from 'components/Box/Box';
-import MarginedChildren from 'components/Box/MarginedChildren';
-import RideBubble from 'components/Ride/RideBubble';
-import { Subtitle } from 'components/Typography/Typography';
 import { Screens } from 'containers/Screens';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { getCompletedRides, getPendingRides } from 'state/ride/selectors';
 import styled from 'styled-components/native';
 import Page from '../commons/Page';
+import RidesList from './RidesList';
+import NoRides from './NoRides';
 
 const Rides: React.FC = () => {
 
   const nav: any = useNavigation();
+  const pendingRides = useSelector(getPendingRides);
+  const completedRides = useSelector(getCompletedRides);
+
+  const hasRides = pendingRides.length > 0 && completedRides.length > 0;
 
   const handleRidePress = () => {
     console.log(nav);
@@ -20,29 +24,17 @@ const Rides: React.FC = () => {
   return (
     <Page title="Viajes">
       <Container>
-        <Subtitle>Pendientes</Subtitle>
-        <Box pb="lg">
-          <MarginedChildren mt="md">
-            <RideBubble onPress={handleRidePress} />
-            <RideBubble />
-            <RideBubble />
-            <RideBubble />
-            <RideBubble />
-            <RideBubble />
-            <RideBubble />
-            <RideBubble />
-            <RideBubble />
-            <RideBubble />
-            <RideBubble />
-            <RideBubble />
-          </MarginedChildren>
-        </Box>
-
+        {!hasRides && <NoRides />}
+        {hasRides &&
+          <>
+            <RidesList title="Pendientes" rides={pendingRides} />
+            <RidesList title="Completados" rides={completedRides} />
+          </>
+        }
       </Container>
     </Page>
   );
 }
-
 
 
 export default Rides;

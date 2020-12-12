@@ -81,7 +81,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
         <CloseContainer>
           <PressableIcon onPress={onClose} size={30} name={'x'} color={colors.black} />
         </CloseContainer>
-        <Map style={{ borderWidth: 3 }} onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={handleLocationChange} mapId={mapId}>
+        <Map onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={handleLocationChange} mapId={mapId}>
           <SelectAddressMarker lifted={isMovingMap} />
         </Map>
       </Content>
@@ -108,7 +108,6 @@ const CloseContainer = styled.SafeAreaView`
   position: absolute;
   margin-left: 24px;
   z-index: 10;
-  border-width:3px;
 `;
 
 const Content = styled.View`

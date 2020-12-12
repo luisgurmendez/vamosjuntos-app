@@ -14,6 +14,7 @@ class Storage {
   public static CREATED = 'created';
   public static ADDRESSES = 'addresses';
   public static TOKENS = 'tokens';
+  public static SHOULD_WELCOME = 'shouldWelcome';
 
   static async isInitialized() {
     const created = await AsyncStorage.getItem(this.CREATED);
@@ -25,7 +26,9 @@ class Storage {
     if (!inited) {
       await AsyncStorage.setItem(Storage.CREATED, 'true');
       await AsyncStorage.setItem(Storage.ADDRESSES, '[]');
-      await AsyncStorage.setItem(Storage.TOKENS, '{}');
+      await AsyncStorage.setItem(Storage.SHOULD_WELCOME, 'true');
+
+      // await AsyncStorage.setItem(Storage.TOKENS, '{}');
     }
   }
 
@@ -73,6 +76,13 @@ class Storage {
       }
     }
     return undefined;
+  }
+
+  static async removeItem(key: string, errorCb?: ErrorCallback): Promise<void> {
+    const inited = await Storage.isInitialized();
+    if (inited) {
+      await AsyncStorage.removeItem(key, errorCb);
+    }
   }
 }
 export default Storage;

@@ -8,24 +8,33 @@ import Review from './modal/Review/Review';
 import styled from 'styled-components/native';
 import Toaster from 'components/Toaster/Toaster';
 import Camera from 'components/Camera/Camera';
+import AppInitialDataFetcher from './AppInitialDataFetcher';
+import WelcomeNavigation from 'containers/app/welcome/WelcomeNavigation';
 
 const Stack = createStackNavigator();
 
 const AppNavigation: React.FC = () => {
+
+  const shouldShowWelcome = false;
+
   return (
     <AppContainer>
       <Camera />
       <Toaster />
-      <Stack.Navigator
-        screenOptions={{
-          headerBackTitle: 'Atras',
-          headerShown: false
-        }}>
-        <Stack.Screen name={Screens.TABS} component={TabsNavigation} />
-        <Stack.Screen name={Screens.LIFT} component={LiftStack} />
-        <Stack.Screen name={Screens.REVIEW} component={Review} />
-        <Stack.Screen name={Screens.RIDE} component={Profile} />
-      </Stack.Navigator>
+      <AppInitialDataFetcher>
+        <Stack.Navigator
+          initialRouteName={shouldShowWelcome ? Screens.WELCOME : Screens.TABS}
+          screenOptions={{
+            headerBackTitle: 'Atras',
+            headerShown: false
+          }}>
+          <Stack.Screen name={Screens.TABS} component={TabsNavigation} />
+          <Stack.Screen name={Screens.LIFT} component={LiftStack} />
+          <Stack.Screen name={Screens.REVIEW} component={Review} />
+          <Stack.Screen name={Screens.RIDE} component={Profile} />
+          <Stack.Screen name={Screens.WELCOME} component={WelcomeNavigation} />
+        </Stack.Navigator>
+      </AppInitialDataFetcher>
     </AppContainer>
   );
 };

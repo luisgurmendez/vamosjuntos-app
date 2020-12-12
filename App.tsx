@@ -1,20 +1,23 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { Children } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { MapProvider } from 'components/Map/MapProvider';
 import useInitStorage from 'hooks/useInitStorage';
 import moment from 'moment';
 import localization from 'moment/locale/es';
 import RootNavigation from 'containers/RootNavigation';
-import Toaster from 'components/Toaster/Toaster';
 import { enableScreens } from 'react-native-screens';
 import store from 'state/store';
 import { Provider } from 'react-redux';
-import Camera from 'components/Camera/Camera';
 import AppCrashHandler from 'containers/AppCrashHandler';
+import useIsAppReady from 'hooks/useIsAppReady';
+import { LogBox, View } from 'react-native';
+import { Title } from 'components/Typography/Typography';
 
 enableScreens();
 moment.updateLocale('es', localization);
+
+LogBox.ignoreAllLogs();
 
 const App = () => {
   useInitStorage();
@@ -23,9 +26,11 @@ const App = () => {
     <NavigationContainer>
       <Provider store={store}>
         <AppCrashHandler>
-          <MapProvider>
-            <RootNavigation />
-          </MapProvider>
+          <SetupApp>
+            <MapProvider>
+              <RootNavigation />
+            </MapProvider>
+          </SetupApp>
         </AppCrashHandler>
       </Provider>
     </NavigationContainer>
@@ -33,3 +38,18 @@ const App = () => {
 };
 
 export default App;
+
+
+const SetupApp: React.FC = ({ children }) => {
+
+  const isReady = useIsAppReady();
+
+  if (isReady) {
+    return <>{children}</>;
+  }
+
+  return <View>
+    <Title>Splashscreen!</Title>
+  </View>
+
+}

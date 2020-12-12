@@ -23,6 +23,27 @@ export interface Passenger {
   whereFrom: Address;
 }
 
+export enum NotificationType {
+  RIDE_CANCELED = 'RIDE_CANCELED',
+  RIDE_KICKED_OUT = 'RIDE_KICKED_OUT',
+  RIDE_REQUEST = 'RIDE_REQUEST',
+  RIDE_REQUEST_ACCEPTED = 'RIDE_REQUEST_ACCEPTED',
+  RIDE_REQUEST_REFUSED = 'RIDE_REFUSED',
+  RIDE_DROPED_OUT = 'RIDE_DROPED_OUT'
+}
+
+export interface NotificationContext {
+  userId?: string;
+  rideId?: string;
+}
+
+export interface Notification {
+  id: number;
+  type: NotificationType;
+  user: User;
+  context: NotificationContext;
+}
+
 export enum RideStatus {
   COMPLETED = 'COMPLETED',
   CANCELED = 'CANCELED',
