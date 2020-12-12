@@ -9,6 +9,10 @@ export interface GetRidesResponse extends BaseResponse {
   rides: Ride[];
 }
 
+export interface GetRideDetailsResponse extends BaseResponse {
+  ride: Ride;
+}
+
 export interface GetNotificationsResponse extends BaseResponse {
   notifications: Notification[];
 }

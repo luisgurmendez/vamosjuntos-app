@@ -1,30 +1,22 @@
-import SomeOtherNotification from 'components/Notifications/SomeOtherNotification';
 import { Text, PlainInput, Subtitle, SmallBody } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
 import React, { useEffect, useState } from 'react';
 import EditProfilePicButton from './EditProfilePicButton';
 import ScoreDisplay from 'components/Score/Score'
-import { Alert, View } from 'react-native';
-import CommentList from 'components/Comment/CommentList';
 import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
 import { setShowCamera } from 'state/camera/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import PlainButton from 'components/Button/PlainButton';
 import EditHeaderActions from './EditHeaderActions';
-import { Box } from 'components/Box/Box';
 import { colors } from 'utils/colors';
 import ProfilePreference from './ProfilePreference';
 import NumberedIcon from 'components/NumberedIcon/NumberedIcon';
-import MarginedChildren from 'components/Box/MarginedChildren';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import EditPreferenceModal from './EditPreferenceModal';
-import useCleanScreenBeforeNavigationRemoval from 'hooks/useCleanScreenBeforeNavigationRemoval';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from 'containers/Screens';
 import { AppState } from 'state/types';
 import { User, UserPreference } from 'types/models';
 import moment from 'moment';
-import { getUserFullName } from 'utils/user';
 
 interface ProfileProps { }
 
@@ -63,7 +55,7 @@ const Profile: React.FC<ProfileProps> = () => {
 
   const handleNameChange = (name: string) => {
     setUser(user => {
-      return { ...user, firstName: name };
+      return { ...user, name: name };
     })
   }
 
@@ -89,7 +81,7 @@ const Profile: React.FC<ProfileProps> = () => {
           <ProfilePicPlaceholder size={160} />
           {editing && <EditProfilePicButton onPress={handleOpenCamera} />}
         </ProfileImageContainer>
-        {editing ? <NameInput onChangeText={handleNameChange} value={_user.firstName} /> : <Subtitle>{_user.firstName}</Subtitle>}
+        {editing ? <NameInput onChangeText={handleNameChange} value={_user.name} /> : <Subtitle>{_user.name}</Subtitle>}
         <ScoreTocuchableContainer disabled={editing} onPress={handleGoToComments}>
           <ScoreDisplay score={3.6} size={30} />
           <SmallBody>Ver 25 comentarios</SmallBody>

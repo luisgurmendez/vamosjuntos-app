@@ -22,8 +22,7 @@ export enum UserPreference {
 export interface User {
   id: string;
   ci: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   username: string;
   phone: string;
   createdAt: string;

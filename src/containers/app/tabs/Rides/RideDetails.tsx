@@ -1,5 +1,5 @@
 import RideMarker from 'components/Ride/RideMarker';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/native';
 import Map from 'components/Map/Map';
 import useMapZoomToCoords from 'hooks/useMapZoomToCoords';
@@ -7,16 +7,18 @@ import PressableIcon from 'components/PressableIcon/PressableIcon';
 import { colors } from 'utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import { Subtitle } from 'components/Typography/Typography';
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
 import { Ride } from 'types/models';
 import UserInRide from './UserInRide';
+import { getRideDetails } from 'api/adedo';
+import HideIfLoading from 'components/Loading/HideIfLoading';
 
 interface RideDetailsProps {
-  route: { params: { ride: Ride } };
+  ride: Ride;
 }
 
-const RideDetails: React.FC<RideDetailsProps> = ({ route: { params: { ride } } }) => {
+const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
 
   const mapId = "ride Map id"
 
@@ -40,34 +42,28 @@ const RideDetails: React.FC<RideDetailsProps> = ({ route: { params: { ride } } }
   }
 
   return (
-    <View style={{ flex: 1 }} pointerEvents="box-none">
-      <Container>
-        <StatusBar hidden />
-        <AbsoluteSafeArea>
-          <PositionedPressableIcon onPress={handleClose} name="x" size={30} color={colors.black} />
-        </AbsoluteSafeArea>
-        <MapContainer>
-          <Map
-            mapId={mapId}
-            showsUserLocation={false}
-            renderMarkers={renderOriginDestinationMarkers}
-          />
-        </MapContainer>
-        <Content contentContainerStyle={{ padding: 8, paddingBottom: 32 }}>
-          <RideDetailsSummary ride={ride} />
-          <Subtitle>Conductor</Subtitle>
-          <UserInRide />
-          <Subtitle>Pasageros</Subtitle>
-          <UserInRide />
-          <UserInRide />
-          <UserInRide />
-        </Content>
-      </Container>
-    </View>
+    <Container>
+      <StatusBar hidden />
+      <AbsoluteSafeArea>
+        <PositionedPressableIcon onPress={handleClose} name="x" size={30} color={colors.black} />
+      </AbsoluteSafeArea>
+      <MapContainer>
+        <Map
+          mapId={mapId}
+          showsUserLocation={false}
+          renderMarkers={renderOriginDestinationMarkers}
+        />
+      </MapContainer>
+      <Content contentContainerStyle={{ padding: 8, paddingBottom: 32 }}>
+        <RideDetailsSummary ride={ride} />
+        <Subtitle>Conductor</Subtitle>
+        <UserInRide user={ride.driver} />
+        <Subtitle>Pasageros</Subtitle>
+        {ride.passengers.map(p => <UserInRide key={`passenger-${p.user.id}`} user={p.user} />)}
+      </Content>
+    </Container>
   )
 }
-
-export default RideDetails;
 
 const Container = styled.View`
   flex: 1;
@@ -95,3 +91,30 @@ const Content = styled.ScrollView`
   width: 100%;
   flex: 1;
 `
+
+interface RideDetailsWrapperProps {
+  route: { params: { rideId: string } }
+}
+
+const RideDetailsWrapper: React.FC<RideDetailsWrapperProps> = ({ route: { params: { rideId } } }) => {
+  const [rideWithDetails, setRideWithDetails] = useState<Ride | undefined>(undefined);
+  const [isFetchingRide, setIsFetchingRide] = useState(false);
+
+  useEffect(() => {
+    const asyncEffect = async () => {
+      setIsFetchingRide(true);
+      const rideDetails = await getRideDetails(rideId);
+      setRideWithDetails(rideDetails);
+      setIsFetchingRide(false);
+    }
+    asyncEffect();
+  }, [])
+
+  return (
+    <HideIfLoading loading={isFetchingRide}>
+      {rideWithDetails && <RideDetails ride={rideWithDetails} />}
+    </HideIfLoading>
+  )
+}
+
+export default RideDetailsWrapper;
