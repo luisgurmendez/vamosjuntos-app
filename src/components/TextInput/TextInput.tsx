@@ -7,6 +7,7 @@ import { View } from 'react-native';
 
 interface TextInputProps extends NativeTextInputProps {
   error?: string;
+
 }
 
 const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(({ error, style, ...textInputProps }, forwardedRef) => {

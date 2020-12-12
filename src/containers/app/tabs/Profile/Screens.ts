@@ -1,0 +1,6 @@
+enum PROFILE_SCREENS {
+  PROFILE = 'PROFILE',
+  COMMENTS = 'COMMENTS',
+}
+
+export default PROFILE_SCREENS;

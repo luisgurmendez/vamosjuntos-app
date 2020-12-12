@@ -3,32 +3,28 @@ import React from 'react'
 import styled from 'styled-components/native';
 import Map from 'components/Map/Map';
 import useMapZoomToCoords from 'hooks/useMapZoomToCoords';
-import useCleanScreenBeforeNavigationRemoval from 'hooks/useCleanScreenBeforeNavigationRemoval';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import { colors } from 'utils/colors';
 import { useNavigation } from '@react-navigation/native';
-import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
 import { Subtitle } from 'components/Typography/Typography';
-import Shadow from 'components/Shadow/Shadow';
-import { StatusBar } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
+import { Ride } from 'types/models';
+import UserInRide from './UserInRide';
 
 interface RideDetailsProps {
+  route: { params: { ride: Ride } };
 }
 
-const RideDetails: React.FC<RideDetailsProps> = ({ }) => {
+const RideDetails: React.FC<RideDetailsProps> = ({ route: { params: { ride } } }) => {
 
   const mapId = "ride Map id"
 
-  const origin = { latitude: -34.933927, longitude: -54.942109 };
-  const destination = { latitude: -34.533927, longitude: -54.342109 };
+  const origin = { latitude: ride.whereFrom.latitude, longitude: ride.whereFrom.longitude }
+  const destination = { latitude: ride.whereTo.latitude, longitude: ride.whereTo.longitude }
 
   const navigation = useNavigation();
   useMapZoomToCoords(mapId, [origin, destination], 30);
-
-  useCleanScreenBeforeNavigationRemoval(navigation => {
-    console.log('clean whatever..')
-  })
 
   const renderOriginDestinationMarkers = () => {
     return (
@@ -44,41 +40,31 @@ const RideDetails: React.FC<RideDetailsProps> = ({ }) => {
   }
 
   return (
-    <Container>
-      <StatusBar hidden />
-      <AbsoluteSafeArea>
-        <PositionedPressableIcon onPress={handleClose} name="x" size={30} color={colors.black} />
-      </AbsoluteSafeArea>
-      <MapContainer>
-        <Map
-          mapId={mapId}
-          showsUserLocation={false}
-          renderMarkers={renderOriginDestinationMarkers}
-        />
-      </MapContainer>
-      <Content contentContainerStyle={{ padding: 8, paddingBottom: 32 }}>
-        <RideDetailsSummary />
-        <Subtitle>Conductor</Subtitle>
-        <DriverContainer style={{ marginVertical: 8 }}>
-          <ProfilePicPlaceholder size={50} />
-        </DriverContainer>
-        <Subtitle>Pasageros</Subtitle>
-        <DriverContainer>
-          <ProfilePicPlaceholder size={50} />
-        </DriverContainer>
-        <DriverContainer>
-          <ProfilePicPlaceholder size={50} />
-        </DriverContainer>
-        <DriverContainer>
-          <ProfilePicPlaceholder size={50} />
-        </DriverContainer>
-        <DriverContainer>
-          <ProfilePicPlaceholder size={50} />
-        </DriverContainer>
-      </Content>
-    </Container>
+    <View style={{ flex: 1 }} pointerEvents="box-none">
+      <Container>
+        <StatusBar hidden />
+        <AbsoluteSafeArea>
+          <PositionedPressableIcon onPress={handleClose} name="x" size={30} color={colors.black} />
+        </AbsoluteSafeArea>
+        <MapContainer>
+          <Map
+            mapId={mapId}
+            showsUserLocation={false}
+            renderMarkers={renderOriginDestinationMarkers}
+          />
+        </MapContainer>
+        <Content contentContainerStyle={{ padding: 8, paddingBottom: 32 }}>
+          <RideDetailsSummary ride={ride} />
+          <Subtitle>Conductor</Subtitle>
+          <UserInRide />
+          <Subtitle>Pasageros</Subtitle>
+          <UserInRide />
+          <UserInRide />
+          <UserInRide />
+        </Content>
+      </Container>
+    </View>
   )
-
 }
 
 export default RideDetails;
@@ -108,28 +94,4 @@ const Content = styled.ScrollView`
   padding: 24px;
   width: 100%;
   flex: 1;
-`
-
-const DriverContainer = styled(Shadow)`
-  width: 100%;
-  padding: 8px;
-  background-color: ${colors.white};
-  border-radius: 8px;
-  margin-top: 10px;
-`
-
-const OriginDestinationContainer = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-vertical: 8px;
-`
-
-const AddressDisplay = styled.View`
-  flex:1;
-  justify-content: center;
-  align-items: center;
-  padding: 4px;
-  border-radius: 4px;
 `

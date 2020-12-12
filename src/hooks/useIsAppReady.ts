@@ -1,5 +1,6 @@
 import { getUser, refreshTokens } from "api/auth";
 import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { setUser } from "state/user/actions";
 import Storage from 'storage/Storage';

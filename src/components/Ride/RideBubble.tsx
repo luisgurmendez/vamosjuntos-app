@@ -7,7 +7,7 @@ import { Ride } from 'types/models';
 
 interface RideBubbleProps extends Stylable {
   onPress?: () => void;
-  ride?: Ride;
+  ride: Ride;
 }
 
 const RideBubble: React.FC<RideBubbleProps> = ({ style, ride, onPress }) => {

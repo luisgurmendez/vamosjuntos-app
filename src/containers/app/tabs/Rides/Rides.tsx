@@ -14,7 +14,7 @@ const Rides: React.FC = () => {
   const pendingRides = useSelector(getPendingRides);
   const completedRides = useSelector(getCompletedRides);
 
-  const hasRides = pendingRides.length > 0 && completedRides.length > 0;
+  const hasRides = pendingRides.length > 0 || completedRides.length > 0;
 
   const handleRidePress = () => {
     console.log(nav);

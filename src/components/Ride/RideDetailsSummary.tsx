@@ -5,27 +5,30 @@ import Icon from 'react-native-vector-icons/Feather';
 import styled from 'styled-components/native';
 import { Ride } from 'types/models';
 import { colors } from 'utils/colors';
-import { getDateText } from 'utils/date';
+import { getDateText, getTimeText } from 'utils/date';
 
 interface RideSummaryProps {
-  ride?: Ride;
+  ride: Ride;
 }
 
 const RideDetailsSummary: React.FC<RideSummaryProps> = ({ ride }) => {
+
+  const rideDate = moment(ride.date);
 
   return (
     <Container>
       <AddressContainer>
         <AddressDisplay>
-          <LargeBody>Maldonado,</LargeBody>
-          <Body>Punta del este</Body>
+          <LargeBody>{ride.whereFrom.department}</LargeBody>
+          {ride.whereFrom.city && <Body>{ride.whereFrom.city}</Body>}
         </AddressDisplay>
         <Icon name="arrow-right" color={colors.main} size={30} />
         <AddressDisplay>
-          <LargeBody>Maldonado</LargeBody>
+          <LargeBody>{ride.whereTo.department}</LargeBody>
+          {ride.whereTo.city && <Body>{ride.whereTo.city}</Body>}
         </AddressDisplay>
       </AddressContainer>
-      <Body>{getDateText(moment().add(5, 'days'))} a las 8:00 pm</Body>
+      <Body>{getDateText(rideDate)} {getTimeText(rideDate)}</Body>
     </Container>
   )
 }

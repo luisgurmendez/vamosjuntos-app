@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native';
-import { Subtitle } from '../../../../components/Typography/Typography';
+import { Subtitle } from 'components/Typography/Typography';
 
 interface NoRidesProps {
 }

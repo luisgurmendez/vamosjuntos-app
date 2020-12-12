@@ -23,7 +23,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccessfullLogin }) => {
     password: ''
   };
 
-
   return (
     <Container>
       <Formik<LoginValues> validationSchema={LoginFormSchema} initialValues={initialValues} onSubmit={onSuccessfullLogin}>
@@ -36,11 +35,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccessfullLogin }) => {
                 textContentType="username"
                 onChangeText={handleChange('username')}
                 value={values.username}
+                autoCapitalize="none"
               />
               <TextInput
                 placeholder="Contraseña"
                 error={errors.password}
                 secureTextEntry
+                autoCapitalize="none"
                 onChangeText={handleChange('password')}
                 value={values.password}
               />

@@ -11,3 +11,8 @@ export const getDateText = (date: moment.Moment): string => {
 
   return date.format('[El] dddd DD [de] MMMM');
 };
+
+
+export const getTimeText = (date: moment.Moment): string => {
+  return date.format('[a las ] HH:mm')
+}

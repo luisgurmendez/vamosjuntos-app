@@ -45,15 +45,15 @@ const Login: React.FC = () => {
   }
 
   return (
-    <DismissKeyboard>
-      <Container>
-        <KeyboardShift>
-          <Header>
-            <PlainButton onPress={handleRegister}>
-              Registrate
+    <Container>
+      <KeyboardShift>
+        <Header>
+          <PlainButton onPress={handleRegister}>
+            Registrate
             </PlainButton>
-          </Header>
-          <Content>
+        </Header>
+        <Content>
+          <DismissKeyboard>
             <CenteredContentBox mb="lg">
               <Logo size={200} />
             </CenteredContentBox>
@@ -61,10 +61,10 @@ const Login: React.FC = () => {
             <PlainButton onPress={handleForgotPassword}>
               Me olvide la contraseña 🤦🏼‍♂️
               </PlainButton>
-          </Content>
-        </KeyboardShift>
-      </Container>
-    </DismissKeyboard>
+          </DismissKeyboard>
+        </Content>
+      </KeyboardShift>
+    </Container>
   );
 };
 

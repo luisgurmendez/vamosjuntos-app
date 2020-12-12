@@ -17,6 +17,7 @@ const Notifications: React.FC = () => {
   const [refreshing, setRefreshing] = React.useState(false);
   const dispatch = useDispatch();
   const notifications = useSelector((state: AppState) => state.notification.notifications)
+  const hasNotifications = notifications.length > 0;
 
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
@@ -27,29 +28,30 @@ const Notifications: React.FC = () => {
 
   const handleScroll = (ev: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { layoutMeasurement, contentOffset, contentSize } = ev.nativeEvent;
-    const paddingToBottom = 40;
-    if (layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
-      &&
-      contentOffset.y > -paddingToBottom
-      && !refreshing
-    ) {
-      Toaster.info("Reached bottom :)")
-      onRefresh();
+    if (hasNotifications) {
+
+      const paddingToBottom = 40;
+      if (layoutMeasurement.height + contentOffset.y >=
+        contentSize.height - paddingToBottom
+        &&
+        contentOffset.y > -paddingToBottom
+        && !refreshing
+      ) {
+        Toaster.info("Reached bottom :)")
+        onRefresh();
+      }
     }
   };
 
-  const hasNotificaitons = notifications.length > 0;
-
   return (
     <Page title="Notificaciones">
-      {hasNotificaitons ?
-        <Container
-          scrollEventThrottle={400}
-          onScroll={handleScroll}
-          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={false} />
-          }
-        >
+      <Container
+        scrollEventThrottle={400}
+        onScroll={handleScroll}
+        refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={false} />
+        }
+      >
+        {hasNotifications ?
           <NotificationSection section="Ejemplo Notis 1">
             <Box pH="md">
               <MarginedChildren mb="md" applyToLast={false}>
@@ -57,10 +59,10 @@ const Notifications: React.FC = () => {
               </MarginedChildren>
             </Box>
           </NotificationSection>
-        </Container>
-        :
-        <NoNotifications />
-      }
+          :
+          <NoNotifications />
+        }
+      </Container>
     </Page>
   );
 }

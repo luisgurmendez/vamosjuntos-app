@@ -1,4 +1,5 @@
 import RIDE_SCREENS from "./Rides/Screens";
+import PROFILE_SCREENS from "./Profile/Screens";
 
 enum TAB_SCREENS {
   NOTIFICATIONS_TAB = 'NOTIFICATIONS_TAB',
@@ -7,4 +8,4 @@ enum TAB_SCREENS {
   RIDES_TAB = 'RIDES_TAB'
 }
 
-export default { ...TAB_SCREENS, ...RIDE_SCREENS };
+export default { ...TAB_SCREENS, ...RIDE_SCREENS, ...PROFILE_SCREENS };

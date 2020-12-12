@@ -1,3 +1,3 @@
 export { ProfileTabOptions } from './ProfileTabOptions';
-import Profile from './Profile';
-export default Profile;
+import ProfileNavigation from './ProfileNavigation';
+export default ProfileNavigation;

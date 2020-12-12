@@ -7,6 +7,18 @@ export interface Address {
   district?: string;
 }
 
+export enum UserPreference {
+  PET = 'pet',
+  NO_PETS = 'noPets',
+  MUSIC = 'music',
+  NO_MUSIC = 'noMusic',
+  SMOKE = 'smoke',
+  NO_SMOKE = 'noSmoke',
+  TALK = 'talk',
+  NO_TALK = 'noTalk',
+  ALWAYS_MASK = 'alwaysMask'
+}
+
 export interface User {
   id: string;
   ci: string;
@@ -14,6 +26,8 @@ export interface User {
   lastName: string;
   username: string;
   phone: string;
+  createdAt: string;
+  preferences: UserPreference[]
 }
 
 export interface Passenger {
