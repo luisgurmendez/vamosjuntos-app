@@ -10,6 +10,8 @@ import Toaster from 'components/Toaster/Toaster';
 import Camera from 'components/Camera/Camera';
 import AppInitialDataFetcher from './AppInitialDataFetcher';
 import WelcomeNavigation from 'containers/app/welcome/WelcomeNavigation';
+import UserProfile from './modal/UserProfile/UserProfile';
+import Comments from './modal/Comments/Comments';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +34,8 @@ const AppNavigation: React.FC = () => {
           <Stack.Screen name={Screens.LIFT} component={LiftStack} />
           <Stack.Screen name={Screens.REVIEW} component={Review} />
           <Stack.Screen name={Screens.RIDE} component={Profile} />
+          <Stack.Screen name={Screens.USER_PROFILE} component={UserProfile} />
+          <Stack.Screen name={Screens.COMMENTS} component={Comments} />
           <Stack.Screen name={Screens.WELCOME} component={WelcomeNavigation} />
         </Stack.Navigator>
       </AppInitialDataFetcher>

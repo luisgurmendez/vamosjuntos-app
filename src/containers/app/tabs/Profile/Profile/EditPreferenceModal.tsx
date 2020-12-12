@@ -3,7 +3,7 @@ import Modal from 'react-native-modal';
 import { Subtitle } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
 import { Box } from 'components/Box/Box';
-import PreferenceIcon from './PreferenceIcon';
+import PreferenceIcon from 'components/Profile/PreferenceIcon';
 import { UserPreference } from 'types/models';
 import { colors } from 'utils/colors';
 import { removeItem } from 'utils/array';

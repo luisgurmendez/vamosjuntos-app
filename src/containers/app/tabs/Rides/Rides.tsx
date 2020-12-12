@@ -4,7 +4,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { getCompletedRides, getPendingRides } from 'state/ride/selectors';
 import styled from 'styled-components/native';
-import Page from '../commons/Page';
+import Page from 'components/Page/Page';
 import RidesList from './RidesList';
 import NoRides from './NoRides';
 

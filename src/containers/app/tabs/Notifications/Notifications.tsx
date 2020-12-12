@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setNotifications } from 'state/notification/actions';
 import { AppState } from 'state/types';
 import styled from 'styled-components/native';
-import Page from '../commons/Page';
+import Page from 'components/Page/Page';
 import NoNotifications from './NoNotifications';
 
 const Notifications: React.FC = () => {

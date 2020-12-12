@@ -1,22 +1,22 @@
-import { Text, PlainInput, Subtitle, SmallBody } from 'components/Typography/Typography';
+import { PlainInput, Subtitle } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
 import React, { useEffect, useState } from 'react';
 import EditProfilePicButton from './EditProfilePicButton';
-import ScoreDisplay from 'components/Score/Score'
 import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
 import { setShowCamera } from 'state/camera/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import EditHeaderActions from './EditHeaderActions';
 import { colors } from 'utils/colors';
-import ProfilePreference from './ProfilePreference';
-import NumberedIcon from 'components/NumberedIcon/NumberedIcon';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import EditPreferenceModal from './EditPreferenceModal';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from 'containers/Screens';
 import { AppState } from 'state/types';
 import { User, UserPreference } from 'types/models';
-import moment from 'moment';
+import PreferenceList from 'components/Profile/PreferenceList';
+import RidesAndLifts from 'components/Profile/RidesAndLifts';
+import UserSince from 'components/Profile/UserSince';
+import ProfileReviews from 'components/Profile/ProfileReviews';
 
 interface ProfileProps { }
 
@@ -82,24 +82,21 @@ const Profile: React.FC<ProfileProps> = () => {
           {editing && <EditProfilePicButton onPress={handleOpenCamera} />}
         </ProfileImageContainer>
         {editing ? <NameInput onChangeText={handleNameChange} value={_user.name} /> : <Subtitle>{_user.name}</Subtitle>}
-        <ScoreTocuchableContainer disabled={editing} onPress={handleGoToComments}>
-          <ScoreDisplay score={3.6} size={30} />
-          <SmallBody>Ver 25 comentarios</SmallBody>
-        </ScoreTocuchableContainer>
 
-        <RidesAndLiftsContainer>
-          <NumberedIcon style={{ marginRight: 32 }} icon="thumb-up" number={5} />
-          <NumberedIcon icon="car" number={8} />
-        </RidesAndLiftsContainer>
-
-        <PreferenceContainer>
+        <ProfileReviews disabledReviews={editing} numberOfReviews={25} score={3.8} />
+        <RidesAndLifts rides={5} lifts={6} />
+        <PreferenceList preferences={_user.preferences}>
           {editing && <PressableIcon style={{ marginBottom: 8 }} size={30} name="plus" color={colors.main} onPress={handleEditPreference} />}
-          {_user.preferences.map(pr => <ProfilePreference key={pr} type={pr} />)}
-        </PreferenceContainer>
-
+        </PreferenceList>
       </Content>
-      <Text>Usuario desde {moment(_user.createdAt).format('MMM YYYY')}</Text>
-      <EditPreferenceModal onChange={handleUserPreferencesChange} preferences={_user.preferences} open={preferenceModalOpen} onClose={() => setPreferenceModalOpen(false)} />
+
+      <UserSince date={_user.createdAt} />
+      <EditPreferenceModal
+        onChange={handleUserPreferencesChange}
+        preferences={_user.preferences}
+        open={preferenceModalOpen}
+        onClose={() => setPreferenceModalOpen(false)}
+      />
     </Container>
   );
 };
@@ -127,19 +124,4 @@ const ProfileImageContainer = styled.View`
 const NameInput = styled(PlainInput)`
   font-weight: bold;
   font-size: 24px;
-`
-const ScoreTocuchableContainer = styled.TouchableOpacity`
-  padding: 16px;
-  width: 100%;
-  align-items: center;
-`
-
-const PreferenceContainer = styled.View`
-  max-width:100%;
-`
-
-const RidesAndLiftsContainer = styled.View`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 16px;
 `

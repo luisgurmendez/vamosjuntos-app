@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Page from '../commons/Page';
+import Page from 'components/Page/Page';
 import AnonymusCommentOption from './options/AnonymusCommentOption';
 import HidePhoneOption from './options/HidePhoneOption';
 import HelpOption from './options/HelpOption';
