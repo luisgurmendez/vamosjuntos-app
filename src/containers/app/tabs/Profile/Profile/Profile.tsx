@@ -10,13 +10,14 @@ import { colors } from 'utils/colors';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import EditPreferenceModal from './EditPreferenceModal';
 import { useNavigation } from '@react-navigation/native';
-import { Screens } from 'containers/Screens';
 import { AppState } from 'state/types';
 import { User, UserPreference } from 'types/models';
 import PreferenceList from 'components/Profile/PreferenceList';
 import RidesAndLifts from 'components/Profile/RidesAndLifts';
 import UserSince from 'components/Profile/UserSince';
 import ProfileReviews from 'components/Profile/ProfileReviews';
+import { updateUser } from 'api/adedo';
+import { setUser } from 'state/user/actions';
 
 interface ProfileProps { }
 
@@ -25,7 +26,8 @@ const Profile: React.FC<ProfileProps> = () => {
   const [preferenceModalOpen, setPreferenceModalOpen] = useState(false);
   const navigation = useNavigation<any>();
   const user = useSelector((state: AppState) => state.user.user);
-  const [_user, setUser] = useState<User>(user!);
+  const [editingUser, setEditingUser] = useState<User>(user!);
+  const [isUpdatingUser, setIsUpdatingUser] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -35,7 +37,7 @@ const Profile: React.FC<ProfileProps> = () => {
       console.log('tabb pressed')
       if (editing) {
         setEditing(false);
-        setUser(user!);
+        setEditingUser(user!);
       }
     });
     console.log(navigation);
@@ -48,19 +50,26 @@ const Profile: React.FC<ProfileProps> = () => {
 
   const toggleEditing = () => {
     setEditing(e => !e);
-    setUser(user!);
+    setEditingUser(user!);
   }
 
-  const handleUpdateProfile = () => { };
+  const handleUpdateProfile = async () => {
+    setIsUpdatingUser(true)
+    const updatedUser = await updateUser(editingUser);
+    dispatch(setUser(updatedUser));
+    setEditing(false);
+    setEditingUser(updatedUser);
+    setIsUpdatingUser(false)
+  };
 
   const handleNameChange = (name: string) => {
-    setUser(user => {
-      return { ...user, name: name };
+    setEditingUser(u => {
+      return { ...u, name: name };
     })
   }
 
   const handleUserPreferencesChange = (p: UserPreference[]) => {
-    setUser(user => {
+    setEditingUser(user => {
       return { ...user, preferences: p };
     })
   }
@@ -69,31 +78,25 @@ const Profile: React.FC<ProfileProps> = () => {
     setPreferenceModalOpen(true)
   }
 
-  const handleGoToComments = () => {
-    navigation.push(Screens.COMMENTS)
-  }
-
   return (
     <Container>
-      <EditHeaderActions editing={editing} onToggleEdit={toggleEditing} onSave={handleUpdateProfile} />
+      <EditHeaderActions editing={editing} saving={isUpdatingUser} onToggleEdit={toggleEditing} onSave={handleUpdateProfile} />
       <Content contentContainerStyle={{ alignItems: 'center' }}>
         <ProfileImageContainer>
           <ProfilePicPlaceholder size={160} />
           {editing && <EditProfilePicButton onPress={handleOpenCamera} />}
         </ProfileImageContainer>
-        {editing ? <NameInput onChangeText={handleNameChange} value={_user.name} /> : <Subtitle>{_user.name}</Subtitle>}
-
+        {editing ? <NameInput onChangeText={handleNameChange} value={editingUser.name} /> : <Subtitle>{editingUser.name}</Subtitle>}
         <ProfileReviews disabledReviews={editing} numberOfReviews={25} score={3.8} />
         <RidesAndLifts rides={5} lifts={6} />
-        <PreferenceList preferences={_user.preferences}>
+        <PreferenceList preferences={editingUser.preferences}>
           {editing && <PressableIcon style={{ marginBottom: 8 }} size={30} name="plus" color={colors.main} onPress={handleEditPreference} />}
         </PreferenceList>
       </Content>
-
-      <UserSince date={_user.createdAt} />
+      <UserSince date={editingUser.createdAt} />
       <EditPreferenceModal
         onChange={handleUserPreferencesChange}
-        preferences={_user.preferences}
+        preferences={editingUser.preferences}
         open={preferenceModalOpen}
         onClose={() => setPreferenceModalOpen(false)}
       />

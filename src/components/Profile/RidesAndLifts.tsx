@@ -8,14 +8,12 @@ interface RidesAndLiftsProps {
 }
 
 const RidesAndLifts: React.FC<RidesAndLiftsProps> = ({ rides, lifts }) => {
-
   return (
     <Container>
       <NumberedIcon style={{ marginRight: 32 }} icon="thumb-up" number={lifts} />
       <NumberedIcon icon="car" number={rides} />
     </Container>
   )
-
 }
 
 export default RidesAndLifts;

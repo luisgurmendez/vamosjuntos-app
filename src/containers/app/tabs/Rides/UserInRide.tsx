@@ -15,7 +15,6 @@ interface UserInRideProps {
 
 const UserInRide: React.FC<UserInRideProps> = ({ user }) => {
 
-  console.log(user);
   const navigation = useNavigation<any>();
 
   const handlePressUser = () => {

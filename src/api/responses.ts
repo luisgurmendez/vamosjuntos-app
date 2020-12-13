@@ -39,3 +39,6 @@ export interface RefreshTokenResponse extends BaseResponse, Tokens { }
 export interface GetUserResponse extends BaseResponse {
   user: User;
 }
+export interface UpdateUserResponse extends BaseResponse {
+  user: User;
+}

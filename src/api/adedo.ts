@@ -1,7 +1,7 @@
 import { CancelToken } from 'axios';
 import { Address, Ride, User, Notification } from 'types/models';
 import { api } from './api';
-import { AddressFromCoordsResponse, GetNotificationsResponse, GetRideDetailsResponse, GetRidesResponse } from './responses';
+import { AddressFromCoordsResponse, GetNotificationsResponse, GetRideDetailsResponse, GetRidesResponse, UpdateUserResponse } from './responses';
 
 export const getRides = async (): Promise<Ride[]> => {
   const response = await api.get<GetRidesResponse>('/ride/all');
@@ -48,3 +48,12 @@ export const getNotifications = async (): Promise<Notification[]> => {
   }
   return [];
 };
+
+
+export const updateUser = async (user: User): Promise<User> => {
+  const response = await api.post<UpdateUserResponse>('/user/update', { user });
+  if (response.data.success) {
+    return response.data.user;
+  }
+  return user;
+}; 

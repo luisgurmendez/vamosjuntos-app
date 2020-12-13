@@ -1,14 +1,15 @@
 import Loading from 'components/Loading/Loading';
 import React from 'react'
-import { Keyboard } from 'react-native';
+import { Keyboard, TextStyle } from 'react-native';
 import styled from 'styled-components/native';
 import { BaseButtonProps } from './types';
 import { useSilentDisabled } from './utils';
 import { Text } from 'components/Typography/Typography';
 import { colors } from 'utils/colors';
+import { Stylable } from 'components/types';
 
 interface PlainButtonProps extends BaseButtonProps {
-  color?: string;
+  textStyle?: Stylable<TextStyle>['style'];
 }
 
 const PlainButton: React.FC<PlainButtonProps> = ({
@@ -16,7 +17,7 @@ const PlainButton: React.FC<PlainButtonProps> = ({
   disabled,
   onPress,
   children,
-  color = colors.main,
+  textStyle,
   style
 }) => {
   const [silentDisabled, setSilentDisabled] = useSilentDisabled()
@@ -37,7 +38,7 @@ const PlainButton: React.FC<PlainButtonProps> = ({
       {loading ? (
         <Loading size={15} />
       ) : (
-          <ButtonText style={{ color: color }}>{children}</ButtonText>
+          <ButtonText style={[{ color: colors.main }, textStyle]}>{children}</ButtonText>
         )}
     </TouchableButton>
   )

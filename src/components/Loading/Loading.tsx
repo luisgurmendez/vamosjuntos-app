@@ -1,8 +1,9 @@
+import { Stylable } from 'components/types';
 import React, { Component } from 'react';
 import { Animated, Easing, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-interface LoaderProps {
+interface LoaderProps extends Stylable {
   size?: number;
   color?: string;
 }
@@ -31,14 +32,14 @@ class Loading extends Component<LoaderProps, LoaderState> {
   }
 
   render() {
-    const { size = 25, color = 'white' } = this.props;
+    const { size = 25, color = 'white', style } = this.props;
 
     const spin = this.state.spinAnim.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '360deg']
     });
     return (
-      <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={[{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }, style]}>
         <AnimatedIcon name="loading" size={size} color={color} style={{ transform: [{ rotate: spin }] }} />
       </View>
     );

@@ -9,16 +9,25 @@ import { useNavigation } from '@react-navigation/native';
 import { Subtitle } from 'components/Typography/Typography';
 import { StatusBar } from 'react-native';
 import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
-import { Ride } from 'types/models';
+import { Ride, User } from 'types/models';
 import UserInRide from './UserInRide';
 import { getRideDetails } from 'api/adedo';
 import HideIfLoading from 'components/Loading/HideIfLoading';
+import PlainButton from 'components/Button/PlainButton';
+import { AppState } from 'state/types';
+import { useSelector } from 'react-redux';
+import ConfirmCancelationModal from './ConfirmCancelationModal';
 
 interface RideDetailsProps {
   ride: Ride;
 }
 
 const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
+
+  const [isConfirmCancelModalOpen, setIsConfirmCancelModalOpen] = useState(false);
+  const user = useSelector((state: AppState) => state.user.user);
+
+  const isDriver = user && user.id === ride.driver.id;
 
   const mapId = "ride Map id"
 
@@ -41,6 +50,14 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
     navigation.goBack();
   }
 
+  const handleConfirmCancelRide = () => {
+    console.log('cancel ride!');
+  }
+
+  const handleCancelRide = () => {
+    setIsConfirmCancelModalOpen(true)
+  }
+
   return (
     <Container>
       <StatusBar hidden />
@@ -61,6 +78,20 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
         <Subtitle>Pasageros</Subtitle>
         {ride.passengers.map(p => <UserInRide key={`passenger-${p.user.id}`} user={p.user} />)}
       </Content>
+
+      <CancelRideButton
+        textStyle={{ color: colors.danger, fontSize: 20 }}
+        onPress={handleCancelRide}
+      >
+        {isDriver ? 'Cancelar Viaje' : 'Bajarme del viaje'}
+      </CancelRideButton>
+
+      <ConfirmCancelationModal
+        open={isConfirmCancelModalOpen}
+        onClose={() => setIsConfirmCancelModalOpen(false)}
+        onConfirm={handleConfirmCancelRide}
+        title={isDriver ? 'Esta seguro que quiere cancel el viaje?' : 'Esta seguro que quiere darse de baja del viaje?'}
+      />
     </Container>
   )
 }
@@ -69,6 +100,7 @@ const Container = styled.View`
   flex: 1;
   background-color: white;
   position:relative;
+  padding-bottom: 14px;
 `
 
 const MapContainer = styled.View`
@@ -91,6 +123,8 @@ const Content = styled.ScrollView`
   width: 100%;
   flex: 1;
 `
+
+const CancelRideButton = styled(PlainButton)``
 
 interface RideDetailsWrapperProps {
   route: { params: { rideId: string } }
