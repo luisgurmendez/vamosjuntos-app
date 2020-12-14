@@ -57,6 +57,7 @@ const ColorDecorator = styled.Text<ColorDecoratorProps>`
   align-items: center;
   justify-content: center;
   flex-direction: row;
+  text-align: center;
 `;
 
 const Container = styled.View`
@@ -68,6 +69,7 @@ const Container = styled.View`
   flex-direction: row;
   position: relative;
 `;
+
 interface Selectable {
   selected: boolean;
 }
@@ -91,15 +93,4 @@ const CellTouchable = styled.TouchableOpacity`
   flex: 1;
   flex-direction: row;
   padding: 4px;
-`;
-
-const Cell = styled.View`
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: center;
-  padding: 10px;
-  border-radius: 4px;
 `;
