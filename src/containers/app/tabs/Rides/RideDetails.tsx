@@ -17,6 +17,7 @@ import PlainButton from 'components/Button/PlainButton';
 import { AppState } from 'state/types';
 import { useSelector } from 'react-redux';
 import ConfirmCancelationModal from './ConfirmCancelationModal';
+import WhereFromWhereToStaticMap from 'components/Map/WhereFromWhereToStaticMap';
 
 interface RideDetailsProps {
   ride: Ride;
@@ -28,23 +29,8 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
   const user = useSelector((state: AppState) => state.user.user);
 
   const isDriver = user && user.id === ride.driver.id;
-
-  const mapId = "ride Map id"
-
-  const origin = { latitude: ride.whereFrom.latitude, longitude: ride.whereFrom.longitude }
-  const destination = { latitude: ride.whereTo.latitude, longitude: ride.whereTo.longitude }
-
+  const mapId = `RideDetails-${ride.id}-map`
   const navigation = useNavigation();
-  useMapZoomToCoords(mapId, [origin, destination], 30);
-
-  const renderOriginDestinationMarkers = () => {
-    return (
-      <>
-        <RideMarker color={'green'} coordinate={origin} />
-        <RideMarker color={'red'} coordinate={destination} />
-      </>
-    )
-  }
 
   const handleClose = () => {
     navigation.goBack();
@@ -64,13 +50,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
       <AbsoluteSafeArea>
         <PositionedPressableIcon onPress={handleClose} name="x" size={30} color={colors.black} />
       </AbsoluteSafeArea>
-      <MapContainer>
-        <Map
-          mapId={mapId}
-          showsUserLocation={false}
-          renderMarkers={renderOriginDestinationMarkers}
-        />
-      </MapContainer>
+      <WhereFromWhereToStaticMap mapId={mapId} whereFrom={ride.whereFrom} whereTo={ride.whereTo} />
       <Content contentContainerStyle={{ padding: 8, paddingBottom: 32 }}>
         <RideDetailsSummary ride={ride} />
         <Subtitle>Conductor</Subtitle>

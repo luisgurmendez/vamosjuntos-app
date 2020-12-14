@@ -6,7 +6,7 @@ import { Moment } from 'moment';
 import moment from 'moment';
 
 const LiftWhen: React.FC = () => {
-  const [when, whenMeta, whenHelpers] = useField<string>('when');
+  const [when, whenMeta, whenHelpers] = useField<string>('date');
 
   const isFieldValid = whenMeta.error === undefined;
 

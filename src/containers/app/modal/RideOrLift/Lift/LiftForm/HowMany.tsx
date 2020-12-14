@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 import { LiftScreens } from '../LiftScreens';
 
 const HowMany: React.FC = () => {
-  const [howMany, howManyMeta, howManyHelpers] = useField<number>('howMany');
+  const [howMany, howManyMeta, howManyHelpers] = useField<number>('capacity');
 
   const isFieldValid = howManyMeta.error === undefined;
 

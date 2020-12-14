@@ -121,6 +121,6 @@ const NavigationOptions = styled.View`
 `
 
 const ExpandedTitle = styled(Title)`
-  flex-grow: 1;
+  flex: 1 1 auto;
   text-align: center;
 `

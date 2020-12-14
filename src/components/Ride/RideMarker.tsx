@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { LatLng, Marker } from 'react-native-maps';
+import { Marker } from 'react-native-maps';
 import { MarkerProps } from 'react-native-maps';
 
 interface RideMarkerProps extends MarkerProps {

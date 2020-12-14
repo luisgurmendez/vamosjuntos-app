@@ -27,7 +27,10 @@ const Price: React.FC = () => {
   };
 
   return (
-    <Wizard action={{ disabled: !isFieldValid }} nextScreen={LiftScreens.SUMMARY} title="¿Cuanto cobras?">
+    <Wizard action={{ disabled: !isFieldValid }} nextScreen={LiftScreens.SUMMARY} title="¿Por cuanto?">
+      <GrayedBody>
+        Recuerda que nuestra comunidad se basa en la idea de compartir, no en ganar dinero.
+      </GrayedBody>
       <DismissKeyboard>
         <Container>
           <PriceInputContainer>
@@ -36,8 +39,7 @@ const Price: React.FC = () => {
           </PriceInputContainer>
           {priceTooHigh && (
             <GrayedBody>
-              Nuestra comunidad se basa en la idea de compartir, no en ganar dinero. Ese es el motivo por el que se
-              aplica un límite máximo a las aportaciones de los viajes.
+              Mmm, ¿no te parece mucho ese monto?
             </GrayedBody>
           )}
         </Container>
@@ -63,6 +65,7 @@ const PriceInputContainer = styled.View`
   width: 100%;
   justify-content: center;
   flex-direction: row;
+  align-items: center;
 `;
 
 const PriceSignText = styled(Text)`

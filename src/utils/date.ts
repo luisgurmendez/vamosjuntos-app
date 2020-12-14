@@ -1,18 +1,24 @@
 import moment from 'moment';
 
-export const getDateText = (date: moment.Moment): string => {
-  if (moment().isSame(date, 'day')) {
+export function toMoment(date: moment.Moment | string): moment.Moment {
+  return typeof date === 'string' ? moment(date) : date;
+}
+
+export const getDateText = (date: moment.Moment | string): string => {
+  const _date = toMoment(date);
+  if (moment().isSame(_date, 'day')) {
     return 'Hoy';
   }
 
-  if (moment().add(1, 'day').isSame(date, 'day')) {
+  if (moment().add(1, 'day').isSame(_date, 'day')) {
     return 'Mañana';
   }
 
-  return date.format('[El] dddd DD [de] MMMM');
+  return _date.format('[El] dddd DD [de] MMMM');
 };
 
 
-export const getTimeText = (date: moment.Moment): string => {
-  return date.format('[a las ] HH:mm')
+export const getTimeText = (date: moment.Moment | string): string => {
+  const _date = toMoment(date);
+  return _date.format('[a las ] HH:mm')
 }

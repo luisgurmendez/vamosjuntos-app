@@ -11,22 +11,28 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import LiftSummary from './LiftSummary';
 import { Formik } from 'formik';
 import moment from 'moment';
-import LiftFormSchema from './LiftForm/formSchema';
+import LiftFormSchema, { LiftCreationValues } from './LiftForm/formSchema';
 
 const Stack = createNativeStackNavigator();
 
-const intialValues = {
+const intialValues: LiftCreationValues = {
   whereFrom: undefined,
   whereTo: undefined,
-  when: moment().toISOString(),
-  howMany: 3,
+  date: moment().toISOString(),
+  capacity: 3,
   price: 100
 }
 
 const LiftStack: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Formik validationSchema={LiftFormSchema} validateOnChange validateOnMount initialValues={intialValues} onSubmit={(values) => console.log('submitting', values)}>
+      <Formik
+        validationSchema={LiftFormSchema}
+        validateOnChange
+        validateOnMount
+        initialValues={intialValues}
+        onSubmit={(values) => console.log('submitting', values)}
+      >
         <Stack.Navigator
           screenOptions={{
             headerBackTitle: 'Atras',
