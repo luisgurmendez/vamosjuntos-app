@@ -10,7 +10,9 @@ import { Subtitle } from 'components/Typography/Typography';
 import Storage from 'storage/Storage';
 import styled from 'styled-components/native';
 import { SavedAddress } from 'types/storage';
-import useGetFromStorage from 'hooks/useGetFromStorage';
+import useStorage from 'hooks/useStorage';
+import Geolocation from '@react-native-community/geolocation';
+import { getAddressFromCoords } from 'api/adedo';
 
 interface SelectAddressFormProps {
   onSelectAddress: (address: Address) => void;
@@ -18,49 +20,45 @@ interface SelectAddressFormProps {
 }
 
 const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, onSelectAddress }) => {
-  const [isNewAddress, setIsNewAddress] = useState(true);
   const [selectAddressOpen, setSelectAddressOpen] = useState(false);
-  const [savedAddresses, isGettingSavedAddresses, setSavedAddress] = useGetFromStorage<SavedAddress[]>(
+  const [savedAddresses, setSavedAddress] = useStorage<SavedAddress[]>(
     Storage.ADDRESSES,
     []
   );
 
+  const handleSelectLocationAsAddress = () => {
+    Geolocation.getCurrentPosition(async ({ coords: { latitude, longitude } }) => {
+      const address = await getAddressFromCoords(latitude, longitude);
+      onSelectAddress(address);
+    });
+  }
 
   const handleCloseAddressModal = () => {
-    console.log('presseddd')
     setSelectAddressOpen(false)
   }
 
   const handleSelectAddressFromMap = (address: Address) => {
-    setIsNewAddress(true);
     onSelectAddress && onSelectAddress(address);
   };
 
   const handleSelectSavedAddress = (sa: SavedAddress) => {
-    setIsNewAddress(false);
     onSelectAddress && onSelectAddress(sa.address);
   };
 
-  const handleRemoveSavedAddress = (address: SavedAddress) => {
-    const newAddresses = savedAddresses.filter((sa) => sa.id !== address.id);
-
-    setSavedAddress(newAddresses);
-    Storage.setItem(Storage.ADDRESSES, newAddresses);
-    // remove from state;
-    // remove from storage;
-  };
 
   return (
     <Container>
       <Button icon="map" onPress={() => setSelectAddressOpen(true)} type="secondary">
         Elegir en el mapa
       </Button>
+      <Box mt="lg" mb="lg">
+        <Button icon="map-pin" onPress={handleSelectLocationAsAddress} type="secondary">
+          Elegir mi ubicacion
+      </Button>
+      </Box>
       {selectedAddress && (
         <Box mb="lg" mt="lg">
-          <Box mb="md">
-            <DisplayAddress address={selectedAddress} />
-          </Box>
-          {isNewAddress && <SaveAddress address={selectedAddress} />}
+          <DisplayAddress address={selectedAddress} />
         </Box>
       )}
       {savedAddresses.length > 0 && (
@@ -70,7 +68,6 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
           </Box>
           <SavedAddressList
             savedAddresses={savedAddresses}
-            onRemoveAddress={handleRemoveSavedAddress}
             onSelectAddress={handleSelectSavedAddress}
           />
         </SavedAddressesContainer>

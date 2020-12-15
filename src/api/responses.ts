@@ -5,6 +5,10 @@ interface BaseResponse {
   success: boolean;
 }
 
+export interface CreateRideResponse extends BaseResponse {
+  ride: Ride;
+}
+
 export interface GetRidesResponse extends BaseResponse {
   rides: Ride[];
 }

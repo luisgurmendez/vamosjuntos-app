@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import { roundToPrecision } from 'utils/math';
-import { LiftScreens } from '../LiftScreens';
+import { RideScreens } from '../RideScreens';
 
 const Price: React.FC = () => {
 
@@ -27,7 +27,7 @@ const Price: React.FC = () => {
   };
 
   return (
-    <Wizard action={{ disabled: !isFieldValid }} nextScreen={LiftScreens.SUMMARY} title="¿Por cuanto?">
+    <Wizard action={{ disabled: !isFieldValid }} nextScreen={RideScreens.SUMMARY} title="¿Por cuanto?">
       <GrayedBody>
         Recuerda que nuestra comunidad se basa en la idea de compartir, no en ganar dinero.
       </GrayedBody>

@@ -3,7 +3,7 @@ import React from 'react';
 import { LiftScreens } from '../LiftScreens';
 
 const LiftWhereFrom: React.FC = () => {
-  return <WhereFrom nextScreen={LiftScreens.HOW_MANY} />;
+  return <WhereFrom nextScreen={LiftScreens.WHEN} />;
 }
 
 export default LiftWhereFrom;

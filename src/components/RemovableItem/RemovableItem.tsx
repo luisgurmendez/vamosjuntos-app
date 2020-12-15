@@ -11,7 +11,7 @@ const RemovableItem: React.FC<RemovableItemProps> = ({ children, onRemove }) => 
   return (
     <Container>
       {children}
-      <PressableIcon onPress={onRemove} name="x" size={20} color={colors.gray} />
+      {onRemove && <PressableIcon onPress={onRemove} name="x" size={20} color={colors.gray} />}
     </Container>
   );
 };

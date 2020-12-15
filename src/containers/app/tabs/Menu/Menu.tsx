@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import Button from 'components/Button/Button';
 import { Screens } from 'containers/Screens';
 import React from 'react';
 import { View } from 'react-native';
@@ -13,28 +12,28 @@ interface RenderItemMenuProps {
 export const RenderItemMenu: React.FC<RenderItemMenuProps> = ({ item, onCloseMenu }) => {
   const navigation: any = useNavigation();
 
-  const handleOpenModals = () => {
+  const handleOpenLift = () => {
     onCloseMenu();
     navigation.push(Screens.LIFT);
   };
 
-  const handleOpenReview = () => {
+  const handleOpenRide = () => {
     onCloseMenu();
-    navigation.push(Screens.REVIEW);
+    navigation.push(Screens.RIDE);
   };
 
   switch (item) {
-    case 'ride':
+    case 'lift':
       return (
         <OptionButton
-          onPress={handleOpenModals}
+          onPress={handleOpenLift}
           iconStyle={{ transform: [{ rotate: '20deg' }] }}
           label=""
           icon="thumb-up"
         />
       );
-    case 'lift':
-      return <OptionButton onPress={handleOpenReview} label="" icon="car" />;
+    case 'ride':
+      return <OptionButton onPress={handleOpenRide} label="" icon="car" />;
   }
 
   return <View style={{ width: 50, height: 50, backgroundColor: 'red', borderRadius: 25 }} />;

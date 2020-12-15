@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
-import { View } from 'react-native';
 import StartSVG from './Start';
 import { colors } from 'utils/colors';
 

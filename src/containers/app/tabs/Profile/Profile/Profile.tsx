@@ -87,7 +87,7 @@ const Profile: React.FC<ProfileProps> = () => {
           {editing && <EditProfilePicButton onPress={handleOpenCamera} />}
         </ProfileImageContainer>
         {editing ? <NameInput onChangeText={handleNameChange} value={editingUser.name} /> : <Subtitle>{editingUser.name}</Subtitle>}
-        <ProfileReviews disabledReviews={editing} numberOfReviews={25} score={3.8} />
+        <ProfileReviews disabledReviews={editing} numberOfReviews={25} score={3.5} />
         <RidesAndLifts rides={5} lifts={6} />
         <PreferenceList preferences={editingUser.preferences}>
           {editing && <PressableIcon style={{ marginBottom: 8 }} size={30} name="plus" color={colors.main} onPress={handleEditPreference} />}

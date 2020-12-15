@@ -2,13 +2,11 @@ import React from 'react';
 
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { LiftScreens } from './LiftScreens';
-import HowMany from './LiftForm/HowMany';
-import Price from './LiftForm/Price';
 import LiftWhen from './LiftForm/LiftWhen';
 import LiftWhereFrom from './LiftForm/LiftWhereFrom';
 import LiftWhereTo from './LiftForm/LiftWhereTo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import LiftSummary from './LiftSummary';
+import JoinRide from './JoinRide';
 import { Formik } from 'formik';
 import moment from 'moment';
 import LiftFormSchema, { LiftCreationValues } from './LiftForm/formSchema';
@@ -18,9 +16,7 @@ const Stack = createNativeStackNavigator();
 const intialValues: LiftCreationValues = {
   whereFrom: undefined,
   whereTo: undefined,
-  date: moment().toISOString(),
-  capacity: 3,
-  price: 100
+  date: moment().toISOString()
 }
 
 const LiftStack: React.FC = () => {
@@ -40,11 +36,8 @@ const LiftStack: React.FC = () => {
           }}>
           <Stack.Screen name={LiftScreens.WHERE_TO} component={LiftWhereTo} />
           <Stack.Screen name={LiftScreens.WHERE_FROM} component={LiftWhereFrom} />
-          <Stack.Screen name={LiftScreens.HOW_MANY} component={HowMany} />
           <Stack.Screen name={LiftScreens.WHEN} component={LiftWhen} />
-          <Stack.Screen name={LiftScreens.PRICE} component={Price} />
-          <Stack.Screen name={LiftScreens.SUMMARY} component={LiftSummary} />
-
+          <Stack.Screen name={LiftScreens.JOIN_RIDE} component={JoinRide} />
         </Stack.Navigator>
       </Formik>
 

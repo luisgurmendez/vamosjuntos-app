@@ -4,14 +4,16 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 interface PageProps {
+  secondaryAction?: React.ReactNode;
 }
 
-const PageWithBack: React.FC<PageProps> = ({ children }) => {
+const PageWithBack: React.FC<PageProps> = ({ secondaryAction, children }) => {
 
   return (
     <Container >
-      <Header p={"md"}>
+      <Header pl={"md"}>
         <BackArrow />
+        {secondaryAction}
       </Header>
       <Content>
         {children}
@@ -30,7 +32,11 @@ const Container = styled.SafeAreaView`
   position: relative;
 `;
 
-const Header = styled(Box)``
+const Header = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
 
 const Content = styled.View`
   flex:1;

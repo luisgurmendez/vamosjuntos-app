@@ -6,6 +6,7 @@ import HidePhoneOption from './options/HidePhoneOption';
 import HelpOption from './options/HelpOption';
 import AppVersionOption from './options/AppVersionOption';
 import SignoutOption from './options/SignoutOption';
+import SavedAddressesOption from './options/SavedAddresses/SavedAddressesOption';
 
 interface ConfigurationProps { }
 
@@ -15,9 +16,11 @@ const Configuration: React.FC<ConfigurationProps> = () => {
       <Container>
         <AnonymusCommentOption />
         <HidePhoneOption />
+        <SavedAddressesOption />
         <HelpOption />
         <AppVersionOption />
         <SignoutOption />
+
       </Container>
     </Page>
   );

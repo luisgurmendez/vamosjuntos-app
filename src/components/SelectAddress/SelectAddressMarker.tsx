@@ -34,7 +34,8 @@ const styles = {
     borderRadius: 20,
     backgroundColor: '#2288dd',
     borderWidth: 2,
-    borderColor: '#eeeeee'
+    borderColor: '#eeeeee',
+    transform: [{ translateY: 14 }]
   }
 };
 

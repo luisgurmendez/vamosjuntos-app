@@ -15,6 +15,7 @@ interface ActionProps {
   label?: string;
   disabled?: boolean;
   loading?: boolean;
+  hideAction?: boolean;
 }
 
 interface WizardProps {
@@ -41,6 +42,7 @@ const Wizard: React.FC<WizardProps> = ({
     label: 'Siguiente',
     disabled: false,
     loading: false,
+    hideAction: false,
   };
   const _action = { ...defaultActionProps, ...action }
 
@@ -70,11 +72,11 @@ const Wizard: React.FC<WizardProps> = ({
           <View />
         </Header>
         <Content>{children}</Content>
-        <Footer>
+        {!_action.hideAction && <Footer>
           <Button loading={_action.loading} disabled={_action.disabled} onPress={handleNext}>
             {_action.label}
           </Button>
-        </Footer>
+        </Footer>}
       </PaddingContainer>
     </Container>
   );

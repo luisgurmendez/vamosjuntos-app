@@ -18,6 +18,9 @@ import { getAddressFromCoords } from 'api/adedo';
 import Axios, { CancelTokenSource } from 'axios';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import { getCancelTokenSource } from 'api/api';
+import FloatingButton from 'components/FloatingButton/FloatingButton';
+import { useMap } from 'components/Map/useMap';
+import Geolocation from '@react-native-community/geolocation';
 
 interface SelectAddressModalProps {
   open: boolean;
@@ -38,6 +41,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   const [isFetchingAddress, setIsFetchingAddress] = useState(true);
   const [possibleAddress, setPossibleAddress] = useState<Address | undefined>(undefined);
   const cancelTokenSource = useRef<CancelTokenSource | undefined>(undefined);
+  const { map } = useMap(mapId);
 
   // useZoomToLocation(mapId);
 
@@ -75,6 +79,22 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
 
   };
 
+  const handleGoToUserLocation = () => {
+    Geolocation.getCurrentPosition(async (info) => {
+      if (map !== null && map !== undefined) {
+        map.animateToRegion(
+          {
+            latitude: info.coords.latitude,
+            longitude: info.coords.longitude,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005
+          },
+          1000
+        );
+      }
+    });
+  }
+
   return (
     <Modal isVisible={open} useNativeDriver={false} coverScreen style={{ margin: 0, zIndex: 100 }} hasBackdrop={false}>
       <Content>
@@ -83,6 +103,9 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
         </CloseContainer>
         <Map onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={handleLocationChange} mapId={mapId}>
           <SelectAddressMarker lifted={isMovingMap} />
+          <GoToLocationBtnPositioner>
+            <FloatingButton icon={"crosshairs-gps"} onPress={handleGoToUserLocation} />
+          </GoToLocationBtnPositioner>
         </Map>
       </Content>
       <SelectedLocationDisplay>
@@ -130,3 +153,10 @@ const GrayedBody = styled(Body)`
   width: 100%;
   text-align: center;
 `;
+
+
+const GoToLocationBtnPositioner = styled.View`
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+`

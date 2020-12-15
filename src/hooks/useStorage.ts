@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
 import Storage from 'storage/Storage';
 
-function useGetFromStorage<T>(
+function useStorage<T>(
   key: string,
   defaultValue: T
-): [T, boolean, (v: T) => void | undefined, (f: boolean) => void | undefined] {
+): [T, (v: T) => Promise<void>, boolean, (f: boolean) => void | undefined] {
   const [value, setValue] = useState<T>(defaultValue);
   const [isGettingValue, setIsGettingValue] = useState(false);
+
+  const setValueInStorageAsWell = async (newValues: T) => {
+    setValue(newValues);
+    await Storage.setItem(key, newValues)
+  }
 
   useEffect(() => {
     const getValue = async () => {
@@ -15,13 +20,13 @@ function useGetFromStorage<T>(
       if (_value) {
         setValue(_value);
       }
-      setIsGettingValue(true);
+      setIsGettingValue(false);
     };
 
     getValue();
   }, [key]);
 
-  return [value, isGettingValue, setValue, setIsGettingValue];
+  return [value, setValueInStorageAsWell, isGettingValue, setIsGettingValue];
 }
 
-export default useGetFromStorage;
+export default useStorage;

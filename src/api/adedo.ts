@@ -1,7 +1,16 @@
 import { CancelToken } from 'axios';
 import { Address, Ride, User, Notification } from 'types/models';
 import { api } from './api';
-import { AddressFromCoordsResponse, GetNotificationsResponse, GetRideDetailsResponse, GetRidesResponse, UpdateUserResponse } from './responses';
+import { AddressFromCoordsResponse, CreateRideResponse, GetNotificationsResponse, GetRideDetailsResponse, GetRidesResponse, UpdateUserResponse } from './responses';
+
+export const createRide = async (body: Partial<Ride>): Promise<Ride | undefined> => {
+  const response = await api.post<CreateRideResponse>('/ride/create', body);
+  if (response.data.success) {
+    return response.data.ride;
+  }
+  return undefined;
+};
+
 
 export const getRides = async (): Promise<Ride[]> => {
   const response = await api.get<GetRidesResponse>('/ride/all');
@@ -10,6 +19,21 @@ export const getRides = async (): Promise<Ride[]> => {
   }
   return [];
 };
+
+interface PossibleRidesData {
+  whereFrom: Address;
+  whereTo: Address;
+  date: string;
+}
+
+export const getPossibleRides = async (data: PossibleRidesData): Promise<Ride[]> => {
+  const response = await api.post<GetRidesResponse>('/ride/possible', data);
+  if (response.data.success) {
+    return response.data.rides;
+  }
+  return [];
+};
+
 
 export const getRideDetails = async (rideId: string): Promise<Ride | undefined> => {
   const response = await api.get<GetRideDetailsResponse>(`/ride/${rideId}`);

@@ -14,18 +14,11 @@ interface SavedAddressItemProps {
 }
 
 const SavedAddressItem: React.FC<SavedAddressItemProps> = ({ item, onRemove, onPress }) => {
-  const handleRemoveItem = () => {
-    onRemove && onRemove();
-  };
-
-  const handlePress = () => {
-    onPress && onPress();
-  };
 
   return (
-    <TouchableOpacity onPress={handlePress}>
+    <TouchableOpacity onPress={onPress}>
       <StyledBox pt="md" pb="md">
-        <RemovableItem onRemove={handleRemoveItem}>
+        <RemovableItem onRemove={onRemove}>
           <AddressName address={item.address} name={item.name} />
         </RemovableItem>
       </StyledBox>

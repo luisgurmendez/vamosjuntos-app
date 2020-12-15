@@ -44,11 +44,11 @@ const Notifications: React.FC = () => {
   };
 
   return (
-    <Page title="Notificaciones">
+    <Page title="Alertas">
       <Container
         scrollEventThrottle={400}
         onScroll={handleScroll}
-        refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={false} />
+        refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
         }
       >
         {hasNotifications ?

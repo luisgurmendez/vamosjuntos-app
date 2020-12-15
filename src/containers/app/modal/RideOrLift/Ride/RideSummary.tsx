@@ -3,27 +3,20 @@ import Wizard from 'components/Wizard/Wizard';
 import { useFormikContext } from 'formik';
 import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
-import RideBubble from 'components/Ride/RideBubble';
-import { Ride } from 'types/models';
-import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
-import { LiftCreationValues } from './LiftForm/formSchema';
+import { RideCreationValues } from './RideForm/formSchema';
 import Icon from 'react-native-vector-icons/Feather';
 import { colors } from 'utils/colors';
 import WhereFromToWhereTo from 'components/Address/WhereFromToWhereTo';
 import { getDateText, getTimeText } from 'utils/date';
 import WhereFromWhereToStaticMap from 'components/Map/WhereFromWhereToStaticMap';
 
-const LiftSummary: React.FC = () => {
+const RideSummary: React.FC = () => {
 
-  const { isValid, handleSubmit, validateForm, isSubmitting, values, errors } = useFormikContext<LiftCreationValues>();
-  console.log(values);
-  console.log(errors);
-  console.log(isValid);
+  const { isValid, handleSubmit, validateForm, isSubmitting, values, errors } = useFormikContext<RideCreationValues>();
 
   useEffect(() => {
     validateForm()
   }, [])
-
 
   return (
     <Wizard action={{ disabled: !isValid, onPress: handleSubmit, label: 'Crear Viaje', loading: isSubmitting }} title="¡Ultimo paso!">
@@ -48,7 +41,7 @@ const LiftSummary: React.FC = () => {
   )
 };
 
-export default LiftSummary;
+export default RideSummary;
 
 const Content = styled.ScrollView`
   width: 100%;

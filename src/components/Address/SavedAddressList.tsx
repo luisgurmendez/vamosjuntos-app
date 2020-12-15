@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import React from 'react';
+import { FlatList } from 'react-native';
 import SavedAddressItem from './SavedAddressItem';
 import { SavedAddress } from 'types/storage';
 import savedAddressFactory from 'factories/savedAddress';
@@ -15,6 +15,7 @@ const SavedAddressList: React.FC<SavedAddressListProps> = ({
   onRemoveAddress,
   onSelectAddress
 }) => {
+
   const handleSavedAddressPress = (address: SavedAddress) => {
     onSelectAddress && onSelectAddress(address);
   };
@@ -31,9 +32,9 @@ const SavedAddressList: React.FC<SavedAddressListProps> = ({
       renderItem={({ item }) => (
         <SavedAddressItem
           key={item.address.address}
-          onRemove={() => handleRemoveAddressItem(item)}
+          onRemove={onRemoveAddress ? () => handleRemoveAddressItem(item) : undefined}
           item={item}
-          onPress={() => handleSavedAddressPress(item)}
+          onPress={onSelectAddress ? () => handleSavedAddressPress(item) : undefined}
         />
       )}
     />

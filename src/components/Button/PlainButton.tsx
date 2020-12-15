@@ -36,7 +36,7 @@ const PlainButton: React.FC<PlainButtonProps> = ({
       disabled={disabled}
       onPress={handleOnPress}>
       {loading ? (
-        <Loading size={15} />
+        <Loading color={colors.main} size={15} />
       ) : (
           <ButtonText style={[{ color: colors.main }, textStyle]}>{children}</ButtonText>
         )}

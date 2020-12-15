@@ -1,11 +1,11 @@
 import When from '../../common/When';
 import React from 'react';
-import { LiftScreens } from '../LiftScreens';
+import { RideScreens } from '../RideScreens';
 import { useField } from 'formik';
 import { Moment } from 'moment';
 import moment from 'moment';
 
-const LiftWhen: React.FC = () => {
+const RideWhen: React.FC = () => {
   const [when, whenMeta, whenHelpers] = useField<string>('date');
 
   const isFieldValid = whenMeta.error === undefined;
@@ -14,7 +14,7 @@ const LiftWhen: React.FC = () => {
     whenHelpers.setValue(mDate.toISOString(), true)
   }
 
-  return <When nextDisabled={!isFieldValid} nextScreen={LiftScreens.JOIN_RIDE} date={moment(when.value)} onDateChange={handleDateChange} />;
+  return <When nextDisabled={!isFieldValid} nextScreen={RideScreens.PRICE} date={moment(when.value)} onDateChange={handleDateChange} />;
 };
 
-export default LiftWhen;
+export default RideWhen;

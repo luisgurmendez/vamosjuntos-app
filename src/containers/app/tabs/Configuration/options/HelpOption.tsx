@@ -1,9 +1,6 @@
-import { Body } from 'components/Typography/Typography';
 import React from 'react'
 import styled from 'styled-components/native';
-import ConfigurationOption from './commons/ConfigurationOption';
-import Icon from 'react-native-vector-icons/Feather';
-import { colors } from 'utils/colors';
+import ToOtherScreenOption from './commons/ToOtherScreenOption';
 
 interface HelpOptionProps {
 }
@@ -11,12 +8,7 @@ interface HelpOptionProps {
 const HelpOption: React.FC<HelpOptionProps> = ({ }) => {
 
   return (
-    <ConfigurationOption>
-      <Container>
-        <Body>Ayuda</Body>
-        <Icon size={20} color={colors.black} name="chevron-right" />
-      </Container>
-    </ConfigurationOption>
+    <ToOtherScreenOption title="Ayuda" />
   )
 
 }
