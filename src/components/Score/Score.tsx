@@ -8,13 +8,13 @@ interface Size {
   size?: number;
 }
 
-interface ScoreInputProps extends Size {
+interface ScoreProps extends Size {
   score?: number;
 }
 
 const ICON_SIZE = 60;
 
-const ScoreInput: React.FC<ScoreInputProps> = ({ size = ICON_SIZE, score = 0.5 }) => {
+const Score: React.FC<ScoreProps> = ({ size = ICON_SIZE, score = 0.5 }) => {
   const getScoreValueForItem = (itemIndex: number) => {
     const s = score - itemIndex + 1;
     return s > 0 ? s : 0;
@@ -34,7 +34,7 @@ const ScoreInput: React.FC<ScoreInputProps> = ({ size = ICON_SIZE, score = 0.5 }
   );
 };
 
-export default ScoreInput;
+export default Score;
 
 const Container = styled.View`
   display: flex;
@@ -42,7 +42,7 @@ const Container = styled.View`
 `;
 
 // Float between 0 - 1;
-const Painted = styled.View<ScoreInputProps>`
+const Painted = styled.View<ScoreProps>`
   width: ${(props) => props.score! * props.size!}px;
   margin-top: 1px;
   position: absolute;

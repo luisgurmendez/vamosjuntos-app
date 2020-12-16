@@ -1,4 +1,4 @@
-import { getPossibleRides } from 'api/adedo';
+import { createRideRequest, getPossibleRides } from 'api/adedo';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import Loading from 'components/Loading/Loading';
@@ -38,21 +38,28 @@ const JoinRide: React.FC<JoinRideProps> = ({ }) => {
 
   }, [isValid])
 
+  const handleJoinRide = async (ride: Ride) => {
+    const { whereFrom, whereTo } = values;
+    if (whereFrom !== undefined && whereTo !== undefined) {
+      await createRideRequest(ride.id, whereFrom, whereTo);
+    }
+  }
 
   return (
     <Wizard action={{ hideAction: true }} title="Posibles viajes">
-      <HideIfLoading loading={rides === undefined} label="Te estamos buscnado viajes">
-        {
-          rides && rides.length > 0 ?
-            <Content>
-              <MarginedChildren mt="lg">
-                {rides?.map(ride => <RideBubble ride={ride} />)}
-              </MarginedChildren>
-            </Content>
-            :
-            <Subtitle>No encontramos viajes que te sirvan :(</Subtitle>
-        }
-
+      <HideIfLoading loading={rides === undefined} label="Te estamos buscando viajes">
+        <Container>
+          {
+            rides && rides.length > 0 ?
+              <Content>
+                <MarginedChildren mt="lg">
+                  {rides?.map(ride => <RideBubble onPress={() => handleJoinRide(ride)} ride={ride} />)}
+                </MarginedChildren>
+              </Content>
+              :
+              <Subtitle>No encontramos viajes que te sirvan :(</Subtitle>
+          }
+        </Container>
       </HideIfLoading>
     </Wizard>
   )
@@ -60,6 +67,11 @@ const JoinRide: React.FC<JoinRideProps> = ({ }) => {
 }
 
 export default JoinRide;
+
+const Container = styled.ScrollView`
+  flex: 1;
+  padding-horizontal: 4px;
+`
 
 const Content = styled.ScrollView`
   flex: 1;

@@ -12,9 +12,11 @@ import RideSummary from './RideSummary';
 import { Formik, FormikHelpers } from 'formik';
 import moment from 'moment';
 import RideFormSchema, { RideCreationValues } from './RideForm/formSchema';
-import { createRide } from 'api/adedo';
+import { createRide, getRides } from 'api/adedo';
 import Toaster from 'components/Toaster/Toaster';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setRides } from 'state/ride/actions';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,15 +31,20 @@ const intialValues: RideCreationValues = {
 const RideStack: React.FC = () => {
 
 
+  const dispatch = useDispatch();
   const navigation = useNavigation<any>();
   const handleCreateRide = async (values: RideCreationValues, helpers: FormikHelpers<RideCreationValues>) => {
 
     try {
       const createdRide = await createRide(values);
+      const rides = await getRides();
+      dispatch(setRides(rides));
       helpers.setSubmitting(false);
       navigation.goBack();
+
     } catch (e) {
       // Toaster.alert()
+      console.log(e);
     }
   }
 

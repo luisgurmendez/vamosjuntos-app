@@ -11,13 +11,14 @@ import { StatusBar } from 'react-native';
 import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
 import { Ride, User } from 'types/models';
 import UserInRide from './UserInRide';
-import { getRideDetails } from 'api/adedo';
+import { cancelRide, dropOutRide, getRideDetails } from 'api/adedo';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import PlainButton from 'components/Button/PlainButton';
 import { AppState } from 'state/types';
 import { useSelector } from 'react-redux';
 import ConfirmCancelationModal from './ConfirmCancelationModal';
 import WhereFromWhereToStaticMap from 'components/Map/WhereFromWhereToStaticMap';
+import { Box } from 'components/Box/Box';
 
 interface RideDetailsProps {
   ride: Ride;
@@ -32,12 +33,18 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
   const mapId = `RideDetails-${ride.id}-map`
   const navigation = useNavigation();
 
+  const hasPassengers = ride.passengers.length > 0
+
   const handleClose = () => {
     navigation.goBack();
   }
 
-  const handleConfirmCancelRide = () => {
-    console.log('cancel ride!');
+  const handleConfirmCancelRide = async () => {
+    if (isDriver) {
+      await cancelRide(ride.id);
+    } else {
+      await dropOutRide(ride.id);
+    }
   }
 
   const handleCancelRide = () => {
@@ -55,8 +62,12 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
         <RideDetailsSummary ride={ride} />
         <Subtitle>Conductor</Subtitle>
         <UserInRide user={ride.driver} />
-        <Subtitle>Pasageros</Subtitle>
-        {ride.passengers.map(p => <UserInRide key={`passenger-${p.user.id}`} user={p.user} />)}
+        {hasPassengers &&
+          <Box mt="lg">
+            <Subtitle>Pasageros</Subtitle>
+            {ride.passengers.map(p => <UserInRide key={`passenger-${p.user.id}`} user={p.user} />)}
+          </Box>
+        }
       </Content>
 
       <CancelRideButton

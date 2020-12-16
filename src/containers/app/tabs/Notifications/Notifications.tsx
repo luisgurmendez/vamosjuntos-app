@@ -2,7 +2,7 @@ import { getNotifications } from 'api/adedo';
 import { Box } from 'components/Box/Box';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import NotificationSection from 'components/Notifications/NotificationSection';
-import RideRequestNotification from 'components/Notifications/RideRequestNotification';
+import RideRequestNotification from 'components/Notifications/notifications/RideRequestNotification';
 import Toaster from 'components/Toaster/Toaster';
 import React from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl } from 'react-native';
@@ -26,28 +26,27 @@ const Notifications: React.FC = () => {
     setRefreshing(false);
   }, []);
 
-  const handleScroll = (ev: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { layoutMeasurement, contentOffset, contentSize } = ev.nativeEvent;
-    if (hasNotifications) {
-
-      const paddingToBottom = 40;
-      if (layoutMeasurement.height + contentOffset.y >=
-        contentSize.height - paddingToBottom
-        &&
-        contentOffset.y > -paddingToBottom
-        && !refreshing
-      ) {
-        Toaster.info("Reached bottom :)")
-        onRefresh();
-      }
-    }
-  };
+  // const handleScroll = (ev: NativeSyntheticEvent<NativeScrollEvent>) => {
+  //   const { layoutMeasurement, contentOffset, contentSize } = ev.nativeEvent;
+  //   if (hasNotifications) {
+  //     const paddingToBottom = 40;
+  //     if (layoutMeasurement.height + contentOffset.y >=
+  //       contentSize.height - paddingToBottom
+  //       &&
+  //       contentOffset.y > -paddingToBottom
+  //       && !refreshing
+  //     ) {
+  //       Toaster.info("Reached bottom :)")
+  //       onRefresh();
+  //     }
+  //   }
+  // };
 
   return (
     <Page title="Alertas">
       <Container
         scrollEventThrottle={400}
-        onScroll={handleScroll}
+        // onScroll={handleScroll}
         refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
         }
       >

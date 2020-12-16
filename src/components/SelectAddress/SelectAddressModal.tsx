@@ -20,7 +20,7 @@ import PressableIcon from 'components/PressableIcon/PressableIcon';
 import { getCancelTokenSource } from 'api/api';
 import FloatingButton from 'components/FloatingButton/FloatingButton';
 import { useMap } from 'components/Map/useMap';
-import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from '@react-native-community/geolocation';
 
 interface SelectAddressModalProps {
   open: boolean;
@@ -80,19 +80,19 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   };
 
   const handleGoToUserLocation = () => {
-    Geolocation.getCurrentPosition(async (info) => {
-      if (map !== null && map !== undefined) {
-        map.animateToRegion(
-          {
-            latitude: info.coords.latitude,
-            longitude: info.coords.longitude,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005
-          },
-          1000
-        );
-      }
-    });
+    // Geolocation.getCurrentPosition(async (info) => {
+    //   if (map !== null && map !== undefined) {
+    //     map.animateToRegion(
+    //       {
+    //         latitude: info.coords.latitude,
+    //         longitude: info.coords.longitude,
+    //         latitudeDelta: 0.005,
+    //         longitudeDelta: 0.005
+    //       },
+    //       1000
+    //     );
+    //   }
+    // });
   }
 
   return (

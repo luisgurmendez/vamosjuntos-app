@@ -1,12 +1,46 @@
 import { CancelToken } from 'axios';
-import { Address, Ride, User, Notification } from 'types/models';
+import { Address, Ride, User, Notification, Passenger, RideRequest } from 'types/models';
 import { api } from './api';
-import { AddressFromCoordsResponse, CreateRideResponse, GetNotificationsResponse, GetRideDetailsResponse, GetRidesResponse, UpdateUserResponse } from './responses';
+import {
+  AddressFromCoordsResponse,
+  CancelRideResponse,
+  CreateRideResponse,
+  DropOutRideResponse,
+  GetNotificationsResponse,
+  GetRideDetailsResponse,
+  GetRidesResponse,
+  UpdateUserResponse,
+  CreateRideRequestResponse
+} from './responses';
 
 export const createRide = async (body: Partial<Ride>): Promise<Ride | undefined> => {
   const response = await api.post<CreateRideResponse>('/ride/create', body);
   if (response.data.success) {
     return response.data.ride;
+  }
+  return undefined;
+};
+
+export const cancelRide = async (rideId: string): Promise<Ride | undefined> => {
+  const response = await api.post<CancelRideResponse>('/ride/cancel', { rideId });
+  if (response.data.success) {
+    return response.data.ride;
+  }
+  return undefined;
+};
+
+export const createRideRequest = async (rideId: string, whereFrom: Address, whereTo: Address): Promise<RideRequest | undefined> => {
+  const response = await api.post<CreateRideRequestResponse>('/request/request', { rideId, whereFrom, whereTo });
+  if (response.data.success) {
+    return response.data.rideRequest;
+  }
+  return undefined;
+};
+
+export const dropOutRide = async (rideId: string): Promise<Passenger | undefined> => {
+  const response = await api.post<DropOutRideResponse>('/passenger/drop-out', { rideId });
+  if (response.data.success) {
+    return response.data.passenger;
   }
   return undefined;
 };

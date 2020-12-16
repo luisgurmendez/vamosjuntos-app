@@ -26,6 +26,7 @@ export interface User {
   username: string;
   phone: string;
   createdAt: string;
+  score: number;
   preferences: UserPreference[]
 }
 
@@ -50,17 +51,38 @@ export interface NotificationContext {
   rideId?: string;
 }
 
+export enum NotificationStatus {
+  SEEN = 'SEEN',
+  UN_SEEN = 'UN_SEEN'
+}
+
 export interface Notification {
   id: number;
   type: NotificationType;
   user: User;
+  status: NotificationStatus;
   context: NotificationContext;
+  rideRequest?: RideRequest;
 }
 
 export enum RideStatus {
   COMPLETED = 'COMPLETED',
   CANCELED = 'CANCELED',
   PENDING = 'PENDING'
+}
+
+export enum RideRequestStatus {
+  PENDING = 'PENDING',
+  ACCEPTED = 'ACCEPTED',
+  DECLINED = 'DECLINED'
+}
+
+export interface RideRequest {
+  user: User;
+  ride: Ride;
+  whereTo: Address;
+  whereFrom: Address;
+  status: RideRequestStatus;
 }
 
 export interface Ride {

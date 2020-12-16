@@ -32,7 +32,7 @@ const When: React.FC<WhenProps> = ({ date = moment(), nextScreen, nextDisabled, 
   };
 
   return (
-    <Wizard nextScreen={nextScreen} nextDisabled={nextDisabled} title="¿Cuando?">
+    <Wizard action={{ disabled: nextDisabled }} nextScreen={nextScreen} title="¿Cuando?">
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
         <KeyboardShift>
           <Container>
