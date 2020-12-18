@@ -35,7 +35,6 @@ const UserProfile: React.FC<UserProfileProps> = ({ route: { params: { user } } }
       </Container>
     </PageWithBack>
   )
-
 }
 
 export default UserProfile;

@@ -7,15 +7,16 @@ import Loading from './Loading';
 interface HideIfLoadingProps {
   loading: boolean;
   label?: string;
+  size?: number;
 }
 
-const HideIfLoading: React.FC<HideIfLoadingProps> = ({ loading, label, children }) => {
+const HideIfLoading: React.FC<HideIfLoadingProps> = ({ loading, label, size = 64, children }) => {
 
   if (loading) {
 
     return (
       <Container>
-        <Loading size={64} color={colors.main} />
+        <Loading size={size} color={colors.main} />
         {label && <Body>{label}</Body>}
       </Container>
     )

@@ -10,7 +10,8 @@ import {
   GetRideDetailsResponse,
   GetRidesResponse,
   UpdateUserResponse,
-  CreateRideRequestResponse
+  CreateRideRequestResponse,
+  BaseResponse
 } from './responses';
 
 export const createRide = async (body: Partial<Ride>): Promise<Ride | undefined> => {
@@ -36,6 +37,18 @@ export const createRideRequest = async (rideId: string, whereFrom: Address, wher
   }
   return undefined;
 };
+
+
+export const acceptRideRequest = async (requestId: string): Promise<boolean> => {
+  const response = await api.post<BaseResponse>('/request/accept', { requestId });
+  return response.data.success;
+};
+
+export const declineRideRequest = async (requestId: string): Promise<boolean> => {
+  const response = await api.post<BaseResponse>('/request/decline', { requestId });
+  return response.data.success;
+};
+
 
 export const dropOutRide = async (rideId: string): Promise<Passenger | undefined> => {
   const response = await api.post<DropOutRideResponse>('/passenger/drop-out', { rideId });

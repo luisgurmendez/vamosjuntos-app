@@ -1,33 +1,56 @@
 import React from 'react'
-import styled from 'styled-components/native';
 import { NotificationType } from 'types/models';
-import { BaseNotificationProps } from './notifications/commons';
+import { BaseNotification, BaseNotificationProps, NotificationProps } from './notifications/commons';
+import KickOutOfRideNotification from './notifications/KickedOutOfRideNotification';
+import PassengerDroppedOutRideNotification from './notifications/PassengerDroppedOutRideNotification';
+import RideCanceledNotification from './notifications/RideCanceledNotification';
+import RideRequestAcceptedNotification from './notifications/RideRequestAcceptedNotification';
+import RideRequestDeclinedNotification from './notifications/RideRequestDeclinedNotification';
 import RideRequestNotification from './notifications/RideRequestNotification';
 
-interface NotificationProps extends BaseNotificationProps { }
 
-const Notification: React.FC<NotificationProps> = ({ notification }) => {
+const Notification: React.FC<NotificationProps> = ({ style, notification }) => {
 
-  let NotificationComp: React.ComponentType<BaseNotificationProps>;
+  let NotificationComp: React.ComponentType<NotificationProps>;
 
   switch (notification.type) {
     case NotificationType.RIDE_REQUEST:
       NotificationComp = RideRequestNotification;
       break;
+    case NotificationType.RIDE_REQUEST_ACCEPTED:
+      NotificationComp = RideRequestAcceptedNotification;
+      break;
+
+    case NotificationType.RIDE_REQUEST_DECLINED:
+      NotificationComp = RideRequestDeclinedNotification;
+      break;
+
+    case NotificationType.RIDE_CANCELED:
+      NotificationComp = RideCanceledNotification;
+      break;
+
+    case NotificationType.RIDE_KICKED_OUT:
+      NotificationComp = KickOutOfRideNotification;
+      break;
+
+    case NotificationType.RIDE_DROPED_OUT:
+      NotificationComp = PassengerDroppedOutRideNotification;
+      break;
 
     default:
-      NotificationComp = RideRequestNotification;
+      NotificationComp = DefaultDummyNotification;
   }
 
 
   return (
-    <NotificationComp notification={notification} />
+    <NotificationComp style={style} notification={notification} />
   )
 
 }
 
 export default Notification;
 
-const Container = styled.View`
 
-`
+const DefaultDummyNotification: React.FC<NotificationProps> = () => {
+  return null;
+}

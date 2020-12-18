@@ -22,7 +22,7 @@ const RidesList: React.FC<RidesListProps> = ({ rides, title }) => {
   }
 
   const handleGoToRideDetails = (ride: Ride) => {
-    navigation.push(Screens.RIDE, { rideId: ride.id })
+    navigation.push(Screens.RIDE_DETAILS, { rideId: ride.id })
   }
 
   return (

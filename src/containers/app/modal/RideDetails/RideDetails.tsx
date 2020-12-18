@@ -45,11 +45,16 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
     } else {
       await dropOutRide(ride.id);
     }
+    // TODO: remove ride from redux. redux-thunk? Since getRides / setRides is too common
+    handleCancelConfirmModal();
+    handleClose();
   }
 
   const handleCancelRide = () => {
     setIsConfirmCancelModalOpen(true)
   }
+
+  const handleCancelConfirmModal = () => { setIsConfirmCancelModalOpen(false) };
 
   return (
     <Container>
@@ -79,7 +84,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
 
       <ConfirmCancelationModal
         open={isConfirmCancelModalOpen}
-        onClose={() => setIsConfirmCancelModalOpen(false)}
+        onClose={handleCancelConfirmModal}
         onConfirm={handleConfirmCancelRide}
         title={isDriver ? 'Esta seguro que quiere cancel el viaje?' : 'Esta seguro que quiere darse de baja del viaje?'}
       />

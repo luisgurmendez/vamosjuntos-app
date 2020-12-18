@@ -12,6 +12,7 @@ import { AppState } from 'state/types';
 import styled from 'styled-components/native';
 import Page from 'components/Page/Page';
 import NoNotifications from './NoNotifications';
+import Notification from 'components/Notifications/Notification';
 
 const Notifications: React.FC = () => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -54,7 +55,7 @@ const Notifications: React.FC = () => {
           <NotificationSection section="Ejemplo Notis 1">
             <Box pH="md">
               <MarginedChildren mb="md" applyToLast={false}>
-                {notifications.map(n => <RideRequestNotification notification={n} />)}
+                {notifications.map(n => <Notification key={n.id} notification={n} />)}
               </MarginedChildren>
             </Box>
           </NotificationSection>

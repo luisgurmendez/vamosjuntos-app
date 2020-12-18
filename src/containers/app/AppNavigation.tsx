@@ -12,6 +12,7 @@ import WelcomeNavigation from 'containers/app/welcome/WelcomeNavigation';
 import UserProfile from './modal/UserProfile/UserProfile';
 import Comments from './modal/Comments/Comments';
 import LiftStack from './modal/RideOrLift/Lift/Lift';
+import RideDetails from './modal/RideDetails/RideDetails';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,7 @@ const AppNavigation: React.FC = () => {
           <Stack.Screen name={Screens.REVIEW} component={Review} />
           <Stack.Screen name={Screens.LIFT} component={LiftStack} />
           <Stack.Screen name={Screens.USER_PROFILE} component={UserProfile} />
+          <Stack.Screen name={Screens.RIDE_DETAILS} component={RideDetails} />
           <Stack.Screen name={Screens.COMMENTS} component={Comments} />
           <Stack.Screen name={Screens.WELCOME} component={WelcomeNavigation} />
         </Stack.Navigator>

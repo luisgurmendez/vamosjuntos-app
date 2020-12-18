@@ -30,7 +30,6 @@ interface SelectAddressModalProps {
 }
 
 
-//TODO cant close or select address FIX THIS, check past commits 47412b53a58fbb519fe7b545d3bbf50efb82e3ee
 const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   open,
   onClose,

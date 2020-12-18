@@ -42,13 +42,14 @@ export enum NotificationType {
   RIDE_KICKED_OUT = 'RIDE_KICKED_OUT',
   RIDE_REQUEST = 'RIDE_REQUEST',
   RIDE_REQUEST_ACCEPTED = 'RIDE_REQUEST_ACCEPTED',
-  RIDE_REQUEST_REFUSED = 'RIDE_REFUSED',
+  RIDE_REQUEST_DECLINED = 'RIDE_REQUEST_DECLINED',
   RIDE_DROPED_OUT = 'RIDE_DROPED_OUT'
 }
 
 export interface NotificationContext {
-  userId?: string;
-  rideId?: string;
+  user?: User;
+  ride?: Ride;
+  rideRequest: RideRequest
 }
 
 export enum NotificationStatus {
@@ -62,7 +63,6 @@ export interface Notification {
   user: User;
   status: NotificationStatus;
   context: NotificationContext;
-  rideRequest?: RideRequest;
 }
 
 export enum RideStatus {
@@ -78,6 +78,7 @@ export enum RideRequestStatus {
 }
 
 export interface RideRequest {
+  id: string;
   user: User;
   ride: Ride;
   whereTo: Address;

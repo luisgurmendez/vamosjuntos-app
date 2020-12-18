@@ -1,21 +1,14 @@
 import React from 'react'
-import styled from 'styled-components/native';
+import { BaseNotification, NotificationProps } from './commons';
 
-interface RideRequestDeclinedNotificationProps {
-}
+interface RideRequestDeclinedNotificationProps extends NotificationProps { }
 
-const RideRequestDeclinedNotification: React.FC<RideRequestDeclinedNotificationProps> = ({ }) => {
+const RideRequestDeclinedNotification: React.FC<RideRequestDeclinedNotificationProps> = ({ notification }) => {
 
   return (
-    <Container>
-
-    </Container>
+    <BaseNotification notification={notification} label={'te rechazo la solicitud para ingresar a un viaje'} />
   )
 
 }
 
 export default RideRequestDeclinedNotification;
-
-const Container = styled.View`
-
-`

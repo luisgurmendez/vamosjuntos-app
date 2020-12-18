@@ -6,7 +6,7 @@ interface Props {
   size?: number;
 }
 
-const ProfilePicPlaceholder: React.FC<Props> = ({ size }) => {
+const ProfilePicPlaceholder: React.FC<Props> = ({ size = 60 }) => {
 
   return (
     <ProfilePic size={size}>

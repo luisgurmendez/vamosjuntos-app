@@ -1,7 +1,7 @@
 import { Ride, User, Notification, Passenger, RideRequest } from 'types/models';
 import { Tokens } from 'types/tokens';
 
-interface BaseResponse {
+export interface BaseResponse {
   success: boolean;
 }
 
