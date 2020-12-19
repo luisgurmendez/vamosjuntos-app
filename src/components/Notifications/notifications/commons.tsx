@@ -2,7 +2,7 @@ import React from 'react';
 import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
 import { Body, Bold } from 'components/Typography/Typography';
 import { Stylable } from 'components/types';
-import { Notification } from 'types/models';
+import { Notification, User } from 'types/models';
 import Shadow from 'components/Shadow/Shadow';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
@@ -18,14 +18,14 @@ export interface BaseNotificationProps extends Stylable {
 
 export type NotificationProps = Omit<BaseNotificationProps, 'label'>;
 
-//TODO: Remove notification.rideRequest. Instead add it to the context. In the endpoint send the context as objects instead of ids.
 export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification, label, style, children }) => {
-  const { rideRequest } = notification.context;
+
+  const { user } = notification.context;
 
   const navigation = useNavigation<any>();
 
   const handlePressOnProfile = () => {
-    navigation.push(Screens.USER_PROFILE, { user: rideRequest?.user })
+    navigation.push(Screens.USER_PROFILE, { user: user! })
   }
 
   return (
@@ -36,7 +36,7 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
             <ProfilePicPlaceholder />
           </PressAnimation>
         </Box>
-        <Body style={{ flex: 1 }}><Bold>{rideRequest?.user.name}</Bold> {label}</Body>
+        <Body style={{ flex: 1 }}><Bold>{user!.name}</Bold> {label}</Body>
       </FullRow>
       <FullRow>
         {children}

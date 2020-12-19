@@ -47,7 +47,7 @@ export enum NotificationType {
 }
 
 export interface NotificationContext {
-  user?: User;
+  user?: User; // The user that has triggered this notification. 
   ride?: Ride;
   rideRequest: RideRequest
 }

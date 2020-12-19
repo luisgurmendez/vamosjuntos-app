@@ -2,13 +2,16 @@ import { useEffect, useState } from 'react';
 import NetInfo from '@react-native-community/netinfo';
 
 function useInternetConnection() {
+
   const [hasInternetConnection, setHasInternetConnection] = useState(false);
   const [hasCheckedInternetconnection, setHasCheckedInternetConnection] = useState(false);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((event) => {
-      setHasInternetConnection(event.isConnected && event.isInternetReachable === true);
-      setHasCheckedInternetConnection(true);
+      if (typeof event.isInternetReachable === 'boolean') {
+        setHasInternetConnection(event.isConnected && event.isInternetReachable);
+        setHasCheckedInternetConnection(true);
+      }
     });
 
     return () => {

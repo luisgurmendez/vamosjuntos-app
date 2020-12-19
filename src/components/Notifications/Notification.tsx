@@ -1,6 +1,6 @@
 import React from 'react'
 import { NotificationType } from 'types/models';
-import { BaseNotification, BaseNotificationProps, NotificationProps } from './notifications/commons';
+import { NotificationProps } from './notifications/commons';
 import KickOutOfRideNotification from './notifications/KickedOutOfRideNotification';
 import PassengerDroppedOutRideNotification from './notifications/PassengerDroppedOutRideNotification';
 import RideCanceledNotification from './notifications/RideCanceledNotification';

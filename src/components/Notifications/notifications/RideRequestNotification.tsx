@@ -4,7 +4,7 @@ import HideIfLoading from 'components/Loading/HideIfLoading';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
-import { getDateText } from 'utils/date';
+import { getDateTimeText } from 'utils/date';
 import { BaseNotification, NotificationProps } from './commons';
 
 interface RideRequestNotification extends NotificationProps { }
@@ -14,10 +14,9 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
   const { rideRequest } = notification.context;
   const [loading, setLoading] = useState(false);
 
-  console.log(notification);
   let rideDate = '';
   if (rideRequest?.ride?.date) {
-    rideDate = getDateText(rideRequest?.ride?.date);
+    rideDate = getDateTimeText(rideRequest?.ride?.date).toLowerCase();
   }
 
   const handleDeclineRideRequest = async () => {
