@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>257892290311-e8o5pp8mfatmekevpht41iua2489q8g2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.257892290311-e8o5pp8mfatmekevpht41iua2489q8g2</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>257892290311-m58p1hh2hl15uh2mb5n2d3i91umhtpv9.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCAYeKuomGUE6qADuZWEika0jf7f0UJDXc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>257892290311</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.adedo</string>
+	<key>PROJECT_ID</key>
+	<string>a-dedo-294100</string>
+	<key>STORAGE_BUCKET</key>
+	<string>a-dedo-294100.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:257892290311:ios:9d351ea745ac954c127fa2</string>
+	<key>DATABASE_URL</key>
+	<string>https://a-dedo-294100.firebaseio.com</string>
+</dict>
+</plist>

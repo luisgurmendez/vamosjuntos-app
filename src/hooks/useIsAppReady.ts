@@ -20,7 +20,7 @@ function useIsAppReady() {
   // 4. Stores user in state.
   useEffect(() => {
 
-    const setUp = async (res: () => void) => {
+    const setUp = async (res: () => void, rej: () => void) => {
       let tokens = await Storage.getItem<Tokens>(Storage.TOKENS);
       if (tokens !== undefined) {
         tokens = await refreshTokens(tokens.refreshToken);

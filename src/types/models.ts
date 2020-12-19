@@ -103,3 +103,13 @@ export interface Comment {
   comment: string;
   score: number;
 }
+
+export enum FeatureFlags {
+  BANNER_ADS = 'BANNER_ADS',
+  FULL_SCREEN_ADS = 'FULL_SCREEN_ADS'
+}
+
+export interface FeatureFlag {
+  name: string;
+  enabled: boolean;
+}

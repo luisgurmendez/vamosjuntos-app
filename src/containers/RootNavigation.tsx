@@ -21,7 +21,6 @@ const RootNavigation: React.FC = () => {
         headerBackTitle: 'Atras',
         headerShown: false,
       }}>
-      {}
       {isLoggedIn ?
         <Stack.Screen name={Screens.APP} component={AppNavigation} />
         :

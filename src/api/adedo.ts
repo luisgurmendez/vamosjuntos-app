@@ -1,5 +1,5 @@
 import { CancelToken } from 'axios';
-import { Address, Ride, User, Notification, Passenger, RideRequest } from 'types/models';
+import { Address, Ride, User, Notification, Passenger, RideRequest, FeatureFlag } from 'types/models';
 import { api } from './api';
 import {
   AddressFromCoordsResponse,
@@ -11,7 +11,8 @@ import {
   GetRidesResponse,
   UpdateUserResponse,
   CreateRideRequestResponse,
-  BaseResponse
+  BaseResponse,
+  GetFeatureFlagsResponse
 } from './responses';
 
 export const createRide = async (body: Partial<Ride>): Promise<Ride | undefined> => {
@@ -66,6 +67,15 @@ export const getRides = async (): Promise<Ride[]> => {
   }
   return [];
 };
+
+export const getFeatureFlags = async (): Promise<FeatureFlag[]> => {
+  const response = await api.get<GetFeatureFlagsResponse>('/feature_flags/all');
+  if (response.data.success) {
+    return response.data.featureFlags;
+  }
+  return [];
+};
+
 
 interface PossibleRidesData {
   whereFrom: Address;

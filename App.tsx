@@ -18,6 +18,11 @@ import { setHasInternetConnection } from 'state/general/actions';
 import styled from 'styled-components/native';
 import ErrorBanner from 'components/ErrorBanner/ErrorBanner';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import useFeatureFlag from 'hooks/useFeatureFlag';
+import { FeatureFlags } from 'types/models';
+import admob, { MaxAdContentRating } from '@react-native-firebase/admob';
+import BannerAd from 'components/Ad/BannerAd';
+import InterstitialAd from 'components/Ad/InterstitialAd';
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -36,6 +41,7 @@ const App = () => {
               <RootNavigation />
             </MapProvider>
           </SetupApp>
+          <BannerAd />
         </AppCrashHandler>
       </Provider>
     </NavigationContainer>
@@ -50,6 +56,18 @@ const SetupApp: React.FC = ({ children }) => {
   const isReady = useIsAppReady();
   const [hasInternetConnection, hasCheckedInternetConnection] = useInternetConnection();
   const dispatch = useDispatch();
+
+  const useAds = useFeatureFlag(FeatureFlags.BANNER_ADS)
+
+  admob()
+    .setRequestConfiguration({
+      maxAdContentRating: MaxAdContentRating.G,
+      tagForChildDirectedTreatment: true,
+      tagForUnderAgeOfConsent: true,
+    })
+    .then(() => {
+      console.log('admob request config success')
+    });
 
   useEffect(() => {
     if (hasCheckedInternetConnection) {
