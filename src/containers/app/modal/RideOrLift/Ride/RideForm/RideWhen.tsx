@@ -14,7 +14,7 @@ const RideWhen: React.FC = () => {
     whenHelpers.setValue(mDate.toISOString(), true)
   }
 
-  return <When nextDisabled={!isFieldValid} nextScreen={RideScreens.PRICE} date={moment(when.value)} onDateChange={handleDateChange} />;
+  return <When action={{ disabled: !isFieldValid }} nextScreen={RideScreens.PRICE} date={moment(when.value)} onDateChange={handleDateChange} />;
 };
 
 export default RideWhen;

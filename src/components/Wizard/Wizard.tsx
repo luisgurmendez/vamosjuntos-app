@@ -10,7 +10,7 @@ import styled from 'styled-components/native';
 import { StackNavigationAPI } from 'types/Navigation';
 import { colors } from 'utils/colors';
 
-interface ActionProps {
+export interface ActionProps {
   onPress?: () => void;
   label?: string;
   disabled?: boolean;
@@ -18,7 +18,7 @@ interface ActionProps {
   hideAction?: boolean;
 }
 
-interface WizardProps {
+export interface WizardProps {
   title?: string;
   icon?: 'arrow' | 'close'
   showBack?: boolean;

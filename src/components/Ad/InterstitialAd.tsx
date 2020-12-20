@@ -37,6 +37,7 @@ const InterstitialAd: React.FC = () => {
       title="Show Interstitial"
       onPress={() => {
         interstitial.show();
+        console.log(interstitial);
       }}
     />
   );

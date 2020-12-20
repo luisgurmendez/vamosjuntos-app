@@ -1,5 +1,5 @@
 import Calendar from 'components/Calendar/Calendar';
-import Wizard from 'components/Wizard/Wizard';
+import Wizard, { WizardProps } from 'components/Wizard/Wizard';
 import moment from 'moment';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
@@ -11,13 +11,13 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { getDateText } from 'utils/date';
 
 interface WhenProps {
-  nextScreen: string;
-  nextDisabled: boolean;
+  nextScreen?: string;
+  action?: WizardProps['action'];
   date?: moment.Moment;
   onDateChange?: (date: moment.Moment) => void;
 }
 
-const When: React.FC<WhenProps> = ({ date = moment(), nextScreen, nextDisabled, onDateChange }) => {
+const When: React.FC<WhenProps> = ({ date = moment(), action, nextScreen, onDateChange }) => {
 
   const handleHourChange = (hour: number, mins: number) => {
     const _date = date.clone();
@@ -32,7 +32,7 @@ const When: React.FC<WhenProps> = ({ date = moment(), nextScreen, nextDisabled, 
   };
 
   return (
-    <Wizard action={{ disabled: nextDisabled }} nextScreen={nextScreen} title="¿Cuando?">
+    <Wizard action={action} nextScreen={nextScreen} title="¿Cuando?">
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
         <KeyboardShift>
           <Container>

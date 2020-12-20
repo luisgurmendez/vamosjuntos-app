@@ -4,9 +4,19 @@ import { LiftScreens } from '../LiftScreens';
 import { useField } from 'formik';
 import { Moment } from 'moment';
 import moment from 'moment';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationAPI } from 'types/Navigation';
+import useInterstatialAd from 'hooks/useInterstitialAd';
 
 const LiftWhen: React.FC = () => {
   const [when, whenMeta, whenHelpers] = useField<string>('date');
+  const navigation: StackNavigationAPI = useNavigation<any>();
+  const handleShowAd = useInterstatialAd();
+
+  const handleNextScreen = () => {
+    handleShowAd();
+    navigation.push(LiftScreens.JOIN_RIDE);
+  }
 
   const isFieldValid = whenMeta.error === undefined;
 
@@ -14,7 +24,11 @@ const LiftWhen: React.FC = () => {
     whenHelpers.setValue(mDate.toISOString(), true)
   }
 
-  return <When nextDisabled={!isFieldValid} nextScreen={LiftScreens.JOIN_RIDE} date={moment(when.value)} onDateChange={handleDateChange} />;
+  return <When
+    action={{ disabled: !isFieldValid, onPress: handleNextScreen }}
+    date={moment(when.value)}
+    onDateChange={handleDateChange}
+  />;
 };
 
 export default LiftWhen;
