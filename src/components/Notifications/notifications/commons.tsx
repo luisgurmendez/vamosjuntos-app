@@ -10,6 +10,7 @@ import { Box } from 'components/Box/Box';
 import PressAnimation from 'components/Animations/PressAnimation';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from 'containers/Screens';
+import moment from 'moment';
 
 export interface BaseNotificationProps extends Stylable {
   notification: Notification;
@@ -28,6 +29,8 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
     navigation.push(Screens.USER_PROFILE, { user: user! })
   }
 
+  const notificationSince = moment().diff(moment(notification.createdAt), 'week');
+
   return (
     <Container style={style}>
       <FullRow>
@@ -36,7 +39,9 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
             <ProfilePicPlaceholder />
           </PressAnimation>
         </Box>
-        <Body style={{ flex: 1 }}><Bold>{user!.name}</Bold> {label}</Body>
+        <Body style={{ flex: 1 }}>
+          <Bold>{user!.name}</Bold> {label} <Grayed>{notificationSince !== 0 && `${notificationSince} sem`}</Grayed>
+        </Body>
       </FullRow>
       <FullRow>
         {children}
@@ -59,4 +64,8 @@ const FullRow = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
+`
+
+const Grayed = styled(Body)`
+  color: ${colors.gray};
 `

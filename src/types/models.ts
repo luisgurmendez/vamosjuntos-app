@@ -63,6 +63,7 @@ export interface Notification {
   user: User;
   status: NotificationStatus;
   context: NotificationContext;
+  createdAt: string;
 }
 
 export enum RideStatus {

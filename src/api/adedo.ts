@@ -131,6 +131,12 @@ export const getNotifications = async (): Promise<Notification[]> => {
 };
 
 
+export const setSeenNotifications = async (notificationIds: number[] | string[]): Promise<boolean> => {
+  const response = await api.post<BaseResponse>('/notification/seen', { notifications: notificationIds });
+  return response.data.success;
+};
+
+
 export const updateUser = async (user: User): Promise<User> => {
   const response = await api.post<UpdateUserResponse>('/user/update', { user });
   if (response.data.success) {

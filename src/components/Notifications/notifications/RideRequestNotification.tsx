@@ -1,8 +1,10 @@
 import { acceptRideRequest, declineRideRequest } from 'api/adedo';
 import PlainButton from 'components/Button/PlainButton';
 import HideIfLoading from 'components/Loading/HideIfLoading';
+import { Body } from 'components/Typography/Typography';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
+import { RideRequestStatus } from 'types/models';
 import { colors } from 'utils/colors';
 import { getDateTimeText } from 'utils/date';
 import { BaseNotification, NotificationProps } from './commons';
@@ -38,10 +40,18 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
   return (
     <BaseNotification notification={notification} style={style} label={`quiere irse contigo en el viaje de ${rideDate}`}>
       <Container>
-        <HideIfLoading size={32} loading={loading}>
-          <BorderedStyledButton onPress={handleDeclineRideRequest} textStyle={{ color: colors.danger }}>Rechazar</BorderedStyledButton>
-          <StyledButton onPress={handleAcceptRideRequest}>Aceptar</StyledButton>
-        </HideIfLoading>
+        {(notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.PENDING) &&
+          <HideIfLoading size={32} loading={loading}>
+            <BorderedStyledButton onPress={handleDeclineRideRequest} textStyle={{ color: colors.danger }}>Rechazar</BorderedStyledButton>
+            <StyledButton onPress={handleAcceptRideRequest}>Aceptar</StyledButton>
+          </HideIfLoading>
+        }
+        {(notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.DECLINED) &&
+          <DeclinedText>Rechazado</DeclinedText>
+        }
+        {(notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.ACCEPTED) &&
+          <AcceptedText>Acceptado</AcceptedText>
+        }
       </Container>
     </BaseNotification>
   )
@@ -55,8 +65,10 @@ const Container = styled.View`
   padding: 4px;
   flex: 1;
   margin-top: 8px;
+  padding-top: 8px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 `
 
 const StyledButton = styled(PlainButton)`
@@ -68,4 +80,12 @@ const StyledButton = styled(PlainButton)`
 const BorderedStyledButton = styled(StyledButton)`
   border-right-width: 0.5px;
   border-color: ${colors.border};
+`
+
+const AcceptedText = styled(Body)`
+  color: ${colors.success};
+`
+
+const DeclinedText = styled(Body)`
+  color: ${colors.danger};
 `

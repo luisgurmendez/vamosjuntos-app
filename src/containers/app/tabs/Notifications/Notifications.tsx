@@ -1,10 +1,10 @@
-import { getNotifications } from 'api/adedo';
+import { getNotifications, setSeenNotifications } from 'api/adedo';
 import { Box } from 'components/Box/Box';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import NotificationSection from 'components/Notifications/NotificationSection';
 import RideRequestNotification from 'components/Notifications/notifications/RideRequestNotification';
 import Toaster from 'components/Toaster/Toaster';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotifications } from 'state/notification/actions';
@@ -13,12 +13,21 @@ import styled from 'styled-components/native';
 import Page from 'components/Page/Page';
 import NoNotifications from './NoNotifications';
 import Notification from 'components/Notifications/Notification';
+import { getSeenNotifications, getUnseenNotifications } from 'state/notification/selectors';
 
 const Notifications: React.FC = () => {
   const [refreshing, setRefreshing] = React.useState(false);
   const dispatch = useDispatch();
-  const notifications = useSelector((state: AppState) => state.notification.notifications)
-  const hasNotifications = notifications.length > 0;
+  const unSeenNotifications = useSelector(getUnseenNotifications)
+  const seenNotifications = useSelector(getSeenNotifications)
+
+  const hasNoNotifications = unSeenNotifications.length === 0 && seenNotifications.length === 0;
+
+  useEffect(() => {
+    if (unSeenNotifications.length > 0) {
+      setSeenNotifications(unSeenNotifications.map(n => n.id));
+    }
+  }, [seenNotifications])
 
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
@@ -27,21 +36,6 @@ const Notifications: React.FC = () => {
     setRefreshing(false);
   }, []);
 
-  // const handleScroll = (ev: NativeSyntheticEvent<NativeScrollEvent>) => {
-  //   const { layoutMeasurement, contentOffset, contentSize } = ev.nativeEvent;
-  //   if (hasNotifications) {
-  //     const paddingToBottom = 40;
-  //     if (layoutMeasurement.height + contentOffset.y >=
-  //       contentSize.height - paddingToBottom
-  //       &&
-  //       contentOffset.y > -paddingToBottom
-  //       && !refreshing
-  //     ) {
-  //       Toaster.info("Reached bottom :)")
-  //       onRefresh();
-  //     }
-  //   }
-  // };
 
   return (
     <Page title="Alertas">
@@ -51,17 +45,28 @@ const Notifications: React.FC = () => {
         refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
         }
       >
-        {hasNotifications ?
-          <NotificationSection section="Ejemplo Notis 1">
+        {unSeenNotifications.length > 0 &&
+          <NotificationSection section="Nuevas">
             <Box pH="md">
               <MarginedChildren mb="md" applyToLast={false}>
-                {notifications.map(n => <Notification key={n.id} notification={n} />)}
+                {unSeenNotifications.map(n => <Notification key={n.id} notification={n} />)}
               </MarginedChildren>
             </Box>
           </NotificationSection>
-          :
-          <NoNotifications />
         }
+
+        {seenNotifications.length > 0 &&
+          <NotificationSection section="Viejas">
+            <Box pH="md">
+              <MarginedChildren mb="md" applyToLast={false}>
+                {seenNotifications.map(n => <Notification key={n.id} notification={n} />)}
+              </MarginedChildren>
+            </Box>
+          </NotificationSection>
+        }
+
+        {hasNoNotifications && <NoNotifications />}
+
       </Container>
     </Page>
   );
