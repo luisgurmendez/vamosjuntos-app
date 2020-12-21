@@ -21,6 +21,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';
 import admob, { MaxAdContentRating } from '@react-native-firebase/admob';
+import messaging from '@react-native-firebase/messaging';
 import BannerAd from 'components/Ad/BannerAd';
 
 enableScreens();
@@ -35,11 +36,13 @@ const App = () => {
     <NavigationContainer>
       <Provider store={store}>
         <AppCrashHandler>
-          <SetupApp>
-            <MapProvider>
-              <RootNavigation />
-            </MapProvider>
-          </SetupApp>
+          <FCMPermissions>
+            <SetupApp>
+              <MapProvider>
+                <RootNavigation />
+              </MapProvider>
+            </SetupApp>
+          </FCMPermissions>
         </AppCrashHandler>
       </Provider>
     </NavigationContainer>
@@ -58,6 +61,11 @@ const SetupApp: React.FC = ({ children }) => {
   const useAds = useFeatureFlag(FeatureFlags.BANNER_ADS)
 
   useEffect(() => {
+
+    messaging().getToken().then(t => {
+      console.log(t);
+    })
+
     admob()
       .setRequestConfiguration({
         maxAdContentRating: MaxAdContentRating.G,
@@ -93,3 +101,24 @@ const SetupApp: React.FC = ({ children }) => {
 const Container = styled.View`
   flex: 1;
 `
+
+const FCMPermissions: React.FC = ({ children }) => {
+
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    console.log(authStatus)
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  }
+
+  useEffect(() => {
+    requestUserPermission();
+  }, [])
+
+  return <>{children}</>
+}

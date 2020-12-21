@@ -5,6 +5,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import * as Yup from 'yup';
 import MarginedChildren from 'components/Box/MarginedChildren';
+import messaging from '@react-native-firebase/messaging';
 
 const RegisterFormSchema = Yup.object().shape({
   username: Yup.string().required('Campo obligatorio'),
@@ -18,8 +19,17 @@ const RegisterFormSchema = Yup.object().shape({
     }).required('Campo obligatorio')
 });
 
+interface UserRegistrationValues {
+  username: string;
+  ci: string;
+  phone: string;
+  name: string;
+  password: string;
+  passwordConfirmation: string;
+}
+
 const RegisterForm: React.FC = () => {
-  const initialValues = {
+  const initialValues: UserRegistrationValues = {
     username: '',
     ci: '',
     phone: '',
@@ -28,7 +38,14 @@ const RegisterForm: React.FC = () => {
     passwordConfirmation: ''
   };
 
-  const handleRegister = async (values: any) => { };
+  const handleRegister = async (values: UserRegistrationValues) => {
+
+    const userToken = await messaging().getToken()
+
+
+
+
+  };
 
   return (
     <Container>

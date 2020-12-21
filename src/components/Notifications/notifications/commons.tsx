@@ -29,6 +29,7 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
     navigation.push(Screens.USER_PROFILE, { user: user! })
   }
 
+  //TODO: not just weeks if diff is less thatn 7 days make it by days.
   const notificationSince = moment().diff(moment(notification.createdAt), 'week');
 
   return (

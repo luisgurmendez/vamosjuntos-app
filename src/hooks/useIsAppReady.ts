@@ -18,6 +18,7 @@ function useIsAppReady() {
   // 2. Refresh tokens.
   // 3. Fetch user
   // 4. Stores user in state.
+  // 5. Sets FCM user token
   useEffect(() => {
 
     const setUp = async (res: () => void, rej: () => void) => {
