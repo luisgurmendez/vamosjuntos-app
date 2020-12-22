@@ -1,4 +1,4 @@
-import { Ride, User, Notification, Passenger, RideRequest, FeatureFlag } from 'types/models';
+import { Ride, User, Notification, Passenger, RideRequest, FeatureFlag, Review } from 'types/models';
 import { Tokens } from 'types/tokens';
 
 export interface BaseResponse {
@@ -17,7 +17,7 @@ export interface GetRidesResponse extends BaseResponse {
   rides: Ride[];
 }
 
-export interface GetFeatureFlagsResponse extends BaseResponse{
+export interface GetFeatureFlagsResponse extends BaseResponse {
   featureFlags: FeatureFlag[];
 }
 
@@ -61,4 +61,8 @@ export interface UpdateUserResponse extends BaseResponse {
 
 export interface CreateRideRequestResponse extends BaseResponse {
   rideRequest: RideRequest;
+}
+
+export interface GetReviewsResponse extends BaseResponse {
+  reviews: Review[];
 }

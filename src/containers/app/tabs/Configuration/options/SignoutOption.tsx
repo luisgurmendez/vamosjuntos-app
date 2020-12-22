@@ -22,7 +22,7 @@ const SignoutOption: React.FC<SignoutOptionProps> = ({ }) => {
 
   return (
     <ConfigurationOption>
-      <StyledButton textStyle={{ color: colors.danger }} onPress={handleSignout}>Cerrar Sesion</StyledButton>
+      <StyledButton textStyle={{ fontSize: 18, color: colors.danger }} onPress={handleSignout}>Cerrar Sesion</StyledButton>
     </ConfigurationOption>
   )
 

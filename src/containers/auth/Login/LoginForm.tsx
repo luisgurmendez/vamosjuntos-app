@@ -33,9 +33,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccessfullLogin }) => {
                 placeholder="Usuario"
                 error={errors.username}
                 textContentType="username"
+                autoCapitalize="none"
                 onChangeText={handleChange('username')}
                 value={values.username}
-                autoCapitalize="none"
               />
               <TextInput
                 placeholder="Contraseña"
@@ -49,7 +49,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccessfullLogin }) => {
 
             <Button loading={isSubmitting} onPress={handleSubmit}>
               Ingresar
-              </Button>
+            </Button>
           </FormContent>
         )}
       </Formik>

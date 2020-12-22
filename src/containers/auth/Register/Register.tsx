@@ -1,16 +1,15 @@
 import React from 'react';
-import { Title } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
 import RegisterForm from './RegisterForm';
+import PageWithBack from 'components/Page/PageWithBack';
 
 const Register: React.FC = () => {
   return (
-    <Container>
-      <Title>Registrate</Title>
+    <PageWithBack title={'Registrate'}>
       <ScrollContent>
         <RegisterForm />
       </ScrollContent>
-    </Container>
+    </PageWithBack>
   );
 };
 

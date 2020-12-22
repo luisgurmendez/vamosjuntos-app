@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Page from 'components/Page/Page';
-import AnonymusCommentOption from './options/AnonymusCommentOption';
-import HidePhoneOption from './options/HidePhoneOption';
 import HelpOption from './options/HelpOption';
 import AppVersionOption from './options/AppVersionOption';
 import SignoutOption from './options/SignoutOption';
 import SavedAddressesOption from './options/SavedAddresses/SavedAddressesOption';
+import ComplaintOption from './options/Complaint/ComplaintOption';
 
 interface ConfigurationProps { }
 
@@ -14,14 +13,12 @@ const Configuration: React.FC<ConfigurationProps> = () => {
   return (
     <Page title="Configuracion">
       <Container>
-        <AnonymusCommentOption />
-        <HidePhoneOption />
         <SavedAddressesOption />
         <HelpOption />
+        <ComplaintOption />
         <AppVersionOption />
-        <SignoutOption />
-
       </Container>
+      <SignoutOption />
     </Page>
   );
 }

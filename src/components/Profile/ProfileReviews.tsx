@@ -8,10 +8,9 @@ import { SmallBody } from 'components/Typography/Typography';
 interface ProfileReviewsProps {
   disabledReviews: boolean;
   score: number;
-  numberOfReviews: number;
 }
 
-const ProfileReviews: React.FC<ProfileReviewsProps> = ({ disabledReviews, numberOfReviews, score }) => {
+const ProfileReviews: React.FC<ProfileReviewsProps> = ({ disabledReviews, score }) => {
   const navigation = useNavigation<any>();
 
   const handleGoToComments = () => {
@@ -21,7 +20,7 @@ const ProfileReviews: React.FC<ProfileReviewsProps> = ({ disabledReviews, number
   return (
     <Container disabled={disabledReviews} onPress={handleGoToComments}>
       <ScoreDisplay score={score} size={30} />
-      <SmallBody>Ver {numberOfReviews} comentarios</SmallBody>
+      <SmallBody>Ver comentarios</SmallBody>
     </Container>
   )
 

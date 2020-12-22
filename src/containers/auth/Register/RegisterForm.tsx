@@ -5,12 +5,18 @@ import React from 'react';
 import styled from 'styled-components/native';
 import * as Yup from 'yup';
 import MarginedChildren from 'components/Box/MarginedChildren';
-import messaging from '@react-native-firebase/messaging';
+import { useNavigation } from '@react-navigation/native';
+import Screens from './Screens';
+import { register } from 'api/auth';
+import { useDispatch } from 'react-redux';
 
 const RegisterFormSchema = Yup.object().shape({
   username: Yup.string().required('Campo obligatorio'),
   ci: Yup.string().required('Campo obligatorio'), //TODO validate Cedula
-  phone: Yup.string().required('Campo obligatorio'),
+  phone: Yup.string()
+    .required('Campo obligatorio')
+    .matches(/^[0-9]+$/, "Solo numeros")
+    .test('len', 'Numero invalido', val => val ? val.length === 8 : false),
   name: Yup.string().required('Campo obligatorio'),
   password: Yup.string().min(8, 'La contraseña debe tener mas de 8 caracteres').required('Contraseña obligatoria'),
   passwordConfirmation: Yup.string()
@@ -19,7 +25,7 @@ const RegisterFormSchema = Yup.object().shape({
     }).required('Campo obligatorio')
 });
 
-interface UserRegistrationValues {
+export interface UserRegistrationValues {
   username: string;
   ci: string;
   phone: string;
@@ -38,19 +44,17 @@ const RegisterForm: React.FC = () => {
     passwordConfirmation: ''
   };
 
+  const navigation = useNavigation<any>();
+
   const handleRegister = async (values: UserRegistrationValues) => {
-
-    const userToken = await messaging().getToken()
-
-
-
-
+    await register(values)
+    navigation.goBack();
   };
 
   return (
     <Container>
       <Formik validationSchema={RegisterFormSchema} initialValues={initialValues} onSubmit={handleRegister}>
-        {({ handleChange, isSubmitting, handleSubmit, values, errors }) => (
+        {({ handleChange, isSubmitting, handleSubmit, values, errors, isValid }) => (
           <FormContent>
             <MarginedChildren mV="md">
 
@@ -58,12 +62,14 @@ const RegisterForm: React.FC = () => {
                 placeholder="Usuario"
                 error={errors.username}
                 textContentType="username"
+                autoCapitalize="none"
                 onChangeText={handleChange('username')}
                 value={values.username}
               />
 
               <TextInput
-                placeholder="Nombre"
+                placeholder="Nombre y Apellido"
+                textContentType="name"
                 error={errors.name}
                 onChangeText={handleChange('name')}
                 value={values.name}
@@ -77,7 +83,9 @@ const RegisterForm: React.FC = () => {
               />
 
               <TextInput
+                prefix={'+598'}
                 placeholder="Celular"
+                textContentType="telephoneNumber"
                 keyboardType={"phone-pad"}
                 error={errors.phone}
                 onChangeText={handleChange('phone')}
@@ -86,6 +94,7 @@ const RegisterForm: React.FC = () => {
 
               <TextInput
                 placeholder="Contraseña"
+                textContentType="password"
                 error={errors.password}
                 secureTextEntry
                 onChangeText={handleChange('password')}
@@ -95,12 +104,13 @@ const RegisterForm: React.FC = () => {
               <TextInput
                 placeholder="Confirmar contraseña"
                 error={errors.passwordConfirmation}
+                secureTextEntry
                 onChangeText={handleChange('passwordConfirmation')}
                 value={values.passwordConfirmation}
               />
             </MarginedChildren>
 
-            <Button loading={isSubmitting} onPress={handleSubmit}>
+            <Button disabled={isSubmitting || !isValid} loading={isSubmitting} onPress={handleSubmit}>
               Registrate
             </Button>
           </FormContent>

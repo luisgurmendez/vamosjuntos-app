@@ -27,7 +27,16 @@ export interface User {
   phone: string;
   createdAt: string;
   score: number;
+  reviews: Review[];
   preferences: UserPreference[]
+}
+
+export interface Review {
+  fromUser: User;
+  toUser: User;
+  ride: Ride;
+  comment: string;
+  score: number;
 }
 
 export interface Passenger {
@@ -96,13 +105,6 @@ export interface Ride {
   whereTo: Address;
   whereFrom: Address;
   status: RideStatus;
-}
-
-
-export interface Comment {
-  user: string; //TODO for now
-  comment: string;
-  score: number;
 }
 
 export enum FeatureFlags {

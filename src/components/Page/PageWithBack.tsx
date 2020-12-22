@@ -1,20 +1,17 @@
-import BackArrow from 'components/Back/BackArrow';
-import { Box } from 'components/Box/Box';
 import React from 'react';
 import styled from 'styled-components/native';
+import Header from './Header';
 
 interface PageProps {
   secondaryAction?: React.ReactNode;
+  title?: string;
 }
 
-const PageWithBack: React.FC<PageProps> = ({ secondaryAction, children }) => {
+const PageWithBack: React.FC<PageProps> = ({ title, secondaryAction, children }) => {
 
   return (
-    <Container >
-      <Header pl={"md"}>
-        <BackArrow />
-        {secondaryAction}
-      </Header>
+    <Container>
+      <Header secondaryAction={secondaryAction} showBack title={title} />
       <Content>
         {children}
       </Content>
@@ -30,13 +27,14 @@ const Container = styled.SafeAreaView`
   width: 100%;
   height: 100%;
   position: relative;
+  padding: 0px 24px;
 `;
 
-const Header = styled(Box)`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`
+// const Header = styled(Box)`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+// `
 
 const Content = styled.View`
   flex:1;

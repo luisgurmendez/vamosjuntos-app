@@ -1,25 +1,21 @@
 import CommentList from 'components/Comment/CommentList';
+import withReviews from 'components/Comment/withReviews';
 import PageWithBack from 'components/Page/PageWithBack';
-import { Title } from 'components/Typography/Typography';
 import React from 'react'
-import styled from 'styled-components/native';
+
+const ReviewList = withReviews(CommentList);
 
 interface CommentsProps {
+  userId: string;
 }
 
-const Comments: React.FC<CommentsProps> = ({ }) => {
+const Comments: React.FC<CommentsProps> = ({ userId }) => {
 
   return (
-    <PageWithBack>
-      <Title>Comentarios</Title>
-      <CommentList />
+    <PageWithBack title="Comentarios">
+      <ReviewList userId={userId} />
     </PageWithBack>
   )
-
 }
 
 export default Comments;
-
-const Container = styled.View`
-
-`

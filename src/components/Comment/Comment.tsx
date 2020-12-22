@@ -7,25 +7,24 @@ import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import ScoreDisplay from 'components/Score/Score'
 import { Box } from 'components/Box/Box';
+import { Review } from 'types/models';
 
 interface CommentProps {
-  comment: string;
-  user: string;
-  score: number;
+  review: Review;
 }
 
-const Comment: React.FC<CommentProps> = ({ user, score, comment }) => {
+const Comment: React.FC<CommentProps> = ({ review }) => {
 
   return (
     <Container>
       <Header>
         <Box mr="md">
-          <Body><Bold>{user}</Bold></Body>
+          <Body><Bold>{review.fromUser.name}</Bold></Body>
         </Box>
-        <ScoreDisplay score={score} size={15} />
+        <ScoreDisplay score={review.score} size={15} />
       </Header>
       <Content>
-        <SmallBody>{comment}</SmallBody>
+        <SmallBody>{review.comment}</SmallBody>
       </Content>
     </Container>
   )

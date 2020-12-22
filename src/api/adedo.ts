@@ -1,5 +1,5 @@
 import { CancelToken } from 'axios';
-import { Address, Ride, User, Notification, Passenger, RideRequest, FeatureFlag } from 'types/models';
+import { Address, Ride, User, Notification, Passenger, RideRequest, FeatureFlag, Review } from 'types/models';
 import { api } from './api';
 import {
   AddressFromCoordsResponse,
@@ -12,7 +12,8 @@ import {
   UpdateUserResponse,
   CreateRideRequestResponse,
   BaseResponse,
-  GetFeatureFlagsResponse
+  GetFeatureFlagsResponse,
+  GetReviewsResponse
 } from './responses';
 
 export const createRide = async (body: Partial<Ride>): Promise<Ride | undefined> => {
@@ -136,11 +137,23 @@ export const setSeenNotifications = async (notificationIds: number[] | string[])
   return response.data.success;
 };
 
-
 export const updateUser = async (user: User): Promise<User> => {
   const response = await api.post<UpdateUserResponse>('/user/update', { user });
   if (response.data.success) {
     return response.data.user;
   }
   return user;
-}; 
+};
+
+export const getReviews = async (userId: string): Promise<Review[]> => {
+  const response = await api.get<GetReviewsResponse>(`/review/${userId}`);
+  if (response.data.success) {
+    return response.data.reviews;
+  }
+  return [];
+};
+
+export const sendComplaint = async (complaint: string): Promise<boolean> => {
+  const response = await api.post<BaseResponse>('/complaint/create', { complaint });
+  return response.data.success;
+};

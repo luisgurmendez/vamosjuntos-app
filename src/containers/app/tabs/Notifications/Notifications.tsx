@@ -76,5 +76,5 @@ export default Notifications;
 
 const Container = styled.ScrollView`
   flex:1;
-  padding-vertical: 8px;
+  padding: 8px;
 `

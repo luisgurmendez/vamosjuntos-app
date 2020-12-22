@@ -1,13 +1,8 @@
-import { Text, Subtitle, SmallBody } from 'components/Typography/Typography';
+import { Subtitle } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
 import React from 'react';
-import ScoreDisplay from 'components/Score/Score'
 import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
-import NumberedIcon from 'components/NumberedIcon/NumberedIcon';
 import { User } from 'types/models';
-import moment from 'moment';
-import ProfilePreference from 'components/Profile/ProfilePreference';
-import BackArrow from 'components/Back/BackArrow';
 import PreferenceList from 'components/Profile/PreferenceList';
 import RidesAndLifts from 'components/Profile/RidesAndLifts';
 import UserSince from 'components/Profile/UserSince';
