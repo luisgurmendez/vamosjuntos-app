@@ -4,24 +4,25 @@ import styled from 'styled-components/native';
 
 interface Props {
   size?: number;
+  img?: string;
 }
 
-const ProfilePicPlaceholder: React.FC<Props> = ({ size = 60 }) => {
+const ProfilePic: React.FC<Props> = ({ img, size = 60 }) => {
 
   return (
-    <ProfilePic size={size}>
+    <ProfilePicBase size={size}>
       <Image
         style={{ flex: 1, width: '100%' }}
         resizeMode="cover"
-        source={require('../../assets/profilePlaceholder.jpg')}
+        source={img ? { uri: img } : require('../../assets/profilePlaceholder.jpg')}
       />
-    </ProfilePic>
+    </ProfilePicBase>
   )
 }
 
-export default ProfilePicPlaceholder;
+export default ProfilePic;
 
-const ProfilePic = styled.View<Props>`
+const ProfilePicBase = styled.View<Props>`
   width: ${props => props.size!}px;
   height: ${props => props.size!}px;
   border-radius: ${props => props.size! / 2}px;

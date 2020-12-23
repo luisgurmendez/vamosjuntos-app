@@ -157,3 +157,14 @@ export const sendComplaint = async (complaint: string): Promise<boolean> => {
   const response = await api.post<BaseResponse>('/complaint/create', { complaint });
   return response.data.success;
 };
+
+interface ReviewBody {
+  toUserId: string;
+  comment: string;
+  score: number;
+}
+
+export const createReview = async (data: ReviewBody): Promise<boolean> => {
+  const response = await api.post<BaseResponse>('/review/create', data);
+  return response.data.success;
+};

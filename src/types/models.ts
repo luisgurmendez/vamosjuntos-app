@@ -28,6 +28,7 @@ export interface User {
   createdAt: string;
   score: number;
   reviews: Review[];
+  img?: string;
   preferences: UserPreference[]
 }
 

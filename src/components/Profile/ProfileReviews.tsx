@@ -8,13 +8,15 @@ import { SmallBody } from 'components/Typography/Typography';
 interface ProfileReviewsProps {
   disabledReviews: boolean;
   score: number;
+  userId: string;
 }
 
-const ProfileReviews: React.FC<ProfileReviewsProps> = ({ disabledReviews, score }) => {
+const ProfileReviews: React.FC<ProfileReviewsProps> = ({ userId, disabledReviews, score }) => {
   const navigation = useNavigation<any>();
+  console.log(userId);
 
   const handleGoToComments = () => {
-    navigation.push(Screens.COMMENTS)
+    navigation.push(Screens.COMMENTS, { userId })
   }
 
   return (

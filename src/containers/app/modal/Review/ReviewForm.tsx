@@ -8,23 +8,29 @@ import Button from 'components/Button/Button';
 import TextInput from 'components/TextInput/TextInput';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import Toaster from 'components/Toaster/Toaster';
+import { User } from 'types/models';
 
 const ScoreFormSchema = Yup.object().shape({
   score: Yup.number().moreThan(0).required(),
   comment: Yup.string()
 });
 
-const initialValues = {
+export interface ReviewFormValues {
+  score: number;
+  comment: string;
+}
+
+const initialValues: ReviewFormValues = {
   score: 0,
-  comment: undefined
+  comment: ''
 }
 
 interface ReviewFormProps {
-  onSubmit: () => void;
+  onSubmit: (vals: ReviewFormValues) => void;
+  toUser: User;
 }
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ toUser, onSubmit }) => {
 
   return (
     <Formik validateOnMount validationSchema={ScoreFormSchema} initialValues={initialValues} onSubmit={onSubmit}>
@@ -32,7 +38,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
         <Content>
           <FieldsContainer>
             <ScoreContainer>
-              <Subtitle>Como estuvo tu viaje con Maria? <RequiredFieldText>*</RequiredFieldText></Subtitle>
+              <Subtitle>Como estuvo tu viaje con {toUser.name}? <RequiredFieldText>*</RequiredFieldText></Subtitle>
               <ScoreInput score={values.score} onChange={(score) => setFieldValue('score', score)} />
             </ScoreContainer>
             <CommentContainer>

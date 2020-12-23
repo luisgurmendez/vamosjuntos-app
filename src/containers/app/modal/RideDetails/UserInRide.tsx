@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
+import ProfilePic from 'components/ProfilePic/ProfilePic';
 import Score from 'components/Score/Score';
 import Shadow from 'components/Shadow/Shadow';
 import { Body } from 'components/Typography/Typography';
@@ -16,9 +16,6 @@ interface UserInRideProps {
 
 const UserInRide: React.FC<UserInRideProps> = ({ user }) => {
 
-
-  console.log(user);
-
   const navigation = useNavigation<any>();
 
   const handlePressUser = () => {
@@ -28,7 +25,7 @@ const UserInRide: React.FC<UserInRideProps> = ({ user }) => {
   return (
     <TouchableOpacity onPress={handlePressUser}>
       <Container>
-        <ProfilePicPlaceholder size={50} />
+        <ProfilePic size={50} />
         <UserContent>
           <Score score={user.score} size={15} />
           <Body>{user.name}</Body>
@@ -37,7 +34,6 @@ const UserInRide: React.FC<UserInRideProps> = ({ user }) => {
     </TouchableOpacity>
 
   )
-
 }
 
 export default UserInRide;

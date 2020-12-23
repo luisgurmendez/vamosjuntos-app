@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import ConfirmCancelationModal from './ConfirmCancelationModal';
 import WhereFromWhereToStaticMap from 'components/Map/WhereFromWhereToStaticMap';
 import { Box } from 'components/Box/Box';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface RideDetailsProps {
   ride: Ride;
@@ -28,6 +29,9 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
 
   const [isConfirmCancelModalOpen, setIsConfirmCancelModalOpen] = useState(false);
   const user = useSelector((state: AppState) => state.user.user);
+  const paddings = useSafeAreaInsets();
+
+  console.log(paddings);
 
   const isDriver = user && user.id === ride.driver.id;
   const mapId = `RideDetails-${ride.id}-map`
@@ -59,7 +63,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
   return (
     <Container>
       <StatusBar hidden />
-      <AbsoluteSafeArea>
+      <AbsoluteSafeArea mt={'xxlg'}>
         <PositionedPressableIcon onPress={handleClose} name="x" size={30} color={colors.black} />
       </AbsoluteSafeArea>
       <WhereFromWhereToStaticMap mapId={mapId} whereFrom={ride.whereFrom} whereTo={ride.whereTo} />
@@ -99,13 +103,7 @@ const Container = styled.View`
   padding-bottom: 14px;
 `
 
-const MapContainer = styled.View`
-  position: relative;
-  width: 100%;
-  height: 250px;
-`
-
-const AbsoluteSafeArea = styled.SafeAreaView`
+const AbsoluteSafeArea = styled(Box)`
   position: absolute;
   zIndex: 300;
 `

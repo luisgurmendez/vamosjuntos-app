@@ -1,13 +1,14 @@
 import { Subtitle } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
 import React from 'react';
-import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
+import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { User } from 'types/models';
 import PreferenceList from 'components/Profile/PreferenceList';
 import RidesAndLifts from 'components/Profile/RidesAndLifts';
 import UserSince from 'components/Profile/UserSince';
 import PageWithBack from 'components/Page/PageWithBack';
 import ProfileReviews from 'components/Profile/ProfileReviews';
+
 interface UserProfileProps {
   route: { params: { user: User } }
 }
@@ -19,10 +20,10 @@ const UserProfile: React.FC<UserProfileProps> = ({ route: { params: { user } } }
       <Container>
         <Content contentContainerStyle={{ alignItems: 'center' }}>
           <ProfileImageContainer>
-            <ProfilePicPlaceholder size={160} />
+            <ProfilePic img={user.img} size={160} />
           </ProfileImageContainer>
           <Subtitle>{user.name}</Subtitle>
-          <ProfileReviews disabledReviews={false} numberOfReviews={25} score={3.8} />
+          <ProfileReviews userId={user.id} disabledReviews={false} score={user.score} />
           <RidesAndLifts rides={5} lifts={6} />
           <PreferenceList preferences={user.preferences} />
         </Content>

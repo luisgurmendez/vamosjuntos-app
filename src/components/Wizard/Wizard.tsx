@@ -1,8 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
+import { Box } from 'components/Box/Box';
 import Button from 'components/Button/Button';
 import Header from 'components/Page/Header';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import React from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import { StackNavigationAPI } from 'types/Navigation';
 import { colors } from 'utils/colors';
@@ -33,6 +35,7 @@ const Wizard: React.FC<WizardProps> = ({
   children
 }) => {
   const navigation: StackNavigationAPI = useNavigation<any>();
+  const paddings = useSafeAreaInsets();
 
   const defaultActionProps = {
     onPress: undefined,
@@ -70,7 +73,7 @@ const Wizard: React.FC<WizardProps> = ({
               undefined
           } />
         <Content>{children}</Content>
-        {!_action.hideAction && <Footer>
+        {!_action.hideAction && <Footer mb={paddings.bottom === 0 ? 'lg' : undefined}>
           <Button loading={_action.loading} disabled={_action.disabled} onPress={handleNext}>
             {_action.label}
           </Button>
@@ -90,7 +93,7 @@ const Content = styled.View`
   flex: 1;
 `;
 
-const Footer = styled.View`
+const Footer = styled(Box)`
   width: 100%;
 `;
 

@@ -1,29 +1,32 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { colors } from 'utils/colors';
-import Toaster from 'components/Toaster/Toaster';
-import ReviewForm from './ReviewForm';
-import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
+import ReviewForm, { ReviewFormValues } from './ReviewForm';
+import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { useNavigation } from '@react-navigation/native';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
+import { User } from 'types/models';
+import { createReview } from 'api/adedo';
 
-const Review: React.FC = () => {
+interface ReviewProps {
+  toUser: User;
+}
+
+const Review: React.FC<ReviewProps> = ({ toUser }) => {
 
   const navigation: any = useNavigation();
 
-  const handleSubmitReview = () => {
-    setTimeout(() => {
-      navigation.goBack(null);
-    }, 2000)
+  const handleSubmitReview = async (values: ReviewFormValues) => {
+    await createReview({ ...values, toUserId: toUser.id });
+    navigation.goBack(null);
   }
 
   return (
     <Container>
       <DismissKeyboard>
         <ProfilePicContainer>
-          <ProfilePicPlaceholder size={150} />
+          <ProfilePic img={toUser.img} size={150} />
         </ProfilePicContainer>
-        <ReviewForm onSubmit={handleSubmitReview} />
+        <ReviewForm toUser={toUser} onSubmit={handleSubmitReview} />
       </DismissKeyboard>
     </Container>
   );
@@ -42,11 +45,4 @@ const ProfilePicContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-`
-
-const ProfilePic = styled.View`
-  width: 150px;
-  height: 150px;
-  border-radius: 75px;
-  background-color: ${colors.gray};
 `

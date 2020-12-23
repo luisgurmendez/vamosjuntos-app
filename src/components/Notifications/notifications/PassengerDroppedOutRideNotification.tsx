@@ -3,10 +3,10 @@ import { BaseNotification, NotificationProps } from './commons';
 
 interface PassengerDroppedOutRideNotificationProps extends NotificationProps { }
 
-const PassengerDroppedOutRideNotification: React.FC<PassengerDroppedOutRideNotificationProps> = ({ notification }) => {
+const PassengerDroppedOutRideNotification: React.FC<PassengerDroppedOutRideNotificationProps> = ({ style, notification }) => {
 
   return (
-    <BaseNotification notification={notification} label={'se fue de un viaje'} />
+    <BaseNotification style={style} notification={notification} label={'se fue de un viaje'} />
   )
 
 }

@@ -2,7 +2,7 @@ import { PlainInput, Subtitle } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
 import React, { useEffect, useState } from 'react';
 import EditProfilePicButton from './EditProfilePicButton';
-import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
+import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { setShowCamera } from 'state/camera/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import EditHeaderActions from './EditHeaderActions';
@@ -83,11 +83,11 @@ const Profile: React.FC<ProfileProps> = () => {
       <EditHeaderActions editing={editing} saving={isUpdatingUser} onToggleEdit={toggleEditing} onSave={handleUpdateProfile} />
       <Content contentContainerStyle={{ alignItems: 'center' }}>
         <ProfileImageContainer>
-          <ProfilePicPlaceholder size={160} />
+          <ProfilePic img={user?.img} size={160} />
           {editing && <EditProfilePicButton onPress={handleOpenCamera} />}
         </ProfileImageContainer>
         {editing ? <NameInput onChangeText={handleNameChange} value={editingUser.name} /> : <Subtitle>{editingUser.name}</Subtitle>}
-        <ProfileReviews disabledReviews={editing} score={user?.score!} />
+        <ProfileReviews userId={user?.id!} disabledReviews={editing} score={user?.score!} />
         <RidesAndLifts rides={5} lifts={6} />
         <PreferenceList preferences={editingUser.preferences}>
           {editing && <PressableIcon style={{ marginBottom: 8 }} size={30} name="plus" color={colors.main} onPress={handleEditPreference} />}

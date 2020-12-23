@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfilePicPlaceholder from 'components/ProfilePic/ProfilePicPlaceholder';
+import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { Body, Bold } from 'components/Typography/Typography';
 import { Stylable } from 'components/types';
 import { Notification, User } from 'types/models';
@@ -37,7 +37,7 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
       <FullRow>
         <Box mr="lg">
           <PressAnimation onPress={handlePressOnProfile}>
-            <ProfilePicPlaceholder />
+            <ProfilePic img={user!.img} />
           </PressAnimation>
         </Box>
         <Body style={{ flex: 1 }}>

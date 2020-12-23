@@ -6,10 +6,10 @@ import React from 'react'
 const ReviewList = withReviews(CommentList);
 
 interface CommentsProps {
-  userId: string;
+  route: { params: { userId: string } }
 }
 
-const Comments: React.FC<CommentsProps> = ({ userId }) => {
+const Comments: React.FC<CommentsProps> = ({ route: { params: { userId } } }) => {
 
   return (
     <PageWithBack title="Comentarios">
