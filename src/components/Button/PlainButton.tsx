@@ -8,7 +8,7 @@ import { Text } from 'components/Typography/Typography';
 import { colors } from 'utils/colors';
 import { Stylable } from 'components/types';
 
-interface PlainButtonProps extends BaseButtonProps {
+export interface PlainButtonProps extends BaseButtonProps {
   textStyle?: Stylable<TextStyle>['style'];
 }
 

@@ -47,7 +47,8 @@ const RegisterForm: React.FC = () => {
   const navigation = useNavigation<any>();
 
   const handleRegister = async (values: UserRegistrationValues) => {
-    await register(values)
+    const updatedValues = { ...values, phone: `+598${values.phone}` }
+    await register(updatedValues)
     navigation.goBack();
   };
 

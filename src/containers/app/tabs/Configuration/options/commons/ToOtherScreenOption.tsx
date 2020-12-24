@@ -28,14 +28,14 @@ const ToOtherScreenOption: React.FC<ToOtherScreenOptionProps> = ({ title, toScre
       </Container>
     </ConfigurationOption>
   )
-
 }
 
 export default ToOtherScreenOption;
 
 const Container = styled.TouchableOpacity`
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
 `

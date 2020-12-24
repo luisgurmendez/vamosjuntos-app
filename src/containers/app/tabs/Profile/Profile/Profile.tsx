@@ -1,4 +1,4 @@
-import { PlainInput, Subtitle } from 'components/Typography/Typography';
+import { LargeBody, PlainInput, Subtitle } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
 import React, { useEffect, useState } from 'react';
 import EditProfilePicButton from './EditProfilePicButton';
@@ -19,6 +19,7 @@ import ProfileReviews from 'components/Profile/ProfileReviews';
 import { updateUser } from 'api/adedo';
 import { setUser } from 'state/user/actions';
 import Toaster from 'components/Toaster/Toaster';
+import { Box } from 'components/Box/Box';
 
 interface ProfileProps { }
 
@@ -73,6 +74,12 @@ const Profile: React.FC<ProfileProps> = () => {
     })
   }
 
+  const handlePhoneChange = (phone: string) => {
+    setEditingUser(u => {
+      return { ...u, phone: phone };
+    })
+  }
+
   const handleUserPreferencesChange = (p: UserPreference[]) => {
     setEditingUser(user => {
       return { ...user, preferences: p };
@@ -94,7 +101,12 @@ const Profile: React.FC<ProfileProps> = () => {
           <ProfilePic img={user?.img} size={160} />
           {editing && <EditProfilePicButton onPress={handleOpenCamera} />}
         </ProfileImageContainer>
-        {editing ? <NameInput onChangeText={handleNameChange} value={editingUser.name} /> : <Subtitle>{editingUser.name}</Subtitle>}
+        <Box mt="lg">
+          {editing ? <NameInput onChangeText={handleNameChange} value={editingUser.name} /> : <Subtitle>{editingUser.name}</Subtitle>}
+        </Box>
+        <Box mt="lg">
+          {editing ? <PhoneInput onChangeText={handlePhoneChange} value={editingUser.phone} /> : <LargeBody>{editingUser.phone}</LargeBody>}
+        </Box>
         <ProfileReviews userId={user?.id!} disabledReviews={editing} score={user?.score!} />
         <RidesAndLifts rides={numOfRides} lifts={numOfLifts} />
         <PreferenceList preferences={editingUser.preferences}>
@@ -135,4 +147,9 @@ const ProfileImageContainer = styled.View`
 const NameInput = styled(PlainInput)`
   font-weight: bold;
   font-size: 24px;
+`
+
+const PhoneInput = styled(PlainInput)`
+  font-weight: 400;
+  font-size: 20px;
 `

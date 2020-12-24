@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { sendComplaint } from 'api/adedo';
 import Button from 'components/Button/Button';
+import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import PageWithBack from 'components/Page/PageWithBack';
 import TextInput from 'components/TextInput/TextInput';
 import Toaster from 'components/Toaster/Toaster';
@@ -8,8 +9,7 @@ import React from 'react'
 import { useState } from 'react';
 import styled from 'styled-components/native';
 
-interface ComplaintProps {
-}
+interface ComplaintProps { }
 
 const Complaint: React.FC<ComplaintProps> = ({ }) => {
 
@@ -33,16 +33,18 @@ const Complaint: React.FC<ComplaintProps> = ({ }) => {
 
   return (
     <PageWithBack title="Quejate">
-      <Content>
-        <MultilinedTextInput
-          placeholder="Contanos que paso"
-          value={complaint}
-          multiline
-          numberOfLines={6}
-          onChangeText={setComplaint}
-        />
-        <Button loading={isSendingComplaint} onPress={handleSendComplaint}>Mandar</Button>
-      </Content>
+      <DismissKeyboard>
+        <Content>
+          <MultilinedTextInput
+            placeholder="Contanos que paso"
+            value={complaint}
+            multiline
+            numberOfLines={6}
+            onChangeText={setComplaint}
+          />
+          <Button loading={isSendingComplaint} onPress={handleSendComplaint}>Mandar</Button>
+        </Content>
+      </DismissKeyboard>
     </PageWithBack>
   )
 }
