@@ -13,7 +13,6 @@ interface ProfileReviewsProps {
 
 const ProfileReviews: React.FC<ProfileReviewsProps> = ({ userId, disabledReviews, score }) => {
   const navigation = useNavigation<any>();
-  console.log(userId);
 
   const handleGoToComments = () => {
     navigation.push(Screens.COMMENTS, { userId })

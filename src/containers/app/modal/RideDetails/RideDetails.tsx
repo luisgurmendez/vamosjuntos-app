@@ -1,15 +1,12 @@
-import RideMarker from 'components/Ride/RideMarker';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/native';
-import Map from 'components/Map/Map';
-import useMapZoomToCoords from 'hooks/useMapZoomToCoords';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import { colors } from 'utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import { Subtitle } from 'components/Typography/Typography';
 import { StatusBar } from 'react-native';
 import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
-import { Ride, User } from 'types/models';
+import { Ride } from 'types/models';
 import UserInRide from './UserInRide';
 import { cancelRide, dropOutRide, getRideDetails } from 'api/adedo';
 import HideIfLoading from 'components/Loading/HideIfLoading';
@@ -19,7 +16,7 @@ import { useSelector } from 'react-redux';
 import ConfirmCancelationModal from './ConfirmCancelationModal';
 import WhereFromWhereToStaticMap from 'components/Map/WhereFromWhereToStaticMap';
 import { Box } from 'components/Box/Box';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Toaster from 'components/Toaster/Toaster';
 
 interface RideDetailsProps {
   ride: Ride;
@@ -29,9 +26,6 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
 
   const [isConfirmCancelModalOpen, setIsConfirmCancelModalOpen] = useState(false);
   const user = useSelector((state: AppState) => state.user.user);
-  const paddings = useSafeAreaInsets();
-
-  console.log(paddings);
 
   const isDriver = user && user.id === ride.driver.id;
   const mapId = `RideDetails-${ride.id}-map`
@@ -44,14 +38,19 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
   }
 
   const handleConfirmCancelRide = async () => {
-    if (isDriver) {
-      await cancelRide(ride.id);
-    } else {
-      await dropOutRide(ride.id);
+    try {
+
+      if (isDriver) {
+        await cancelRide(ride.id);
+      } else {
+        await dropOutRide(ride.id);
+      }
+      handleCancelConfirmModal();
+      handleClose();
+    } catch (e) {
+      Toaster.alert('Hubo un error')
     }
-    // TODO: remove ride from redux. redux-thunk? Since getRides / setRides is too common
-    handleCancelConfirmModal();
-    handleClose();
+
   }
 
   const handleCancelRide = () => {
@@ -131,8 +130,10 @@ const RideDetailsWrapper: React.FC<RideDetailsWrapperProps> = ({ route: { params
   useEffect(() => {
     const asyncEffect = async () => {
       setIsFetchingRide(true);
-      const rideDetails = await getRideDetails(rideId);
-      setRideWithDetails(rideDetails);
+      try {
+        const rideDetails = await getRideDetails(rideId);
+        setRideWithDetails(rideDetails);
+      } catch (e) { }
       setIsFetchingRide(false);
     }
     asyncEffect();

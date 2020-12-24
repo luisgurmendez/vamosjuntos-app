@@ -30,22 +30,20 @@ const intialValues: RideCreationValues = {
 
 const RideStack: React.FC = () => {
 
-
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
   const handleCreateRide = async (values: RideCreationValues, helpers: FormikHelpers<RideCreationValues>) => {
 
     try {
-      const createdRide = await createRide(values);
+      await createRide(values);
       const rides = await getRides();
       dispatch(setRides(rides));
-      helpers.setSubmitting(false);
       navigation.goBack();
 
     } catch (e) {
-      // Toaster.alert()
-      console.log(e);
+      Toaster.alert('Hubo un error al crear el viaje')
     }
+    helpers.setSubmitting(false);
   }
 
   return (

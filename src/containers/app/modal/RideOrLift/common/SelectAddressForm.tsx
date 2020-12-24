@@ -11,7 +11,7 @@ import Storage from 'storage/Storage';
 import styled from 'styled-components/native';
 import { SavedAddress } from 'types/storage';
 import useStorage from 'hooks/useStorage';
-// import Geolocation from '@react-native-community/geolocation';
+import Geolocation from '@react-native-community/geolocation';
 import { getAddressFromCoords } from 'api/adedo';
 
 interface SelectAddressFormProps {
@@ -21,16 +21,18 @@ interface SelectAddressFormProps {
 
 const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, onSelectAddress }) => {
   const [selectAddressOpen, setSelectAddressOpen] = useState(false);
-  const [savedAddresses, setSavedAddress] = useStorage<SavedAddress[]>(
+  const [savedAddresses] = useStorage<SavedAddress[]>(
     Storage.ADDRESSES,
     []
   );
 
   const handleSelectLocationAsAddress = () => {
-    // Geolocation.getCurrentPosition(async ({ coords: { latitude, longitude } }) => {
-    //   const address = await getAddressFromCoords(latitude, longitude);
-    //   onSelectAddress(address);
-    // });
+    Geolocation.getCurrentPosition(async ({ coords: { latitude, longitude } }) => {
+      try {
+        const address = await getAddressFromCoords(latitude, longitude);
+        onSelectAddress(address);
+      } catch (e) { }
+    });
 
   }
 

@@ -49,7 +49,7 @@ interface MenuOptionsConfig {
 export const MenuOptions = (options: MenuOptionsConfig): BottomTabNavigationOptions => ({
   tabBarLabel: '',
   tabBarIcon: ({ focused, size, color }) => null,
-  tabBarBadge: undefined, // TODO como hacer esto??
+  tabBarBadge: undefined,
   tabBarButton: () => <Menu {...options} />
 });
 

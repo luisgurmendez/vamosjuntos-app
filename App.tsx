@@ -22,7 +22,9 @@ import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';
 import admob, { MaxAdContentRating } from '@react-native-firebase/admob';
 import messaging from '@react-native-firebase/messaging';
+import crashlytics from '@react-native-firebase/crashlytics';
 import BannerAd from 'components/Ad/BannerAd';
+import useVersion from 'hooks/useVersion';
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -31,6 +33,12 @@ LogBox.ignoreAllLogs();
 
 const App = () => {
   useInitStorage();
+  const appVersion = useVersion();
+
+  useEffect(() => {
+    console.log(`Using app version: ${appVersion}`)
+    crashlytics().log(`Using app version: ${appVersion}`)
+  })
 
   return (
     <NavigationContainer>

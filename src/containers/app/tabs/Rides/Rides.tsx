@@ -10,6 +10,7 @@ import NoRides from './NoRides';
 import { getRides } from 'api/adedo';
 import { setRides } from 'state/ride/actions';
 import { RefreshControl } from 'react-native';
+import Toaster from 'components/Toaster/Toaster';
 
 const Rides: React.FC = () => {
 
@@ -24,8 +25,13 @@ const Rides: React.FC = () => {
 
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
-    const _rides = await getRides();
-    dispatch(setRides(_rides))
+    try {
+      const _rides = await getRides();
+      dispatch(setRides(_rides))
+    } catch (e) {
+      Toaster.alert('Hubo un error')
+    }
+
     setRefreshing(false);
   }, []);
 

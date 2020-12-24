@@ -20,10 +20,15 @@ const Complaint: React.FC<ComplaintProps> = ({ }) => {
 
   const handleSendComplaint = async () => {
     setSendingComplaint(true);
-    await sendComplaint(complaint);
+    try {
+      await sendComplaint(complaint);
+      navigation.goBack();
+      Toaster.success('Queja guarada.')
+    } catch (e) {
+      Toaster.alert('Error guardando tu queja.')
+    }
     setSendingComplaint(false);
-    navigation.goBack();
-    Toaster.success('Queja guarada.')
+
   }
 
   return (

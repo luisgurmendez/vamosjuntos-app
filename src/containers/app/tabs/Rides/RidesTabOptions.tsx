@@ -5,5 +5,5 @@ import Icon from 'react-native-vector-icons/Feather';
 export const RidesTabOptions: BottomTabNavigationOptions = {
   tabBarLabel: 'Viajes',
   tabBarIcon: ({ focused, size, color }) => <Icon name="navigation" size={size} color={color} />,
-  tabBarBadge: undefined // TODO como hacer esto??
+  tabBarBadge: undefined
 };

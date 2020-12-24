@@ -1,6 +1,7 @@
 import { acceptRideRequest, declineRideRequest } from 'api/adedo';
 import PlainButton from 'components/Button/PlainButton';
 import HideIfLoading from 'components/Loading/HideIfLoading';
+import Toaster from 'components/Toaster/Toaster';
 import { Body } from 'components/Typography/Typography';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
@@ -24,7 +25,11 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
   const handleDeclineRideRequest = async () => {
     if (rideRequest) {
       setLoading(true);
-      await declineRideRequest(rideRequest.id)
+      try {
+        await declineRideRequest(rideRequest.id)
+      } catch (e) {
+        Toaster.alert('Hubo un error');
+      }
       setLoading(false);
     }
   }
@@ -32,7 +37,11 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
   const handleAcceptRideRequest = async () => {
     if (rideRequest) {
       setLoading(true);
-      await acceptRideRequest(rideRequest.id)
+      try {
+        await acceptRideRequest(rideRequest.id)
+      } catch (e) {
+        Toaster.alert('Hubo un error');
+      }
       setLoading(false);
     }
   }

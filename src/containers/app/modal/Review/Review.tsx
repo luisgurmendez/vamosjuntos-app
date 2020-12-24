@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import { User } from 'types/models';
 import { createReview } from 'api/adedo';
+import Toaster from 'components/Toaster/Toaster';
 
 interface ReviewProps {
   toUser: User;
@@ -15,8 +16,9 @@ const Review: React.FC<ReviewProps> = ({ toUser }) => {
 
   const navigation: any = useNavigation();
 
-  const handleSubmitReview = async (values: ReviewFormValues) => {
-    await createReview({ ...values, toUserId: toUser.id });
+  const handleSubmitReview = (values: ReviewFormValues) => {
+    createReview({ ...values, toUserId: toUser.id }); // Silent request
+    Toaster.success('Gracias!')
     navigation.goBack(null);
   }
 

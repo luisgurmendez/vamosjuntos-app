@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components/native';
-import Modal from 'react-native-modal';
-import { Subtitle } from 'components/Typography/Typography';
 import SimpleModal from 'components/Modal/SimpleModal';
 import ModalActions from 'components/Modal/ModalActions';
 

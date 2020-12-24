@@ -1,5 +1,5 @@
 import { Screens } from 'containers/Screens';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabsNavigation from './tabs/TabsNavigation';
 import RideStack from './modal/RideOrLift/Ride/Ride';
@@ -13,12 +13,22 @@ import UserProfile from './modal/UserProfile/UserProfile';
 import LiftStack from './modal/RideOrLift/Lift/Lift';
 import RideDetails from './modal/RideDetails/RideDetails';
 import Comments from 'components/Profile/Comments';
+import crashlytics from '@react-native-firebase/crashlytics';
+import { useSelector } from 'react-redux';
+import { AppState } from 'state/types';
 
 const Stack = createStackNavigator();
 
 const AppNavigation: React.FC = () => {
 
   const shouldShowWelcome = false;
+  const user = useSelector((state: AppState) => state.user.user);
+
+  useEffect(() => {
+    crashlytics().log('User sign in');
+    crashlytics().setUserId(user!.id.toString());
+
+  }, [user])
 
   return (
     <AppContainer>

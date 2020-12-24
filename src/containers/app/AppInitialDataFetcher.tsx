@@ -1,14 +1,12 @@
 import { getFeatureFlags, getNotifications, getRides } from 'api/adedo';
 import HideIfLoading from 'components/Loading/HideIfLoading';
-import Loading from 'components/Loading/Loading';
+import Toaster from 'components/Toaster/Toaster';
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { setFeatureFlags } from 'state/featureFlags/actions';
 import { setNotifications } from 'state/notification/actions';
 import { setRides } from 'state/ride/actions';
 import styled from 'styled-components/native';
-import { colors } from 'utils/colors';
 
 interface AppInitialDataFetcherProps {
 }
@@ -28,6 +26,9 @@ const AppInitialDataFetcher: React.FC<AppInitialDataFetcherProps> = ({ children 
       dispatch(setRides(rides));
       dispatch(setFeatureFlags(featureFlags));
       setFetching(false);
+    }).catch(() => {
+      setFetching(false);
+      Toaster.alert('Hubo un error');
     })
 
   }, [dispatch])

@@ -1,6 +1,6 @@
 import { Body } from 'components/Typography/Typography';
+import useVersion from 'hooks/useVersion';
 import React from 'react'
-import styled from 'styled-components/native';
 import ConfigurationOption from './commons/ConfigurationOption';
 
 interface AppVersionOptionProps {
@@ -8,16 +8,14 @@ interface AppVersionOptionProps {
 
 const AppVersionOption: React.FC<AppVersionOptionProps> = ({ }) => {
 
+  const version = useVersion();
+
   return (
     <ConfigurationOption>
-      <Body>Version 1.21.1</Body>
+      <Body>Version {version}</Body>
     </ConfigurationOption>
   )
 
 }
 
 export default AppVersionOption;
-
-const Container = styled.View`
-
-`

@@ -1,6 +1,7 @@
 {
   "react-native": {
     "admob_android_app_id": "ca-app-pub-8544233246340029~6207707169",
-    "admob_ios_app_id": "ca-app-pub-8544233246340029~4720377431"
+    "admob_ios_app_id": "ca-app-pub-8544233246340029~4720377431",
+    "crashlytics_debug_enabled": true
   }
 }

@@ -28,10 +28,11 @@ const JoinRide: React.FC<JoinRideProps> = ({ }) => {
 
   useEffect(() => {
     const asyncCb = async () => {
-      console.log(isValid)
       if (isValid) {
-        const _rides = await getPossibleRides(values as any);
-        setRides(_rides);
+        try {
+          const _rides = await getPossibleRides(values as any);
+          setRides(_rides);
+        } catch (e) { }
       }
     }
     asyncCb()
@@ -41,6 +42,7 @@ const JoinRide: React.FC<JoinRideProps> = ({ }) => {
   const handleJoinRide = async (ride: Ride) => {
     const { whereFrom, whereTo } = values;
     if (whereFrom !== undefined && whereTo !== undefined) {
+      //TODO change screen
       await createRideRequest(ride.id, whereFrom, whereTo);
     }
   }

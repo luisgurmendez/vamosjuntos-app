@@ -1,12 +1,17 @@
 import axios, { CancelToken } from 'axios';
 import { Tokens } from 'types/tokens';
 import Storage from 'storage/Storage';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 export const api = axios.create({
   baseURL: 'http://35.199.116.28:3000'
 });
 
 api.interceptors.response.use((response) => {
+  if (!response.data.success) {
+    crashlytics().log(`Request failed`);
+    crashlytics().recordError(new Error(JSON.stringify(response, null, 2)));
+  }
   return response;
 });
 

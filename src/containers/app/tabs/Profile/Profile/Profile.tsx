@@ -18,6 +18,7 @@ import UserSince from 'components/Profile/UserSince';
 import ProfileReviews from 'components/Profile/ProfileReviews';
 import { updateUser } from 'api/adedo';
 import { setUser } from 'state/user/actions';
+import Toaster from 'components/Toaster/Toaster';
 
 interface ProfileProps { }
 
@@ -32,15 +33,13 @@ const Profile: React.FC<ProfileProps> = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //TODO: type this better;
+
     const unsubscribe = navigation.dangerouslyGetParent().addListener('tabPress', (e: any) => {
-      console.log('tabb pressed')
       if (editing) {
         setEditing(false);
         setEditingUser(user!);
       }
     });
-    console.log(navigation);
     return unsubscribe;
   }, [])
 
@@ -55,10 +54,14 @@ const Profile: React.FC<ProfileProps> = () => {
 
   const handleUpdateProfile = async () => {
     setIsUpdatingUser(true)
-    const updatedUser = await updateUser(editingUser);
-    dispatch(setUser(updatedUser));
+    try {
+      const updatedUser = await updateUser(editingUser);
+      dispatch(setUser(updatedUser));
+      setEditingUser(updatedUser);
+    } catch (e) {
+      Toaster.alert('No pudimos guardar tus cambios')
+    }
     setEditing(false);
-    setEditingUser(updatedUser);
     setIsUpdatingUser(false)
   };
 
