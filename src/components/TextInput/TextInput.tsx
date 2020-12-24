@@ -57,6 +57,7 @@ const TextInputBase = styled.TextInput`
   flex: 1;
   margin-left: 8px;
   color: ${colors.black};
+  padding: 0px;
 `;
 
 const ErrorText = styled(SmallBody)`

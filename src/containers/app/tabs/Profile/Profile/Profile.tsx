@@ -27,6 +27,8 @@ const Profile: React.FC<ProfileProps> = () => {
   const [preferenceModalOpen, setPreferenceModalOpen] = useState(false);
   const navigation = useNavigation<any>();
   const user = useSelector((state: AppState) => state.user.user);
+  const rides = useSelector((state: AppState) => state.ride.rides);
+
   const [editingUser, setEditingUser] = useState<User>(user!);
   const [isUpdatingUser, setIsUpdatingUser] = useState(false);
 
@@ -81,6 +83,9 @@ const Profile: React.FC<ProfileProps> = () => {
     setPreferenceModalOpen(true)
   }
 
+  const numOfRides = rides.filter(r => user && r.driver && r.driver.id === user.id).length
+  const numOfLifts = rides.filter(r => user && r.driver && r.driver.id !== user.id).length
+
   return (
     <Container>
       <EditHeaderActions editing={editing} saving={isUpdatingUser} onToggleEdit={toggleEditing} onSave={handleUpdateProfile} />
@@ -91,7 +96,7 @@ const Profile: React.FC<ProfileProps> = () => {
         </ProfileImageContainer>
         {editing ? <NameInput onChangeText={handleNameChange} value={editingUser.name} /> : <Subtitle>{editingUser.name}</Subtitle>}
         <ProfileReviews userId={user?.id!} disabledReviews={editing} score={user?.score!} />
-        <RidesAndLifts rides={5} lifts={6} />
+        <RidesAndLifts rides={numOfRides} lifts={numOfLifts} />
         <PreferenceList preferences={editingUser.preferences}>
           {editing && <PressableIcon style={{ marginBottom: 8 }} size={30} name="plus" color={colors.main} onPress={handleEditPreference} />}
         </PreferenceList>

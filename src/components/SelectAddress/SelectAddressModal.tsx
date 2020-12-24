@@ -55,7 +55,6 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
     setIsMovingMap(false);
 
     if (cancelTokenSource.current !== undefined) {
-      console.log('calling cancel token')
       cancelTokenSource.current.cancel();
     }
 
@@ -72,7 +71,6 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
         setPossibleAddress(undefined);
         setIsFetchingAddress(false);
       }
-      console.log(e)
     }
 
   };

@@ -26,7 +26,7 @@ const RideSummary: React.FC = () => {
         <SummaryValue icon="map-pin">
           <WhereFromToWhereTo whereFrom={values.whereFrom!} whereTo={values.whereTo!} />
         </SummaryValue>
-        <WhereFromWhereToStaticMap style={{ height: 150 }} whereFrom={values.whereFrom!} whereTo={values.whereTo!} mapId={"caca"} />
+        <WhereFromWhereToStaticMap style={{ height: 150 }} whereFrom={values.whereFrom!} whereTo={values.whereTo!} mapId={"ride-summary-map"} />
         <SummaryValue icon="calendar">
           <Body>{getDateText(values.date)} {getTimeText(values.date)}</Body>
         </SummaryValue>

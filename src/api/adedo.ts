@@ -115,7 +115,6 @@ export const getAddressFromCoords = async (
     `/address/geo?latitude=${latitude}&longitude=${longitude}`,
     { cancelToken: opts?.cancelToken }
   );
-  console.log(response);
   if (response.data) {
     return { ...latlng, city: response.data.city, department: response.data.department };
   }

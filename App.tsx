@@ -37,7 +37,7 @@ const App = () => {
 
   useEffect(() => {
     console.log(`Using app version: ${appVersion}`)
-    crashlytics().log(`Using app version: ${appVersion}`)
+    crashlytics().log(`Using app version: ${appVersion}`);
   })
 
   return (
