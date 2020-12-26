@@ -4,14 +4,14 @@ import SimpleModal from 'components/Modal/SimpleModal';
 import ModalActions from 'components/Modal/ModalActions';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 
-interface ConfirmCancelationModalProps {
+interface ConfirmCompleteRideModalProps {
   open: boolean;
   onClose: () => void;
   onConfirm: () => Promise<void>;
   title: string;
 }
 
-const ConfirmCancelationModal: React.FC<ConfirmCancelationModalProps> = ({ onConfirm, onClose, ...modalProps }) => {
+const ConfirmCompleteRideModal: React.FC<ConfirmCompleteRideModalProps> = ({ onConfirm, onClose, ...modalProps }) => {
   const [loading, setLoading] = useState(false);
 
   const onConfirmWrapper = async () => {
@@ -36,7 +36,7 @@ const ConfirmCancelationModal: React.FC<ConfirmCancelationModalProps> = ({ onCon
 
 }
 
-export default ConfirmCancelationModal;
+export default ConfirmCompleteRideModal;
 
 const Content = styled.View`
   backgroundColor: white;

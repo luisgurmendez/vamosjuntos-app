@@ -11,10 +11,10 @@ interface LinkButtonProps extends PlainButtonProps {
 const LinkButton: React.FC<LinkButtonProps> = ({ children, url, ...rest }) => {
 
   const handlePress = () => {
-    Linking.canOpenURL(url).then(() => {
-      Linking.openURL(url);
-    }).catch(e => {
-      crashlytics().recordError(new Error(e));
+    Linking.canOpenURL(url).then((canOpen) => {
+      if (canOpen) {
+        Linking.openURL(url);
+      }
     })
   }
 

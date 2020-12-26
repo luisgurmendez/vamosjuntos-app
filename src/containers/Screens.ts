@@ -1,6 +1,5 @@
 import AUTH_SCREENS from './auth/Screens';
 import APP_SCREENS from './app/Screens';
-import WELCOME_SCREENS from './app/welcome/Screens';
 
 enum ROOT_SCREENS {
   APP = 'APP',

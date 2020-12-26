@@ -1,5 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
-import { Screens } from 'containers/Screens';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCompletedRides, getPendingRides } from 'state/ride/selectors';
@@ -17,7 +15,6 @@ const Rides: React.FC = () => {
   const [refreshing, setRefreshing] = React.useState(false);
   const dispatch = useDispatch();
 
-  const nav: any = useNavigation();
   const pendingRides = useSelector(getPendingRides);
   const completedRides = useSelector(getCompletedRides);
 
@@ -35,12 +32,6 @@ const Rides: React.FC = () => {
     setRefreshing(false);
   }, []);
 
-
-
-  const handleRidePress = () => {
-    console.log(nav);
-    nav.navigate(Screens.RIDE);
-  }
 
   return (
     <Page title="Viajes">

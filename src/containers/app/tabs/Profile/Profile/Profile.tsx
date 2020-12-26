@@ -20,6 +20,7 @@ import { updateUser } from 'api/adedo';
 import { setUser } from 'state/user/actions';
 import Toaster from 'components/Toaster/Toaster';
 import { Box } from 'components/Box/Box';
+import { getUser } from 'state/user/selectors';
 
 interface ProfileProps { }
 
@@ -27,7 +28,7 @@ const Profile: React.FC<ProfileProps> = () => {
   const [editing, setEditing] = useState(false);
   const [preferenceModalOpen, setPreferenceModalOpen] = useState(false);
   const navigation = useNavigation<any>();
-  const user = useSelector((state: AppState) => state.user.user);
+  const user = useSelector(getUser);
   const rides = useSelector((state: AppState) => state.ride.rides);
 
   const [editingUser, setEditingUser] = useState<User>(user!);

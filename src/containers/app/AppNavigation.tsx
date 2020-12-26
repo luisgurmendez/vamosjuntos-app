@@ -15,19 +15,18 @@ import RideDetails from './modal/RideDetails/RideDetails';
 import Comments from 'components/Profile/Comments';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useSelector } from 'react-redux';
-import { AppState } from 'state/types';
+import { getUser } from 'state/user/selectors';
 
 const Stack = createStackNavigator();
 
 const AppNavigation: React.FC = () => {
 
   const shouldShowWelcome = false;
-  const user = useSelector((state: AppState) => state.user.user);
+  const user = useSelector(getUser);
 
   useEffect(() => {
     crashlytics().log('User sign in');
     crashlytics().setUserId(user!.id.toString());
-
   }, [user])
 
   return (

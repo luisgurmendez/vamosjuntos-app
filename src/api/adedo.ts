@@ -167,3 +167,8 @@ export const createReview = async (data: ReviewBody): Promise<boolean> => {
   const response = await api.post<BaseResponse>('/review/create', data);
   return response.data.success;
 };
+
+export const setRideCompleted = async (rideId: string): Promise<boolean> => {
+  const response = await api.post<BaseResponse>('/ride/completed', { rideId });
+  return response.data.success;
+}

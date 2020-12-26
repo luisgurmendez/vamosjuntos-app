@@ -8,12 +8,9 @@ import RidesAndLifts from 'components/Profile/RidesAndLifts';
 import UserSince from 'components/Profile/UserSince';
 import PageWithBack from 'components/Page/PageWithBack';
 import ProfileReviews from 'components/Profile/ProfileReviews';
-import LinkButton from 'components/Button/LinkButton';
-import { Linking, View } from 'react-native';
+import { Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from 'utils/colors';
-import crashlytics from '@react-native-firebase/crashlytics';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface UserProfileProps {
   route: { params: { user: User } }
@@ -25,13 +22,12 @@ const UserProfile: React.FC<UserProfileProps> = ({ route: { params: { user } } }
   const wppUrl = `whatsapp://send?phone=${user?.phone}&text=${'Hola'}`
 
   useEffect(() => {
-    Linking.canOpenURL(wppUrl).then(() => {
-      setCanGoToWpp(true)
-    }).catch(e => {
-      crashlytics().recordError(new Error(e));
+    Linking.canOpenURL(wppUrl).then((can) => {
+      if (can) {
+        setCanGoToWpp(true)
+      }
     })
   }, [])
-
 
   const handleGoToWpp = () => {
     Linking.openURL(wppUrl);

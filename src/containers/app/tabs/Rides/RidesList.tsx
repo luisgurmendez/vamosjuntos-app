@@ -11,9 +11,10 @@ import { useNavigation } from '@react-navigation/native';
 interface RidesListProps {
   rides: Ride[];
   title: string;
+  onRidePress?: (r: Ride) => void;
 }
 
-const RidesList: React.FC<RidesListProps> = ({ rides, title }) => {
+const RidesList: React.FC<RidesListProps> = ({ onRidePress, rides, title }) => {
 
   const navigation = useNavigation<any>();
 
@@ -25,12 +26,20 @@ const RidesList: React.FC<RidesListProps> = ({ rides, title }) => {
     navigation.push(Screens.RIDE_DETAILS, { rideId: ride.id })
   }
 
+  const handleRidePress = (ride: Ride) => {
+    if (onRidePress) {
+      onRidePress(ride)
+    } else {
+      handleGoToRideDetails(ride)
+    }
+  }
+
   return (
     <Container>
       <Subtitle>{title}</Subtitle>
       <Box pb="lg">
         <MarginedChildren mt="md">
-          {rides.map(r => <RideBubble key={r.id} ride={r} onPress={() => handleGoToRideDetails(r)} />)}
+          {rides.map(r => <RideBubble key={r.id} ride={r} onPress={() => handleRidePress(r)} />)}
         </MarginedChildren>
       </Box>
     </Container>

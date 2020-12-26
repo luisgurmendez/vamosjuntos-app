@@ -30,12 +30,6 @@ const Container = styled.SafeAreaView`
   padding: 0px 24px;
 `;
 
-// const Header = styled(Box)`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-between;
-// `
-
 const Content = styled.View`
   flex:1;
 `

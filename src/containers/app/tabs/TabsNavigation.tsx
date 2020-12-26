@@ -14,7 +14,13 @@ const Tab = createBottomTabWithMenuNavigator();
 
 const TabsNavigation: React.FC = () => {
 
-  const numOfNotificaitons = useSelector(getNumberOfUnseenNotifications)
+  const numOfNotificaitons = useSelector(getNumberOfUnseenNotifications);
+
+  // useEffect(()=>{
+  //   owsReview().then(()=>{
+  //     navigation.push(Screens.REVIEW, {user})
+  //   })
+  // })
 
   return (
     <SafeAreaProvider>
