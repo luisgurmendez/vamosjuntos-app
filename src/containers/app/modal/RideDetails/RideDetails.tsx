@@ -12,7 +12,6 @@ import { cancelRide, dropOutRide, getRideDetails, getRides, setRideCompleted } f
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import PlainButton from 'components/Button/PlainButton';
 import { useDispatch, useSelector } from 'react-redux';
-import ConfirmCancelationModal from './ConfirmCancelationModal';
 import WhereFromWhereToStaticMap from 'components/Map/WhereFromWhereToStaticMap';
 import { Box } from 'components/Box/Box';
 import Toaster from 'components/Toaster/Toaster';
