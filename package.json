@@ -1,5 +1,5 @@
 {
-  "name": "adedo",
+  "name": "vamosjuntos",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -21,6 +21,7 @@
     "@react-native-firebase/auth": "^10.3.1",
     "@react-native-firebase/crashlytics": "^10.3.1",
     "@react-native-firebase/messaging": "^10.3.1",
+    "@react-native-firebase/storage": "^10.3.1",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.0",
     "@react-navigation/stack": "^5.12.8",
@@ -34,7 +35,9 @@
     "react": "16.13.1",
     "react-native": "0.63.3",
     "react-native-animation-hooks": "^1.0.1",
+    "react-native-camera": "^3.40.0",
     "react-native-gesture-handler": "^1.8.0",
+    "react-native-image-resizer": "^1.4.1",
     "react-native-maps": "0.27.1",
     "react-native-modal": "^11.5.6",
     "react-native-permissions": "^3.0.0",

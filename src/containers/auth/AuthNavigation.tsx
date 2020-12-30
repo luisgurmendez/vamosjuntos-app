@@ -6,6 +6,7 @@ import Login from './Login/Login';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
 import RegisterNavigation from './Register/RegisterNavigation';
 import ForgotPasswordNavigation from './ForgotPassword/ForgotPasswordNavigation';
+import Toaster from 'components/Toaster/Toaster';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -13,15 +14,18 @@ const Stack = createNativeStackNavigator();
 const AuthNavigation: React.FC = () => {
 
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerBackTitle: 'Atras',
-        headerShown: false
-      }}>
-      <Stack.Screen name={Screens.LOGIN} component={Login} />
-      <Stack.Screen name={Screens.REGISTER} component={RegisterNavigation} />
-      <Stack.Screen name={Screens.FORGOT_PASSWORD} component={ForgotPasswordNavigation} />
-    </Stack.Navigator>
+    <>
+      <Toaster />
+      <Stack.Navigator
+        screenOptions={{
+          headerBackTitle: 'Atras',
+          headerShown: false
+        }}>
+        <Stack.Screen name={Screens.LOGIN} component={Login} />
+        <Stack.Screen name={Screens.REGISTER} component={RegisterNavigation} />
+        <Stack.Screen name={Screens.FORGOT_PASSWORD} component={ForgotPasswordNavigation} />
+      </Stack.Navigator>
+    </>
   );
 };
 

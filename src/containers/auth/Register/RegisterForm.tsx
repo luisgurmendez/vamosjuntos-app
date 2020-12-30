@@ -48,6 +48,7 @@ const RegisterForm: React.FC = () => {
 
   const handleRegister = async (values: UserRegistrationValues) => {
     const updatedValues = { ...values, phone: `+598${values.phone}` }
+    // TODO: show error message
     await register(updatedValues)
     navigation.goBack();
   };

@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import React, { useEffect, useState } from 'react';
 import EditProfilePicButton from './EditProfilePicButton';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
-import { setShowCamera } from 'state/camera/actions';
+import { setShowCamera, setTmpImage } from 'state/camera/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import EditHeaderActions from './EditHeaderActions';
 import { colors } from 'utils/colors';
@@ -21,6 +21,7 @@ import { setUser } from 'state/user/actions';
 import Toaster from 'components/Toaster/Toaster';
 import { Box } from 'components/Box/Box';
 import { getUser } from 'state/user/selectors';
+import storage from '@react-native-firebase/storage'
 
 interface ProfileProps { }
 
@@ -30,6 +31,7 @@ const Profile: React.FC<ProfileProps> = () => {
   const navigation = useNavigation<any>();
   const user = useSelector(getUser);
   const rides = useSelector((state: AppState) => state.ride.rides);
+  const tmpUserImage = useSelector((state: AppState) => state.camera.tmpImage);
 
   const [editingUser, setEditingUser] = useState<User>(user!);
   const [isUpdatingUser, setIsUpdatingUser] = useState(false);
@@ -39,13 +41,20 @@ const Profile: React.FC<ProfileProps> = () => {
   useEffect(() => {
 
     const unsubscribe = navigation.dangerouslyGetParent().addListener('tabPress', (e: any) => {
+      dispatch(setTmpImage(undefined))
       if (editing) {
         setEditing(false);
         setEditingUser(user!);
       }
     });
     return unsubscribe;
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    setEditingUser(user => {
+      return { ...user, img: tmpUserImage ? tmpUserImage : user.img };
+    })
+  }, [tmpUserImage])
 
   const handleOpenCamera = () => {
     dispatch(setShowCamera(true));
@@ -59,6 +68,12 @@ const Profile: React.FC<ProfileProps> = () => {
   const handleUpdateProfile = async () => {
     setIsUpdatingUser(true)
     try {
+      if (editingUser.img && user!.img !== editingUser.img) {
+        const imgRef = storage().ref(`images/${editingUser.username}`)
+        await imgRef.putFile(editingUser.img);
+        const imgUrl = await imgRef.getDownloadURL();
+        editingUser.img = imgUrl
+      }
       const updatedUser = await updateUser(editingUser);
       dispatch(setUser(updatedUser));
       setEditingUser(updatedUser);
@@ -99,7 +114,7 @@ const Profile: React.FC<ProfileProps> = () => {
       <EditHeaderActions editing={editing} saving={isUpdatingUser} onToggleEdit={toggleEditing} onSave={handleUpdateProfile} />
       <Content contentContainerStyle={{ alignItems: 'center' }}>
         <ProfileImageContainer>
-          <ProfilePic img={user?.img} size={160} />
+          <ProfilePic img={editingUser?.img} size={160} />
           {editing && <EditProfilePicButton onPress={handleOpenCamera} />}
         </ProfileImageContainer>
         <Box mt="lg">

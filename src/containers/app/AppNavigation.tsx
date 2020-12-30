@@ -15,9 +15,10 @@ import RideDetails from './modal/RideDetails/RideDetails';
 import Comments from 'components/Profile/Comments';
 import crashlytics from '@react-native-firebase/crashlytics';
 import messaging from '@react-native-firebase/messaging';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from 'state/user/selectors';
 import { updateUserNotificationToken } from 'api/adedo';
+import { setTmpImage } from 'state/camera/actions';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,8 @@ const AppNavigation: React.FC = () => {
   const shouldShowWelcome = false;
   const user = useSelector(getUser);
   const userId = user && user.id;
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     crashlytics().log('User sign in');
@@ -42,9 +45,13 @@ const AppNavigation: React.FC = () => {
     })
   }, [userId])
 
+  const handleImageChange = (img: string) => {
+    dispatch(setTmpImage(img));
+  }
+
   return (
     <AppContainer>
-      <Camera />
+      <Camera onImageChange={handleImageChange} />
       <Toaster />
       <AppInitialDataFetcher>
         <Stack.Navigator

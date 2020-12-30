@@ -15,7 +15,6 @@ export const login = async (username: string, password: string): Promise<Tokens 
 // TODO: type registration;
 export const register = async (registrationForm: any): Promise<User | undefined> => {
   const response = await api.post<RegisterResponse>('/auth/register', registrationForm);
-  console.log(response.data.success);
   if (response.data.success) {
     return response.data.user;
   }

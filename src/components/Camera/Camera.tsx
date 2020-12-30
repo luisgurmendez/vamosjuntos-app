@@ -1,15 +1,16 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
-// import { RNCamera } from 'react-native-camera';
+import { RNCamera } from 'react-native-camera';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
 import Loading from 'components/Loading/Loading';
 import AbsolutePositioned from 'components/AbsolutePositioned/AbsolutePositioned';
-// import { setShowCamera } from 'state/camera/actions';
 import AnimatedCamera from './AnimatedCamera';
-// import ImageResizer from 'react-native-image-resizer';
+import ImageResizer from 'react-native-image-resizer';
 import { setShowCamera } from 'state/camera/actions';
+import PlainButton from 'components/Button/PlainButton';
+import { colors } from 'utils/colors';
 
 interface CameraProps {
   onImageChange?: (img: string) => void;
@@ -19,22 +20,33 @@ interface CameraProps {
 const Camera: React.FC<CameraProps> = ({ onImageChange, onCancel }) => {
 
   const dispatch = useDispatch();
-  const cameraRef = useRef(undefined);//useRef<RNCamera | null>(null);
+  const cameraRef = useRef<RNCamera | null>(null);
   const [image, setImage] = useState<string | undefined>(undefined);
   const [takingImage, setTakingImage] = useState(false);
+  const [cameraType, setCameraType] = useState<'front' | 'back'>('front');
 
   const handleRetryImage = () => {
-    // setImage(undefined);
-    // if (cameraRef.current) {
-    //   cameraRef.current.resumePreview();
-    // }
+    setImage(undefined);
+    if (cameraRef.current) {
+      cameraRef.current.resumePreview();
+    }
+  }
+
+  const handleChangeCameraType = () => {
+    setCameraType(t => {
+      if (t === 'front') {
+        return 'back';
+      } else {
+        return 'front'
+      }
+    })
   }
 
   const handleAcceptImage = () => {
-    // if (onImageChange && image) {
-    //   onImageChange(image);
-    //   handleOnCancel();
-    // }
+    if (onImageChange && image) {
+      onImageChange(image);
+      handleOnCancel();
+    }
   }
 
   const handleOnCancel = () => {
@@ -47,42 +59,43 @@ const Camera: React.FC<CameraProps> = ({ onImageChange, onCancel }) => {
   }
 
   const takePicture = async () => {
-    // if (cameraRef.current) {
-    //   setTakingImage(true);
-    //   cameraRef.current.pausePreview();
-    //   const options = { quality: 0.5, base64: true };
-    //   const data = await cameraRef.current.takePictureAsync(options);
-    //   const newImage = await ImageResizer.createResizedImage(data.uri, 800, 900, "JPEG", 75);
-    //   setImage(newImage.uri);
-    //   setTakingImage(false);
-    // }
+    if (cameraRef.current) {
+      setTakingImage(true);
+      const options = { quality: 0.5, base64: true };
+      const data = await cameraRef.current.takePictureAsync(options);
+      cameraRef.current.pausePreview();
+      const newImage = await ImageResizer.createResizedImage(data.uri, 800, 900, "JPEG", 75);
+      setImage(newImage.uri);
+      setTakingImage(false);
+    }
   };
 
   return (
     <AbsolutePositioned top="0px" bottom="0px" left="0px" right="0px" pointerEvents={'box-none'} >
       <AnimatedCamera>
         <Container>
-          {/* {!image ? <BaseCamera
+          {!image ? <BaseCamera
+            type={cameraType}
             captureAudio={false}
             ref={cameraRef}
             useNativeZoom
             autoFocus={RNCamera.Constants.AutoFocus.on}
           >
             <CloseButtonContainer pointerEvents='box-none'>
-              <StyledIcon name="close" size={40} onPress={handleOnCancel} />
+              <StyledIcon name="x" size={40} onPress={handleOnCancel} />
             </CloseButtonContainer>
           </BaseCamera>
-            : <PreviewImageTaken resizeMode="cover" source={{ uri: image }} />} */}
-
-          <CloseButtonContainer pointerEvents='box-none'>
-            <StyledIcon name="x" size={40} onPress={handleOnCancel} />
-          </CloseButtonContainer>
+            : <PreviewImageTaken resizeMode="cover" source={{ uri: image }} />}
           <CameraActionsContainer>
-            {image ? <StyledIcon name="check" size={40} onPress={handleAcceptImage} /> : <View />}
+            {image ? <StyledIcon name="check" size={40} onPress={handleAcceptImage} /> : <View style={{ width: 30 }} />}
             {!image && <IconContainer onPress={!takingImage ? takePicture : undefined}>
               {!takingImage ? <StyledIcon size={40} name="camera" /> : <Loading size={40} />}
             </IconContainer>}
-            {image ? <StyledIcon name="reload" size={40} onPress={handleRetryImage} /> : <View />}
+            {image ?
+              <PlainButton textStyle={{ color: colors.white }} onPress={handleRetryImage} >Cancelar</PlainButton>
+              :
+              <StyledIcon name="refresh-cw" size={30} onPress={handleChangeCameraType} />
+            }
           </CameraActionsContainer>
         </Container>
       </AnimatedCamera>
@@ -100,9 +113,9 @@ const Container = styled.View`
   position: relative;
 `
 
-// const BaseCamera = styled(RNCamera)`
-//   flex: 1;
-// `
+const BaseCamera = styled(RNCamera)`
+  flex: 1;
+`
 
 const CameraActionsContainer = styled.View`
   backgroundColor: transparent;
