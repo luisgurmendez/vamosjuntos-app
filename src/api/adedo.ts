@@ -13,7 +13,9 @@ import {
   CreateRideRequestResponse,
   BaseResponse,
   GetFeatureFlagsResponse,
-  GetReviewsResponse
+  GetReviewsResponse,
+  GetUserRideDetails,
+  UserRideDetails
 } from './responses';
 
 export const createRide = async (body: Partial<Ride>): Promise<Ride | undefined> => {
@@ -175,4 +177,11 @@ export const setRideCompleted = async (rideId: string): Promise<boolean> => {
 export const updateUserNotificationToken = async (token: string, userId: string): Promise<boolean> => {
   const response = await api.post<UpdateUserResponse>('/user/update', { user: { id: userId, notificationToken: token } });
   return response.data.success
+};
+
+
+export const getUserRideDetails = async (userId: string): Promise<UserRideDetails> => {
+  const response = await api.post<GetUserRideDetails>('/user/ride-details', { userId });
+  console.log(response.data)
+  return response.data.details
 };

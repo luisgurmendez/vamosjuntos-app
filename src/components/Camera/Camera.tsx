@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { RNCamera } from 'react-native-camera';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
 import Loading from 'components/Loading/Loading';
@@ -42,9 +42,11 @@ const Camera: React.FC<CameraProps> = ({ onImageChange, onCancel }) => {
     })
   }
 
-  const handleAcceptImage = () => {
+  const handleAcceptImage = async () => {
     if (onImageChange && image) {
-      onImageChange(image);
+      const newImage = await ImageResizer.createResizedImage(image, 800, 800, "JPEG", 20);
+      console.log(newImage.size);
+      onImageChange(newImage.uri);
       handleOnCancel();
     }
   }
@@ -61,11 +63,10 @@ const Camera: React.FC<CameraProps> = ({ onImageChange, onCancel }) => {
   const takePicture = async () => {
     if (cameraRef.current) {
       setTakingImage(true);
-      const options = { quality: 0.5, base64: true };
+      const options = { quality: 0.5, base64: true, mirrorImage: true };
       const data = await cameraRef.current.takePictureAsync(options);
       cameraRef.current.pausePreview();
-      const newImage = await ImageResizer.createResizedImage(data.uri, 800, 900, "JPEG", 75);
-      setImage(newImage.uri);
+      setImage(data.uri);
       setTakingImage(false);
     }
   };

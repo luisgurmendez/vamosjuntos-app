@@ -11,6 +11,9 @@ import ProfileReviews from 'components/Profile/ProfileReviews';
 import { Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from 'utils/colors';
+import { UserRideDetails } from 'api/responses';
+import { getUserRideDetails } from 'api/adedo';
+
 
 interface UserProfileProps {
   route: { params: { user: User } }
@@ -19,6 +22,7 @@ interface UserProfileProps {
 const UserProfile: React.FC<UserProfileProps> = ({ route: { params: { user } } }) => {
 
   const [canGoToWpp, setCanGoToWpp] = useState(false);
+  const [userRideDetails, setUserRideDetails] = useState<UserRideDetails | undefined>(undefined);
   const wppUrl = `whatsapp://send?phone=${user?.phone}&text=${'Hola'}`
 
   useEffect(() => {
@@ -26,6 +30,11 @@ const UserProfile: React.FC<UserProfileProps> = ({ route: { params: { user } } }
       if (can) {
         setCanGoToWpp(true)
       }
+    })
+
+    getUserRideDetails(user.id).then(details => {
+      console.log('setting details', details)
+      setUserRideDetails(details);
     })
   }, [])
 
@@ -50,7 +59,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ route: { params: { user } } }
             <LargeBody>{user.phone}</LargeBody>
           }
           <ProfileReviews userId={user.id} disabledReviews={false} score={user.score} />
-          <RidesAndLifts rides={5} lifts={6} />
+          {userRideDetails && <RidesAndLifts rides={userRideDetails.numOfDriver} lifts={userRideDetails.numOfPassenger} />}
           <PreferenceList preferences={user.preferences} />
         </Content>
         <UserSince date={user.createdAt} />

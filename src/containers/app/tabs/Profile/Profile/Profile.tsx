@@ -22,6 +22,7 @@ import Toaster from 'components/Toaster/Toaster';
 import { Box } from 'components/Box/Box';
 import { getUser } from 'state/user/selectors';
 import storage from '@react-native-firebase/storage'
+import crashlytics from '@react-native-firebase/crashlytics';
 
 interface ProfileProps { }
 
@@ -69,7 +70,7 @@ const Profile: React.FC<ProfileProps> = () => {
     setIsUpdatingUser(true)
     try {
       if (editingUser.img && user!.img !== editingUser.img) {
-        const imgRef = storage().ref(`images/${editingUser.username}`)
+        const imgRef = storage().ref(`images/${editingUser.username}.jpg`)
         await imgRef.putFile(editingUser.img);
         const imgUrl = await imgRef.getDownloadURL();
         editingUser.img = imgUrl
@@ -78,6 +79,7 @@ const Profile: React.FC<ProfileProps> = () => {
       dispatch(setUser(updatedUser));
       setEditingUser(updatedUser);
     } catch (e) {
+      crashlytics().recordError(e);
       Toaster.alert('No pudimos guardar tus cambios')
     }
     setEditing(false);

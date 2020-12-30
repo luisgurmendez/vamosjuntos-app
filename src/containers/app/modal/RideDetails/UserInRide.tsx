@@ -25,7 +25,7 @@ const UserInRide: React.FC<UserInRideProps> = ({ user }) => {
   return (
     <TouchableOpacity onPress={handlePressUser}>
       <Container>
-        <ProfilePic size={50} />
+        <ProfilePic img={user.img} size={50} />
         <UserContent>
           <Score score={user.score} size={15} />
           <Body>{user.name}</Body>

@@ -66,3 +66,13 @@ export interface CreateRideRequestResponse extends BaseResponse {
 export interface GetReviewsResponse extends BaseResponse {
   reviews: Review[];
 }
+
+
+export interface UserRideDetails {
+  numOfDriver: number;
+  numOfPassenger: number;
+}
+
+export interface GetUserRideDetails extends BaseResponse {
+  details: UserRideDetails
+}
