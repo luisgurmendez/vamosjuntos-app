@@ -7,6 +7,8 @@ import SignoutOption from './options/SignoutOption';
 import SavedAddressesOption from './options/SavedAddresses/SavedAddressesOption';
 import ComplaintOption from './options/Complaint/ComplaintOption';
 import CrashalyticsEnabledOption from './options/CrashalyticsEnabledOption';
+import ShowCanceledRidesOption from './options/ShowCanceledRidesOption';
+import ShowCompletedRidesOption from './options/ShowCompletedRidesOption';
 
 interface ConfigurationProps { }
 
@@ -17,6 +19,8 @@ const Configuration: React.FC<ConfigurationProps> = () => {
         <SavedAddressesOption />
         <HelpOption />
         <CrashalyticsEnabledOption />
+        <ShowCanceledRidesOption />
+        <ShowCompletedRidesOption />
         <ComplaintOption />
         <AppVersionOption />
       </Container>

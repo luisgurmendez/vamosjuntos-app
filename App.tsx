@@ -70,10 +70,6 @@ const SetupApp: React.FC = ({ children }) => {
 
   useEffect(() => {
 
-    messaging().getToken().then(t => {
-      console.log(t);
-    })
-
     admob()
       .setRequestConfiguration({
         maxAdContentRating: MaxAdContentRating.G,

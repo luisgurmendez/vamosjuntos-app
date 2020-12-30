@@ -14,8 +14,10 @@ import LiftStack from './modal/RideOrLift/Lift/Lift';
 import RideDetails from './modal/RideDetails/RideDetails';
 import Comments from 'components/Profile/Comments';
 import crashlytics from '@react-native-firebase/crashlytics';
+import messaging from '@react-native-firebase/messaging';
 import { useSelector } from 'react-redux';
 import { getUser } from 'state/user/selectors';
+import { updateUserNotificationToken } from 'api/adedo';
 
 const Stack = createStackNavigator();
 
@@ -23,11 +25,22 @@ const AppNavigation: React.FC = () => {
 
   const shouldShowWelcome = false;
   const user = useSelector(getUser);
+  const userId = user && user.id;
 
   useEffect(() => {
     crashlytics().log('User sign in');
     crashlytics().setUserId(user!.id.toString());
   }, [user])
+
+  useEffect(() => {
+    messaging().getToken().then(t => {
+      updateUserNotificationToken(t, userId!);
+    })
+
+    return messaging().onTokenRefresh(t => {
+      updateUserNotificationToken(t, userId!);
+    })
+  }, [userId])
 
   return (
     <AppContainer>

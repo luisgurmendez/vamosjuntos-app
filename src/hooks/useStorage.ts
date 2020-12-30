@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useDebugValue, useEffect, useState } from 'react';
 import Storage from 'storage/Storage';
 
 function useStorage<T>(
@@ -17,7 +17,7 @@ function useStorage<T>(
     const getValue = async () => {
       setIsGettingValue(true);
       const _value = await Storage.getItem<T>(key);
-      if (_value) {
+      if (_value !== undefined) {
         setValue(_value);
       }
       setIsGettingValue(false);
@@ -25,6 +25,8 @@ function useStorage<T>(
 
     getValue();
   }, [key]);
+
+  useDebugValue(value);
 
   return [value, setValueInStorageAsWell, isGettingValue, setIsGettingValue];
 }

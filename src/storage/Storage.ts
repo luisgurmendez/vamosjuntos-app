@@ -15,6 +15,9 @@ class Storage {
   public static ADDRESSES = 'addresses';
   public static TOKENS = 'tokens';
   public static SHOULD_WELCOME = 'shouldWelcome';
+  public static SHOW_CANCELED_RIDES = 'showCanceledRides';
+  public static SHOW_COMPLETED_RIDES = 'showCompletedRides';
+
 
   static async isInitialized() {
     const created = await AsyncStorage.getItem(this.CREATED);
@@ -27,6 +30,8 @@ class Storage {
       await AsyncStorage.setItem(Storage.CREATED, 'true');
       await AsyncStorage.setItem(Storage.ADDRESSES, '[]');
       await AsyncStorage.setItem(Storage.SHOULD_WELCOME, 'true');
+      await AsyncStorage.setItem(Storage.SHOW_CANCELED_RIDES, 'true');
+      await AsyncStorage.setItem(Storage.SHOW_COMPLETED_RIDES, 'true');
 
       // await AsyncStorage.setItem(Storage.TOKENS, '{}');
     }

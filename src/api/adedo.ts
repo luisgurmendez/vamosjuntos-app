@@ -92,7 +92,6 @@ export const getPossibleRides = async (data: PossibleRidesData): Promise<Ride[]>
   return [];
 };
 
-
 export const getRideDetails = async (rideId: string): Promise<Ride | undefined> => {
   const response = await api.get<GetRideDetailsResponse>(`/ride/${rideId}`);
   if (response.data.success) {
@@ -172,3 +171,8 @@ export const setRideCompleted = async (rideId: string): Promise<boolean> => {
   const response = await api.post<BaseResponse>('/ride/completed', { rideId });
   return response.data.success;
 }
+
+export const updateUserNotificationToken = async (token: string, userId: string): Promise<boolean> => {
+  const response = await api.post<UpdateUserResponse>('/user/update', { user: { id: userId, notificationToken: token } });
+  return response.data.success
+};

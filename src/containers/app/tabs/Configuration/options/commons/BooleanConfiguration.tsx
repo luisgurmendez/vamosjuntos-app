@@ -4,6 +4,7 @@ import React from 'react'
 import { Switch } from 'react-native'
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
+import ConfigurationOption from './ConfigurationOption';
 
 interface BooleanConfigurationProps extends Stylable {
   config?: string;
@@ -14,10 +15,12 @@ interface BooleanConfigurationProps extends Stylable {
 const BooleanConfiguration: React.FC<BooleanConfigurationProps> = ({ style, config, onConfigChange, value }) => {
 
   return (
-    <Container style={style}>
-      <Body>{config}</Body>
-      <Switch value={value} onValueChange={onConfigChange} trackColor={{ true: colors.main, false: '' }} />
-    </Container>
+    <ConfigurationOption>
+      <Container style={style}>
+        <Body>{config}</Body>
+        <Switch value={value} onValueChange={onConfigChange} trackColor={{ true: colors.main, false: '' }} />
+      </Container>
+    </ConfigurationOption>
   )
 
 }
