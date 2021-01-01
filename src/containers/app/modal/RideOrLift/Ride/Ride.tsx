@@ -17,6 +17,7 @@ import Toaster from 'components/Toaster/Toaster';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { setRides } from 'state/ride/actions';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,8 +33,8 @@ const RideStack: React.FC = () => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
-  const handleCreateRide = async (values: RideCreationValues, helpers: FormikHelpers<RideCreationValues>) => {
 
+  const handleCreateRide = async (values: RideCreationValues, helpers: FormikHelpers<RideCreationValues>) => {
     try {
       await createRide(values);
       const rides = await getRides();
@@ -42,6 +43,7 @@ const RideStack: React.FC = () => {
 
     } catch (e) {
       Toaster.alert('Hubo un error al crear el viaje')
+      crashlytics().recordError(e);
     }
     helpers.setSubmitting(false);
   }

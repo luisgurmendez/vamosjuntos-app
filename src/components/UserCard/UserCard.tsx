@@ -1,20 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
-import ProfilePic from 'components/ProfilePic/ProfilePic';
-import Score from 'components/Score/Score';
 import Shadow from 'components/Shadow/Shadow';
-import { Body } from 'components/Typography/Typography';
 import { Screens } from 'containers/Screens';
 import React from 'react'
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { User } from 'types/models';
 import { colors } from 'utils/colors';
+import UserCardPlain from './UserCardPlain';
 
-interface UserInRideProps {
+interface UserCardProps {
   user: User
 }
 
-const UserInRide: React.FC<UserInRideProps> = ({ user }) => {
+const UserCard: React.FC<UserCardProps> = ({ user }) => {
 
   const navigation = useNavigation<any>();
 
@@ -25,18 +23,14 @@ const UserInRide: React.FC<UserInRideProps> = ({ user }) => {
   return (
     <TouchableOpacity onPress={handlePressUser}>
       <Container>
-        <ProfilePic img={user.img} size={50} />
-        <UserContent>
-          <Score score={user.score} size={15} />
-          <Body>{user.name}</Body>
-        </UserContent>
+        <UserCardPlain user={user} />
       </Container>
     </TouchableOpacity>
 
   )
 }
 
-export default UserInRide;
+export default UserCard;
 
 const Container = styled(Shadow)`
   width: 100%;
@@ -47,7 +41,3 @@ const Container = styled(Shadow)`
   flex-direction: row;
 `
 
-const UserContent = styled.View`
-  margin-left: 16px;
-  justify-content: center;
-`

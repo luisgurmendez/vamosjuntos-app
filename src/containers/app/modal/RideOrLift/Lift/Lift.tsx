@@ -6,20 +6,40 @@ import LiftWhen from './LiftForm/LiftWhen';
 import LiftWhereFrom from './LiftForm/LiftWhereFrom';
 import LiftWhereTo from './LiftForm/LiftWhereTo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import JoinRide from './JoinRide';
+import PossibleRides from './PossibleRides';
 import { Formik } from 'formik';
 import moment from 'moment';
 import LiftFormSchema, { LiftCreationValues } from './LiftForm/formSchema';
+import JoinRide from './JoinRide';
+import { useNavigation } from '@react-navigation/native';
+import { createRideRequest } from 'api/adedo';
+import crashlytics from '@react-native-firebase/crashlytics';
+import Toaster from 'components/Toaster/Toaster';
 
 const Stack = createNativeStackNavigator();
 
 const intialValues: LiftCreationValues = {
+  rideId: '',
   whereFrom: undefined,
   whereTo: undefined,
   date: moment().toISOString()
 }
 
 const LiftStack: React.FC = () => {
+
+  const navigation = useNavigation<any>();
+
+  const handleCreateRideRequest = async (values: LiftCreationValues) => {
+    console.log('HANDLE SUBMIT!')
+    try {
+      await createRideRequest(values.rideId, values.whereFrom!, values.whereTo!);
+      navigation.goBack();
+    } catch (e) {
+      Toaster.alert('Hubo un error al intentar unirte al viaje')
+      crashlytics().recordError(e);
+    }
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Formik
@@ -27,7 +47,7 @@ const LiftStack: React.FC = () => {
         validateOnChange
         validateOnMount
         initialValues={intialValues}
-        onSubmit={(values) => console.log('submitting', values)}
+        onSubmit={handleCreateRideRequest}
       >
         <Stack.Navigator
           screenOptions={{
@@ -37,6 +57,7 @@ const LiftStack: React.FC = () => {
           <Stack.Screen name={LiftScreens.WHERE_TO} component={LiftWhereTo} />
           <Stack.Screen name={LiftScreens.WHERE_FROM} component={LiftWhereFrom} />
           <Stack.Screen name={LiftScreens.WHEN} component={LiftWhen} />
+          <Stack.Screen name={LiftScreens.POSSIBLE_RIDES} component={PossibleRides} />
           <Stack.Screen name={LiftScreens.JOIN_RIDE} component={JoinRide} />
         </Stack.Navigator>
       </Formik>

@@ -15,7 +15,7 @@ const LiftWhen: React.FC = () => {
 
   const handleNextScreen = () => {
     handleShowAd();
-    navigation.push(LiftScreens.JOIN_RIDE);
+    navigation.push(LiftScreens.POSSIBLE_RIDES);
   }
 
   const isFieldValid = whenMeta.error === undefined;

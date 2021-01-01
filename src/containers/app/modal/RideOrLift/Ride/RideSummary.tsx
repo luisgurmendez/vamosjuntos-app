@@ -9,6 +9,7 @@ import { colors } from 'utils/colors';
 import WhereFromToWhereTo from 'components/Address/WhereFromToWhereTo';
 import { getDateText, getTimeText } from 'utils/date';
 import WhereFromWhereToStaticMap from 'components/Map/WhereFromWhereToStaticMap';
+import IconedValue from 'components/IconedValue/IconedValue';
 
 const RideSummary: React.FC = () => {
 
@@ -23,19 +24,19 @@ const RideSummary: React.FC = () => {
       <Subtitle>Estas a punto de crear un viaje.</Subtitle>
       <Body>Verifica que la informacion sea correcta</Body>
       <Content >
-        <SummaryValue icon="map-pin">
+        <IconedValue icon="map-pin">
           <WhereFromToWhereTo whereFrom={values.whereFrom!} whereTo={values.whereTo!} />
-        </SummaryValue>
+        </IconedValue>
         <WhereFromWhereToStaticMap style={{ height: 150 }} whereFrom={values.whereFrom!} whereTo={values.whereTo!} mapId={"ride-summary-map"} />
-        <SummaryValue icon="calendar">
+        <IconedValue icon="calendar">
           <Body>{getDateText(values.date)} {getTimeText(values.date)}</Body>
-        </SummaryValue>
-        <SummaryValue icon="users">
+        </IconedValue>
+        <IconedValue icon="users">
           <Body>Entran {values.capacity} personas</Body>
-        </SummaryValue>
-        <SummaryValue icon="dollar-sign">
+        </IconedValue>
+        <IconedValue icon="dollar-sign">
           <Body>Pedis una colaboracion de {values.price}$ c/u</Body>
-        </SummaryValue>
+        </IconedValue>
       </Content>
     </Wizard>
   )
@@ -47,34 +48,3 @@ const Content = styled.ScrollView`
   width: 100%;
   flex: 1;
 `;
-
-
-interface SummaryValueProps {
-  icon: string;
-}
-
-const SummaryValue: React.FC<SummaryValueProps> = ({ children, icon }) => {
-
-  return (
-    <SummaryValueContainer>
-      <Icon name={icon} size={30} color={colors.gray} />
-      <ValueContainer>
-        {children}
-      </ValueContainer>
-    </SummaryValueContainer>
-  )
-}
-
-
-const SummaryValueContainer = styled.View`
-  display: flex;
-  width: 100%;
-  margin-vertical: 16px;
-  flex-direction: row;
-  align-items: center;
-`
-
-const ValueContainer = styled.View`
-  margin-left: 16px;
-  flex: 1 1 auto;
-`

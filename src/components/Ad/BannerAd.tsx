@@ -1,25 +1,39 @@
 import React, { useState } from 'react';
 import { BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
+import crashlytics from '@react-native-firebase/crashlytics';
+import { usePlatform } from 'hooks/usePlatform';
 
 const AdView: React.FC = () => {
 
   const [showAd, setShowAd] = useState(true);
+  const { isAndroid } = usePlatform();
 
-  const onFailToRecieveAd = (error: any) => {
+  let adUnitId = TestIds.BANNER;
+
+  if (!__DEV__) {
+    if (isAndroid) {
+      adUnitId = 'ca-app-pub-8544233246340029/6733302841'
+    } else {
+      adUnitId = 'ca-app-pub-8544233246340029/7297712968'
+    }
+  }
+
+  const handleAddCrashToLoad = (error: any) => {
     setShowAd(false);
+    crashlytics().recordError(error)
   }
 
   if (!showAd) {
     return null;
   }
 
-  const dummyFn = () => { }
+  const dummyFn = () => { };
+
 
   return (
     <BannerAd
       onAdClosed={dummyFn}
-      onAdFailedToLoad={onFailToRecieveAd}
+      onAdFailedToLoad={handleAddCrashToLoad}
       onAdLoaded={dummyFn}
       onAdOpened={dummyFn}
       onAdLeftApplication={dummyFn}
@@ -29,13 +43,6 @@ const AdView: React.FC = () => {
         requestNonPersonalizedAdsOnly: true,
       }}
     />
-    // <AdMobBanner
-    //   adSize="fullBanner"
-    //   adUnitID="ca-app-pub-3940256099942544/2934735716"
-    //   testDeviceID={[AdMobBanner.simulatorId]}
-    //   didFailToReceiveAdWithError={onFailToRecieveAd}
-    //   onAdLoaded={(ad) => { console.log('loaded!', ad.target) }}
-    // />
   )
 }
 

@@ -1,68 +1,60 @@
-import { createRideRequest, getPossibleRides } from 'api/adedo';
-import MarginedChildren from 'components/Box/MarginedChildren';
-import HideIfLoading from 'components/Loading/HideIfLoading';
-import Loading from 'components/Loading/Loading';
-import RideBubble from 'components/Ride/RideBubble';
-import { Subtitle } from 'components/Typography/Typography';
+import { useNavigation } from '@react-navigation/native';
+import WhereFromToWhereTo from 'components/Address/WhereFromToWhereTo';
+import IconedValue from 'components/IconedValue/IconedValue';
+import WhereFromWhereToStaticMap from 'components/Map/WhereFromWhereToStaticMap';
+import { Body } from 'components/Typography/Typography';
+import UserCardPlain from 'components/UserCard/UserCardPlain';
 import Wizard from 'components/Wizard/Wizard';
+import { Screens } from 'containers/Screens';
 import { useFormikContext } from 'formik';
-import React, { useState } from 'react'
-import { useEffect } from 'react';
+import React, { useEffect } from 'react'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import { Ride } from 'types/models';
-import { colors } from 'utils/colors';
+import { getDateTimeText } from 'utils/date';
 import { LiftCreationValues } from './LiftForm/formSchema';
 
 interface JoinRideProps {
-}
-
-const JoinRide: React.FC<JoinRideProps> = ({ }) => {
-
-  const [rides, setRides] = useState<Ride[] | undefined>(undefined);
-
-  const { isValid, handleSubmit, validateForm, isSubmitting, values, errors } = useFormikContext<LiftCreationValues>();
-
-  useEffect(() => {
-    validateForm()
-  }, [])
-
-  useEffect(() => {
-    const asyncCb = async () => {
-      if (isValid) {
-        try {
-          const _rides = await getPossibleRides(values as any);
-          setRides(_rides);
-        } catch (e) { }
-      }
-    }
-    asyncCb()
-
-  }, [isValid])
-
-  const handleJoinRide = async (ride: Ride) => {
-    const { whereFrom, whereTo } = values;
-    if (whereFrom !== undefined && whereTo !== undefined) {
-      //TODO change screen
-      await createRideRequest(ride.id, whereFrom, whereTo);
+  route: {
+    params: {
+      ride: Ride
     }
   }
+}
+
+const JoinRide: React.FC<JoinRideProps> = ({ route: { params: { ride } } }) => {
+
+  const { isValid, errors, validateForm, handleSubmit, isSubmitting } = useFormikContext<LiftCreationValues>();
+
+  const navigation = useNavigation<any>();
+
+  const handlePressUser = () => {
+    navigation.push(Screens.USER_PROFILE, { user: ride.driver })
+  }
+
+  useEffect(() => {
+    validateForm();
+  }, [])
 
   return (
-    <Wizard action={{ hideAction: true }} title="Posibles viajes">
-      <HideIfLoading loading={rides === undefined} label="Te estamos buscando viajes">
-        <Container>
-          {
-            rides && rides.length > 0 ?
-              <Content>
-                <MarginedChildren mt="lg">
-                  {rides?.map(ride => <RideBubble onPress={() => handleJoinRide(ride)} ride={ride} />)}
-                </MarginedChildren>
-              </Content>
-              :
-              <Subtitle>No encontramos viajes que te sirvan :(</Subtitle>
-          }
-        </Container>
-      </HideIfLoading>
+    <Wizard action={{ disabled: !isValid, loading: isSubmitting, label: 'Unirme', onPress: handleSubmit }} title="¿Te unis?" >
+      <Content>
+        <IconedValue icon="map-pin">
+          <WhereFromToWhereTo whereFrom={ride.whereFrom!} whereTo={ride.whereTo!} />
+        </IconedValue>
+        <WhereFromWhereToStaticMap style={{ height: 150 }} whereFrom={ride.whereFrom!} whereTo={ride.whereTo!} mapId={"ride-summary-map"} />
+        <IconedValue icon="calendar">
+          <Body>{getDateTimeText(ride.date)}</Body>
+        </IconedValue>
+        <IconedValue icon="dollar-sign">
+          <Body>Se pide una colaboracion de {ride.price}$</Body>
+        </IconedValue>
+        <IconedValue icon="user">
+          <TouchableOpacity onPress={handlePressUser}>
+            <UserCardPlain user={ride.driver}></UserCardPlain>
+          </TouchableOpacity>
+        </IconedValue>
+      </Content>
     </Wizard>
   )
 
@@ -70,12 +62,6 @@ const JoinRide: React.FC<JoinRideProps> = ({ }) => {
 
 export default JoinRide;
 
-const Container = styled.ScrollView`
-  flex: 1;
-  padding-horizontal: 4px;
-`
-
 const Content = styled.ScrollView`
   flex: 1;
-  overflow: visible;
 `

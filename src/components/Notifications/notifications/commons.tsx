@@ -11,6 +11,7 @@ import PressAnimation from 'components/Animations/PressAnimation';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from 'containers/Screens';
 import moment from 'moment';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export interface BaseNotificationProps extends Stylable {
   notification: Notification;
@@ -29,21 +30,31 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
     navigation.push(Screens.USER_PROFILE, { user: user! })
   }
 
+  const handleNotificationBodyPress = () => {
+    const _ride = notification.context.ride ? notification.context.ride : notification.context.rideRequest ? notification.context.rideRequest.ride : undefined;
+    console.log(_ride);
+    if (_ride) {
+      navigation.push(Screens.RIDE_DETAILS, { rideId: _ride.id })
+    }
+  }
+
   //TODO: not just weeks if diff is less thatn 7 days make it by days.
   const notificationSince = moment().diff(moment(notification.createdAt), 'week');
 
   return (
     <Container style={style}>
-      <FullRow>
-        <Box mr="lg">
-          <PressAnimation onPress={handlePressOnProfile}>
-            <ProfilePic img={user!.img} />
-          </PressAnimation>
-        </Box>
-        <Body style={{ flex: 1 }}>
-          <Bold>{user!.name}</Bold> {label} <Grayed>{notificationSince !== 0 && `${notificationSince} sem`}</Grayed>
-        </Body>
-      </FullRow>
+      <TouchableOpacity style={{ width: '100%' }} onPress={handleNotificationBodyPress}>
+        <FullRow>
+          <Box mr="lg">
+            <TouchableOpacity onPress={handlePressOnProfile}>
+              <ProfilePic img={user!.img} />
+            </TouchableOpacity>
+          </Box>
+          <Body style={{ flex: 1 }}>
+            <Bold>{user!.name}</Bold> {label} <Grayed>{notificationSince !== 0 && `${notificationSince} sem`}</Grayed>
+          </Body>
+        </FullRow>
+      </TouchableOpacity>
       <FullRow>
         {children}
       </FullRow>

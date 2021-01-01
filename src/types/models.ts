@@ -106,6 +106,7 @@ export interface Ride {
   whereTo: Address;
   whereFrom: Address;
   status: RideStatus;
+  price: number;
 }
 
 export enum FeatureFlags {

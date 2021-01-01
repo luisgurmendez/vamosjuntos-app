@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { address } from '../../common/schema';
 
 export interface LiftCreationValues {
+  rideId: string;
   whereFrom: Address | undefined;
   whereTo: Address | undefined;
   date: string;

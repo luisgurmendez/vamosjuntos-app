@@ -7,7 +7,6 @@ import { Subtitle } from 'components/Typography/Typography';
 import { StatusBar } from 'react-native';
 import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
 import { Ride, RideStatus } from 'types/models';
-import UserInRide from './UserInRide';
 import { cancelRide, dropOutRide, getRideDetails, getRides, setRideCompleted } from 'api/adedo';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import PlainButton from 'components/Button/PlainButton';
@@ -20,6 +19,7 @@ import { getUser } from 'state/user/selectors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import moment from 'moment';
 import ModalWithYesNoActions from 'components/Modal/ModalWithYesNoActions';
+import UserCard from 'components/UserCard/UserCard';
 
 interface RideDetailsProps {
   ride: Ride;
@@ -97,11 +97,11 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
         <Content>
           <RideDetailsSummary ride={ride} />
           <Subtitle>Conductor</Subtitle>
-          <UserInRide user={ride.driver} />
+          <UserCard user={ride.driver} />
           {hasPassengers &&
             <Box mt="lg">
               <Subtitle>Pasageros</Subtitle>
-              {ride.passengers.map(p => <UserInRide key={`passenger-${p.user.id}`} user={p.user} />)}
+              {ride.passengers.map(p => <UserCard key={`passenger-${p.user.id}`} user={p.user} />)}
             </Box>
           }
         </Content>
