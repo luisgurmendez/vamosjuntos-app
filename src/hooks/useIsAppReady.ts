@@ -1,6 +1,6 @@
 import { getUser, refreshTokens } from "api/auth";
 import { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import SplashScreen from "react-native-splash-screen";
 import { useDispatch } from "react-redux";
 import { setUser } from "state/user/actions";
 import Storage from 'storage/Storage';
@@ -21,7 +21,7 @@ function useIsAppReady() {
   // 5. Sets FCM user token
   useEffect(() => {
 
-    const setUp = async (res: () => void, rej: () => void) => {
+    const setUp = async () => {
       let tokens = await Storage.getItem<Tokens>(Storage.TOKENS);
       if (tokens !== undefined) {
         tokens = await refreshTokens(tokens.refreshToken);
@@ -29,13 +29,12 @@ function useIsAppReady() {
         const user = await getUser();
         dispatch(setUser(user))
       }
-      res();
+
     }
 
-    const setupPromise = new Promise(setUp);
-
-    setupPromise.then(() => {
-      setReady(true)
+    setUp().then(() => {
+      setReady(true);
+      SplashScreen.hide()
     }).catch(e => {
       // TODO What should we do here?!
       // re try? How?
