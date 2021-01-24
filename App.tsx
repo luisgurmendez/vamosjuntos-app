@@ -85,21 +85,13 @@ const SetupApp: React.FC = ({ children }) => {
 
   }, [hasInternetConnection, hasCheckedInternetConnection])
 
-  if (isReady && hasCheckedInternetConnection) {
-    return (
-      <Container>
-        {!hasInternetConnection && <SafeAreaView><ErrorBanner>No hay conexion a internet</ErrorBanner></SafeAreaView>}
-        {children}
-        {useAds && <BannerAd />}
-      </Container>
-    );
-  }
-
   return (
-    <View>
-      <Title>Splashscreen!</Title>
-    </View>
-  )
+    <Container>
+      {!hasInternetConnection && <SafeAreaView><ErrorBanner>No hay conexion a internet</ErrorBanner></SafeAreaView>}
+      {children}
+      {useAds && <BannerAd />}
+    </Container>
+  );
 }
 
 const Container = styled.View`

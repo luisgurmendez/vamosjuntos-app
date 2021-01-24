@@ -107,9 +107,11 @@ class Toaster extends React.Component<ToasterProps, ToasterState> {
   render() {
     return (
       <ToasterContainer pointerEvents="box-none">
-        {this.state.messages.map((message) => {
-          return <Toast key={message.id} {...message} onDismiss={Toaster.dismiss} />;
-        })}
+        <PaddedContent pointerEvents="box-none">
+          {this.state.messages.map((message) => {
+            return <Toast key={message.id} {...message} onDismiss={Toaster.dismiss} />;
+          })}
+        </PaddedContent>
       </ToasterContainer>
     );
   }
@@ -117,9 +119,9 @@ class Toaster extends React.Component<ToasterProps, ToasterState> {
 
 export default Toaster;
 
-const ToasterContainer = styled.View`
+const ToasterContainer = styled.SafeAreaView`
   position: absolute;
-  top: 24px;
+  top: 0px;
   bottom: 0px
   left: 0px;
   right: 0px;
@@ -128,5 +130,11 @@ const ToasterContainer = styled.View`
   flex: 1;
   justify-content: flex-start;
   flex-direction: column;
-  padding: 20px;
+  width: 100%;
 `;
+
+const PaddedContent = styled.View`
+  padding: 20px;
+  flex: 1;
+  width: 100%;
+`
