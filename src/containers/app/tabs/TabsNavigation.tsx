@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Notifications, { NotificationsTabOptions } from './Notifications';
 import ConfigurationNavigation, { ConfigurationTabOptions } from './Configuration';
-import Rides, { RidesTabOptions } from './Rides';
+import RidesNavigation, { RidesTabOptions } from './Rides';
 import ProfileNavigation, { ProfileTabOptions } from './Profile';
 import createBottomTabWithMenuNavigator from 'components/TabMenuNavigator/BottomTabWithMenuNavigator';
 import { RenderItemMenu } from './Menu/Menu';
-import { Screens } from 'containers/Screens';
 import { useSelector } from 'react-redux';
 import { getNumberOfUnseenNotifications } from 'state/notification/selectors';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { Screens } from 'containers/Screens';
+import { AppState } from 'state/types';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabWithMenuNavigator();
 
@@ -16,11 +18,23 @@ const TabsNavigation: React.FC = () => {
 
   const numOfNotificaitons = useSelector(getNumberOfUnseenNotifications);
 
-  // useEffect(()=>{
-  //   owsReview().then(()=>{
-  //     navigation.push(Screens.REVIEW, {user})
-  //   })
-  // })
+  const navigation = useNavigation<any>();
+  const passenger = useSelector((state: AppState) => state.user.owesReview)
+
+  useEffect(() => {
+    if (passenger !== undefined) {
+      console.log('to review!', passenger)
+      console.log(navigation)
+      const to = setTimeout(() => {
+        navigation.push(Screens.REVIEW, { passenger: passenger })
+      }, 3000)
+
+      return () => {
+        clearTimeout(to)
+      }
+    }
+
+  }, [passenger, navigation])
 
   return (
     <SafeAreaProvider>
@@ -31,7 +45,7 @@ const TabsNavigation: React.FC = () => {
             menu: ['ride', 'lift']
           }}
           tabBarOptions={{ showLabel: true }}>
-          <Tab.Screen name={Screens.RIDES_TAB} options={RidesTabOptions} component={Rides} />
+          <Tab.Screen name={Screens.RIDES_TAB} options={RidesTabOptions} component={RidesNavigation} />
           <Tab.Screen name={Screens.NOTIFICATIONS_TAB} options={NotificationsTabOptions(numOfNotificaitons)} component={Notifications} />
           <Tab.Screen name={Screens.PROFILE_TAB} options={ProfileTabOptions} component={ProfileNavigation} />
           <Tab.Screen name={Screens.SETTINGS_TAB} options={ConfigurationTabOptions} component={ConfigurationNavigation} />

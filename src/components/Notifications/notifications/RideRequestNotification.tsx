@@ -1,9 +1,12 @@
+import crashlytics from '@react-native-firebase/crashlytics';
 import { acceptRideRequest, declineRideRequest } from 'api/adedo';
 import PlainButton from 'components/Button/PlainButton';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import Toaster from 'components/Toaster/Toaster';
 import { Body } from 'components/Typography/Typography';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateNotification } from 'state/notification/actions';
 import styled from 'styled-components/native';
 import { RideRequestStatus } from 'types/models';
 import { colors } from 'utils/colors';
@@ -17,6 +20,8 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
   const { rideRequest } = notification.context;
   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
+
   let rideDate = '';
   if (rideRequest?.ride?.date) {
     rideDate = getDateTimeText(rideRequest?.ride?.date).toLowerCase();
@@ -27,7 +32,11 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
       setLoading(true);
       try {
         await declineRideRequest(rideRequest.id)
+        const _noti = { ...notification };
+        _noti.context.rideRequest.status = RideRequestStatus.DECLINED;
+        dispatch(updateNotification(_noti));
       } catch (e) {
+        crashlytics().recordError(e)
         Toaster.alert('Hubo un error');
       }
       setLoading(false);
@@ -38,8 +47,12 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
     if (rideRequest) {
       setLoading(true);
       try {
-        await acceptRideRequest(rideRequest.id)
+        await acceptRideRequest(rideRequest.id);
+        const _noti = { ...notification };
+        _noti.context.rideRequest.status = RideRequestStatus.ACCEPTED;
+        dispatch(updateNotification(_noti));
       } catch (e) {
+        crashlytics().recordError(e)
         Toaster.alert('Hubo un error');
       }
       setLoading(false);

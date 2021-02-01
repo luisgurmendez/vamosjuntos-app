@@ -29,12 +29,13 @@ function useIsAppReady() {
         const user = await getUser();
         dispatch(setUser(user))
       }
-
     }
 
     setUp().then(() => {
-      setReady(true);
       SplashScreen.hide()
+      setTimeout(() => {
+        setReady(true);
+      }, 400);
     }).catch(e => {
       // TODO What should we do here?!
       // re try? How?

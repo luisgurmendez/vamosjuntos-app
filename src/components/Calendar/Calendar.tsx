@@ -20,8 +20,11 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate }) => {
   const iteratingDay = moment(month + 1, 'MM')
     .subtract(1, 'month')
     .endOf('month')
-    .startOf('week');
-  iteratingDay.subtract(1, 'day');
+
+  if (iteratingDay.weekday() !== 6) {
+    iteratingDay.startOf('week');
+    iteratingDay.subtract(1, 'day');
+  }
 
   const firstSundayOfNextMonth = moment(month + 1, 'MM').endOf('month');
   const numOfWeeks = firstSundayOfNextMonth.diff(iteratingDay, 'days') / 7;

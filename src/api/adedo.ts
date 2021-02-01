@@ -15,7 +15,9 @@ import {
   GetFeatureFlagsResponse,
   GetReviewsResponse,
   GetUserRideDetails,
-  UserRideDetails
+  UserRideDetails,
+  GetRideRequestsResponse,
+  GetOwesReviewsResponse
 } from './responses';
 
 export const createRide = async (body: Partial<Ride>): Promise<Ride | undefined> => {
@@ -42,6 +44,10 @@ export const createRideRequest = async (rideId: string, whereFrom: Address, wher
   return undefined;
 };
 
+export const cancelRideRequest = async (rideRequestId: string): Promise<boolean> => {
+  const response = await api.post<CreateRideRequestResponse>('/request/cancel', { rideRequestId });
+  return response.data.success
+};
 
 export const acceptRideRequest = async (requestId: string): Promise<boolean> => {
   const response = await api.post<BaseResponse>('/request/accept', { requestId });
@@ -67,6 +73,14 @@ export const getRides = async (): Promise<Ride[]> => {
   const response = await api.get<GetRidesResponse>('/ride/all');
   if (response.data.success) {
     return response.data.rides;
+  }
+  return [];
+};
+
+export const getRideRequests = async (): Promise<RideRequest[]> => {
+  const response = await api.get<GetRideRequestsResponse>('/request/all');
+  if (response.data.success) {
+    return response.data.rideRequests;
   }
   return [];
 };
@@ -153,6 +167,15 @@ export const getReviews = async (userId: string): Promise<Review[]> => {
   return [];
 };
 
+export const getOwesReviews = async (): Promise<Passenger | undefined> => {
+  const response = await api.get<GetOwesReviewsResponse>(`/review/owes`);
+  if (response.data.success) {
+    return response.data.passenger;
+  }
+  return undefined;
+};
+
+
 export const sendComplaint = async (complaint: string): Promise<boolean> => {
   const response = await api.post<BaseResponse>('/complaint/create', { complaint });
   return response.data.success;
@@ -160,8 +183,10 @@ export const sendComplaint = async (complaint: string): Promise<boolean> => {
 
 interface ReviewBody {
   toUserId: string;
+  rideId: string;
   comment: string;
   score: number;
+  passengerId: Passenger['id'];
 }
 
 export const createReview = async (data: ReviewBody): Promise<boolean> => {

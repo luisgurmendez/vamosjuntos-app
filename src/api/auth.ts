@@ -12,11 +12,21 @@ export const login = async (username: string, password: string): Promise<Tokens 
   return undefined;
 };
 
+interface UserAndTokens {
+  user: User;
+  tokens: Tokens;
+}
 // TODO: type registration;
-export const register = async (registrationForm: any): Promise<User | undefined> => {
+export const register = async (registrationForm: any): Promise<UserAndTokens | undefined> => {
   const response = await api.post<RegisterResponse>('/auth/register', registrationForm);
   if (response.data.success) {
-    return response.data.user;
+    return {
+      user: response.data.user,
+      tokens: {
+        token: response.data.token,
+        refreshToken: response.data.refreshToken
+      }
+    }
   }
   return undefined;
 }

@@ -3,6 +3,7 @@ import { InterstitialAd as NativeInterstitialAd, AdEventType, TestIds, FirebaseA
 import useFeatureFlag from './useFeatureFlag';
 import { FeatureFlags } from 'types/models';
 import { usePlatform } from './usePlatform';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const useInterstatialAd = () => {
 
@@ -11,7 +12,7 @@ const useInterstatialAd = () => {
   const shouldShowAd = useFeatureFlag(FeatureFlags.FULL_SCREEN_ADS);
   const { isAndroid } = usePlatform();
 
-  let adUnitId = TestIds.BANNER;
+  let adUnitId = TestIds.INTERSTITIAL;
 
   if (!__DEV__) {
     if (isAndroid) {
@@ -39,10 +40,14 @@ const useInterstatialAd = () => {
         setShown(true);
       } else {
         // wait unitl ad loads.
-        interstitial.current.onAdEvent(type => {
+        interstitial.current.onAdEvent((type, error) => {
           if (type === AdEventType.LOADED && !shown) {
             interstitial.current!.show();
             setShown(true);
+          }
+
+          if (error) {
+            crashlytics().recordError(error);
           }
         })
       }

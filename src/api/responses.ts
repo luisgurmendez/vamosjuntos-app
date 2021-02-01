@@ -17,6 +17,10 @@ export interface GetRidesResponse extends BaseResponse {
   rides: Ride[];
 }
 
+export interface GetRideRequestsResponse extends BaseResponse {
+  rideRequests: RideRequest[];
+}
+
 export interface GetFeatureFlagsResponse extends BaseResponse {
   featureFlags: FeatureFlag[];
 }
@@ -44,6 +48,8 @@ export interface AddressFromCoordsResponse extends BaseResponse {
 
 export interface RegisterResponse extends BaseResponse {
   user: User;
+  token: string;
+  refreshToken: string;
 }
 
 export interface ForgotPasswordResponse extends BaseResponse {
@@ -67,6 +73,9 @@ export interface GetReviewsResponse extends BaseResponse {
   reviews: Review[];
 }
 
+export interface GetOwesReviewsResponse extends BaseResponse {
+  passenger: Passenger;
+}
 
 export interface UserRideDetails {
   numOfDriver: number;

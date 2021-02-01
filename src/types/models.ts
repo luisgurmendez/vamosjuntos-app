@@ -41,6 +41,7 @@ export interface Review {
 }
 
 export interface Passenger {
+  id: string;
   user: User;
   ride: Ride;
   whereTo: Address;

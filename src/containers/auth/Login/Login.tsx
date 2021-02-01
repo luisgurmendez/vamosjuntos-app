@@ -14,6 +14,8 @@ import Toaster from 'components/Toaster/Toaster';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'state/user/actions';
+import { colors } from 'utils/colors';
+import { Subtitle, Text, Title } from 'components/Typography/Typography';
 
 export interface LoginValues {
   username: string;
@@ -54,13 +56,14 @@ const Login: React.FC = () => {
         </Header>
         <Content>
           <DismissKeyboard>
-            <CenteredContentBox mb="lg">
-              <Logo size={200} />
+            <CenteredContentBox mb="xlg">
+              <SubtitleText>Inicia sesion, asi</SubtitleText>
+              <BlueTitle>Vamos juntos</BlueTitle>
             </CenteredContentBox>
             <LoginForm onSuccessfullLogin={handleSuccessfullLogin} />
             <PlainButton onPress={handleForgotPassword}>
               Me olvide la contraseña 🤦🏼‍♂️
-              </PlainButton>
+            </PlainButton>
           </DismissKeyboard>
         </Content>
       </KeyboardShift>
@@ -93,4 +96,13 @@ const Header = styled.View`
 `
 const CenteredContentBox = styled(Box)`
   align-items: center;
+`
+const BlueTitle = styled(Title)`
+  color: ${colors.main};
+`
+
+const SubtitleText = styled(Text)`
+  font-size: 16px;
+  width:100%;
+  text-align: left;
 `

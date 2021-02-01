@@ -13,11 +13,9 @@ interface RideBubbleProps extends Stylable {
 const RideBubble: React.FC<RideBubbleProps> = ({ style, ride, onPress }) => {
 
   return (
-    <Shadow>
-      <Container onPress={onPress} disabled={onPress === undefined} style={style}>
-        <RideDetailsSummary ride={ride} />
-      </Container>
-    </Shadow>
+    <Container onPress={onPress} disabled={onPress === undefined} style={style}>
+      <RideDetailsSummary ride={ride} />
+    </Container>
   );
 }
 

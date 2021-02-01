@@ -27,13 +27,13 @@ export const RenderItemMenu: React.FC<RenderItemMenuProps> = ({ item, onCloseMen
       return (
         <OptionButton
           onPress={handleOpenLift}
-          label="Buscar"
+          label="¿Me llevas?"
           iconStyle={{ transform: [{ rotate: '20deg' }] }}
           icon="thumb-up"
         />
       );
     case 'ride':
-      return <OptionButton onPress={handleOpenRide} label="Llevar" icon="car" />;
+      return <OptionButton onPress={handleOpenRide} label="Te llevo" icon="car" />;
   }
 
   return <View style={{ width: 50, height: 50, backgroundColor: 'red', borderRadius: 25 }} />;

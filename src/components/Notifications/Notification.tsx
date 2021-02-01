@@ -41,7 +41,6 @@ const Notification: React.FC<NotificationProps> = ({ style, notification }) => {
       NotificationComp = DefaultDummyNotification;
   }
 
-
   return (
     <NotificationComp style={style} notification={notification} />
   )

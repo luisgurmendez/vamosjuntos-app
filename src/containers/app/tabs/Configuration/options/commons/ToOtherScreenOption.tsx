@@ -9,15 +9,17 @@ import { useNavigation } from '@react-navigation/native';
 interface ToOtherScreenOptionProps {
   title: string;
   toScreen?: string;
+  onPress?: () => void;
 }
 
-const ToOtherScreenOption: React.FC<ToOtherScreenOptionProps> = ({ title, toScreen }) => {
+const ToOtherScreenOption: React.FC<ToOtherScreenOptionProps> = ({ title, toScreen, onPress }) => {
   const navigation = useNavigation<any>();
 
   const handleGoToOtherScreen = () => {
-    if (toScreen !== undefined) {
+    if (toScreen !== undefined && onPress === undefined) {
       navigation.push(toScreen);
     }
+    onPress && onPress();
   }
 
   return (

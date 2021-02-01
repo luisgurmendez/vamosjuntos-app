@@ -1,6 +1,7 @@
 enum RIDE_SCREENS {
   RIDES = 'RIDES',
   RIDE = 'RIDE',
+  RIDE_REQUESTS = 'RIDE_REQUESTS'
 }
 
 export default RIDE_SCREENS;

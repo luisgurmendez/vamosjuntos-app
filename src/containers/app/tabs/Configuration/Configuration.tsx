@@ -9,18 +9,20 @@ import ComplaintOption from './options/Complaint/ComplaintOption';
 import CrashalyticsEnabledOption from './options/CrashalyticsEnabledOption';
 import ShowCanceledRidesOption from './options/ShowCanceledRidesOption';
 import ShowCompletedRidesOption from './options/ShowCompletedRidesOption';
+import PermissionsOption from './options/Permissions/PermissionsOption';
 
 interface ConfigurationProps { }
 
 const Configuration: React.FC<ConfigurationProps> = () => {
   return (
-    <Page title="Configuracion">
+    <Page title="Configuración">
       <Container>
         <SavedAddressesOption />
         <HelpOption />
         <CrashalyticsEnabledOption />
         <ShowCanceledRidesOption />
         <ShowCompletedRidesOption />
+        <PermissionsOption />
         <ComplaintOption />
         <AppVersionOption />
       </Container>
@@ -36,15 +38,3 @@ const Container = styled.ScrollView`
   padding-top: 24px;
   flex: 1;
 `
-
-/**
- * Configuraciones:
- *  - Comentarios anonimos ?
- *  - Cerrar sesion
- *  - Acerca de (como ? icon arriba a la derecha)
- *  - Ocultar numero de telefono
- *  - App version
- *  - notificaciones?
- *  - Help
- *
- */

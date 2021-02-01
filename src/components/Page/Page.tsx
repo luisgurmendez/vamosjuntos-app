@@ -1,18 +1,16 @@
+import React from 'react';
 import { Box } from 'components/Box/Box';
 import { Title } from 'components/Typography/Typography';
-import { usePlatform } from 'hooks/usePlatform';
-import React, { useState } from 'react';
 import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/Feather';
+import Badge from 'components/Badge/Badge';
 
 interface PageProps {
   title: string;
+  renderAction?: () => React.ReactNode;
 }
 
-const Page: React.FC<PageProps> = ({ title, children }) => {
-
-  const { isAndroid } = usePlatform();
-
-  const marginBottomAndroidStyle = { marginBottom: 8 }
+const Page: React.FC<PageProps> = ({ title, renderAction, children }) => {
 
   return (
     <Container >
@@ -20,6 +18,7 @@ const Page: React.FC<PageProps> = ({ title, children }) => {
         <Title>
           {title}
         </Title>
+        {renderAction && renderAction()}
       </Header>
       <Content>
         {children}
@@ -39,7 +38,10 @@ const Container = styled.SafeAreaView`
 `;
 
 const Header = styled(Box)`
-
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `
 const Content = styled.View`
   flex:1;

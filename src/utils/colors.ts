@@ -8,7 +8,8 @@ export const colors = {
   white: '#fff',
   black: 'rgb(5, 71, 82)',
   gray: '#888',
-  yellow: '#FDCC0D'
+  yellow: '#FDCC0D',
+  notification: '#FF3A30'
 };
 
 export function alpha(color: string, alphaNumber: number | string) {

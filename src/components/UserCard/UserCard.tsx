@@ -32,7 +32,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
 
 export default UserCard;
 
-const Container = styled(Shadow)`
+const Container = styled.View`
   width: 100%;
   padding: 8px;
   background-color: ${colors.white};

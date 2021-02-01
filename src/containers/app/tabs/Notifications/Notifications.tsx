@@ -41,7 +41,6 @@ const Notifications: React.FC = () => {
     <Page title="Alertas">
       <Container
         scrollEventThrottle={400}
-        // onScroll={handleScroll}
         refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
         }
       >

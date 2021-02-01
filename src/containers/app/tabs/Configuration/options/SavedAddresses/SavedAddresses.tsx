@@ -74,17 +74,15 @@ const SavedAddresses: React.FC<SavedAddressesProps> = ({ }) => {
               </Button>
               </>
             }
-            {savedAddresses.length > 0 && (
-              <SavedAddressesContainer mt="lg">
-                <Box mb="md">
-                  <Subtitle>Direcciónes guardadas</Subtitle>
-                </Box>
-                <SavedAddressList
-                  savedAddresses={savedAddresses}
-                  onRemoveAddress={handleRemoveSavedAddress}
-                />
-              </SavedAddressesContainer>
-            )}
+            <SavedAddressesContainer mt="lg">
+              <Box mb="md">
+                <Subtitle>Direcciónes guardadas</Subtitle>
+              </Box>
+              <SavedAddressList
+                savedAddresses={savedAddresses}
+                onRemoveAddress={handleRemoveSavedAddress}
+              />
+            </SavedAddressesContainer>
           </KeyboardShift>
         </Container>
 

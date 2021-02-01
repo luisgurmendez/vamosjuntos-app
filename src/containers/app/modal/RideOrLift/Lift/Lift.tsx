@@ -15,6 +15,8 @@ import { useNavigation } from '@react-navigation/native';
 import { createRideRequest } from 'api/adedo';
 import crashlytics from '@react-native-firebase/crashlytics';
 import Toaster from 'components/Toaster/Toaster';
+import { useDispatch } from 'react-redux';
+import { addRideRequest } from 'state/ride/actions';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,11 +30,15 @@ const intialValues: LiftCreationValues = {
 const LiftStack: React.FC = () => {
 
   const navigation = useNavigation<any>();
+  const dispatch = useDispatch();
 
   const handleCreateRideRequest = async (values: LiftCreationValues) => {
-    console.log('HANDLE SUBMIT!')
     try {
-      await createRideRequest(values.rideId, values.whereFrom!, values.whereTo!);
+      const rr = await createRideRequest(values.rideId, values.whereFrom!, values.whereTo!);
+      Toaster.success('Se mando tu solicitud, espera a que el conductor te acepte.')
+      if (rr) {
+        dispatch(addRideRequest(rr));
+      }
       navigation.goBack();
     } catch (e) {
       Toaster.alert('Hubo un error al intentar unirte al viaje')

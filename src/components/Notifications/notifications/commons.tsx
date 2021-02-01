@@ -32,14 +32,13 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
 
   const handleNotificationBodyPress = () => {
     const _ride = notification.context.ride ? notification.context.ride : notification.context.rideRequest ? notification.context.rideRequest.ride : undefined;
-    console.log(_ride);
     if (_ride) {
       navigation.push(Screens.RIDE_DETAILS, { rideId: _ride.id })
     }
   }
 
-  //TODO: not just weeks if diff is less thatn 7 days make it by days.
-  const notificationSince = moment().diff(moment(notification.createdAt), 'week');
+  const notificationSince = moment().diff(moment(notification.createdAt), 'day');
+  const notificationSinceLabel = notificationSince === 0 ? 'hoy' : notificationSince > 7 ? `${Math.floor(notificationSince / 7)} sem` : `${notificationSince} dias`
 
   return (
     <Container style={style}>
@@ -51,7 +50,7 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
             </TouchableOpacity>
           </Box>
           <Body style={{ flex: 1 }}>
-            <Bold>{user!.name}</Bold> {label} <Grayed>{notificationSince !== 0 && `${notificationSince} sem`}</Grayed>
+            <Bold>{user!.name}</Bold> {label} <Grayed>{notificationSinceLabel}</Grayed>
           </Body>
         </FullRow>
       </TouchableOpacity>
@@ -62,7 +61,7 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
   )
 }
 
-const Container = styled(Shadow)`
+const Container = styled.View`
   padding: 8px;
   background-color: ${colors.white};
   border-radius: 4px;

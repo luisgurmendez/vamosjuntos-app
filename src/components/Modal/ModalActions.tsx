@@ -20,8 +20,8 @@ const ModalActions: React.FC<ModalActionsProps> = ({
 
   return (
     <Container>
-      {secondaryLabel && <PlainButton onPress={onSecondaryPress}>{secondaryLabel}</PlainButton>}
       {primaryLabel && <PlainButton onPress={onPrimaryPress}>{primaryLabel}</PlainButton>}
+      {secondaryLabel && <PlainButton onPress={onSecondaryPress}>{secondaryLabel}</PlainButton>}
     </Container>
   )
 
@@ -30,8 +30,8 @@ const ModalActions: React.FC<ModalActionsProps> = ({
 export default ModalActions;
 
 const Container = styled.View`
-  display:flex;
+  display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
 `

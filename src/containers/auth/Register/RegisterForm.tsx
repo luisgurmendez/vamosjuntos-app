@@ -9,6 +9,9 @@ import { useNavigation } from '@react-navigation/native';
 import Screens from './Screens';
 import { register } from 'api/auth';
 import { useDispatch } from 'react-redux';
+import Storage from 'storage/Storage';
+import { setUser } from 'state/user/actions';
+import Toaster from 'components/Toaster/Toaster';
 
 const RegisterFormSchema = Yup.object().shape({
   username: Yup.string().required('Campo obligatorio'),
@@ -44,13 +47,19 @@ const RegisterForm: React.FC = () => {
     passwordConfirmation: ''
   };
 
-  const navigation = useNavigation<any>();
+  const dispatch = useDispatch();
 
   const handleRegister = async (values: UserRegistrationValues) => {
     const updatedValues = { ...values, phone: `+598${values.phone}` }
-    // TODO: show error message
-    await register(updatedValues)
-    navigation.goBack();
+    try {
+      const registrationResponse = await register(updatedValues);
+      if (registrationResponse) {
+        await Storage.setItem(Storage.TOKENS, registrationResponse.tokens);
+        dispatch(setUser(registrationResponse.user))
+      }
+    } catch (e) {
+      Toaster.alert('Hubo un error creando tu usuario');
+    }
   };
 
   return (

@@ -100,7 +100,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
           <UserCard user={ride.driver} />
           {hasPassengers &&
             <Box mt="lg">
-              <Subtitle>Pasageros</Subtitle>
+              <Subtitle>Pasajeros</Subtitle>
               {ride.passengers.map(p => <UserCard key={`passenger-${p.user.id}`} user={p.user} />)}
             </Box>
           }
@@ -128,14 +128,14 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
         open={isConfirmCompleteRideModalOpen}
         onClose={handleConfirmCompleteRideModal}
         onConfirm={handleConfirmCompleteRide}
-        title={'¿Esta seguro que este viaje ya se completo?'}
+        title={'¿Estas seguro que este viaje ya se completo?'}
       />
 
       <ModalWithYesNoActions
         open={isConfirmCancelModalOpen}
         onClose={handleCancelConfirmModal}
         onConfirm={handleConfirmCancelRide}
-        title={isDriver ? '¿Esta seguro que quiere cancel el viaje?' : '?Esta seguro que quiere darse de baja del viaje?'}
+        title={isDriver ? '¿Estas seguro que quieres cancel el viaje?' : '¿Estas seguro que queres bajarte del viaje?'}
       />
 
     </Container >
@@ -144,7 +144,6 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
 
 const Container = styled.View`
   flex: 1;
-  background-color: white;
   position:relative;
   padding-bottom: 14px;
 `

@@ -13,7 +13,7 @@ const Logo: React.FC<LogoProps> = ({ size = 50 }) => {
       <Image
         style={{ flex: 1, width: '100%' }}
         resizeMode="cover"
-        source={require('../../assets/placeholderImg.png')}
+        source={require('../../assets/Logo.png')}
       />
     </Container>
   )

@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import Modal from 'react-native-modal';
 import { Subtitle } from 'components/Typography/Typography';
 import { Stylable } from 'components/types';
+import { Box } from 'components/Box/Box';
 
 export interface SimpleModalProps extends Stylable {
   open: boolean;
@@ -14,21 +15,27 @@ const SimpleModal: React.FC<SimpleModalProps> = ({ open, onClose, title, childre
 
   return (
     <Modal isVisible={open} onBackdropPress={onClose} backdropTransitionOutTiming={0}>
-      <Content style={style}>
+      <Container style={style}>
         {title && <Subtitle>{title}</Subtitle>}
-        {children}
-      </Content>
+        <Content pt="lg">
+          {children}
+        </Content>
+      </Container>
     </Modal>
   )
 }
 
 export default SimpleModal;
 
-const Content = styled.View`
+const Container = styled.View`
   backgroundColor: white;
   padding: 22px;
   justifyContent: center;
   alignItems: center;
   borderRadius: 4px;
   borderColor: rgba(0, 0, 0, 0.1);
+`
+
+const Content = styled(Box)`
+  width: 100%;
 `

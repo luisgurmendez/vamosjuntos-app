@@ -4,20 +4,21 @@ import ReviewForm, { ReviewFormValues } from './ReviewForm';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { useNavigation } from '@react-navigation/native';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
-import { User } from 'types/models';
+import { Passenger, User } from 'types/models';
 import { createReview } from 'api/adedo';
 import Toaster from 'components/Toaster/Toaster';
 
 interface ReviewProps {
-  toUser: User;
+  route: { params: { passenger: Passenger; } }
 }
 
-const Review: React.FC<ReviewProps> = ({ toUser }) => {
+const Review: React.FC<ReviewProps> = ({ route: { params: { passenger } } }) => {
 
   const navigation: any = useNavigation();
+  const toUser = passenger.ride.driver;
 
   const handleSubmitReview = (values: ReviewFormValues) => {
-    createReview({ ...values, toUserId: toUser.id }); // Silent request
+    createReview({ ...values, rideId: passenger.ride.id, passengerId: passenger.id, toUserId: passenger.ride.driver.id }); // Silent request
     Toaster.success('Gracias!')
     navigation.goBack(null);
   }
