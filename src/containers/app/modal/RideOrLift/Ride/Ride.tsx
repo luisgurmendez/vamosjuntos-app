@@ -62,8 +62,8 @@ const RideStack: React.FC = () => {
             headerBackTitle: 'Atras',
             headerShown: false
           }}>
-          <Stack.Screen name={RideScreens.WHERE_TO} component={RideWhereTo} />
           <Stack.Screen name={RideScreens.WHERE_FROM} component={RideWhereFrom} />
+          <Stack.Screen name={RideScreens.WHERE_TO} component={RideWhereTo} />
           <Stack.Screen name={RideScreens.HOW_MANY} component={HowMany} />
           <Stack.Screen name={RideScreens.WHEN} component={RideWhen} />
           <Stack.Screen name={RideScreens.PRICE} component={Price} />

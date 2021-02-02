@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Screens } from 'containers/Screens';
 import React from 'react';
 import { View } from 'react-native';
-import OptionButton from './MenuItemButton';
+import MenuItemButton from './MenuItemButton';
 
 interface RenderItemMenuProps {
   item: string;
@@ -25,7 +25,7 @@ export const RenderItemMenu: React.FC<RenderItemMenuProps> = ({ item, onCloseMen
   switch (item) {
     case 'lift':
       return (
-        <OptionButton
+        <MenuItemButton
           onPress={handleOpenLift}
           label="¿Me llevas?"
           iconStyle={{ transform: [{ rotate: '20deg' }] }}
@@ -33,7 +33,7 @@ export const RenderItemMenu: React.FC<RenderItemMenuProps> = ({ item, onCloseMen
         />
       );
     case 'ride':
-      return <OptionButton onPress={handleOpenRide} label="Te llevo" icon="car" />;
+      return <MenuItemButton onPress={handleOpenRide} label="Te llevo" icon="car" />;
   }
 
   return <View style={{ width: 50, height: 50, backgroundColor: 'red', borderRadius: 25 }} />;

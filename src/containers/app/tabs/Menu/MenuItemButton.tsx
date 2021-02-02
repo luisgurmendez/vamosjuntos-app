@@ -17,9 +17,9 @@ interface FloatingButtonProps {
   size?: number;
 }
 
-const OptionButton: React.FC<FloatingButtonProps> = ({ style, icon, onPress, label, iconStyle, size = 60 }) => {
+const MenuItemButton: React.FC<FloatingButtonProps> = ({ style, icon, onPress, label, iconStyle, size = 60 }) => {
   return (
-    <OptionContainer style={style}>
+    <OptionContainer style={style} size={size}>
       <OptionTouchable onPress={onPress} activeOpacity={0.6} size={size}>
         <AnimatedIcon size={size * 0.5} name={icon} color={colors.main} style={iconStyle} />
       </OptionTouchable>
@@ -30,7 +30,7 @@ const OptionButton: React.FC<FloatingButtonProps> = ({ style, icon, onPress, lab
   );
 };
 
-export default OptionButton;
+export default MenuItemButton;
 
 const OptionTouchable = styled(TouchableOpacity) <{ size: number }>`
   width: ${(props) => props.size}px;
@@ -43,7 +43,9 @@ const OptionTouchable = styled(TouchableOpacity) <{ size: number }>`
   align-items: center;
 `;
 
-const OptionContainer = styled.View`
+const OptionContainer = styled.View<{ size: number }>`
+  width: ${(props) => props.size}px;
+  height: ${(props) => props.size}px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,6 +56,9 @@ const StyledBody = styled(Body)`
 `;
 
 const TextPositioner = styled.View<{ size: number }>`
-  bottom: -${(props) => props.size * 0.25 + 8}px;
-  position: absolute;
+  bottom: -4px;
+  width: 100px;
+  text-align: center;
+  align-items: center;
+  position: relative;
 `;

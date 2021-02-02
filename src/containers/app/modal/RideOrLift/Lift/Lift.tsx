@@ -60,8 +60,8 @@ const LiftStack: React.FC = () => {
             headerBackTitle: 'Atras',
             headerShown: false
           }}>
-          <Stack.Screen name={LiftScreens.WHERE_TO} component={LiftWhereTo} />
           <Stack.Screen name={LiftScreens.WHERE_FROM} component={LiftWhereFrom} />
+          <Stack.Screen name={LiftScreens.WHERE_TO} component={LiftWhereTo} />
           <Stack.Screen name={LiftScreens.WHEN} component={LiftWhen} />
           <Stack.Screen name={LiftScreens.POSSIBLE_RIDES} component={PossibleRides} />
           <Stack.Screen name={LiftScreens.JOIN_RIDE} component={JoinRide} />

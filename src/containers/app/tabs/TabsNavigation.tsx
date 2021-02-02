@@ -23,8 +23,6 @@ const TabsNavigation: React.FC = () => {
 
   useEffect(() => {
     if (passenger !== undefined) {
-      console.log('to review!', passenger)
-      console.log(navigation)
       const to = setTimeout(() => {
         navigation.push(Screens.REVIEW, { passenger: passenger })
       }, 3000)
