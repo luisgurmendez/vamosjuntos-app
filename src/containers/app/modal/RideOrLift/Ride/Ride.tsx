@@ -24,7 +24,7 @@ const Stack = createNativeStackNavigator();
 const intialValues: RideCreationValues = {
   whereFrom: undefined,
   whereTo: undefined,
-  date: moment().toISOString(),
+  date: moment().set({ hours: 12, minutes: 0 }).toISOString(),
   capacity: 3,
   price: 100
 }

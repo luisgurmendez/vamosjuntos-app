@@ -1,10 +1,10 @@
 import Calendar from 'components/Calendar/Calendar';
 import Wizard, { WizardProps } from 'components/Wizard/Wizard';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import { Subtitle, Text } from 'components/Typography/Typography';
-import HourInput from 'components/Input/HourInput';
+import { Subtitle } from 'components/Typography/Typography';
+import TimePicker from 'components/Input/TimePicker';
 import KeyboardShift from 'components/Keyboard/KeyboardShift';
 import { Box } from 'components/Box/Box';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -18,12 +18,6 @@ interface WhenProps {
 }
 
 const When: React.FC<WhenProps> = ({ date = moment(), action, nextScreen, onDateChange }) => {
-
-  const handleHourChange = (hour: number, mins: number) => {
-    const _date = date.clone();
-    _date.set({ hour: hour, minutes: mins });
-    onDateChange && onDateChange(_date);
-  };
 
   const handleDateChange = (value: moment.Moment) => {
     const _date = date.clone();
@@ -42,7 +36,7 @@ const When: React.FC<WhenProps> = ({ date = moment(), action, nextScreen, onDate
             </Box>
             <Box mt="xxxxlg">
               <MarginedSubtitle>{date.format('[A las] HH:mm')}</MarginedSubtitle>
-              <HourInput onHourChange={handleHourChange} value={date.format('HH:mm')} />
+              <TimePicker onTimeChange={onDateChange} date={date} />
             </Box>
           </Container>
         </KeyboardShift>

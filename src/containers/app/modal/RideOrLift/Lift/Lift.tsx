@@ -24,7 +24,7 @@ const intialValues: LiftCreationValues = {
   rideId: '',
   whereFrom: undefined,
   whereTo: undefined,
-  date: moment().toISOString()
+  date: moment().set({ hours: 12, minutes: 0 }).toISOString()
 }
 
 const LiftStack: React.FC = () => {

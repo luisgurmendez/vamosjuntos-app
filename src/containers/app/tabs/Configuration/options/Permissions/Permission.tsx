@@ -17,7 +17,6 @@ const Permission: React.FC<PermissionProps> = ({ permission }) => {
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(false);
 
-
   useEffect(() => {
     check(permission).then((checkedPerms) => {
       if (checkedPerms === RESULTS.GRANTED) {

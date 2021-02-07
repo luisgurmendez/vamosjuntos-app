@@ -12,7 +12,6 @@ import { Provider, useDispatch } from 'react-redux';
 import AppCrashHandler from 'containers/AppCrashHandler';
 import useIsAppReady from 'hooks/useIsAppReady';
 import { LogBox, View } from 'react-native';
-import { Title } from 'components/Typography/Typography';
 import useInternetConnection from 'hooks/useInternetConnection';
 import { setHasInternetConnection } from 'state/general/actions';
 import styled from 'styled-components/native';
@@ -84,6 +83,11 @@ const SetupApp: React.FC = ({ children }) => {
     }
 
   }, [hasInternetConnection, hasCheckedInternetConnection])
+
+
+  if (!isReady) {
+    return null;
+  }
 
   return (
     <Container>
