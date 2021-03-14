@@ -9,14 +9,16 @@ import { colors } from 'utils/colors';
 import UserCardPlain from './UserCardPlain';
 
 interface UserCardProps {
-  user: User
+  user: User;
+  isPassenger?: boolean;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ user }) => {
+const UserCard: React.FC<UserCardProps> = ({ user, isPassenger }) => {
 
   const navigation = useNavigation<any>();
 
   const handlePressUser = () => {
+    const screen = isPassenger ? Screens.PASSENGER_DETAILS : Screens.USER_PROFILE;
     navigation.push(Screens.USER_PROFILE, { user })
   }
 

@@ -4,6 +4,7 @@ enum Screens {
   REVIEW = 'REVIEW',
   USER_PROFILE = 'USER_PROFILE',
   RIDE_DETAILS = 'RIDE_DETAILS',
+  PASSENGER_DETAILS = 'PASSENGER_DETAILS'
 }
 
 export default Screens;
