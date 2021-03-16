@@ -20,6 +20,7 @@ import { getCancelTokenSource } from 'api/api';
 import FloatingButton from 'components/FloatingButton/FloatingButton';
 import { useMap } from 'components/Map/useMap';
 import Geolocation from '@react-native-community/geolocation';
+import { debounce } from 'ts-debounce';
 
 interface SelectAddressModalProps {
   open: boolean;
@@ -72,7 +73,6 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
         setIsFetchingAddress(false);
       }
     }
-
   };
 
   const handleGoToUserLocation = () => {
@@ -91,13 +91,15 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
     });
   }
 
+  const debouncedHandleLocationChange = debounce(handleLocationChange, 100);
+
   return (
     <Modal isVisible={open} useNativeDriver={false} coverScreen style={{ margin: 0, zIndex: 100 }} hasBackdrop={false}>
       <Content>
         <CloseContainer>
           <PressableIcon onPress={onClose} size={30} name={'x'} color={colors.black} />
         </CloseContainer>
-        <Map onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={handleLocationChange} mapId={mapId}>
+        <Map onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={debouncedHandleLocationChange} mapId={mapId}>
           <SelectAddressMarker lifted={isMovingMap} />
           <GoToLocationBtnPositioner>
             <FloatingButton icon={"crosshairs-gps"} onPress={handleGoToUserLocation} />
