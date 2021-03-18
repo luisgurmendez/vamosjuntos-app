@@ -1,58 +1,44 @@
-import { api } from "./api";
-import { ForgotPasswordResponse, GetUserResponse, LoginResponse, RefreshTokenResponse, RegisterResponse } from './responses';
 import { User } from 'types/models';
-import { Tokens } from 'types/tokens';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import { southamericaFunctions } from "./functions";
 
-export const login = async (username: string, password: string): Promise<Tokens | undefined> => {
-  const response = await api.post<LoginResponse>('/auth/login', { username, password });
-  console.log(response.data.success);
-  if (response.data.success) {
-    return { token: response.data.token, refreshToken: response.data.refreshToken };
-  }
-  return undefined;
+export interface UserRegistrationValues {
+  email: string;
+  name: string;
+  phone: string;
+  password: string;
+  passwordConfirmation: string;
+}
+
+export const login = async (email: string, password: string) => {
+  return auth().signInWithEmailAndPassword(email, password);
 };
 
-interface UserAndTokens {
-  user: User;
-  tokens: Tokens;
-}
-// TODO: type registration;
-export const register = async (registrationForm: any): Promise<UserAndTokens | undefined> => {
-  const response = await api.post<RegisterResponse>('/auth/register', registrationForm);
-  if (response.data.success) {
-    return {
-      user: response.data.user,
-      tokens: {
-        token: response.data.token,
-        refreshToken: response.data.refreshToken
-      }
-    }
-  }
-  return undefined;
+export const logout = async () => {
+  return auth().signOut();
+};
+
+export const register = async (values: UserRegistrationValues) => {
+  const user = (await southamericaFunctions.httpsCallable('register')(values)).data;
+  await login(values.email, values.password);
+  return user;
 }
 
-// TODO: define how this is going to work
-export const forgotPassword = async (ci: string): Promise<void> => {
-  const response = await api.post<ForgotPasswordResponse>('/auth/forgot-password', { ci });
-  if (response.data.success) {
-    // TODO: here
-    return undefined;
-  }
-  return undefined;
+export const forgotPassword = async (email: string): Promise<void> => {
+  return auth().sendPasswordResetEmail(email);
 }
 
-export const refreshTokens = async (refreshToken: string): Promise<Tokens | undefined> => {
-  const response = await api.post<RefreshTokenResponse>('/auth/refresh', { refreshToken });
-  if (response.data.success) {
-    return { token: response.data.token, refreshToken: response.data.refreshToken };
-  }
-  return undefined;
+export const getFirebaseUser = () => {
+  return auth().currentUser;
 }
 
 export const getUser = async (): Promise<User | undefined> => {
-  const response = await api.get<GetUserResponse>('/user/me');
-  if (response.data.success) {
-    return response.data.user;
+  const fbUser = getFirebaseUser();
+  if (fbUser) {
+    const user = (await firestore().doc<User>(`users/${fbUser?.email}`).get()).data();
+    return user;
   }
+
   return undefined;
 }

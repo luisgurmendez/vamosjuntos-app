@@ -2,7 +2,6 @@ import React from 'react'
 import { Linking } from 'react-native';
 import styled from 'styled-components/native';
 import PlainButton, { PlainButtonProps } from './PlainButton';
-import crashlytics from '@react-native-firebase/crashlytics';
 
 interface LinkButtonProps extends PlainButtonProps {
   url: string;

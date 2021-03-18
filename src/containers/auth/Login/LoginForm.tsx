@@ -5,7 +5,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import * as Yup from 'yup';
 import MarginedChildren from 'components/Box/MarginedChildren';
-import { LoginValues } from './Login';
+import { LoginValues } from './types';
 
 const LoginFormSchema = Yup.object().shape({
   username: Yup.string().required('Username required'),

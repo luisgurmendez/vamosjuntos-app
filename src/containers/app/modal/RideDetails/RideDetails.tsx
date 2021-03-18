@@ -63,7 +63,6 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
     } catch (e) {
       Toaster.alert('Hubo un error')
     }
-
   }
 
   const handleRideCompleted = async () => {

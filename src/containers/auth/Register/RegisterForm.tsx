@@ -7,15 +7,14 @@ import * as Yup from 'yup';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import { useNavigation } from '@react-navigation/native';
 import Screens from './Screens';
-import { register } from 'api/auth';
+import { register, UserRegistrationValues } from 'api/auth';
 import { useDispatch } from 'react-redux';
 import Storage from 'storage/Storage';
 import { setUser } from 'state/user/actions';
 import Toaster from 'components/Toaster/Toaster';
 
 const RegisterFormSchema = Yup.object().shape({
-  username: Yup.string().required('Campo obligatorio'),
-  ci: Yup.string().required('Campo obligatorio'), //TODO validate Cedula
+  email: Yup.string().required('Campo obligatorio'),
   phone: Yup.string()
     .required('Campo obligatorio')
     .matches(/^[0-9]+$/, "Solo numeros")
@@ -28,21 +27,11 @@ const RegisterFormSchema = Yup.object().shape({
     }).required('Campo obligatorio')
 });
 
-export interface UserRegistrationValues {
-  username: string;
-  ci: string;
-  phone: string;
-  name: string;
-  password: string;
-  passwordConfirmation: string;
-}
-
 const RegisterForm: React.FC = () => {
   const initialValues: UserRegistrationValues = {
-    username: '',
-    ci: '',
-    phone: '',
+    email: '',
     name: '',
+    phone: '',
     password: '',
     passwordConfirmation: ''
   };
@@ -50,14 +39,11 @@ const RegisterForm: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleRegister = async (values: UserRegistrationValues) => {
-    const updatedValues = { ...values, phone: `+598${values.phone}` }
     try {
-      const registrationResponse = await register(updatedValues);
-      if (registrationResponse) {
-        await Storage.setItem(Storage.TOKENS, registrationResponse.tokens);
-        dispatch(setUser(registrationResponse.user))
-      }
+      const _u = await register({ ...values, phone: `+598${values.phone}` });
+      console.log(_u);
     } catch (e) {
+      console.log(e);
       Toaster.alert('Hubo un error creando tu usuario');
     }
   };
@@ -68,14 +54,13 @@ const RegisterForm: React.FC = () => {
         {({ handleChange, isSubmitting, handleSubmit, values, errors, isValid }) => (
           <FormContent>
             <MarginedChildren mV="md">
-
               <TextInput
-                placeholder="Usuario"
-                error={errors.username}
-                textContentType="username"
+                placeholder="Email"
+                error={errors.email}
+                textContentType="emailAddress"
                 autoCapitalize="none"
-                onChangeText={handleChange('username')}
-                value={values.username}
+                onChangeText={handleChange('email')}
+                value={values.email}
               />
 
               <TextInput
@@ -84,13 +69,6 @@ const RegisterForm: React.FC = () => {
                 error={errors.name}
                 onChangeText={handleChange('name')}
                 value={values.name}
-              />
-
-              <TextInput
-                placeholder="Cedula. ej. 1.111.111-1"
-                error={errors.ci}
-                onChangeText={handleChange('ci')}
-                value={values.ci}
               />
 
               <TextInput

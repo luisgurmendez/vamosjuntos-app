@@ -31,9 +31,10 @@ const AppInitialDataFetcher: React.FC<AppInitialDataFetcherProps> = ({ children 
       dispatch(setRideRequests(rideRequests));
       dispatch(setFeatureFlags(featureFlags));
       dispatch(setOwesReview(owesReview));
-    }).catch(() => {
+    }).catch((e) => {
       crashlytics().log('Failed app initial data fetcher');
       Toaster.alert('Hubo un error');
+      crashlytics().recordError(e)
       setError(true)
     }).finally(() => {
       setFetching(false);

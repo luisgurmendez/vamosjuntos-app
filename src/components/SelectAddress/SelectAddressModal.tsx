@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components/native';
 import Modal from 'react-native-modal';
 
@@ -13,10 +13,8 @@ import { Address } from 'types/models';
 import useZoomToLocation from 'hooks/useZoomToLocation';
 import Map from 'components/Map/Map';
 import { Region } from 'react-native-maps';
-import { getAddressFromCoords } from 'api/adedo';
-import { CancelTokenSource } from 'axios';
+import { getAddressFromCoords } from 'api/geo';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
-import { getCancelTokenSource } from 'api/api';
 import FloatingButton from 'components/FloatingButton/FloatingButton';
 import { useMap } from 'components/Map/useMap';
 import Geolocation from '@react-native-community/geolocation';
@@ -29,7 +27,6 @@ interface SelectAddressModalProps {
   mapId?: string;
 }
 
-
 const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   open,
   onClose,
@@ -39,8 +36,15 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   const [isMovingMap, setIsMovingMap] = useState(false);
   const [isFetchingAddress, setIsFetchingAddress] = useState(true);
   const [possibleAddress, setPossibleAddress] = useState<Address | undefined>(undefined);
-  const cancelTokenSource = useRef<CancelTokenSource | undefined>(undefined);
   const { map } = useMap(mapId);
+
+  const handleLocationChange = useCallback(async (region: Region) => {
+    const address = await getAddressFromCoords(region.latitude, region.longitude)
+    setPossibleAddress(address);
+    setIsFetchingAddress(false);
+  }, []);
+
+  const debouncedHandleLocationChange = useCallback(debounce(handleLocationChange, 1700), [])
 
   useZoomToLocation(mapId);
 
@@ -51,28 +55,17 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
     }
   };
 
-  const handleLocationChange = async (region: Region) => {
-    setIsFetchingAddress(true);
-    setIsMovingMap(false);
+  const handleLocationChangeWrapper = async (region: Region) => {
 
-    if (cancelTokenSource.current !== undefined) {
-      cancelTokenSource.current.cancel();
+    if (!isFetchingAddress) {
+      setIsFetchingAddress(true);
     }
 
-    const _cancelTokenSource = getCancelTokenSource();
-    cancelTokenSource.current = _cancelTokenSource;
-
-    try {
-      const address = await getAddressFromCoords(region.latitude, region.longitude, { cancelToken: _cancelTokenSource.token })
-      cancelTokenSource.current = undefined;
-      setPossibleAddress(address);
-      setIsFetchingAddress(false);
-    } catch (e) {
-      if (e.response && e.response.status === 404) {
-        setPossibleAddress(undefined);
-        setIsFetchingAddress(false);
-      }
+    if (isMovingMap) {
+      setIsMovingMap(false);
     }
+
+    debouncedHandleLocationChange(region);
   };
 
   const handleGoToUserLocation = () => {
@@ -91,7 +84,6 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
     });
   }
 
-  const debouncedHandleLocationChange = debounce(handleLocationChange, 100);
 
   return (
     <Modal isVisible={open} useNativeDriver={false} coverScreen style={{ margin: 0, zIndex: 100 }} hasBackdrop={false}>
@@ -99,7 +91,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
         <CloseContainer>
           <PressableIcon onPress={onClose} size={30} name={'x'} color={colors.black} />
         </CloseContainer>
-        <Map onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={debouncedHandleLocationChange} mapId={mapId}>
+        <Map onRegionChange={() => setIsMovingMap(true)} onRegionChangeComplete={handleLocationChangeWrapper} mapId={mapId}>
           <SelectAddressMarker lifted={isMovingMap} />
           <GoToLocationBtnPositioner>
             <FloatingButton icon={"crosshairs-gps"} onPress={handleGoToUserLocation} />
@@ -112,8 +104,8 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
           {isFetchingAddress ? (
             <Loading size={20} color={colors.black} />
           ) : (
-              <DisplayAddress address={possibleAddress!} />
-            )}
+            <DisplayAddress address={possibleAddress!} />
+          )}
         </Box>
         <Button disabled={isFetchingAddress || possibleAddress === undefined} onPress={handleSelectAddress}>
           Elegir

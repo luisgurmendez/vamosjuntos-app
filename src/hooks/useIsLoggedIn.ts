@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
 import { AppState } from "state/types";
+import { useSelector } from 'react-redux';
+import { getIsUserLoggedIn } from 'state/user/selectors';
 
 function useIsLoggedIn() {
-
-  const user = useSelector<AppState>(state => state.user.user);
-  return user !== undefined;
+  const isLoggedIn = useSelector(getIsUserLoggedIn);
+  return isLoggedIn;
 }
 
 export default useIsLoggedIn;

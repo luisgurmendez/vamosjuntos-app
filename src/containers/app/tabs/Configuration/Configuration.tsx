@@ -9,7 +9,7 @@ import ComplaintOption from './options/Complaint/ComplaintOption';
 import CrashalyticsEnabledOption from './options/CrashalyticsEnabledOption';
 import ShowCanceledRidesOption from './options/ShowCanceledRidesOption';
 import ShowCompletedRidesOption from './options/ShowCompletedRidesOption';
-import PermissionsOption from './options/Permissions/PermissionsOption';
+import PermissionsOption from './options/PermissionsOption';
 
 interface ConfigurationProps { }
 

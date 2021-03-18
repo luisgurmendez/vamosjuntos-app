@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { Children, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { MapProvider } from 'components/Map/MapProvider';
 import useInitStorage from 'hooks/useInitStorage';
@@ -10,20 +10,20 @@ import { enableScreens } from 'react-native-screens';
 import store from 'state/store';
 import { Provider, useDispatch } from 'react-redux';
 import AppCrashHandler from 'containers/AppCrashHandler';
-import useIsAppReady from 'hooks/useIsAppReady';
-import { LogBox, View } from 'react-native';
+import useHandleUserAuthentication from 'hooks/useHandleUserAuthentication';
+import { LogBox } from 'react-native';
 import useInternetConnection from 'hooks/useInternetConnection';
 import { setHasInternetConnection } from 'state/general/actions';
 import styled from 'styled-components/native';
 import ErrorBanner from 'components/ErrorBanner/ErrorBanner';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';
 import admob, { MaxAdContentRating } from '@react-native-firebase/admob';
 import messaging from '@react-native-firebase/messaging';
 import crashlytics from '@react-native-firebase/crashlytics';
-import BannerAd from 'components/Ad/BannerAd';
 import useVersion from 'hooks/useVersion';
+import HideIfLoading from 'components/Loading/HideIfLoading';
+import remoteConfig from '@react-native-firebase/remote-config';
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -37,7 +37,7 @@ const App = () => {
   useEffect(() => {
     console.log(`Using app version: ${appVersion}`)
     crashlytics().log(`Using app version: ${appVersion}`);
-  })
+  }, [appVersion])
 
   return (
     <NavigationContainer>
@@ -61,13 +61,18 @@ export default App;
 
 const SetupApp: React.FC = ({ children }) => {
 
-  const isReady = useIsAppReady();
   const [hasInternetConnection, hasCheckedInternetConnection] = useInternetConnection();
+  const initialCheckAuth = useHandleUserAuthentication();
   const dispatch = useDispatch();
 
-  const useAds = useFeatureFlag(FeatureFlags.BANNER_ADS)
-
   useEffect(() => {
+
+    remoteConfig()
+      .setDefaults({
+        [FeatureFlags.BANNER_ADS]: 'false',
+        [FeatureFlags.FULL_SCREEN_ADS]: 'false',
+      })
+      .then(() => { remoteConfig().fetchAndActivate() });
 
     admob()
       .setRequestConfiguration({
@@ -84,16 +89,13 @@ const SetupApp: React.FC = ({ children }) => {
 
   }, [hasInternetConnection, hasCheckedInternetConnection])
 
-
-  if (!isReady) {
-    return null;
-  }
-
   return (
     <Container>
-      {!hasInternetConnection && <SafeAreaView><ErrorBanner>No hay conexion a internet</ErrorBanner></SafeAreaView>}
-      {children}
-      {useAds && <BannerAd />}
+      <HideIfLoading loading={!initialCheckAuth}>
+        {!hasInternetConnection && <SafeAreaView><ErrorBanner>No hay conexion a internet</ErrorBanner></SafeAreaView>}
+        {children}
+      </HideIfLoading>
+
     </Container>
   );
 }
@@ -105,14 +107,14 @@ const Container = styled.View`
 const FCMPermissions: React.FC = ({ children }) => {
 
   const requestUserPermission = async () => {
-    const authStatus = await messaging().requestPermission();
+    const messagingAuthorizationStatus = await messaging().requestPermission();
     const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+      messagingAuthorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      messagingAuthorizationStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-    console.log(authStatus)
+    console.log(messagingAuthorizationStatus)
     if (enabled) {
-      console.log('Authorization status:', authStatus);
+      console.log('Authorization status:', messagingAuthorizationStatus);
     }
   }
 

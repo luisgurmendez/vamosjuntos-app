@@ -8,6 +8,7 @@ import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import ConfigurationOption from './commons/ConfigurationOption';
 import Storage from 'storage/Storage';
+import { logout } from 'api/auth';
 
 interface SignoutOptionProps {
 }
@@ -16,7 +17,7 @@ const SignoutOption: React.FC<SignoutOptionProps> = ({ }) => {
 
   const dispatch = useDispatch();
   const handleSignout = () => {
-    dispatch(setUser(undefined));
+    logout();
     Storage.removeItem(Storage.TOKENS);
   }
 

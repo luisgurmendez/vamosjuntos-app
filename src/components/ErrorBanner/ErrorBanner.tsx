@@ -3,6 +3,9 @@ import React from 'react'
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 
+console.log('executsss')
+console.log(colors);
+
 interface ErrorBannerProps { }
 
 const ErrorBanner: React.FC<ErrorBannerProps> = ({ children }) => {

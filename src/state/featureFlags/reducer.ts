@@ -2,7 +2,6 @@ import {
   setFeatureFlags
 } from './actions';
 import { createReducer } from '@reduxjs/toolkit';
-import { FeatureFlag } from 'types/models';
 
 export type MappedFeatureFlag = { [ffName: string]: boolean };
 

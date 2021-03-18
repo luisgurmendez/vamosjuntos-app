@@ -1,6 +1,6 @@
 import React from 'react'
 import { openSettings } from 'react-native-permissions';
-import ToOtherScreenOption from '../commons/ToOtherScreenOption';
+import ToOtherScreenOption from './commons/ToOtherScreenOption';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 interface PermissionsOptionProps {

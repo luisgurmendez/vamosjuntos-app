@@ -1,33 +1,26 @@
+import PageWithBack from 'components/Page/PageWithBack';
 import React from 'react'
 import styled from 'styled-components/native';
 import ForgotPasswordForm from './ForgotPasswordForm';
 
-interface ForgotPasswordProps {
-}
-
-export interface ForgotPasswordValues {
-  phone: string;
-}
+interface ForgotPasswordProps { }
 
 const ForgotPassword: React.FC<ForgotPasswordProps> = ({ }) => {
 
-  const handleForgotPassword = (values: ForgotPasswordValues) => {
-    console.log('que vejiga');
-  }
-
   return (
-    <Container>
-      <ForgotPasswordForm onForgotPassword={handleForgotPassword} />
-    </Container>
+    <PageWithBack title={'Recuperar contraseña'}>
+      <Container>
+        <ForgotPasswordForm />
+      </Container>
+    </PageWithBack>
   )
 
 }
 
 export default ForgotPassword;
 
-const Container = styled.SafeAreaView`
-  align-items: center;
-  justify-content: center;
-  background-color: #f1f1f1;
+const Container = styled.View`
   flex: 1;
-`;
+  padding-horizontal: 32px;
+`
+

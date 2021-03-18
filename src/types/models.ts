@@ -20,16 +20,33 @@ export enum UserPreference {
 }
 
 export interface User {
-  id: string;
-  ci: string;
   name: string;
-  username: string;
   phone: string;
-  createdAt: string;
+  notificationToken: string;
+  /**
+   * Commulative avg Rating score
+   */
   score: number;
-  reviews: Review[];
-  img?: string;
-  preferences: UserPreference[]
+  /**
+   * Counter of the number of reviews this user has, usefull to calculate a new score
+   */
+  numberOfReviews: number;
+  /**
+   * profile pic image url
+   */
+  img: string;
+  preferences: UserPreference[];
+  /**
+   * Check if the user need to fill it's data after authenticating
+   */
+  createdAt: string;
+  rideRequests: RideRequest[];
+
+  ridesAsPassenger: string[] //DocRef<Ride>[];
+  ridesAsDriver: string[] //DocRef<Ride>[];
+
+  // notifications: Collection<Notification>;
+  // reviews: Collection<Review>;
 }
 
 export interface Review {

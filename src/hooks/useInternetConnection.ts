@@ -14,9 +14,7 @@ function useInternetConnection() {
       }
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return unsubscribe;
   });
 
   return [hasInternetConnection, hasCheckedInternetconnection];

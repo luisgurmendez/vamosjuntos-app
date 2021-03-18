@@ -6,7 +6,6 @@ import crashlytics from '@react-native-firebase/crashlytics';
 export const api = axios.create({
   baseURL: 'http://35.199.116.28:3000'
   // baseURL: 'http://192.168.1.9:3000'
-
 });
 
 api.interceptors.response.use((response) => {
@@ -20,10 +19,11 @@ api.interceptors.response.use((response) => {
 api.interceptors.request.use(async req => {
   // TODO: move since this will exectue everytime user makes a request.
   // Maybe use axios.defaults.headers.common['Authorization'] = token;  instead.
-  const accessToken = await Storage.getItem<Tokens>(Storage.TOKENS);
-  if (accessToken && Object.keys(accessToken).length !== 0) {
-    req.headers.Authorization = accessToken.token
-  }
+  // const accessToken = await Storage.getItem<Tokens>(Storage.TOKENS);
+  // if (accessToken && Object.keys(accessToken).length !== 0) {
+  // Temporary while we make the api -> serverless switch
+  req.headers.Authorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoibHVzIiwiaWF0IjoxNjE2MDMyMjgyLCJleHAiOjE2MTYxMTg2ODJ9.kXirBDPmYNyZ-cM4lVyTTYv65jrXJZZ7Wk_SiZzqQEg"
+  // }
   return req;
 })
 

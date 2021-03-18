@@ -15,13 +15,6 @@ const Register: React.FC = () => {
 
 export default Register;
 
-const Container = styled.SafeAreaView`
-  align-items: center;
-  justify-content: center;
-  background-color: #f1f1f1;
-  flex: 1;
-`;
-
 const ScrollContent = styled.ScrollView`
   flex: 1;
   width: 100%;

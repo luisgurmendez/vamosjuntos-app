@@ -19,6 +19,7 @@ import {
   GetRideRequestsResponse,
   GetOwesReviewsResponse
 } from './responses';
+import remoteConfig from '@react-native-firebase/remote-config';
 
 export const createRide = async (body: Partial<Ride>): Promise<Ride | undefined> => {
   const response = await api.post<CreateRideResponse>('/ride/create', body);
@@ -86,11 +87,18 @@ export const getRideRequests = async (): Promise<RideRequest[]> => {
 };
 
 export const getFeatureFlags = async (): Promise<FeatureFlag[]> => {
-  const response = await api.get<GetFeatureFlagsResponse>('/feature_flags/all');
-  if (response.data.success) {
-    return response.data.featureFlags;
-  }
-  return [];
+  console.log('gettinf ffs');
+  const configs = remoteConfig().getAll();
+  console.log(configs);
+  const featureFlags: FeatureFlag[] = [];
+  Object.keys(configs).forEach(configKey => {
+    featureFlags.push({
+      name: configKey,
+      enabled: configs[configKey].asBoolean()
+    })
+  })
+
+  return featureFlags;
 };
 
 
@@ -118,23 +126,6 @@ export const getRideDetails = async (rideId: string): Promise<Ride | undefined> 
 
 export const ping = async () => {
   api.get('/status');
-}
-
-export const getAddressFromCoords = async (
-  latitude: number,
-  longitude: number,
-  opts?: { cancelToken: CancelToken }
-): Promise<Address> => {
-  const latlng = { latitude: latitude, longitude: longitude }
-  const response = await api.get<AddressFromCoordsResponse>(
-    `/address/geo?latitude=${latitude}&longitude=${longitude}`,
-    { cancelToken: opts?.cancelToken }
-  );
-  if (response.data) {
-    return { ...latlng, city: response.data.city, department: response.data.department };
-  }
-
-  return latlng;
 }
 
 export const getNotifications = async (): Promise<Notification[]> => {

@@ -5,15 +5,14 @@ import { enableScreens } from 'react-native-screens';
 import { Screens } from './Screens';
 import AppNavigation from './app/AppNavigation';
 import AuthNavigation from './auth/AuthNavigation';
-import { useSelector } from 'react-redux';
-import { getIsUserLoggedIn } from 'state/user/selectors';
+import useIsLoggedIn from 'hooks/useIsLoggedIn';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
 
 const RootNavigation: React.FC = () => {
 
-  const isLoggedIn = useSelector(getIsUserLoggedIn);
+  const isLoggedIn = useIsLoggedIn();
 
   return (
     <Stack.Navigator

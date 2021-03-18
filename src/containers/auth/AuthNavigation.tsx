@@ -5,7 +5,6 @@ import { Screens } from 'containers/Screens';
 import Login from './Login/Login';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
 import RegisterNavigation from './Register/RegisterNavigation';
-import ForgotPasswordNavigation from './ForgotPassword/ForgotPasswordNavigation';
 import Toaster from 'components/Toaster/Toaster';
 
 enableScreens();
@@ -23,7 +22,7 @@ const AuthNavigation: React.FC = () => {
         }}>
         <Stack.Screen name={Screens.LOGIN} component={Login} />
         <Stack.Screen name={Screens.REGISTER} component={RegisterNavigation} />
-        <Stack.Screen name={Screens.FORGOT_PASSWORD} component={ForgotPasswordNavigation} />
+        <Stack.Screen name={Screens.FORGOT_PASSWORD} component={ForgotPassword} />
       </Stack.Navigator>
     </>
   );
