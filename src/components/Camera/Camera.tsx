@@ -86,7 +86,7 @@ const Camera: React.FC<CameraProps> = ({ onImageChange, onCancel }) => {
               <StyledIcon name="x" size={40} onPress={handleOnCancel} />
             </CloseButtonContainer>
           </BaseCamera>
-            : <PreviewImageTaken resizeMode="cover" source={{ uri: image }} />}
+            : <PreviewImageTaken style={{ transform: [{ scaleX: cameraType === 'back' ? 1 : -1 }] }} resizeMode="cover" source={{ uri: image }} />}
           <CameraActionsContainer>
             {image ? <StyledIcon name="check" size={40} onPress={handleAcceptImage} /> : <View style={{ width: 30 }} />}
             {!image && <IconContainer onPress={!takingImage ? takePicture : undefined}>

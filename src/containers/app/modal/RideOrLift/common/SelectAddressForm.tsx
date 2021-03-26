@@ -12,7 +12,7 @@ import styled from 'styled-components/native';
 import { SavedAddress } from 'types/storage';
 import useStorage from 'hooks/useStorage';
 import Geolocation from '@react-native-community/geolocation';
-import { getAddressFromCoords } from 'api/adedo';
+import { getAddressFromCoords } from 'api/geo';
 
 interface SelectAddressFormProps {
   onSelectAddress: (address: Address) => void;

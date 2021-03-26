@@ -1,6 +1,5 @@
-import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { createAction } from '@reduxjs/toolkit';
-import { Passenger, Ride, User } from 'types/models';
+import { Passenger, User } from 'types/models';
 import { withPayloadType } from '../types';
 
 export const setUser = createAction('[USER] SET_USER', withPayloadType<User | undefined>());

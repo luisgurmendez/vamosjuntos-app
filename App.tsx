@@ -24,6 +24,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import useVersion from 'hooks/useVersion';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import remoteConfig from '@react-native-firebase/remote-config';
+import { logout } from 'api/auth';
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -36,6 +37,7 @@ const App = () => {
 
   useEffect(() => {
     console.log(`Using app version: ${appVersion}`)
+    logout();
     crashlytics().log(`Using app version: ${appVersion}`);
   }, [appVersion])
 

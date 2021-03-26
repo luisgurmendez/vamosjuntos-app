@@ -39,7 +39,8 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   const { map } = useMap(mapId);
 
   const handleLocationChange = useCallback(async (region: Region) => {
-    const address = await getAddressFromCoords(region.latitude, region.longitude)
+    const address = await getAddressFromCoords(region.latitude, region.longitude);
+    console.log(address);
     setPossibleAddress(address);
     setIsFetchingAddress(false);
   }, []);

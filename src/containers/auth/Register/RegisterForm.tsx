@@ -5,12 +5,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import * as Yup from 'yup';
 import MarginedChildren from 'components/Box/MarginedChildren';
-import { useNavigation } from '@react-navigation/native';
-import Screens from './Screens';
 import { register, UserRegistrationValues } from 'api/auth';
-import { useDispatch } from 'react-redux';
-import Storage from 'storage/Storage';
-import { setUser } from 'state/user/actions';
 import Toaster from 'components/Toaster/Toaster';
 
 const RegisterFormSchema = Yup.object().shape({
@@ -36,12 +31,9 @@ const RegisterForm: React.FC = () => {
     passwordConfirmation: ''
   };
 
-  const dispatch = useDispatch();
-
   const handleRegister = async (values: UserRegistrationValues) => {
     try {
       const _u = await register({ ...values, phone: `+598${values.phone}` });
-      console.log(_u);
     } catch (e) {
       console.log(e);
       Toaster.alert('Hubo un error creando tu usuario');

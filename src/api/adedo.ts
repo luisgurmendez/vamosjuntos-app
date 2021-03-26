@@ -20,17 +20,37 @@ import {
   GetOwesReviewsResponse
 } from './responses';
 import remoteConfig from '@react-native-firebase/remote-config';
+import { southamericaFunctions } from './functions';
+
+export const getUser = async (): Promise<User | undefined> => {
+  const user = (await southamericaFunctions.httpsCallable('userMe')()).data;
+  return user;
+}
 
 export const createRide = async (body: Partial<Ride>): Promise<Ride | undefined> => {
-  const response = await api.post<CreateRideResponse>('/ride/create', body);
+  const response = (await southamericaFunctions.httpsCallable('rideCreate')(body));
+  console.log(response)
+
   if (response.data.success) {
     return response.data.ride;
   }
   return undefined;
 };
 
+export const getRides = async (): Promise<Ride[]> => {
+  const response = (await southamericaFunctions.httpsCallable('rideGetAll')());
+  console.log(response)
+
+  if (response.data.success) {
+    return response.data.rides;
+  }
+  return [];
+};
+
 export const cancelRide = async (rideId: string): Promise<Ride | undefined> => {
-  const response = await api.post<CancelRideResponse>('/ride/cancel', { rideId });
+  const response = (await southamericaFunctions.httpsCallable('rideCancel')({ rideId }));
+  console.log(response)
+
   if (response.data.success) {
     return response.data.ride;
   }
@@ -38,7 +58,9 @@ export const cancelRide = async (rideId: string): Promise<Ride | undefined> => {
 };
 
 export const createRideRequest = async (rideId: string, whereFrom: Address, whereTo: Address): Promise<RideRequest | undefined> => {
-  const response = await api.post<CreateRideRequestResponse>('/request/request', { rideId, whereFrom, whereTo });
+  const response = (await southamericaFunctions.httpsCallable('rideRequestCreate')({ rideId, whereFrom, whereTo }));
+  console.log(response)
+
   if (response.data.success) {
     return response.data.rideRequest;
   }
@@ -46,40 +68,40 @@ export const createRideRequest = async (rideId: string, whereFrom: Address, wher
 };
 
 export const cancelRideRequest = async (rideRequestId: string): Promise<boolean> => {
-  const response = await api.post<CreateRideRequestResponse>('/request/cancel', { rideRequestId });
+  const response = (await southamericaFunctions.httpsCallable('rideRequestCancel')({ rideRequestId }));
+  console.log(response)
+
   return response.data.success
 };
 
 export const acceptRideRequest = async (requestId: string): Promise<boolean> => {
-  const response = await api.post<BaseResponse>('/request/accept', { requestId });
+  const response = (await southamericaFunctions.httpsCallable('rideRequestAccept')({ requestId }));
+  console.log(response)
+
   return response.data.success;
 };
 
 export const declineRideRequest = async (requestId: string): Promise<boolean> => {
-  const response = await api.post<BaseResponse>('/request/decline', { requestId });
+  const response = await southamericaFunctions.httpsCallable('rideRequestDecline')({ requestId });
+  console.log(response)
+
   return response.data.success;
 };
 
-
 export const dropOutRide = async (rideId: string): Promise<Passenger | undefined> => {
-  const response = await api.post<DropOutRideResponse>('/passenger/drop-out', { rideId });
+  const response = (await southamericaFunctions.httpsCallable('passengerDropOut')({ rideId }));
+  console.log(response)
+
   if (response.data.success) {
     return response.data.passenger;
   }
   return undefined;
 };
 
-
-export const getRides = async (): Promise<Ride[]> => {
-  const response = await api.get<GetRidesResponse>('/ride/all');
-  if (response.data.success) {
-    return response.data.rides;
-  }
-  return [];
-};
-
 export const getRideRequests = async (): Promise<RideRequest[]> => {
-  const response = await api.get<GetRideRequestsResponse>('/request/all');
+  const response = (await southamericaFunctions.httpsCallable('rideRequestGetAll')());
+  console.log(response)
+
   if (response.data.success) {
     return response.data.rideRequests;
   }
@@ -87,9 +109,7 @@ export const getRideRequests = async (): Promise<RideRequest[]> => {
 };
 
 export const getFeatureFlags = async (): Promise<FeatureFlag[]> => {
-  console.log('gettinf ffs');
   const configs = remoteConfig().getAll();
-  console.log(configs);
   const featureFlags: FeatureFlag[] = [];
   Object.keys(configs).forEach(configKey => {
     featureFlags.push({
@@ -109,7 +129,9 @@ interface PossibleRidesData {
 }
 
 export const getPossibleRides = async (data: PossibleRidesData): Promise<Ride[]> => {
-  const response = await api.post<GetRidesResponse>('/ride/possible', data);
+  const response = (await southamericaFunctions.httpsCallable('ridePossibleRides')(data));
+  console.log(response)
+
   if (response.data.success) {
     return response.data.rides;
   }
@@ -117,7 +139,9 @@ export const getPossibleRides = async (data: PossibleRidesData): Promise<Ride[]>
 };
 
 export const getRideDetails = async (rideId: string): Promise<Ride | undefined> => {
-  const response = await api.get<GetRideDetailsResponse>(`/ride/${rideId}`);
+  const response = (await southamericaFunctions.httpsCallable('rideGet')({ rideId }));
+  console.log(response)
+
   if (response.data.success) {
     return response.data.ride;
   }
@@ -129,21 +153,26 @@ export const ping = async () => {
 }
 
 export const getNotifications = async (): Promise<Notification[]> => {
-  const response = await api.get<GetNotificationsResponse>('/notification/all');
+  const response = (await southamericaFunctions.httpsCallable('notificationGet')({}));
+  console.log(response)
+
   if (response.data.success) {
     return response.data.notifications;
   }
   return [];
 };
 
-
 export const setSeenNotifications = async (notificationIds: number[] | string[]): Promise<boolean> => {
-  const response = await api.post<BaseResponse>('/notification/seen', { notifications: notificationIds });
+  const response = (await southamericaFunctions.httpsCallable('notificationSeen')({ notifications: notificationIds }));
+  console.log(response)
+
   return response.data.success;
 };
 
 export const updateUser = async (user: User): Promise<User> => {
-  const response = await api.post<UpdateUserResponse>('/user/update', { user });
+  const response = (await southamericaFunctions.httpsCallable('userUpdate')(user));
+  console.log(response)
+
   if (response.data.success) {
     return response.data.user;
   }
@@ -151,7 +180,9 @@ export const updateUser = async (user: User): Promise<User> => {
 };
 
 export const getReviews = async (userId: string): Promise<Review[]> => {
-  const response = await api.get<GetReviewsResponse>(`/review/${userId}`);
+  const response = (await southamericaFunctions.httpsCallable('reviewGetUserReviews')({ userId }));
+  console.log(response)
+
   if (response.data.success) {
     return response.data.reviews;
   }
@@ -159,8 +190,10 @@ export const getReviews = async (userId: string): Promise<Review[]> => {
 };
 
 export const getOwesReviews = async (): Promise<Passenger | undefined> => {
-  const response = await api.get<GetOwesReviewsResponse>(`/review/owes`);
-  if (response.data.success) {
+  const response = (await southamericaFunctions.httpsCallable('reviewOwes')());
+  console.log(response)
+
+  if (response.data.success && response.data.passenger) {
     return response.data.passenger;
   }
   return undefined;
@@ -168,7 +201,10 @@ export const getOwesReviews = async (): Promise<Passenger | undefined> => {
 
 
 export const sendComplaint = async (complaint: string): Promise<boolean> => {
-  const response = await api.post<BaseResponse>('/complaint/create', { complaint });
+  const response = (await southamericaFunctions.httpsCallable('complaintCreate')({ complaint }));
+  console.log(response)
+
+  console.log(response)
   return response.data.success;
 };
 
@@ -181,23 +217,28 @@ interface ReviewBody {
 }
 
 export const createReview = async (data: ReviewBody): Promise<boolean> => {
-  const response = await api.post<BaseResponse>('/review/create', data);
+  const response = (await southamericaFunctions.httpsCallable('reviewCreate')(data));
+  console.log(response)
+
   return response.data.success;
 };
 
 export const setRideCompleted = async (rideId: string): Promise<boolean> => {
-  const response = await api.post<BaseResponse>('/ride/completed', { rideId });
+  const response = (await southamericaFunctions.httpsCallable('rideComplete')({ rideId }));
+  console.log(response)
+
   return response.data.success;
 }
 
 export const updateUserNotificationToken = async (token: string, userId: string): Promise<boolean> => {
-  const response = await api.post<UpdateUserResponse>('/user/update', { user: { id: userId, notificationToken: token } });
+  const response = (await southamericaFunctions.httpsCallable('userUpdate')({ id: userId, notificationToken: token }));
+  console.log(response)
   return response.data.success
 };
 
 
 export const getUserRideDetails = async (userId: string): Promise<UserRideDetails> => {
-  const response = await api.post<GetUserRideDetails>('/user/ride-details', { userId });
+  const response = (await southamericaFunctions.httpsCallable('userGetRideDetails')({ userId }));
   console.log(response.data)
   return response.data.details
 };

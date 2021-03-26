@@ -70,15 +70,17 @@ const Profile: React.FC<ProfileProps> = () => {
     setIsUpdatingUser(true)
     try {
       if (editingUser.img && user!.img !== editingUser.img) {
-        const imgRef = storage().ref(`images/${editingUser.username}.jpg`)
+        const imgRef = storage().ref(`images/${editingUser.id}.jpg`)
         await imgRef.putFile(editingUser.img);
         const imgUrl = await imgRef.getDownloadURL();
         editingUser.img = imgUrl
       }
+      console.log('calling update user')
       const updatedUser = await updateUser(editingUser);
       dispatch(setUser(updatedUser));
       setEditingUser(updatedUser);
     } catch (e) {
+      console.error(e);
       crashlytics().recordError(e);
       Toaster.alert('No pudimos guardar tus cambios')
     }

@@ -1,5 +1,5 @@
 import { Screens } from 'containers/Screens';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabsNavigation from './tabs/TabsNavigation';
 import RideStack from './modal/RideOrLift/Ride/Ride';
@@ -14,7 +14,7 @@ import LiftStack from './modal/RideOrLift/Lift/Lift';
 import RideDetails from './modal/RideDetails/RideDetails';
 import Comments from 'components/Profile/Comments';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from 'state/user/selectors';
+import { getUser as getUserFromStore } from 'state/user/selectors';
 import { setTmpImage } from 'state/camera/actions';
 import useUpdateUsersNotificationToken from 'hooks/useUpdateUsersNotificationToken';
 import HideIfLoading from 'components/Loading/HideIfLoading';
@@ -27,8 +27,8 @@ const Stack = createStackNavigator();
 const AppNavigation: React.FC = () => {
 
   const shouldShowWelcome = false;
-  const isFetchingUserFromFirestore = useSelector(getUser) === undefined;
-  const useAds = useFeatureFlag(FeatureFlags.BANNER_ADS)
+  const isFetchingUser = useSelector(getUserFromStore) === undefined;
+  const useAds = useFeatureFlag(FeatureFlags.BANNER_ADS);
 
   const dispatch = useDispatch();
   useUpdateUsersNotificationToken();
@@ -41,8 +41,8 @@ const AppNavigation: React.FC = () => {
     <AppContainer>
       <Camera onImageChange={handleImageChange} />
       <Toaster />
-      <AppInitialDataFetcher>
-        <HideIfLoading loading={isFetchingUserFromFirestore}>
+      <HideIfLoading loading={isFetchingUser}>
+        <AppInitialDataFetcher>
           <Stack.Navigator
             initialRouteName={shouldShowWelcome ? Screens.WELCOME : Screens.TABS}
             screenOptions={{
@@ -58,8 +58,8 @@ const AppNavigation: React.FC = () => {
             <Stack.Screen name={Screens.COMMENTS} component={Comments} />
             <Stack.Screen name={Screens.WELCOME} component={WelcomeNavigation} />
           </Stack.Navigator>
-        </HideIfLoading>
-      </AppInitialDataFetcher>
+        </AppInitialDataFetcher>
+      </HideIfLoading>
       {useAds && <BannerAd />}
     </AppContainer>
   );

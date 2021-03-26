@@ -20,33 +20,15 @@ export enum UserPreference {
 }
 
 export interface User {
+  id: string;
   name: string;
   phone: string;
-  notificationToken: string;
-  /**
-   * Commulative avg Rating score
-   */
+  notificationToken?: string;
   score: number;
-  /**
-   * Counter of the number of reviews this user has, usefull to calculate a new score
-   */
-  numberOfReviews: number;
-  /**
-   * profile pic image url
-   */
-  img: string;
+  img?: string;
   preferences: UserPreference[];
-  /**
-   * Check if the user need to fill it's data after authenticating
-   */
+  reviews: Review[];
   createdAt: string;
-  rideRequests: RideRequest[];
-
-  ridesAsPassenger: string[] //DocRef<Ride>[];
-  ridesAsDriver: string[] //DocRef<Ride>[];
-
-  // notifications: Collection<Notification>;
-  // reviews: Collection<Review>;
 }
 
 export interface Review {
@@ -88,7 +70,7 @@ export enum NotificationStatus {
 export interface Notification {
   id: number;
   type: NotificationType;
-  user: User;
+  // user: User;
   status: NotificationStatus;
   context: NotificationContext;
   createdAt: string;
@@ -108,7 +90,6 @@ export enum RideRequestStatus {
 
 export interface RideRequest {
   id: string;
-  user: User;
   ride: Ride;
   whereTo: Address;
   whereFrom: Address;

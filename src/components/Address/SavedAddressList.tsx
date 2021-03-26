@@ -2,7 +2,6 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import SavedAddressItem from './SavedAddressItem';
 import { SavedAddress } from 'types/storage';
-import savedAddressFactory from 'factories/savedAddress';
 
 interface SavedAddressListProps {
   onSelectAddress?: (address: SavedAddress) => void;
@@ -11,7 +10,7 @@ interface SavedAddressListProps {
 }
 
 const SavedAddressList: React.FC<SavedAddressListProps> = ({
-  savedAddresses = savedAddressFactory.buildList(30),
+  savedAddresses,
   onRemoveAddress,
   onSelectAddress
 }) => {

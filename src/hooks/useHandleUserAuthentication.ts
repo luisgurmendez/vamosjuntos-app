@@ -5,7 +5,8 @@ import { setIsLoggedIn, setUser, logout as logoutAction, login as loginAction } 
 import auth from '@react-native-firebase/auth';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { getUser, logout } from "api/auth";
+import { logout } from "api/auth";
+import { getUser } from "api/adedo";
 
 /**
  * Solves initial app load auth and hides splashscree,
@@ -23,25 +24,33 @@ function useHandleUserAuthentication() {
   }
 
   async function onAuthStateChange(firebaseUser: FirebaseAuthTypes.User | null) {
+    console.log('on auth state change', firebaseUser);
     if (firebaseUser != null) {
       // User has logged in
+      console.log('login in');
       try {
         dispatch(setIsLoggedIn(true));
-        const user = await getUser();
-        dispatch(setUser(user));
         crashlytics().log('User sign in');
+        console.log('getting user');
+        const user = await getUser()
+        console.log(user);
+        dispatch(setUser(user));
         crashlytics().setUserId(firebaseUser.uid);
       } catch (e) {
-        logout();
+        crashlytics().recordError(e);
+        console.error(e);
+        await logout();
       }
     } else {
       // has logged out or never signed in
       if (hasCheckAuth) {
+        console.log('loggedout');
         // has loggedout
         dispatch(logoutAction())
         dispatch(setIsLoggedIn(false));
       } else {
         // never signed in
+        console.log('never signed in');
       }
     }
 
@@ -50,7 +59,7 @@ function useHandleUserAuthentication() {
 
   useEffect(() => {
     // TODO: remove 
-    auth().signOut();
+    // logout()
     const subscriber = auth().onAuthStateChanged(onAuthStateChange);
     return subscriber;
 

@@ -58,8 +58,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ route: { params: { user } } }
             :
             <LargeBody>{user.phone}</LargeBody>
           }
-          <ProfileReviews userId={user.email} disabledReviews={false} score={user.score} />
-          {userRideDetails && <RidesAndLifts rides={user.ridesAsDriver.length} lifts={user.ridesAsPassenger.length} />}
+          <ProfileReviews userId={user.id} disabledReviews={false} score={user.score} />
+          {userRideDetails && <RidesAndLifts rides={userRideDetails.numOfDriver} lifts={userRideDetails.numOfPassenger} />}
           <PreferenceList preferences={user.preferences} />
         </Content>
         <UserSince date={user.createdAt} />

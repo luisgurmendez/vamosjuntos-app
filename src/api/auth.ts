@@ -1,6 +1,4 @@
-import { User } from 'types/models';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import { southamericaFunctions } from "./functions";
 
 export interface UserRegistrationValues {
@@ -20,7 +18,7 @@ export const logout = async () => {
 };
 
 export const register = async (values: UserRegistrationValues) => {
-  const user = (await southamericaFunctions.httpsCallable('register')(values)).data;
+  const user = (await southamericaFunctions.httpsCallable('userRegister')(values)).data;
   await login(values.email, values.password);
   return user;
 }
@@ -31,14 +29,4 @@ export const forgotPassword = async (email: string): Promise<void> => {
 
 export const getFirebaseUser = () => {
   return auth().currentUser;
-}
-
-export const getUser = async (): Promise<User | undefined> => {
-  const fbUser = getFirebaseUser();
-  if (fbUser) {
-    const user = (await firestore().doc<User>(`users/${fbUser?.email}`).get()).data();
-    return user;
-  }
-
-  return undefined;
 }

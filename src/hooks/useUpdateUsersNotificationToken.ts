@@ -1,25 +1,24 @@
 import { useEffect } from 'react';
 import messaging from '@react-native-firebase/messaging';
 import { updateUserNotificationToken } from 'api/adedo';
-import auth from '@react-native-firebase/auth';
+import { getFirebaseUser } from 'api/auth';
 
 function useUpdateUsersNotificationToken() {
 
-  const userEmail = auth().currentUser?.email;
-
   useEffect(() => {
-    if (userEmail) {
-
+    const user = getFirebaseUser();
+    if (user) {
       messaging().getToken().then(t => {
-        updateUserNotificationToken(t, userEmail!);
+        console.log(t);
+        updateUserNotificationToken(t, user.uid);
       })
 
       return messaging().onTokenRefresh(t => {
-        updateUserNotificationToken(t, userEmail!);
+        updateUserNotificationToken(t, user.uid);
       })
     }
 
-  }, [userEmail])
+  }, [])
 }
 
 export default useUpdateUsersNotificationToken;

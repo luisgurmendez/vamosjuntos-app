@@ -9,7 +9,7 @@ export interface NotificationState {
 }
 
 export const initialState: NotificationState = {
-  notifications: [],
+  notifications: []
 };
 
 export const reducer = createReducer(initialState, builder => {

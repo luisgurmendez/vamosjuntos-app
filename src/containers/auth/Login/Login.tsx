@@ -6,7 +6,6 @@ import { StackNavigationAPI } from 'types/Navigation';
 import { Screens } from 'containers/Screens';
 import PlainButton from 'components/Button/PlainButton';
 import { Box } from 'components/Box/Box';
-import Logo from 'components/Logo/Logo';
 import KeyboardShift from 'components/Keyboard/KeyboardShift';
 import { login } from 'api/auth';
 import Toaster from 'components/Toaster/Toaster';
@@ -21,7 +20,7 @@ const Login: React.FC = () => {
 
   const handleSuccessfullLogin = async (values: LoginValues) => {
     try {
-      await login(values.username, values.password);
+      const userCreds = await login(values.username, values.password);
     } catch (e) {
       Toaster.alert({ message: 'Contraseña o usuario incorrecta' });
     }
