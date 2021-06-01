@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import Page from 'components/Page/Page';
 import RidesList from './RidesList';
 import NoRides from './NoRides';
-import { getRideRequests, getRides } from 'api/adedo';
+import { getRideRequests, getRides } from 'api/callables';
 import { setRideRequests, setRides } from 'state/ride/actions';
 import { Alert, RefreshControl } from 'react-native';
 import Toaster from 'components/Toaster/Toaster';

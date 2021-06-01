@@ -40,12 +40,11 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
 
   const handleLocationChange = useCallback(async (region: Region) => {
     const address = await getAddressFromCoords(region.latitude, region.longitude);
-    console.log(address);
     setPossibleAddress(address);
     setIsFetchingAddress(false);
   }, []);
 
-  const debouncedHandleLocationChange = useCallback(debounce(handleLocationChange, 1700), [])
+  const debouncedHandleLocationChange = useCallback(debounce(handleLocationChange, 100), [])
 
   useZoomToLocation(mapId);
 

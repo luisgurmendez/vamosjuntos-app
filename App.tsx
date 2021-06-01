@@ -24,7 +24,6 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import useVersion from 'hooks/useVersion';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import remoteConfig from '@react-native-firebase/remote-config';
-import { logout } from 'api/auth';
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -36,8 +35,6 @@ const App = () => {
   const appVersion = useVersion();
 
   useEffect(() => {
-    console.log(`Using app version: ${appVersion}`)
-    logout();
     crashlytics().log(`Using app version: ${appVersion}`);
   }, [appVersion])
 
@@ -110,14 +107,10 @@ const FCMPermissions: React.FC = ({ children }) => {
 
   const requestUserPermission = async () => {
     const messagingAuthorizationStatus = await messaging().requestPermission();
-    const enabled =
-      messagingAuthorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      messagingAuthorizationStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    // const enabled =
+    //   messagingAuthorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    //   messagingAuthorizationStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-    console.log(messagingAuthorizationStatus)
-    if (enabled) {
-      console.log('Authorization status:', messagingAuthorizationStatus);
-    }
   }
 
   useEffect(() => {

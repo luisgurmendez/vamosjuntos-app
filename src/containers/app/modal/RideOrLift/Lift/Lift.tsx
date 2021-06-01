@@ -12,7 +12,7 @@ import moment from 'moment';
 import LiftFormSchema, { LiftCreationValues } from './LiftForm/formSchema';
 import JoinRide from './JoinRide';
 import { useNavigation } from '@react-navigation/native';
-import { createRideRequest } from 'api/adedo';
+import { createRideRequest } from 'api/callables';
 import crashlytics from '@react-native-firebase/crashlytics';
 import Toaster from 'components/Toaster/Toaster';
 import { useDispatch } from 'react-redux';

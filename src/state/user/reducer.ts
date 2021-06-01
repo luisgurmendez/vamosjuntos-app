@@ -1,5 +1,4 @@
 import {
-  login,
   logout,
   setIsLoggedIn,
   setOwesReview,
@@ -22,10 +21,6 @@ export const initialState: UserState = {
 
 export const reducer = createReducer(initialState, builder => {
   builder
-    .addCase(login, (state, action) => {
-      state.user = action.payload;
-      state.isLoggedIn = true;
-    })
     .addCase(logout, state => {
       state.user = undefined;
       state.isLoggedIn = false;
@@ -37,7 +32,11 @@ export const reducer = createReducer(initialState, builder => {
       state.isLoggedIn = action.payload;
     })
     .addCase(setOwesReview, (state, action) => {
-      state.owesReview = action.payload;
+      if (action.payload === null) {
+        state.owesReview = undefined;
+      } else {
+        state.owesReview = action.payload;
+      }
     })
 
   return builder;

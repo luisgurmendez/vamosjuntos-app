@@ -12,15 +12,17 @@ import { useNavigation } from '@react-navigation/native';
 import { Screens } from 'containers/Screens';
 import moment from 'moment';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import PlainButton from 'components/Button/PlainButton';
 
 export interface BaseNotificationProps extends Stylable {
   notification: Notification;
   label: string;
+  onNotificationPress?: () => void;
 }
 
-export type NotificationProps = Omit<BaseNotificationProps, 'label'>;
+export type NotificationProps = Omit<BaseNotificationProps, 'label' | 'onNotificationPress'>;
 
-export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification, label, style, children }) => {
+export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification, label, onNotificationPress, style, children }) => {
 
   const { user } = notification.context;
 
@@ -31,9 +33,13 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
   }
 
   const handleNotificationBodyPress = () => {
-    const _ride = notification.context.ride ? notification.context.ride : notification.context.rideRequest ? notification.context.rideRequest.ride : undefined;
-    if (_ride) {
-      navigation.push(Screens.RIDE_DETAILS, { rideId: _ride.id })
+    if (!onNotificationPress) {
+      const _ride = notification.context.ride ? notification.context.ride : notification.context.rideRequest ? notification.context.rideRequest.ride : undefined;
+      if (_ride) {
+        navigation.push(Screens.RIDE_DETAILS, { rideId: _ride.id })
+      }
+    } else {
+      onNotificationPress();
     }
   }
 
@@ -50,7 +56,9 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
             </TouchableOpacity>
           </Box>
           <Body style={{ flex: 1 }}>
-            <Bold>{user!.name}</Bold> {label} <Grayed>{notificationSinceLabel}</Grayed>
+            <Bold>{user!.name}</Bold>
+            {' '}{label}{' '}
+            <Grayed>{notificationSinceLabel}</Grayed>
           </Body>
         </FullRow>
       </TouchableOpacity>

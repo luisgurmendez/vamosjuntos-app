@@ -1,4 +1,4 @@
-import { getRideRequests } from 'api/adedo';
+import { getRideRequests } from 'api/callables';
 import PageWithBack from 'components/Page/PageWithBack';
 import Toaster from 'components/Toaster/Toaster';
 import React from 'react'

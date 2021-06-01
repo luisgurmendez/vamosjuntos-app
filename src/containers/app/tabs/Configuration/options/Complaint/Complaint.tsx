@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { sendComplaint } from 'api/adedo';
+import { sendComplaint } from 'api/callables';
 import Button from 'components/Button/Button';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import PageWithBack from 'components/Page/PageWithBack';

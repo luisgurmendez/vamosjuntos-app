@@ -16,7 +16,7 @@ import PreferenceList from 'components/Profile/PreferenceList';
 import RidesAndLifts from 'components/Profile/RidesAndLifts';
 import UserSince from 'components/Profile/UserSince';
 import ProfileReviews from 'components/Profile/ProfileReviews';
-import { updateUser } from 'api/adedo';
+import { updateUser } from 'api/callables';
 import { setUser } from 'state/user/actions';
 import Toaster from 'components/Toaster/Toaster';
 import { Box } from 'components/Box/Box';

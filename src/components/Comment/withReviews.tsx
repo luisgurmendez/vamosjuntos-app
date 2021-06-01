@@ -1,4 +1,4 @@
-import { getReviews } from 'api/adedo';
+import { getReviews } from 'api/callables';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import React, { useEffect, useState } from 'react';
 import { Review } from 'types/models';

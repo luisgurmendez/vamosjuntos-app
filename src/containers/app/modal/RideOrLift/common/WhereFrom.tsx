@@ -14,7 +14,7 @@ const WhereFrom: React.FC<WhereProps> = ({ nextScreen, title = '¿De donde salis
   const isFieldValid = whereFromMeta.error === undefined
 
   return (
-    <Wizard action={{ disabled: !isFieldValid }} title={title} nextScreen={nextScreen}>
+    <Wizard action={{ disabled: !isFieldValid }} showBack={false} title={title} nextScreen={nextScreen}>
       <SelectAddressForm selectedAddress={whereFrom.value} onSelectAddress={whereFromHelpers.setValue} />
     </Wizard>
   );

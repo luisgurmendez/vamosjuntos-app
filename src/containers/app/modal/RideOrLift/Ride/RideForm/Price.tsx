@@ -13,14 +13,13 @@ import { RideScreens } from '../RideScreens';
 
 const Price: React.FC = () => {
 
-  const estimatedPrice = 300;
-  const maxPrice = roundToPrecision(Math.round(estimatedPrice * 1.4), 10);
+  const maxPrice = 1000
 
   const [price, priceMeta, priceHelpers] = useField<number>('price');
   const navigation: StackNavigationAPI = useNavigation<any>();
   const handleShowAd = useInterstatialAd();
 
-  const priceTooHigh = price.value > estimatedPrice + 100;
+  const priceTooHigh = price.value >= maxPrice;
   const isFieldValid = priceMeta.error === undefined;
 
   const handlePriceChange = (value: string) => {
@@ -45,7 +44,7 @@ const Price: React.FC = () => {
       <DismissKeyboard>
         <Container>
           <PriceInputContainer>
-            <PriceInput onChangeText={handlePriceChange} value={`${price.value}`} keyboardType="numeric" maxLength={4} />
+            <PriceInput onChangeText={handlePriceChange} value={`${price.value}`} keyboardType="phone-pad" maxLength={5} />
             <PriceSignText>$</PriceSignText>
           </PriceInputContainer>
           {priceTooHigh && (

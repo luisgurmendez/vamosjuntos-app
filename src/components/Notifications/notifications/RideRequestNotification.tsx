@@ -1,9 +1,11 @@
 import crashlytics from '@react-native-firebase/crashlytics';
-import { acceptRideRequest, declineRideRequest } from 'api/adedo';
+import { useNavigation } from '@react-navigation/native';
+import { acceptRideRequest, declineRideRequest } from 'api/callables';
 import PlainButton from 'components/Button/PlainButton';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import Toaster from 'components/Toaster/Toaster';
 import { Body } from 'components/Typography/Typography';
+import Screens from 'containers/app/modal/Screens';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateNotification } from 'state/notification/actions';
@@ -17,9 +19,10 @@ interface RideRequestNotification extends NotificationProps { }
 
 const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, notification }) => {
 
-  const { rideRequest } = notification.context;
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigation<any>();
 
+  const { rideRequest } = notification.context;
   const dispatch = useDispatch();
 
   let rideDate = '';
@@ -48,10 +51,11 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
       setLoading(true);
       try {
         await acceptRideRequest(rideRequest.id);
-        const _noti = { ...notification };
+        const _noti = { ...notification, context: { ...notification.context, rideRequest: { ...notification.context.rideRequest } } };
         _noti.context.rideRequest.status = RideRequestStatus.ACCEPTED;
         dispatch(updateNotification(_noti));
       } catch (e) {
+        console.error(e);
         crashlytics().recordError(e)
         Toaster.alert('Hubo un error');
       }
@@ -59,8 +63,12 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
     }
   }
 
+  const handleNotificationPress = () => {
+    navigation.push(Screens.RIDEREQUEST_DETAILS, { rideRequest: notification.context.rideRequest })
+  }
+
   return (
-    <BaseNotification notification={notification} style={style} label={`quiere irse contigo en el viaje de ${rideDate}`}>
+    <BaseNotification notification={notification} style={style} onNotificationPress={handleNotificationPress} label={`quiere irse contigo en el viaje de ${rideDate}`}>
       <Container>
         {(notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.PENDING) &&
           <HideIfLoading size={32} loading={loading}>

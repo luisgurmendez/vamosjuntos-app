@@ -14,7 +14,7 @@ const WhereTo: React.FC<WhereToProps> = ({ nextScreen, title = '¿A donde vas?' 
   const isFieldValid = whereToMeta.error === undefined
 
   return (
-    <Wizard action={{ disabled: !isFieldValid }} showBack={false} nextScreen={nextScreen} title={title}>
+    <Wizard action={{ disabled: !isFieldValid }} nextScreen={nextScreen} title={title}>
       <SelectAddressForm selectedAddress={whereTo.value} onSelectAddress={whereToHelpers.setValue} />
     </Wizard>
   );

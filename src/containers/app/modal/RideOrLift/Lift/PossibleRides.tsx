@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { getPossibleRides } from 'api/adedo';
+import { getPossibleRides } from 'api/callables';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import RideBubble from 'components/Ride/RideBubble';

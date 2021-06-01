@@ -18,12 +18,15 @@ export const reducer = createReducer(initialState, builder => {
       state.notifications = action.payload;
     })
     .addCase(updateNotification, (state, action) => {
+      console.log('updating notifs', action.payload);
       state.notifications = state.notifications.map(n => {
         if (n.id === action.payload.id) {
           return action.payload
         }
         return n;
       });
+
+      console.log(state.notifications);
     })
 
   return builder;

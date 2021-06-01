@@ -12,7 +12,7 @@ import RideSummary from './RideSummary';
 import { Formik, FormikHelpers } from 'formik';
 import moment from 'moment';
 import RideFormSchema, { RideCreationValues } from './RideForm/formSchema';
-import { createRide, getRides } from 'api/adedo';
+import { createRide, getRides } from 'api/callables';
 import Toaster from 'components/Toaster/Toaster';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';

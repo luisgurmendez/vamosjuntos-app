@@ -1,19 +1,17 @@
-import { getNotifications, setSeenNotifications } from 'api/adedo';
+import { getNotifications, setSeenNotifications } from 'api/callables';
 import { Box } from 'components/Box/Box';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import NotificationSection from 'components/Notifications/NotificationSection';
-import RideRequestNotification from 'components/Notifications/notifications/RideRequestNotification';
-import Toaster from 'components/Toaster/Toaster';
 import React, { useEffect } from 'react';
-import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotifications } from 'state/notification/actions';
-import { AppState } from 'state/types';
 import styled from 'styled-components/native';
 import Page from 'components/Page/Page';
 import NoNotifications from './NoNotifications';
 import Notification from 'components/Notifications/Notification';
 import { getSeenNotifications, getUnseenNotifications } from 'state/notification/selectors';
+import { NotificationType, RideRequestStatus } from 'types/models';
 
 const Notifications: React.FC = () => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -25,7 +23,13 @@ const Notifications: React.FC = () => {
 
   useEffect(() => {
     if (unSeenNotifications.length > 0) {
-      setSeenNotifications(unSeenNotifications.map(n => n.id));
+
+      setSeenNotifications(unSeenNotifications.filter(n => {
+        // Filter the notifications that are waiting for user action in any
+        return !(n.type === NotificationType.RIDE_REQUEST &&
+          n.context &&
+          n.context.rideRequest.status === RideRequestStatus.PENDING)
+      }).map(n => n.id));
     }
   }, [seenNotifications])
 

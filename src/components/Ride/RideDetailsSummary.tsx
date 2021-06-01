@@ -1,14 +1,12 @@
 import WhereFromToWhereTo from 'components/Address/WhereFromToWhereTo';
-import { Body, LargeBody, SmallBody } from 'components/Typography/Typography';
+import { Body } from 'components/Typography/Typography';
 import moment from 'moment';
 import React from 'react'
-import Icon from 'react-native-vector-icons/Feather';
 import styled from 'styled-components/native';
 import { Ride } from 'types/models';
-import { colors } from 'utils/colors';
 import { getDateText, getTimeText } from 'utils/date';
 
-type RideLike = Ride | Pick<Ride, 'whereFrom' | 'whereTo' | 'date'>
+type RideLike = Ride | Pick<Ride, 'whereFrom' | 'whereTo' | 'date' | 'price'>
 
 interface RideSummaryProps {
   ride: RideLike;

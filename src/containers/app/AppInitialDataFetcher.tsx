@@ -1,4 +1,4 @@
-import { getFeatureFlags, getNotifications, getOwesReviews, getRideRequests, getRides } from 'api/adedo';
+import { getFeatureFlags, getNotifications, getOwesReviews, getRideRequests, getRides } from 'api/callables';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import Toaster from 'components/Toaster/Toaster';
 import React, { useEffect, useState } from 'react'

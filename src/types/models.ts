@@ -70,7 +70,6 @@ export enum NotificationStatus {
 export interface Notification {
   id: number;
   type: NotificationType;
-  // user: User;
   status: NotificationStatus;
   context: NotificationContext;
   createdAt: string;

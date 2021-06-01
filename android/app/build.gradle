@@ -193,6 +193,11 @@ dependencies {
 
     implementation 'androidx.multidex:multidex:2.0.1'
 
+    implementation 'androidx.core:core:1.5.0-alpha04'
+
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
+    implementation 'com.google.android.gms:play-services-basement:17.5.0'
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }

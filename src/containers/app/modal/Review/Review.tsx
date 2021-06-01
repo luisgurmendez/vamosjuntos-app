@@ -5,7 +5,7 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { useNavigation } from '@react-navigation/native';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import { Passenger, User } from 'types/models';
-import { createReview } from 'api/adedo';
+import { createReview } from 'api/callables';
 import Toaster from 'components/Toaster/Toaster';
 
 interface ReviewProps {

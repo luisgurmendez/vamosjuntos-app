@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import messaging from '@react-native-firebase/messaging';
-import { updateUserNotificationToken } from 'api/adedo';
+import { updateUserNotificationToken } from 'api/callables';
 import { getFirebaseUser } from 'api/auth';
 
 function useUpdateUsersNotificationToken() {
