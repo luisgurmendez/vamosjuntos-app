@@ -15,6 +15,7 @@
 		216DDBF42548F1DE00112183 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 216DDBF32548F1C400112183 /* Roboto-Bold.ttf */; };
 		216DDBF92548F1E200112183 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 216DDBF12548F1C400112183 /* Roboto-Italic.ttf */; };
 		216DDBFA2548F1E500112183 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 216DDBF22548F1C400112183 /* Roboto-Regular.ttf */; };
+		21E62495267CD4F90046EB0E /* EmptyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E62494267CD4F80046EB0E /* EmptyFile.swift */; };
 		28A44A2FAD008DE64CECD613 /* libPods-adedo-adedoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1B3A8D23350DD833A57F519 /* libPods-adedo-adedoTests.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -76,6 +77,8 @@
 		216DDBF22548F1C400112183 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		216DDBF32548F1C400112183 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		21AD104C25901C8300FAAC48 /* adedo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = adedo.entitlements; path = adedo/adedo.entitlements; sourceTree = "<group>"; };
+		21E62493267CD4F70046EB0E /* adedo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "adedo-Bridging-Header.h"; sourceTree = "<group>"; };
+		21E62494267CD4F80046EB0E /* EmptyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFile.swift; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* adedo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "adedo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* adedo-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "adedo-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		38D70602B0DE89BFC30FD3B6 /* Pods-adedo-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adedo-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-adedo-tvOS/Pods-adedo-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -227,6 +230,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				21E62494267CD4F80046EB0E /* EmptyFile.swift */,
 				21694045258E94010013C00C /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* adedo */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -234,6 +238,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				1665D04C33FB0D8B46AAA176 /* Pods */,
+				21E62493267CD4F70046EB0E /* adedo-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -352,7 +357,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 5X49TUK8ZU;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1250;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -541,6 +546,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-adedo-adedoTests/Pods-adedo-adedoTests-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/PersonalizedAdConsent/PersonalizedAdConsent.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
@@ -563,6 +569,7 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/PersonalizedAdConsent.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
@@ -595,6 +602,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-adedo/Pods-adedo-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/PersonalizedAdConsent/PersonalizedAdConsent.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
@@ -617,6 +625,7 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/PersonalizedAdConsent.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
@@ -763,6 +772,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21E62495267CD4F90046EB0E /* EmptyFile.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -805,6 +815,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 72B8DE95D5E30C6CFFBB2FF2 /* Pods-adedo-adedoTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -828,6 +839,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B31431400960161D66A2E9E6 /* Pods-adedo-adedoTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = adedoTests/Info.plist;
@@ -866,6 +878,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = vamosjuntos;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "adedo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -893,6 +906,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = vamosjuntos;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "adedo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
