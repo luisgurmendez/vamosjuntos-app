@@ -1,5 +1,5 @@
 import { Screens } from 'containers/Screens';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabsNavigation from './tabs/TabsNavigation';
 import RideStack from './modal/RideOrLift/Ride/Ride';
@@ -13,8 +13,7 @@ import UserProfile from './modal/UserProfile/UserProfile';
 import LiftStack from './modal/RideOrLift/Lift/Lift';
 import RideDetails from './modal/RideDetails/RideDetails';
 import Comments from 'components/Profile/Comments';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUser as getUserFromStore } from 'state/user/selectors';
+import { useDispatch } from 'react-redux';
 import { setTmpImage } from 'state/camera/actions';
 import useUpdateUsersNotificationToken from 'hooks/useUpdateUsersNotificationToken';
 import HideIfLoading from 'components/Loading/HideIfLoading';
@@ -26,13 +25,11 @@ import RideRequestDetails from './modal/RideRequestDetails/RideRequestDetails';
 const Stack = createStackNavigator();
 
 const AppNavigation: React.FC = () => {
+  const dispatch = useDispatch();
+  const useAds = useFeatureFlag(FeatureFlags.BANNER_ADS);
+  useUpdateUsersNotificationToken();
 
   const shouldShowWelcome = false;
-  const isFetchingUser = useSelector(getUserFromStore) === undefined;
-  const useAds = useFeatureFlag(FeatureFlags.BANNER_ADS);
-
-  const dispatch = useDispatch();
-  useUpdateUsersNotificationToken();
 
   const handleImageChange = (img: string) => {
     dispatch(setTmpImage(img));
@@ -42,26 +39,25 @@ const AppNavigation: React.FC = () => {
     <AppContainer>
       <Camera onImageChange={handleImageChange} />
       <Toaster />
-      <HideIfLoading loading={isFetchingUser}>
-        <AppInitialDataFetcher>
-          <Stack.Navigator
-            initialRouteName={shouldShowWelcome ? Screens.WELCOME : Screens.TABS}
-            screenOptions={{
-              headerBackTitle: 'Atras',
-              headerShown: false
-            }}>
-            <Stack.Screen name={Screens.TABS} component={TabsNavigation} />
-            <Stack.Screen name={Screens.RIDE} component={RideStack} />
-            <Stack.Screen name={Screens.REVIEW} component={Review} />
-            <Stack.Screen name={Screens.LIFT} component={LiftStack} />
-            <Stack.Screen name={Screens.USER_PROFILE} component={UserProfile} />
-            <Stack.Screen name={Screens.RIDE_DETAILS} component={RideDetails} />
-            <Stack.Screen name={Screens.RIDEREQUEST_DETAILS} component={RideRequestDetails} />
-            <Stack.Screen name={Screens.COMMENTS} component={Comments} />
-            <Stack.Screen name={Screens.WELCOME} component={WelcomeNavigation} />
-          </Stack.Navigator>
-        </AppInitialDataFetcher>
-      </HideIfLoading>
+      <AppInitialDataFetcher>
+        <Stack.Navigator
+          initialRouteName={shouldShowWelcome ? Screens.WELCOME : Screens.TABS}
+          screenOptions={{
+            headerBackTitle: 'Atras',
+            headerShown: false
+          }}>
+          <Stack.Screen name={Screens.TABS} component={TabsNavigation} />
+          <Stack.Screen name={Screens.RIDE} component={RideStack} />
+          <Stack.Screen name={Screens.REVIEW} component={Review} />
+          <Stack.Screen name={Screens.LIFT} component={LiftStack} />
+          <Stack.Screen name={Screens.USER_PROFILE} component={UserProfile} />
+          <Stack.Screen name={Screens.RIDE_DETAILS} component={RideDetails} />
+          <Stack.Screen name={Screens.RIDEREQUEST_DETAILS} component={RideRequestDetails} />
+          <Stack.Screen name={Screens.COMMENTS} component={Comments} />
+          <Stack.Screen name={Screens.WELCOME} component={WelcomeNavigation} />
+        </Stack.Navigator>
+      </AppInitialDataFetcher>
+
       {useAds && <BannerAd />}
     </AppContainer>
   );

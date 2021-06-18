@@ -25,6 +25,7 @@ const Backdrop: React.FC<BackdropProps> = ({ show, opacity = 0.5, onClose }) => 
   });
 
   const handleBackdropPress = () => {
+    console.log('backdrop clicked!');
     onClose && onClose();
   };
 

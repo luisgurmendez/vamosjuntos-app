@@ -7,7 +7,7 @@ interface ShowCanceledRidesProps { }
 
 const ShowCanceledRidesOption: React.FC<ShowCanceledRidesProps> = ({ }) => {
 
-  const [isEnabled, setIsEnabled] = useStorage(Storage.SHOW_CANCELED_RIDES, true);
+  const { value: isEnabled, setValue: setIsEnabled } = useStorage(Storage.SHOW_CANCELED_RIDES, true);
 
   return (
     <BooleanConfiguration

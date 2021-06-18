@@ -92,9 +92,12 @@ export const getRideRequests = async (): Promise<RideRequest[]> => {
 };
 
 export const getFeatureFlags = async (): Promise<FeatureFlag[]> => {
+  await remoteConfig().fetch(0);
+  await remoteConfig().activate();
   const configs = remoteConfig().getAll();
   const featureFlags: FeatureFlag[] = [];
   Object.keys(configs).forEach(configKey => {
+    console.log('KEEYYSSS', configKey, configs);
     featureFlags.push({
       name: configKey,
       enabled: configs[configKey].asBoolean()

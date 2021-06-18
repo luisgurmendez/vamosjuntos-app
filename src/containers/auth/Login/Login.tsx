@@ -13,6 +13,14 @@ import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import { Text, Title } from 'components/Typography/Typography';
 import { LoginValues } from './types';
 import { colors } from 'utils/colors';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import GoogleLogin from './GoogleLogin';
+import SocialSignup from './SocialSignup';
+import Logo from 'components/Logo/Logo';
+
+GoogleSignin.configure({
+  webClientId: '257892290311-9m7cu8asuhsqigqm5bbvvredcu5ivapt.apps.googleusercontent.com',
+});
 
 const Login: React.FC = () => {
 
@@ -20,7 +28,7 @@ const Login: React.FC = () => {
 
   const handleSuccessfullLogin = async (values: LoginValues) => {
     try {
-      const userCreds = await login(values.username, values.password);
+      await login(values.username, values.password);
     } catch (e) {
       Toaster.alert({ message: 'Contraseña o usuario incorrecta' });
     }
@@ -40,18 +48,19 @@ const Login: React.FC = () => {
         <Header>
           <PlainButton onPress={handleRegister}>
             Registrate
-            </PlainButton>
+          </PlainButton>
         </Header>
         <Content>
           <DismissKeyboard>
             <CenteredContentBox mb="xlg">
-              <SubtitleText>Inicia sesion, asi</SubtitleText>
-              <BlueTitle>Vamos juntos</BlueTitle>
+              {/* TODO: Make Logo animation for login, where the car starts smaller and and passes right next to the thumb while the thumb makes the "lift me" sign (moving up and down) */}
+              <Logo size={120} />
             </CenteredContentBox>
             <LoginForm onSuccessfullLogin={handleSuccessfullLogin} />
             <PlainButton onPress={handleForgotPassword}>
               Me olvide la contraseña 🤦🏼‍♂️
             </PlainButton>
+            <SocialSignup />
           </DismissKeyboard>
         </Content>
       </KeyboardShift>

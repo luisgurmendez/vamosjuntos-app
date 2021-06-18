@@ -7,7 +7,7 @@ interface ShowCompletedRidesProps { }
 
 const ShowCompletedRidesOption: React.FC<ShowCompletedRidesProps> = ({ }) => {
 
-  const [isEnabled, setIsEnabled] = useStorage(Storage.SHOW_COMPLETED_RIDES, true);
+  const { value: isEnabled, setValue: setIsEnabled } = useStorage(Storage.SHOW_COMPLETED_RIDES, true);
 
   return (
     <BooleanConfiguration

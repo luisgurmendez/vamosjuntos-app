@@ -25,8 +25,8 @@ const Configuration: React.FC<ConfigurationProps> = () => {
         <PermissionsOption />
         <ComplaintOption />
         <AppVersionOption />
+        <SignoutOption />
       </Container>
-      <SignoutOption />
     </Page>
   );
 }
@@ -35,6 +35,6 @@ export default Configuration;
 
 const Container = styled.ScrollView`
   padding-horizontal: 8px;
-  padding-top: 24px;
+  padding-vertical: 24px;
   flex: 1;
 `

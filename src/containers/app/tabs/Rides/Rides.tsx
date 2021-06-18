@@ -22,8 +22,8 @@ import RememberToCompleteRidesModal from './RememberToCompleteRidesModal';
 const Rides: React.FC = () => {
 
   const [refreshing, setRefreshing] = React.useState(false);
-  const [showCanceledRides] = useStorage(Storage.SHOW_CANCELED_RIDES, true);
-  const [showCompletedRides] = useStorage(Storage.SHOW_COMPLETED_RIDES, true);
+  const { value: showCanceledRides, refreshValue: refreshShowCanceledRides } = useStorage(Storage.SHOW_CANCELED_RIDES, true);
+  const { value: showCompletedRides, refreshValue: refreshShowCompletedRides } = useStorage(Storage.SHOW_COMPLETED_RIDES, true);
 
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
@@ -31,19 +31,20 @@ const Rides: React.FC = () => {
   const pendingRides = useSelector(getPendingRides);
   const completedRides = useSelector(getCompletedRides);
   const canceledRides = useSelector(getCanceledRides);
-  const isThereAnypendingRidesWithDueDate = pendingRides.some(r => moment().isAfter(moment(r.date)))
-  const [showRememberMarkRidesAsCompleteModal, setShowRememberModal] = React.useState(isThereAnypendingRidesWithDueDate)
+  const isThereAnyPendingRidesWithDueDate = pendingRides.some(r => moment().isAfter(moment(r.date)))
+  const [showRememberMarkRidesAsCompleteModal, setShowRememberModal] = React.useState(isThereAnyPendingRidesWithDueDate);
 
   const rideRequests = useSelector(getPendingRideRequests);
 
   const _completedRides = showCompletedRides ? completedRides : [];
   const _canceledRides = showCanceledRides ? canceledRides : [];
 
-
   const hasRides = pendingRides.length > 0 || _completedRides.length > 0 || _canceledRides.length > 0;
 
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
+    refreshShowCompletedRides();
+    refreshShowCanceledRides();
     try {
       const _rides = await getRides();
       const _rideRequests = await getRideRequests();
@@ -60,31 +61,29 @@ const Rides: React.FC = () => {
     navigation.push(Screens.RIDE_REQUESTS)
   }
 
-
   const renderAction = () => {
     return (
       <Badge badge={rideRequests.length} max={10}>
-        <Icon onPress={handleGoToRideRequests} name="car" size={30} style={{ color: colors.black, transform: [{ rotate: '0deg' }] }} />
+        <Icon onPress={handleGoToRideRequests} name="car" size={30} style={{ color: colors.black }} />
       </Badge>
     )
   }
 
   return (
     <Page title="Mis Viajes" renderAction={renderAction}>
-      <Container
-        scrollEventThrottle={400}
-        refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-        }
-      >
-        {!hasRides && <NoRides />}
-        {hasRides &&
-          <>
-            <RidesList title="Por salir" rides={pendingRides} />
-            <RidesList title="Cancelados" rides={_canceledRides} />
-            <RidesList title="Completados" rides={_completedRides} />
-          </>
-        }
-      </Container>
+      {!hasRides && <NoRides />}
+
+      {hasRides &&
+        <Container
+          scrollEventThrottle={400}
+          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+          }
+        >
+          <RidesList title="Por salir" rides={pendingRides} />
+          <RidesList title="Cancelados" rides={_canceledRides} />
+          <RidesList title="Completados" rides={_completedRides} />
+        </Container>
+      }
       <RememberToCompleteRidesModal open={showRememberMarkRidesAsCompleteModal} onClose={() => setShowRememberModal(false)} />
     </Page>
   );

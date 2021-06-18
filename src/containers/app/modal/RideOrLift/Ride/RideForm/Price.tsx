@@ -13,22 +13,18 @@ import { RideScreens } from '../RideScreens';
 
 const Price: React.FC = () => {
 
-  const maxPrice = 1000
+  const maxPrice = 3000
 
   const [price, priceMeta, priceHelpers] = useField<number>('price');
   const navigation: StackNavigationAPI = useNavigation<any>();
   const handleShowAd = useInterstatialAd();
 
   const priceTooHigh = price.value >= maxPrice;
-  const isFieldValid = priceMeta.error === undefined;
+  const isFieldValid = priceMeta.error === undefined && !priceTooHigh;
 
   const handlePriceChange = (value: string) => {
     const newPrice = value !== '' ? parseInt(value) : 0;
-    if (newPrice > maxPrice) {
-      priceHelpers.setValue(maxPrice);
-    } else {
-      priceHelpers.setValue(newPrice);
-    }
+    priceHelpers.setValue(newPrice);
   };
 
   const handleNextScreen = () => {

@@ -21,7 +21,7 @@ interface SelectAddressFormProps {
 
 const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, onSelectAddress }) => {
   const [selectAddressOpen, setSelectAddressOpen] = useState(false);
-  const [savedAddresses] = useStorage<SavedAddress[]>(
+  const { value: savedAddresses } = useStorage<SavedAddress[]>(
     Storage.ADDRESSES,
     []
   );
@@ -30,7 +30,7 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
     Geolocation.getCurrentPosition(async ({ coords: { latitude, longitude } }) => {
       try {
         const address = await getAddressFromCoords(latitude, longitude);
-        onSelectAddress(address);
+        address !== undefined && onSelectAddress(address);
       } catch (e) { }
     });
 

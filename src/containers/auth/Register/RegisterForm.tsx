@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import { register, UserRegistrationValues } from 'api/auth';
 import Toaster from 'components/Toaster/Toaster';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const RegisterFormSchema = Yup.object().shape({
   email: Yup.string().required('Campo obligatorio'),
@@ -33,8 +34,9 @@ const RegisterForm: React.FC = () => {
 
   const handleRegister = async (values: UserRegistrationValues) => {
     try {
-      const _u = await register({ ...values, phone: `+598${values.phone}` });
+      await register({ ...values, phone: `+598${values.phone}` });
     } catch (e) {
+      crashlytics().recordError(e);
       console.log(e);
       Toaster.alert('Hubo un error creando tu usuario');
     }

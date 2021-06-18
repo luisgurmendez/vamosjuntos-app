@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native';
-import { Subtitle } from 'components/Typography/Typography';
+import { Image } from 'react-native';
 
 interface NoRidesProps {
 }
@@ -8,9 +8,11 @@ interface NoRidesProps {
 const NoRides: React.FC<NoRidesProps> = ({ }) => {
 
   return (
-    <Container>
-      <Subtitle>No tenes viajes</Subtitle>
-    </Container>
+    <Image
+      style={{ height: '100%', maxWidth: '100%' }}
+      resizeMode="contain"
+      source={require('../../../../assets/noRides.png')}
+    />
   )
 
 }

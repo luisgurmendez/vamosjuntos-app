@@ -13,7 +13,6 @@ interface HideIfLoadingProps {
 const HideIfLoading: React.FC<HideIfLoadingProps> = ({ loading, label, size = 64, children }) => {
 
   if (loading) {
-
     return (
       <Container>
         <Loading size={size} color={colors.main} />

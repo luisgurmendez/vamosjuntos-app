@@ -26,7 +26,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = ({ }) => {
   const [selectAddressModalOpen, setSelectAddressModalOpen] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<Address | undefined>(undefined)
   const [addressName, setAddressName] = useState<string | undefined>(undefined);
-  const [savedAddresses, setSavedAddress, isGettingSavedAddresses] = useStorage<SavedAddress[]>(
+  const { value: savedAddresses, setValue: setSavedAddress, isFetching: isGettingSavedAddresses } = useStorage<SavedAddress[]>(
     Storage.ADDRESSES,
     []
   );

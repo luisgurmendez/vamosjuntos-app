@@ -1,6 +1,5 @@
 import PlainButton from 'components/Button/PlainButton';
 import React from 'react'
-import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import ConfigurationOption from './commons/ConfigurationOption';
 import { logout } from 'api/auth';
@@ -16,14 +15,10 @@ const SignoutOption: React.FC<SignoutOptionProps> = ({ }) => {
 
   return (
     <ConfigurationOption>
-      <StyledButton textStyle={{ fontSize: 18, color: colors.danger }} onPress={handleSignout}>Cerrar Sesion</StyledButton>
+      <PlainButton textStyle={{ fontSize: 18, color: colors.danger }} onPress={handleSignout}>Cerrar Sesion</PlainButton>
     </ConfigurationOption>
   )
 
 }
 
 export default SignoutOption;
-
-const StyledButton = styled(PlainButton)`
-  text-align: center;
-`

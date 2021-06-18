@@ -1,10 +1,18 @@
-import { useDebugValue, useEffect, useState } from 'react';
+import { useCallback, useDebugValue, useEffect, useState } from 'react';
 import Storage from 'storage/Storage';
+
+interface UseStorage<T> {
+  value: T;
+  setValue: (v: T) => Promise<void>;
+  isFetching: boolean;
+  refreshValue: () => void;
+}
+
 
 function useStorage<T>(
   key: string,
   defaultValue: T
-): [T, (v: T) => Promise<void>, boolean, (f: boolean) => void | undefined] {
+): UseStorage<T> {
   const [value, setValue] = useState<T>(defaultValue);
   const [isGettingValue, setIsGettingValue] = useState(false);
 
@@ -13,22 +21,22 @@ function useStorage<T>(
     await Storage.setItem(key, newValues)
   }
 
-  useEffect(() => {
-    const getValue = async () => {
-      setIsGettingValue(true);
-      const _value = await Storage.getItem<T>(key);
-      if (_value !== undefined) {
-        setValue(_value);
-      }
-      setIsGettingValue(false);
-    };
-
-    getValue();
+  const getValue = useCallback(async () => {
+    setIsGettingValue(true);
+    const _value = await Storage.getItem<T>(key);
+    if (_value !== undefined) {
+      setValue(_value);
+    }
+    setIsGettingValue(false);
   }, [key]);
+
+  useEffect(() => {
+    getValue();
+  }, [getValue]);
 
   useDebugValue(value);
 
-  return [value, setValueInStorageAsWell, isGettingValue, setIsGettingValue];
+  return { value, setValue: setValueInStorageAsWell, isFetching: isGettingValue, refreshValue: getValue };
 }
 
 export default useStorage;
