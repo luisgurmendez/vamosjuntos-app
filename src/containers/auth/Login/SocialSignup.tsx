@@ -2,6 +2,7 @@ import { Text } from 'components/Typography/Typography';
 import React from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
+import FacebookLogin from './FacebookLogin';
 import GoogleLogin from './GoogleLogin';
 
 const SocialSignup: React.FC = () => {
@@ -10,7 +11,7 @@ const SocialSignup: React.FC = () => {
     <Container>
       <Or />
       <GoogleLogin />
-      <GoogleLogin />
+      <FacebookLogin />
       <GoogleLogin />
     </Container>
   )

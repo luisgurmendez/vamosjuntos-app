@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Vamos Juntos</string>
+    <string name="facebook_app_id">261040482442033</string> <string name="fb_login_protocol_scheme">fb261040482442033</string>
 </resources>

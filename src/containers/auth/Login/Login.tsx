@@ -14,10 +14,13 @@ import { Text, Title } from 'components/Typography/Typography';
 import { LoginValues } from './types';
 import { colors } from 'utils/colors';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import GoogleLogin from './GoogleLogin';
 import SocialSignup from './SocialSignup';
 import Logo from 'components/Logo/Logo';
+import { Settings as FBSettings } from 'react-native-fbsdk-next';
 
+// Ask for consent first if necessary
+// Possibly only do this for iOS if no need to handle a GDPR-type flow
+FBSettings.initializeSDK();
 GoogleSignin.configure({
   webClientId: '257892290311-9m7cu8asuhsqigqm5bbvvredcu5ivapt.apps.googleusercontent.com',
 });
