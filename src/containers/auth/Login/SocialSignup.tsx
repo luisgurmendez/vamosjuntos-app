@@ -1,18 +1,33 @@
+import MarginedChildren from 'components/Box/MarginedChildren';
 import { Text } from 'components/Typography/Typography';
 import React from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import FacebookLogin from './FacebookLogin';
 import GoogleLogin from './GoogleLogin';
+import AppleLogin from './AppleLogin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { Settings as FBSettings } from 'react-native-fbsdk-next';
+import { usePlatform } from 'hooks/usePlatform';
+
+// Ask for consent first if necessary
+// Possibly only do this for iOS if no need to handle a GDPR-type flow
+FBSettings.initializeSDK();
+GoogleSignin.configure({
+  webClientId: '257892290311-9m7cu8asuhsqigqm5bbvvredcu5ivapt.apps.googleusercontent.com',
+});
 
 const SocialSignup: React.FC = () => {
+  const { isIOS } = usePlatform();
 
   return (
     <Container>
       <Or />
-      <GoogleLogin />
-      <FacebookLogin />
-      <GoogleLogin />
+      <MarginedChildren mV='sm'>
+        {isIOS && <AppleLogin />}
+        <GoogleLogin />
+        <FacebookLogin />
+      </MarginedChildren>
     </Container>
   )
 }

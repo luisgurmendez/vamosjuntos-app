@@ -13,17 +13,9 @@ import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import { Text, Title } from 'components/Typography/Typography';
 import { LoginValues } from './types';
 import { colors } from 'utils/colors';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import SocialSignup from './SocialSignup';
 import Logo from 'components/Logo/Logo';
-import { Settings as FBSettings } from 'react-native-fbsdk-next';
 
-// Ask for consent first if necessary
-// Possibly only do this for iOS if no need to handle a GDPR-type flow
-FBSettings.initializeSDK();
-GoogleSignin.configure({
-  webClientId: '257892290311-9m7cu8asuhsqigqm5bbvvredcu5ivapt.apps.googleusercontent.com',
-});
 
 const Login: React.FC = () => {
 
@@ -53,7 +45,7 @@ const Login: React.FC = () => {
             Registrate
           </PlainButton>
         </Header>
-        <Content>
+        <Content >
           <DismissKeyboard>
             <CenteredContentBox mb="xlg">
               {/* TODO: Make Logo animation for login, where the car starts smaller and and passes right next to the thumb while the thumb makes the "lift me" sign (moving up and down) */}
@@ -80,11 +72,7 @@ const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
-const Content = styled.View`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+const Content = styled.ScrollView`
   padding-horizontal: 16px;
 `
 

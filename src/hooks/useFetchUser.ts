@@ -13,19 +13,27 @@ function useFetchUser() {
   const fetchCounts = useRef(0);
 
   useEffect(() => {
-    const fetchUserInterval = setInterval(() => {
-      console.log('FETCHING USER INTERVAL!!');
+    /**
+     * There is a race condition when users first signup where the auth.onCreate google cloud functions didn trigger yet
+     * so there is no user in the vamosjuntos-db. The request will fail an thus we try to re fetch the user after some
+     * delay.
+     */
+    const tryFetchUser = () => {
+      console.log('Trying to fetch user');
       fetchCounts.current += 1;
+
       if (fetchCounts.current < 20) {
         getUser().then(user => {
           dispatch(setUser(user));
-          clearInterval(fetchUserInterval);
           setFetchingUser(false);
-        }).catch(() => {
+        }).catch((e) => {
+          console.error(e);
           crashlytics().log(`Waiting for user creation atempt: ${fetchCounts.current}`)
+          crashlytics().recordError(e);
+          //delay refetch of user
+          setTimeout(tryFetchUser, 1000);
         });
       } else {
-        clearInterval(fetchUserInterval);
         setFetchingUser(false);
         Toaster.alert({
           message: 'Hubo un error con tu usuario 😬',
@@ -34,12 +42,8 @@ function useFetchUser() {
         logout();
         dispatch(logoutAction());
       }
-
-    }, 2000);
-
-    return () => {
-      clearInterval(fetchUserInterval);
-    }
+    };
+    tryFetchUser();
   }, []);
 
   return fetchingUser;

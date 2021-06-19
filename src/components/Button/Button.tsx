@@ -19,7 +19,7 @@ interface ButtonStyles {
 
 interface ButtonProps extends BaseButtonProps {
   type?: ButtonType;
-  icon?: string;
+  icon?: string | JSX.Element;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -63,6 +63,11 @@ const Button: React.FC<ButtonProps> = ({
 
   const iconColor: string = (buttonStyles?.text?.color as string) || '#fff';
 
+  const iconElement = icon !== undefined ?
+    typeof icon === 'string' ? <Icon name={icon} size={25} color={iconColor} /> : icon
+    :
+    undefined;
+
   return (
     <ButtonContainer
       style={[
@@ -91,13 +96,13 @@ const Button: React.FC<ButtonProps> = ({
         onPressOut={handlePressOut}
         onPress={handleOnPress}>
         {loading ? (
-          <Loading />
+          <Loading color={iconColor} />
         ) : (
-            <>
-              {icon !== undefined && <Icon name={icon} size={25} color={iconColor} />}
-              <ButtonText style={buttonStyles.text}>{children}</ButtonText>
-            </>
-          )}
+          <>
+            {iconElement}
+            <ButtonText style={buttonStyles.text}>{children}</ButtonText>
+          </>
+        )}
       </TouchableButton>
     </ButtonContainer>
   );

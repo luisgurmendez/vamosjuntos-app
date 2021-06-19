@@ -13,7 +13,7 @@ const Logo: React.FC<LogoProps> = ({ size = 50 }) => {
       <Image
         style={{ flex: 1, width: '100%' }}
         resizeMode="cover"
-        source={require('../../assets/Logo.png')}
+        source={require('../../assets/vamosjuntosLogo.png')}
       />
     </Container>
   )
@@ -27,6 +27,4 @@ const Container = styled.View<{ size: number }>`
   height: ${props => props.size!}px;
   border-radius: ${props => props.size! / 2}px;
   overflow: hidden;
-  border-width: 2px;
-  border-color: white;
 `

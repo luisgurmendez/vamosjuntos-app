@@ -1,32 +1,25 @@
-import React, { Component } from 'react';
-import { View } from 'react-native';
+import React from 'react';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import auth from '@react-native-firebase/auth';
-import Button from 'components/Button/Button';
+import SocialLoginButton from './SocialLoginButton';
 
-const FacebookLogin: React.FC = () => {
+const FacebookLogin: React.FC<{ style?: any }> = ({ style }) => {
 
-  LoginManager.logOut();
   async function onFacebookButtonPress() {
-    console.log('loggin w facebook')
     const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-    console.log(result);
     if (result.isCancelled) {
       throw 'User cancelled the login process';
     }
     const data = await AccessToken.getCurrentAccessToken();
-    console.log(data);
     if (!data) {
       throw 'Something went wrong obtaining access token';
     }
     const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-    console.log(facebookCredential);
-    const signin = await auth().signInWithCredential(facebookCredential);
-    console.log(signin);
+    await auth().signInWithCredential(facebookCredential);
   }
 
   return (
-    <Button onPress={onFacebookButtonPress}>Con fb</Button>
+    <SocialLoginButton style={style} onPress={onFacebookButtonPress} provider="Facebook" />
   );
 };
 
