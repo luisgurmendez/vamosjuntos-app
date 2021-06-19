@@ -16,6 +16,8 @@ target 'adedo' do
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'adedoTests' do
     inherit! :complete
     # Pods for testing

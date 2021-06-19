@@ -239,6 +239,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				1665D04C33FB0D8B46AAA176 /* Pods */,
 				21E62493267CD4F70046EB0E /* adedo-Bridging-Header.h */,
+				8CB89655C7604E4EB792E6DE /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -255,6 +256,14 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		8CB89655C7604E4EB792E6DE /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
