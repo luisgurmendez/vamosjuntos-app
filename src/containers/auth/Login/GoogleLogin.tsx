@@ -4,7 +4,6 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import SocialLoginButton from './SocialLoginButton';
 
 const GoogleLogin: React.FC<{ style?: any }> = ({ style }) => {
-
   const handleLogin = async () => {
     const { idToken } = await GoogleSignin.signIn();
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);

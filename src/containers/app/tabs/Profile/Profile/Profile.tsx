@@ -23,6 +23,7 @@ import { Box } from 'components/Box/Box';
 import { getUser } from 'state/user/selectors';
 import storage from '@react-native-firebase/storage'
 import crashlytics from '@react-native-firebase/crashlytics';
+import useCameraPermission from 'hooks/useCameraPermission';
 
 interface ProfileProps { }
 
@@ -36,6 +37,8 @@ const Profile: React.FC<ProfileProps> = () => {
 
   const [editingUser, setEditingUser] = useState<User>(user!);
   const [isUpdatingUser, setIsUpdatingUser] = useState(false);
+
+  const isCameraPermissionGranted = useCameraPermission();
 
   const dispatch = useDispatch();
 
@@ -57,8 +60,14 @@ const Profile: React.FC<ProfileProps> = () => {
     })
   }, [tmpUserImage])
 
-  const handleOpenCamera = () => {
-    dispatch(setShowCamera(true));
+  const handleOpenCamera = async () => {
+    if (isCameraPermissionGranted) {
+      dispatch(setShowCamera(true));
+    } else {
+      Toaster.warn({
+        message: 'Tenes que habilitar los permisios de la camara'
+      })
+    }
   }
 
   const toggleEditing = () => {

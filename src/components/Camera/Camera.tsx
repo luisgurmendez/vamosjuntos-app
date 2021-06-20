@@ -11,6 +11,7 @@ import ImageResizer from 'react-native-image-resizer';
 import { setShowCamera } from 'state/camera/actions';
 import PlainButton from 'components/Button/PlainButton';
 import { colors } from 'utils/colors';
+import useCameraPermission from 'hooks/useCameraPermission';
 
 interface CameraProps {
   onImageChange?: (img: string) => void;
@@ -24,6 +25,7 @@ const Camera: React.FC<CameraProps> = ({ onImageChange, onCancel }) => {
   const [image, setImage] = useState<string | undefined>(undefined);
   const [takingImage, setTakingImage] = useState(false);
   const [cameraType, setCameraType] = useState<'front' | 'back'>('front');
+  const isCameraPermissionGranted = useCameraPermission()
 
   const handleRetryImage = () => {
     setImage(undefined);
@@ -70,6 +72,10 @@ const Camera: React.FC<CameraProps> = ({ onImageChange, onCancel }) => {
       setTakingImage(false);
     }
   };
+
+  if (!isCameraPermissionGranted) {
+    return null;
+  }
 
   return (
     <AbsolutePositioned top="0px" bottom="0px" left="0px" right="0px" pointerEvents={'box-none'} >

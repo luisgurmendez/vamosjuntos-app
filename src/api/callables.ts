@@ -163,7 +163,7 @@ export const updateUser = async (user: User): Promise<User> => {
 };
 
 export const getReviews = async (userId: string): Promise<Review[]> => {
-  const response = (await southamericaFunctions.httpsCallable('reviewGetUserReviews')({ userId }));
+  const response = (await southamericaFunctions.httpsCallable('reviewGetUserReviews')({ userId: userId }));
   console.log(response)
 
   if (response.data.success) {
@@ -176,8 +176,8 @@ export const getOwesReviews = async (): Promise<Passenger | undefined> => {
   const response = (await southamericaFunctions.httpsCallable('reviewOwes')());
   console.log(response)
 
-  if (response.data.success && response.data.passenger) {
-    return response.data.passenger;
+  if (response.data.success && response.data.owes) {
+    return response.data.owes;
   }
   return undefined;
 };

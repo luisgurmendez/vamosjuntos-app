@@ -15,19 +15,19 @@ import RideDetails from './modal/RideDetails/RideDetails';
 import Comments from 'components/Profile/Comments';
 import { useDispatch } from 'react-redux';
 import { setTmpImage } from 'state/camera/actions';
-import useUpdateUsersNotificationToken from 'hooks/useUpdateUsersNotificationToken';
-import HideIfLoading from 'components/Loading/HideIfLoading';
+import useNotificationsHandler from 'hooks/useUpdateUsersNotificationToken';
 import BannerAd from 'components/Ad/BannerAd';
 import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';
 import RideRequestDetails from './modal/RideRequestDetails/RideRequestDetails';
+import { NativeModules } from 'react-native';
 
 const Stack = createStackNavigator();
 
 const AppNavigation: React.FC = () => {
   const dispatch = useDispatch();
   const useAds = useFeatureFlag(FeatureFlags.BANNER_ADS);
-  useUpdateUsersNotificationToken();
+  useNotificationsHandler();
 
   const shouldShowWelcome = false;
 

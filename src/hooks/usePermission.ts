@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Permission, RESULTS, check, request } from 'react-native-permissions';
 
-function useCheckAndRequestPermission(permission: Permission) {
+function usePermission(permission: Permission, shouldRequestPermission: boolean = true) {
   const [isAvailable, setIsAvailable] = useState<boolean | undefined>(undefined);
+
+  const requestPermission = async () => {
+    const requestedPerms = await request(permission);
+    setIsAvailable(requestedPerms === RESULTS.GRANTED);
+    return requestedPerms;
+  }
 
   useEffect(() => {
     check(permission).then((checkedPerms) => {
       if (checkedPerms !== RESULTS.GRANTED) {
-        request(permission).then((requestedPerms) => {
-          setIsAvailable(requestedPerms === RESULTS.GRANTED);
-        });
+        shouldRequestPermission && requestPermission();
       } else {
         setIsAvailable(true);
       }
@@ -19,4 +23,4 @@ function useCheckAndRequestPermission(permission: Permission) {
   return isAvailable;
 }
 
-export default useCheckAndRequestPermission;
+export default usePermission;

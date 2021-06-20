@@ -31,6 +31,7 @@ const AppInitialDataFetcher: React.FC<AppInitialDataFetcherProps> = ({ children 
 
     Promise.all([_notifications, _rides, _rideRequests, _featureFlags, _owesReview])
       .then(([notifications, rides, rideRequests, featureFlags, owesReview]) => {
+        console.log(owesReview);
         dispatch(setNotifications(notifications));
         dispatch(setRides(rides));
         dispatch(setRideRequests(rideRequests));
