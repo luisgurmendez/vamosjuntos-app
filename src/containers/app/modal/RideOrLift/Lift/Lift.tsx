@@ -36,6 +36,7 @@ const LiftStack: React.FC = () => {
     try {
       const rr = await createRideRequest(values.rideId, values.whereFrom!, values.whereTo!);
       Toaster.success('Se mando tu solicitud, espera a que el conductor te acepte.')
+      console.log(rr);
       if (rr) {
         dispatch(addRideRequest(rr));
       }

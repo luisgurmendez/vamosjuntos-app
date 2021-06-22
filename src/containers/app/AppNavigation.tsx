@@ -15,7 +15,7 @@ import RideDetails from './modal/RideDetails/RideDetails';
 import Comments from 'components/Profile/Comments';
 import { useDispatch } from 'react-redux';
 import { setTmpImage } from 'state/camera/actions';
-import useNotificationsHandler from 'hooks/useUpdateUsersNotificationToken';
+import useNotificationsHandler from 'hooks/useNotificationsHandler';
 import BannerAd from 'components/Ad/BannerAd';
 import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';

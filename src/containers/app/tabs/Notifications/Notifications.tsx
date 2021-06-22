@@ -27,7 +27,7 @@ const Notifications: React.FC = () => {
       setSeenNotifications(unSeenNotifications.filter(n => {
         // Filter the notifications that are waiting for user action in any
         return !(n.type === NotificationType.RIDE_REQUEST &&
-          n.context &&
+          n.context && n.context.rideRequest &&
           n.context.rideRequest.status === RideRequestStatus.PENDING)
       }).map(n => n.id));
     }
@@ -39,7 +39,6 @@ const Notifications: React.FC = () => {
     dispatch(setNotifications(_notificiations))
     setRefreshing(false);
   }, []);
-
 
   return (
     <Page title="Alertas">

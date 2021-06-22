@@ -9,9 +9,9 @@ const NoRides: React.FC<NoRidesProps> = ({ }) => {
 
   return (
     <Image
-      style={{ height: '100%', maxWidth: '100%' }}
+      style={{ flex: 1, height: '100%', maxWidth: '100%' }}
       resizeMode="contain"
-      source={require('../../../../assets/noRides.png')}
+      source={require('../../../../assets/noTenesViajes.png')}
     />
   )
 

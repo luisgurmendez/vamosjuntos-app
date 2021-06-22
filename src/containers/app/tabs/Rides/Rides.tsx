@@ -18,6 +18,9 @@ import { useNavigation } from '@react-navigation/native';
 import Screens from './Screens';
 import moment from 'moment';
 import RememberToCompleteRidesModal from './RememberToCompleteRidesModal';
+import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
+
+const noRidesImage = require('../../../../assets/noTenesViajes.png');
 
 const Rides: React.FC = () => {
 
@@ -71,19 +74,18 @@ const Rides: React.FC = () => {
 
   return (
     <Page title="Mis Viajes" renderAction={renderAction}>
-      {!hasRides && <NoRides />}
-
-      {hasRides &&
+      <WithBackgroundImage asset={!hasRides ? noRidesImage : undefined}>
         <Container
+          showsVerticalScrollIndicator={false}
           scrollEventThrottle={400}
-          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-          }
+          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
         >
           <RidesList title="Por salir" rides={pendingRides} />
           <RidesList title="Cancelados" rides={_canceledRides} />
           <RidesList title="Completados" rides={_completedRides} />
         </Container>
-      }
+      </WithBackgroundImage>
+
       <RememberToCompleteRidesModal open={showRememberMarkRidesAsCompleteModal} onClose={() => setShowRememberModal(false)} />
     </Page>
   );

@@ -13,8 +13,8 @@ function useNotificationsHandler() {
 
   const handleGetNotifications = async (message: RemoteMessage) => {
     console.log(message);
-    const _notificiations = await getNotifications();
-    dispatch(setNotifications(_notificiations))
+    const _notifications = await getNotifications();
+    dispatch(setNotifications(_notifications))
   }
 
   useEffect(() => {

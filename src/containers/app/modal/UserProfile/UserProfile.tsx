@@ -25,17 +25,21 @@ const UserProfile: React.FC<UserProfileProps> = ({ route: { params: { user } } }
   const wppUrl = `whatsapp://send?phone=${user?.phone}&text=${'Hola'}`
 
   useEffect(() => {
+    console.log(wppUrl);
     Linking.canOpenURL(wppUrl).then((can) => {
+      console.log(wppUrl);
+      console.log(can);
       if (can) {
         setCanGoToWpp(true)
       }
+    }).catch(e => {
+      console.log(e);
     })
 
     getUserRideDetails(user.id).then(details => {
-      console.log('setting details', details)
       setUserRideDetails(details);
     })
-  }, [])
+  }, [wppUrl])
 
   const handleGoToWpp = () => {
     Linking.openURL(wppUrl);

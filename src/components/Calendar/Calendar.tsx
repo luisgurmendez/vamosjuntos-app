@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import moment from 'moment';
-import { Text } from 'components/Typography/Typography';
-import SelectableDay from './SelectableDay';
 import MonthSelector from './MonthSelector';
-import { colors } from 'utils/colors';
 import SelectableCell from './SelectableCell';
 
 interface CalendarProps {

@@ -97,7 +97,6 @@ export const getFeatureFlags = async (): Promise<FeatureFlag[]> => {
   const configs = remoteConfig().getAll();
   const featureFlags: FeatureFlag[] = [];
   Object.keys(configs).forEach(configKey => {
-    console.log('KEEYYSSS', configKey, configs);
     featureFlags.push({
       name: configKey,
       enabled: configs[configKey].asBoolean()
@@ -185,7 +184,6 @@ export const getOwesReviews = async (): Promise<Passenger | undefined> => {
 
 export const sendComplaint = async (complaint: string): Promise<boolean> => {
   const response = (await southamericaFunctions.httpsCallable('complaintCreate')({ complaint }));
-  console.log(response)
 
   console.log(response)
   return response.data.success;
@@ -225,7 +223,10 @@ export const getUserRideDetails = async (userId: string): Promise<UserRideDetail
   return response.data.details
 };
 
-export async function createCallable<D, R>(callable: string, data: D) {
+export async function createCallable<D, R>(callable: string, data: D, defaultValue?: R) {
   const response = (await southamericaFunctions.httpsCallable(callable)(data));
-  return response.data as R
+  if (response.data.success) {
+    return response.data as R
+  }
+  return defaultValue;
 }

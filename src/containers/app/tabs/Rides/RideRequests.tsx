@@ -27,11 +27,11 @@ const RideRequests: React.FC<RideRequestsProps> = ({ }) => {
     } catch (e) {
       Toaster.alert('Hubo un error')
     }
-
     setRefreshing(false);
+
   }, []);
   return (
-    <PageWithBack title="Solicitudes">
+    <PageWithBack title="Solicitudes de viajes">
       <Container
         scrollEventThrottle={400}
         refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />

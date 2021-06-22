@@ -1,11 +1,9 @@
-import { Body, LargeBody, Subtitle } from 'components/Typography/Typography';
+import { Body, Subtitle } from 'components/Typography/Typography';
 import Wizard from 'components/Wizard/Wizard';
 import { useFormikContext } from 'formik';
 import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { RideCreationValues } from './RideForm/formSchema';
-import Icon from 'react-native-vector-icons/Feather';
-import { colors } from 'utils/colors';
 import WhereFromToWhereTo from 'components/Address/WhereFromToWhereTo';
 import { getDateText, getTimeText } from 'utils/date';
 import WhereFromWhereToStaticMap from 'components/Map/WhereFromWhereToStaticMap';
@@ -20,7 +18,7 @@ const RideSummary: React.FC = () => {
   }, [])
 
   return (
-    <Wizard action={{ disabled: !isValid, onPress: handleSubmit, label: 'Crear Viaje', loading: isSubmitting }} title="¡Ultimo paso!">
+    <Wizard action={{ disabled: !isValid, onPress: handleSubmit, label: 'Crear viaje', loading: isSubmitting }} title="¡Ultimo paso!">
       <Subtitle>Estas a punto de crear un viaje.</Subtitle>
       <Body>Verifica que la informacion sea correcta</Body>
       <Content >
