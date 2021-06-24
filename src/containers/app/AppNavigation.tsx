@@ -21,6 +21,7 @@ import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';
 import RideRequestDetails from './modal/RideRequestDetails/RideRequestDetails';
 import { NativeModules } from 'react-native';
+import PassengerDetails from './modal/PassengerDetails/PassengerDetails';
 
 const Stack = createStackNavigator();
 
@@ -53,6 +54,7 @@ const AppNavigation: React.FC = () => {
           <Stack.Screen name={Screens.USER_PROFILE} component={UserProfile} />
           <Stack.Screen name={Screens.RIDE_DETAILS} component={RideDetails} />
           <Stack.Screen name={Screens.RIDEREQUEST_DETAILS} component={RideRequestDetails} />
+          <Stack.Screen name={Screens.PASSENGER_DETAILS} component={PassengerDetails} />
           <Stack.Screen name={Screens.COMMENTS} component={Comments} />
           <Stack.Screen name={Screens.WELCOME} component={WelcomeNavigation} />
         </Stack.Navigator>

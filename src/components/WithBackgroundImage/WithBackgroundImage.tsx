@@ -1,12 +1,12 @@
 import React from 'react'
-import styled from 'styled-components/native';
-import { Image } from 'react-native';
+import { Image, ImageStyle } from 'react-native';
 
 interface WithBackgroundImageProps {
   asset: any;
+  imageStyles?: ImageStyle;
 }
 
-const WithBackgroundImage: React.FC<WithBackgroundImageProps> = ({ children, asset }) => {
+const WithBackgroundImage: React.FC<WithBackgroundImageProps> = ({ children, imageStyles = {}, asset }) => {
 
   return (
     <>
@@ -15,6 +15,8 @@ const WithBackgroundImage: React.FC<WithBackgroundImageProps> = ({ children, ass
           style={{
             position: 'absolute',
             width: '100%',
+            height: '100%',
+            ...imageStyles
           }}
           resizeMode="contain"
           source={asset}
@@ -28,8 +30,3 @@ const WithBackgroundImage: React.FC<WithBackgroundImageProps> = ({ children, ass
 }
 
 export default WithBackgroundImage;
-
-const Container = styled.View`
-  max-width: 100%;
-  height: 100%;
-`

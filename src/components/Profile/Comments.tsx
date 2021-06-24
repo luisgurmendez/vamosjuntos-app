@@ -24,9 +24,11 @@ const Comments: React.FC<CommentsProps> = ({ route: { params: { userId } } }) =>
 export default Comments;
 
 
-const Content = styled.ScrollView`
+const Content = styled.View`
   flex: 1;
   width:100%;
-  flex-direction: column;
-  padding-horizontal: 32px;
+  height: 100%;
+  flex-direction: row;
+  justify-content: center;
+  padding-horizontal: 8px;
 `

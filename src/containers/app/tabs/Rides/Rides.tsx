@@ -4,10 +4,9 @@ import { getCompletedRides, getPendingRides, getCanceledRides, getPendingRideReq
 import styled from 'styled-components/native';
 import Page from 'components/Page/Page';
 import RidesList from './RidesList';
-import NoRides from './NoRides';
 import { getRideRequests, getRides } from 'api/callables';
 import { setRideRequests, setRides } from 'state/ride/actions';
-import { Alert, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import Toaster from 'components/Toaster/Toaster';
 import useStorage from 'hooks/useStorage';
 import Storage from 'storage/Storage';
@@ -20,7 +19,7 @@ import moment from 'moment';
 import RememberToCompleteRidesModal from './RememberToCompleteRidesModal';
 import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
 
-const noRidesImage = require('../../../../assets/noTenesViajes.png');
+const noRidesImage = require('../../../../assets/NoRides.png');
 
 const Rides: React.FC = () => {
 
@@ -85,7 +84,6 @@ const Rides: React.FC = () => {
           <RidesList title="Completados" rides={_completedRides} />
         </Container>
       </WithBackgroundImage>
-
       <RememberToCompleteRidesModal open={showRememberMarkRidesAsCompleteModal} onClose={() => setShowRememberModal(false)} />
     </Page>
   );

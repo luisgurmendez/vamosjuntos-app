@@ -1,18 +1,20 @@
 import BackArrow from 'components/Back/BackArrow';
 import { Title } from 'components/Typography/Typography';
 import React from 'react'
+import { ViewStyle } from 'react-native';
 import styled from 'styled-components/native';
 
 interface HeaderProps {
   showBack?: boolean;
   title?: string;
   secondaryAction?: React.ReactNode;
+  style?: ViewStyle;
 }
 
-const Header: React.FC<HeaderProps> = ({ showBack, title, secondaryAction }) => {
+const Header: React.FC<HeaderProps> = ({ style, showBack, title, secondaryAction }) => {
 
   return (
-    <Container>
+    <Container style={style}>
       {showBack ? <BackArrow /> : <Placeholder />}
       <ExpandedTitle>{title}</ExpandedTitle>
       {secondaryAction ? secondaryAction : <Placeholder />}

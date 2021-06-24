@@ -17,7 +17,7 @@ class Storage {
   public static SHOULD_WELCOME = 'shouldWelcome';
   public static SHOW_CANCELED_RIDES = 'showCanceledRides';
   public static SHOW_COMPLETED_RIDES = 'showCompletedRides';
-
+  public static SHOW_SEEN_NOTIFICATIONS = 'showSeenNotifications';
 
   static async isInitialized() {
     const created = await AsyncStorage.getItem(this.CREATED);
@@ -32,8 +32,7 @@ class Storage {
       await AsyncStorage.setItem(Storage.SHOULD_WELCOME, 'true');
       await AsyncStorage.setItem(Storage.SHOW_CANCELED_RIDES, 'true');
       await AsyncStorage.setItem(Storage.SHOW_COMPLETED_RIDES, 'true');
-
-      // await AsyncStorage.setItem(Storage.TOKENS, '{}');
+      await AsyncStorage.setItem(Storage.SHOW_SEEN_NOTIFICATIONS, 'false');
     }
   }
 

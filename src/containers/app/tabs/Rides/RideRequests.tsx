@@ -1,6 +1,7 @@
 import { getRideRequests } from 'api/callables';
 import PageWithBack from 'components/Page/PageWithBack';
 import Toaster from 'components/Toaster/Toaster';
+import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
 import React from 'react'
 import { RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +9,8 @@ import { setRideRequests } from 'state/ride/actions';
 import { getPendingRideRequests } from 'state/ride/selectors';
 import styled from 'styled-components/native';
 import RideRequestsList from './RideRequestsList';
+
+const noRideRequestsImage = require('../../../../assets/NoRideRequests.png');
 
 interface RideRequestsProps {
 }
@@ -32,13 +35,15 @@ const RideRequests: React.FC<RideRequestsProps> = ({ }) => {
   }, []);
   return (
     <PageWithBack title="Solicitudes de viajes">
-      <Container
-        scrollEventThrottle={400}
-        refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-        }
-      >
-        <RideRequestsList rideRequests={rideRequests} />
-      </Container>
+      <WithBackgroundImage asset={rideRequests.length === 0 ? noRideRequestsImage : undefined}>
+        <Container
+          scrollEventThrottle={400}
+          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+          }
+        >
+          <RideRequestsList rideRequests={rideRequests} />
+        </Container>
+      </WithBackgroundImage>
     </PageWithBack>
   )
 

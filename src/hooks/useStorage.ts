@@ -8,7 +8,6 @@ interface UseStorage<T> {
   refreshValue: () => void;
 }
 
-
 function useStorage<T>(
   key: string,
   defaultValue: T

@@ -12,18 +12,32 @@ import NoNotifications from './NoNotifications';
 import Notification from 'components/Notifications/Notification';
 import { getSeenNotifications, getUnseenNotifications } from 'state/notification/selectors';
 import { NotificationType, RideRequestStatus } from 'types/models';
+import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
+import useStorage from 'hooks/useStorage';
+import Storage from 'storage/Storage';
+
+const noAlertsImage = require('../../../../assets/NoAlerts.png');
 
 const Notifications: React.FC = () => {
   const [refreshing, setRefreshing] = React.useState(false);
   const dispatch = useDispatch();
-  const unSeenNotifications = useSelector(getUnseenNotifications)
-  const seenNotifications = useSelector(getSeenNotifications)
+
+  const {
+    value: showSeenNotifications,
+    refreshValue: refreshShowSeenNotifications
+  } = useStorage(Storage.SHOW_SEEN_NOTIFICATIONS, true);
+
+  const unSeenNotifications = useSelector(getUnseenNotifications);
+  let seenNotifications = useSelector(getSeenNotifications);
+
+  if (!showSeenNotifications) {
+    seenNotifications = [];
+  }
 
   const hasNoNotifications = unSeenNotifications.length === 0 && seenNotifications.length === 0;
 
   useEffect(() => {
     if (unSeenNotifications.length > 0) {
-
       setSeenNotifications(unSeenNotifications.filter(n => {
         // Filter the notifications that are waiting for user action in any
         return !(n.type === NotificationType.RIDE_REQUEST &&
@@ -34,6 +48,7 @@ const Notifications: React.FC = () => {
   }, [seenNotifications])
 
   const onRefresh = React.useCallback(async () => {
+    refreshShowSeenNotifications();
     setRefreshing(true);
     const _notificiations = await getNotifications();
     dispatch(setNotifications(_notificiations))
@@ -42,34 +57,33 @@ const Notifications: React.FC = () => {
 
   return (
     <Page title="Alertas">
-      <Container
-        scrollEventThrottle={400}
-        refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-        }
-      >
-        {unSeenNotifications.length > 0 &&
-          <NotificationSection section="Nuevas">
-            <Box pH="md">
-              <MarginedChildren mb="md" applyToLast={false}>
-                {unSeenNotifications.map(n => <Notification key={n.id} notification={n} />)}
-              </MarginedChildren>
-            </Box>
-          </NotificationSection>
-        }
+      <WithBackgroundImage asset={hasNoNotifications ? noAlertsImage : undefined}>
+        <Container
+          scrollEventThrottle={400}
+          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+          }
+        >
+          {unSeenNotifications.length > 0 &&
+            <NotificationSection section="Nuevas">
+              <Box pH="md">
+                <MarginedChildren mb="md" applyToLast={false}>
+                  {unSeenNotifications.map(n => <Notification key={n.id} notification={n} />)}
+                </MarginedChildren>
+              </Box>
+            </NotificationSection>
+          }
+          {seenNotifications.length > 0 &&
+            <NotificationSection section="Viejas">
+              <Box pH="md">
+                <MarginedChildren mb="md" applyToLast={false}>
+                  {seenNotifications.map(n => <Notification key={n.id} notification={n} />)}
+                </MarginedChildren>
+              </Box>
+            </NotificationSection>
+          }
+        </Container>
+      </WithBackgroundImage>
 
-        {seenNotifications.length > 0 &&
-          <NotificationSection section="Viejas">
-            <Box pH="md">
-              <MarginedChildren mb="md" applyToLast={false}>
-                {seenNotifications.map(n => <Notification key={n.id} notification={n} />)}
-              </MarginedChildren>
-            </Box>
-          </NotificationSection>
-        }
-
-        {hasNoNotifications && <NoNotifications />}
-
-      </Container>
     </Page>
   );
 }

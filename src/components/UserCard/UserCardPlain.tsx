@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import PlainButton from 'components/Button/PlainButton';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import Score from 'components/Score/Score';
 import Shadow from 'components/Shadow/Shadow';
@@ -14,7 +15,7 @@ interface UserCardPlainProps {
   user: User;
 }
 
-const UserCardPlain: React.FC<UserCardPlainProps> = ({ user }) => {
+const UserCardPlain: React.FC<UserCardPlainProps> = ({ user, children }) => {
 
   return (
     <Container>
@@ -23,6 +24,7 @@ const UserCardPlain: React.FC<UserCardPlainProps> = ({ user }) => {
         <Score score={user.score} size={15} />
         <Body>{user.name}</Body>
       </Content>
+      {children}
     </Container>
   )
 
@@ -38,4 +40,5 @@ const Container = styled.View`
 const Content = styled.View`
   margin-left: 16px;
   justify-content: center;
+  flex: 1;
 `

@@ -8,8 +8,8 @@ import MarginedChildren from 'components/Box/MarginedChildren';
 import { LoginValues } from './types';
 
 const LoginFormSchema = Yup.object().shape({
-  username: Yup.string().required('Username required'),
-  password: Yup.string().required('Password required')
+  username: Yup.string().required('Usuario requerido'),
+  password: Yup.string().required('Contraseña requerida')
 });
 
 interface LoginFormProps {

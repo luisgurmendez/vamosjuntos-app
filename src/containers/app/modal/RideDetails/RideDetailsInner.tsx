@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Body, Subtitle } from 'components/Typography/Typography';
 import { StatusBar } from 'react-native';
 import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
-import { Ride, RideStatus } from 'types/models';
+import { Passenger, Ride, RideStatus } from 'types/models';
 import { cancelRide, dropOutRide, getRides, setRideCompleted } from 'api/callables';
 import PlainButton from 'components/Button/PlainButton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +20,7 @@ import moment from 'moment';
 import ModalWithYesNoActions from 'components/Modal/ModalWithYesNoActions';
 import UserCard from 'components/UserCard/UserCard';
 import IconedValue from 'components/IconedValue/IconedValue';
+import Screens from '../Screens';
 
 interface RideDetailsProps {
   ride: Ride;
@@ -37,7 +38,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
   const isPassedDate = moment().diff(moment(ride.date)) > 0;
 
   const mapId = `RideDetails-${ride.id}-map`
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
 
   const hasPassengers = ride.passengers.length > 0
 
@@ -85,6 +86,10 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
 
   const handleCancelConfirmModal = () => { setIsConfirmCancelModalOpen(false) };
 
+  const handleOnPassengerClick = (p: Passenger) => {
+    navigation.push(Screens.PASSENGER_DETAILS, { passenger: p })
+  }
+
   return (
     <Container>
       <StatusBar hidden />
@@ -103,25 +108,39 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
           {hasPassengers &&
             <Box mt="lg">
               <Subtitle>Pasajeros</Subtitle>
-              {ride.passengers.map(p => <UserCard key={`passenger-${p.user.id}`} user={p.user} />)}
+              {ride.passengers.map(p =>
+                <UserCard
+                  key={`passenger-${p.user.id}`}
+                  user={p.user}
+                  action={isDriver ? () => <PlainButton onPress={() => handleOnPassengerClick(p)}>Ver trayecto</PlainButton> : undefined}
+                />)
+              }
             </Box>
           }
         </Content>
       </ScrollContent>
 
-      {ride.status === RideStatus.PENDING &&
+      {ride.status === RideStatus.PENDING ?
         <Footer>
           <FooterButton
             textStyle={{ color: colors.danger, fontSize: 20 }}
             onPress={handleCancelRide}
           >
-            {isDriver ? 'Cancelar Viaje' : 'Bajarme del viaje'}
+            {isDriver ? 'Cancelar viaje' : 'Bajarme del viaje'}
           </FooterButton>
 
           {isPassedDate &&
             <FooterButton onPress={handleRideCompleted} textStyle={{ fontSize: 20 }}>
               Completado
-          </FooterButton>
+            </FooterButton>
+          }
+        </Footer>
+        :
+        <Footer>
+          {ride.status === RideStatus.CANCELED ?
+            <Body style={{ color: colors.danger }}>Cancelado</Body>
+            :
+            <Body style={{ color: colors.success }}>Completado</Body>
           }
         </Footer>
       }
@@ -143,6 +162,8 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
     </Container >
   )
 }
+
+export default RideDetails;
 
 const Container = styled.View`
   flex: 1;
@@ -172,11 +193,10 @@ const Footer = styled(SafeAreaView)`
   display: flex;
   flex-direction: row;
   margin-horizontal: 8px;
+  justify-content: center;
 `
 
 const FooterButton = styled(PlainButton)`
   flex: 1;
   margin-horizontal: 8px;
 `
-
-export default RideDetails;

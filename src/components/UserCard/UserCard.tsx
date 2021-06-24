@@ -10,25 +10,25 @@ import UserCardPlain from './UserCardPlain';
 
 interface UserCardProps {
   user: User;
-  isPassenger?: boolean;
+  action?: () => JSX.Element;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ user, isPassenger }) => {
+const UserCard: React.FC<UserCardProps> = ({ user, action }) => {
 
   const navigation = useNavigation<any>();
 
   const handlePressUser = () => {
-    const screen = isPassenger ? Screens.PASSENGER_DETAILS : Screens.USER_PROFILE;
     navigation.push(Screens.USER_PROFILE, { user })
   }
 
   return (
     <TouchableOpacity onPress={handlePressUser}>
       <Container>
-        <UserCardPlain user={user} />
+        <UserCardPlain user={user}>
+          {action && action()}
+        </UserCardPlain>
       </Container>
     </TouchableOpacity>
-
   )
 }
 

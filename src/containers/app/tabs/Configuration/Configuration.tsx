@@ -10,6 +10,7 @@ import CrashalyticsEnabledOption from './options/CrashalyticsEnabledOption';
 import ShowCanceledRidesOption from './options/ShowCanceledRidesOption';
 import ShowCompletedRidesOption from './options/ShowCompletedRidesOption';
 import PermissionsOption from './options/PermissionsOption';
+import ShowOldAlertsOption from './options/ShowOldAlertsOption';
 
 interface ConfigurationProps { }
 
@@ -22,6 +23,7 @@ const Configuration: React.FC<ConfigurationProps> = () => {
         <CrashalyticsEnabledOption />
         <ShowCanceledRidesOption />
         <ShowCompletedRidesOption />
+        <ShowOldAlertsOption />
         <PermissionsOption />
         <ComplaintOption />
         <AppVersionOption />
@@ -35,6 +37,5 @@ export default Configuration;
 
 const Container = styled.ScrollView`
   padding-horizontal: 8px;
-  padding-vertical: 24px;
   flex: 1;
 `

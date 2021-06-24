@@ -10,12 +10,11 @@ import KeyboardShift from 'components/Keyboard/KeyboardShift';
 import { login } from 'api/auth';
 import Toaster from 'components/Toaster/Toaster';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
-import { Text, Title } from 'components/Typography/Typography';
+import { LargeBody, Text, Title } from 'components/Typography/Typography';
 import { LoginValues } from './types';
 import { colors } from 'utils/colors';
 import SocialSignup from './SocialSignup';
 import Logo from 'components/Logo/Logo';
-
 
 const Login: React.FC = () => {
 
@@ -51,6 +50,7 @@ const Login: React.FC = () => {
               {/* TODO: Make Logo animation for login, where the car starts smaller and and passes right next to the thumb while the thumb makes the "lift me" sign (moving up and down) */}
               <Logo size={120} />
             </CenteredContentBox>
+            <LargeBody style={{ alignSelf: 'center', width: '50%', fontWeight: 'bold', textAlign: 'center' }}>Iniciar sesión en una cuenta existente</LargeBody>
             <LoginForm onSuccessfullLogin={handleSuccessfullLogin} />
             <PlainButton onPress={handleForgotPassword}>
               Me olvide la contraseña 🤦🏼‍♂️
