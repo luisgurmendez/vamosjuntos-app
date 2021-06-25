@@ -6,6 +6,7 @@ import PassengerDroppedOutRideNotification from './notifications/PassengerDroppe
 import RideCanceledNotification from './notifications/RideCanceledNotification';
 import RideRequestAcceptedNotification from './notifications/RideRequestAcceptedNotification';
 import RideRequestDeclinedNotification from './notifications/RideRequestDeclinedNotification';
+import RideRequestInstantlyAcceptedNotification from './notifications/RideRequestInstantlyAcceptedNotification';
 import RideRequestNotification from './notifications/RideRequestNotification';
 
 
@@ -17,8 +18,13 @@ const Notification: React.FC<NotificationProps> = ({ style, notification }) => {
     case NotificationType.RIDE_REQUEST:
       NotificationComp = RideRequestNotification;
       break;
+
     case NotificationType.RIDE_REQUEST_ACCEPTED:
       NotificationComp = RideRequestAcceptedNotification;
+      break;
+
+    case NotificationType.RIDE_REQUEST_INSTANTLY_ACCEPTED:
+      NotificationComp = RideRequestInstantlyAcceptedNotification;
       break;
 
     case NotificationType.RIDE_REQUEST_DECLINED:

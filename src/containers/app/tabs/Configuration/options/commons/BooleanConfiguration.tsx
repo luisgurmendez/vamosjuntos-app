@@ -22,7 +22,6 @@ const BooleanConfiguration: React.FC<BooleanConfigurationProps> = ({ style, conf
       </Container>
     </ConfigurationOption>
   )
-
 }
 
 

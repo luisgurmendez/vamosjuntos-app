@@ -22,8 +22,8 @@ const WhereFromWhereToStaticMap: React.FC<WhereFromWhereToStaticMapProps> = ({ m
   const renderOriginDestinationMarkers = () => {
     return (
       <>
-        <RideMarker color={'green'} coordinate={origin} />
-        <RideMarker color={'red'} coordinate={destination} />
+        <RideMarker type={'origin'} coordinate={origin} />
+        <RideMarker type={'destination'} coordinate={destination} />
       </>
     )
   }

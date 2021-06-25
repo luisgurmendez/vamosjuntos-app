@@ -8,6 +8,7 @@ export interface RideCreationValues {
   capacity: number;
   date: string;
   price: number;
+  instantApproval: boolean;
 }
 
 const RideFormSchema = Yup.object().shape({
@@ -15,7 +16,8 @@ const RideFormSchema = Yup.object().shape({
   whereTo: address,
   capacity: Yup.number().required(),
   date: Yup.string().required(),
-  price: Yup.number().required()
+  price: Yup.number().required(),
+  instantApproval: Yup.boolean().required(),
 }).strict(true);
 
 export default RideFormSchema;

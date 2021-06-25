@@ -26,7 +26,8 @@ const intialValues: RideCreationValues = {
   whereTo: undefined,
   date: moment().set({ hours: 12, minutes: 0 }).toISOString(),
   capacity: 3,
-  price: 100
+  price: 100,
+  instantApproval: false,
 }
 
 const RideStack: React.FC = () => {
@@ -68,7 +69,6 @@ const RideStack: React.FC = () => {
           <Stack.Screen name={RideScreens.WHEN} component={RideWhen} />
           <Stack.Screen name={RideScreens.PRICE} component={Price} />
           <Stack.Screen name={RideScreens.SUMMARY} component={RideSummary} />
-
         </Stack.Navigator>
       </Formik>
 

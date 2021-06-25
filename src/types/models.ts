@@ -52,6 +52,7 @@ export enum NotificationType {
   RIDE_KICKED_OUT = 'RIDE_KICKED_OUT',
   RIDE_REQUEST = 'RIDE_REQUEST',
   RIDE_REQUEST_ACCEPTED = 'RIDE_REQUEST_ACCEPTED',
+  RIDE_REQUEST_INSTANTLY_ACCEPTED = 'RIDE_REQUEST_INSTANTLY_ACCEPTED',
   RIDE_REQUEST_DECLINED = 'RIDE_REQUEST_DECLINED',
   RIDE_DROPED_OUT = 'RIDE_DROPED_OUT'
 }
@@ -105,6 +106,7 @@ export interface Ride {
   whereFrom: Address;
   status: RideStatus;
   price: number;
+  instantApproval: boolean;
 }
 
 export enum FeatureFlags {
