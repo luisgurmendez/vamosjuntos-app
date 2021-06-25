@@ -11,12 +11,14 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Screens } from 'containers/Screens';
 import { AppState } from 'state/types';
 import { useNavigation } from '@react-navigation/native';
+import { getPendingRides } from 'state/ride/selectors';
 
 const Tab = createBottomTabWithMenuNavigator();
 
 const TabsNavigation: React.FC = () => {
 
   const numOfNotificaitons = useSelector(getNumberOfUnseenNotifications);
+  const numOfPendingRides = useSelector(getPendingRides).length;
 
   const navigation = useNavigation<any>();
   const passenger = useSelector((state: AppState) => state.user.owesReview)
@@ -43,7 +45,7 @@ const TabsNavigation: React.FC = () => {
             menu: ['ride', 'lift']
           }}
           tabBarOptions={{ showLabel: true }}>
-          <Tab.Screen name={Screens.RIDES_TAB} options={RidesTabOptions} component={RidesNavigation} />
+          <Tab.Screen name={Screens.RIDES_TAB} options={RidesTabOptions(numOfPendingRides)} component={RidesNavigation} />
           <Tab.Screen name={Screens.NOTIFICATIONS_TAB} options={NotificationsTabOptions(numOfNotificaitons)} component={Notifications} />
           <Tab.Screen name={Screens.PROFILE_TAB} options={ProfileTabOptions} component={ProfileNavigation} />
           <Tab.Screen name={Screens.SETTINGS_TAB} options={ConfigurationTabOptions} component={ConfigurationNavigation} />

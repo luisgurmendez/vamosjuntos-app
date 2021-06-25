@@ -63,26 +63,34 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
     }
   }
 
-  const handleNotificationPress = () => {
-    navigation.push(Screens.RIDEREQUEST_DETAILS, { rideRequest: notification.context.rideRequest })
+  const handleGoToRideRequestDetails = () => {
+    navigation.push(Screens.RIDEREQUEST_DETAILS, { user: notification.context.user, rideRequest: notification.context.rideRequest })
   }
 
+  const isPending = notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.PENDING;
+  const isDeclined = notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.DECLINED;
+  const isAccepted = notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.ACCEPTED;
+
   return (
-    <BaseNotification notification={notification} style={style} onNotificationPress={handleNotificationPress} label={`quiere irse contigo en el viaje de ${rideDate}`}>
+    <BaseNotification notification={notification} style={style} label={`quiere irse contigo en el viaje de ${rideDate}`}>
       <Container>
-        {(notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.PENDING) &&
-          <HideIfLoading size={32} loading={loading}>
-            <BorderedStyledButton onPress={handleDeclineRideRequest} textStyle={{ color: colors.danger }}>Rechazar</BorderedStyledButton>
-            <StyledButton onPress={handleAcceptRideRequest}>Aceptar</StyledButton>
-          </HideIfLoading>
-        }
-        {(notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.DECLINED) &&
-          <DeclinedText>Rechazado</DeclinedText>
-        }
-        {(notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.ACCEPTED) &&
-          <AcceptedText>Acceptado</AcceptedText>
-        }
+        {isPending && <PlainButton onPress={handleGoToRideRequestDetails}>Ver trayecto</PlainButton>}
+        <ActionContainer>
+          {isPending &&
+            <HideIfLoading size={32} loading={loading}>
+              <BorderedStyledButton onPress={handleDeclineRideRequest} textStyle={{ color: colors.danger }}>Rechazar</BorderedStyledButton>
+              <StyledButton onPress={handleAcceptRideRequest}>Aceptar</StyledButton>
+            </HideIfLoading>
+          }
+          {isDeclined &&
+            <DeclinedText>Rechazado</DeclinedText>
+          }
+          {isAccepted &&
+            <AcceptedText>Acceptado</AcceptedText>
+          }
+        </ActionContainer>
       </Container>
+
     </BaseNotification>
   )
 }
@@ -90,6 +98,12 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
 export default RideRequestNotification;
 
 const Container = styled.View`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`
+
+const ActionContainer = styled.View`
   border-top-width: 0.5px;
   border-color: ${colors.border};
   padding: 4px;

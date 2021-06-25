@@ -156,7 +156,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
         open={isConfirmCancelModalOpen}
         onClose={handleCancelConfirmModal}
         onConfirm={handleConfirmCancelRide}
-        title={isDriver ? '¿Estas seguro que quieres cancel el viaje?' : '¿Estas seguro que queres bajarte del viaje?'}
+        title={isDriver ? '¿Estas seguro que queres cancelar el viaje?' : '¿Estas seguro que queres bajarte del viaje?'}
       />
 
     </Container >

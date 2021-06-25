@@ -10,7 +10,6 @@ interface Props {
 
 const ProfilePic: React.FC<Props> = ({ img, size = 60 }) => {
 
-
   const handleDownloadImageError = (e: NativeSyntheticEvent<ImageErrorEventData>) => {
     crashlytics().recordError(e.nativeEvent.error, 'ImageError');
   }

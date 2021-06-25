@@ -25,7 +25,7 @@ const RideDetails: React.FC<RideDetailsWrapperProps> = ({ route: { params: { rid
   }, [])
 
   return (
-    <HideIfLoading loading={isFetchingRide}>
+    <HideIfLoading label="Buscando detalles del viaje" loading={isFetchingRide}>
       {rideWithDetails && <RideDetailsInner ride={rideWithDetails} />}
     </HideIfLoading>
   )

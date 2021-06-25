@@ -6,7 +6,7 @@ interface PassengerDroppedOutRideNotificationProps extends NotificationProps { }
 const PassengerDroppedOutRideNotification: React.FC<PassengerDroppedOutRideNotificationProps> = ({ style, notification }) => {
 
   return (
-    <BaseNotification style={style} notification={notification} label={'se fue de un viaje'} />
+    <BaseNotification style={style} notification={notification} label={'se bajo de tu viaje'} />
   )
 
 }
