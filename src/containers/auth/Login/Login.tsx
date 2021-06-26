@@ -85,12 +85,3 @@ const Header = styled.View`
 const CenteredContentBox = styled(Box)`
   align-items: center;
 `
-const BlueTitle = styled(Title)`
-  color: ${colors.main};
-`
-
-const SubtitleText = styled(Text)`
-  font-size: 16px;
-  width:100%;
-  text-align: left;
-`
