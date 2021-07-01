@@ -33,7 +33,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
 	<string>261040482442033</string>
 	<key>FacebookClientToken</key>
@@ -77,9 +77,11 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string/>
+	<string>Para editar tu foto de perfil</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Para poder selecionar tu ubicación para crear o pedir viajes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>Para poder selecionar tu ubicación para crear o pedir viajes</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

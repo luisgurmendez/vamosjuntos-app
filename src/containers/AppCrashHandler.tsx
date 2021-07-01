@@ -11,7 +11,7 @@ class AppCrashHandler extends React.Component<{}, { hasError: boolean }> {
 
   constructor(props: {}) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: true };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {

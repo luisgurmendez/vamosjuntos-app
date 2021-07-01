@@ -2,6 +2,7 @@ import { Address } from "types/models";
 import { LatLngUtils } from "utils/geo/LatLngUtils";
 import { southamericaFunctions } from "./functions";
 
+// TODO: calculating this in the client adds like 15mb of just json data...
 export const getAddressFromCoords = async (
   latitude: number,
   longitude: number,
