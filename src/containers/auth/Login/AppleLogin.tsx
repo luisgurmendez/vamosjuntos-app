@@ -6,13 +6,10 @@ import { appleAuth } from '@invertase/react-native-apple-authentication';
 
 const AppleLogin: React.FC<{ style?: any }> = ({ style }) => {
   const handleLogin = async () => {
-    console.log('signing in');
-    console.log(appleAuth.isSupported);
     const appleAuthRequestResponse = await appleAuth.performRequest({
       requestedOperation: appleAuth.Operation.LOGIN,
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
-    console.log(appleAuthRequestResponse)
 
     // Ensure Apple returned a user identityToken
     if (!appleAuthRequestResponse.identityToken) {
@@ -20,11 +17,7 @@ const AppleLogin: React.FC<{ style?: any }> = ({ style }) => {
     }
     // Create a Firebase credential from the response
     const { identityToken, nonce } = appleAuthRequestResponse;
-    console.log(identityToken, nonce)
-
     const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
-    console.log(appleCredential);
-
     // Sign the user in with the credential
     await auth().signInWithCredential(appleCredential);
   }

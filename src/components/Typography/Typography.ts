@@ -6,6 +6,11 @@ export const Text = styled.Text`
   color: ${colors.black};
 `;
 
+export const LargeTitle = styled(Text)`
+font-weight: bold;
+font-size: 46px;
+`;
+
 export const Title = styled(Text)`
   font-weight: bold;
   font-size: 32px;

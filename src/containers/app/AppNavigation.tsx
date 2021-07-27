@@ -8,7 +8,6 @@ import styled from 'styled-components/native';
 import Toaster from 'components/Toaster/Toaster';
 import Camera from 'components/Camera/Camera';
 import AppInitialDataFetcher from './AppInitialDataFetcher';
-import WelcomeNavigation from 'containers/app/welcome/WelcomeNavigation';
 import UserProfile from './modal/UserProfile/UserProfile';
 import LiftStack from './modal/RideOrLift/Lift/Lift';
 import RideDetails from './modal/RideDetails/RideDetails';
@@ -20,8 +19,8 @@ import BannerAd from 'components/Ad/BannerAd';
 import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';
 import RideRequestDetails from './modal/RideRequestDetails/RideRequestDetails';
-import { NativeModules } from 'react-native';
 import PassengerDetails from './modal/PassengerDetails/PassengerDetails';
+import Welcome from './modal/Welcome/Welcome';
 
 const Stack = createStackNavigator();
 
@@ -30,7 +29,7 @@ const AppNavigation: React.FC = () => {
   const useAds = useFeatureFlag(FeatureFlags.BANNER_ADS);
   useNotificationsHandler();
 
-  const shouldShowWelcome = false;
+  const shouldShowWelcome = true;
 
   const handleImageChange = (img: string) => {
     dispatch(setTmpImage(img));
@@ -55,8 +54,8 @@ const AppNavigation: React.FC = () => {
           <Stack.Screen name={Screens.RIDE_DETAILS} component={RideDetails} />
           <Stack.Screen name={Screens.RIDEREQUEST_DETAILS} component={RideRequestDetails} />
           <Stack.Screen name={Screens.PASSENGER_DETAILS} component={PassengerDetails} />
+          <Stack.Screen name={Screens.WELCOME} component={Welcome} />
           <Stack.Screen name={Screens.COMMENTS} component={Comments} />
-          <Stack.Screen name={Screens.WELCOME} component={WelcomeNavigation} />
         </Stack.Navigator>
       </AppInitialDataFetcher>
 

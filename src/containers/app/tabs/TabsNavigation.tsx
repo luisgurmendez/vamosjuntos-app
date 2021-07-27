@@ -21,6 +21,7 @@ const TabsNavigation: React.FC = () => {
   const numOfPendingRides = useSelector(getPendingRides).length;
 
   const navigation = useNavigation<any>();
+  console.log(navigation);
   const passenger = useSelector((state: AppState) => state.user.owesReview)
 
   useEffect(() => {
