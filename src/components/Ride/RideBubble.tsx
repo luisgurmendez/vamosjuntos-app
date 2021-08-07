@@ -4,6 +4,7 @@ import Shadow from 'components/Shadow/Shadow';
 import RideDetailsSummary from './RideDetailsSummary';
 import { Stylable } from 'components/types';
 import { Ride } from 'types/models';
+import { colors } from 'utils/colors';
 
 interface RideBubbleProps extends Stylable {
   onPress?: () => void;
@@ -27,5 +28,5 @@ const Container = styled.TouchableOpacity`
   flex-direction: row;
   overflow: hidden;
   width: 100%;
-  background-color: white;
+  background-color: ${colors.white};
 `

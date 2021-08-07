@@ -11,8 +11,12 @@ import ShowCanceledRidesOption from './options/ShowCanceledRidesOption';
 import ShowCompletedRidesOption from './options/ShowCompletedRidesOption';
 import PermissionsOption from './options/PermissionsOption';
 import ShowOldAlertsOption from './options/ShowOldAlertsOption';
+import FAQOption from './options/FAQ/FAQOption';
 
 interface ConfigurationProps { }
+
+//TODO: Add FAQ option, example https://support.blablacar.com/hc/es
+
 
 const Configuration: React.FC<ConfigurationProps> = () => {
   return (
@@ -24,6 +28,7 @@ const Configuration: React.FC<ConfigurationProps> = () => {
         <ShowCanceledRidesOption />
         <ShowCompletedRidesOption />
         <ShowOldAlertsOption />
+        <FAQOption />
         <PermissionsOption />
         <ComplaintOption />
         <AppVersionOption />

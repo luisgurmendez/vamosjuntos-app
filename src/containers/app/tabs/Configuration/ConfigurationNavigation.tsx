@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import Configuration from './Configuration';
 import ConfigurationScreens from './ConfigurationScreens';
 import Complaint from './options/Complaint/Complaint';
+import FAQ from './options/FAQ/FAQ';
 import SavedAddresses from './options/SavedAddresses/SavedAddresses';
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +20,7 @@ const ConfigurationStack: React.FC<ConfigurationStackProps> = ({ }) => {
         headerShown: false
       }}>
       <Stack.Screen name={ConfigurationScreens.OPTIONS} component={Configuration} />
+      <Stack.Screen name={ConfigurationScreens.FAQ} component={FAQ} />
       <Stack.Screen name={ConfigurationScreens.SAVED_ADDRESSES} component={SavedAddresses} />
       <Stack.Screen name={ConfigurationScreens.COMPLAINT} component={Complaint} />
     </Stack.Navigator>

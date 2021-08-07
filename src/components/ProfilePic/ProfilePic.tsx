@@ -20,7 +20,7 @@ const ProfilePic: React.FC<Props> = ({ img, size = 60 }) => {
         onError={handleDownloadImageError}
         style={{ flex: 1, width: '100%' }}
         resizeMode="cover"
-        source={img ? { uri: img } : require('../../assets/profilePlaceholder.jpg')}
+        source={img ? { uri: img, cache: 'force-cache' } : require('../../assets/profilePlaceholder.jpg')}
       />
     </ProfilePicBase>
   )

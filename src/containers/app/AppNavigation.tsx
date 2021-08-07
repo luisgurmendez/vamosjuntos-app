@@ -29,8 +29,6 @@ const AppNavigation: React.FC = () => {
   const useAds = useFeatureFlag(FeatureFlags.BANNER_ADS);
   useNotificationsHandler();
 
-  const shouldShowWelcome = true;
-
   const handleImageChange = (img: string) => {
     dispatch(setTmpImage(img));
   }
@@ -41,7 +39,7 @@ const AppNavigation: React.FC = () => {
       <Toaster />
       <AppInitialDataFetcher>
         <Stack.Navigator
-          initialRouteName={shouldShowWelcome ? Screens.WELCOME : Screens.TABS}
+          initialRouteName={Screens.TABS}
           screenOptions={{
             headerBackTitle: 'Atras',
             headerShown: false

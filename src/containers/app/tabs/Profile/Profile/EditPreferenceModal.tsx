@@ -75,7 +75,7 @@ const EditPreferenceModal: React.FC<EditPreferenceModalProps> = ({ preferences, 
 export default EditPreferenceModal;
 
 const Content = styled.View`
-  backgroundColor: white;
+  backgroundColor: ${colors.white};
   padding: 22px;
   justifyContent: center;
   alignItems: center;

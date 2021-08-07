@@ -1,5 +1,5 @@
+import { Screens } from 'containers/Screens';
 import React from 'react'
-import styled from 'styled-components/native';
 import ToOtherScreenOption from './commons/ToOtherScreenOption';
 
 interface HelpOptionProps {
@@ -8,16 +8,9 @@ interface HelpOptionProps {
 const HelpOption: React.FC<HelpOptionProps> = ({ }) => {
 
   return (
-    <ToOtherScreenOption title="Ayuda" />
+    <ToOtherScreenOption title="Ayuda" toScreen={Screens.WELCOME} />
   )
 
 }
 
 export default HelpOption;
-
-const Container = styled.TouchableOpacity`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`

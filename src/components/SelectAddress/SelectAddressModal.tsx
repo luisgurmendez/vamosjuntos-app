@@ -124,7 +124,7 @@ const CloseContainer = styled.SafeAreaView`
 `;
 
 const Content = styled.View`
-  background-color: white;
+  background-color: ${colors.white};
   flex: 1;
 `;
 

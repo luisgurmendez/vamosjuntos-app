@@ -2,8 +2,7 @@ import React from 'react';
 import { Box } from 'components/Box/Box';
 import { Title } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/Feather';
-import Badge from 'components/Badge/Badge';
+import { colors } from 'utils/colors';
 
 interface PageProps {
   title: string;
@@ -13,7 +12,7 @@ interface PageProps {
 const Page: React.FC<PageProps> = ({ title, renderAction, children }) => {
 
   return (
-    <Container >
+    <Container>
       <Header p={"md"}>
         <Title>
           {title}

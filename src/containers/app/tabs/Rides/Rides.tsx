@@ -79,7 +79,7 @@ const Rides: React.FC = () => {
           scrollEventThrottle={400}
           refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
         >
-          <RidesList title="Por salir" rides={pendingRides} />
+          <RidesList title="Programados" rides={pendingRides} />
           <RidesList title="Cancelados" rides={_canceledRides} />
           <RidesList title="Completados" rides={_completedRides} />
         </Container>

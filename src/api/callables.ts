@@ -4,6 +4,7 @@ import {
 } from './responses';
 import remoteConfig from '@react-native-firebase/remote-config';
 import { southamericaFunctions } from './functions';
+import { FAQItem } from 'containers/app/tabs/Configuration/options/FAQ/FAQ';
 
 export const getUser = async (): Promise<User | undefined> => {
   const user = (await southamericaFunctions.httpsCallable('userMe')()).data;
@@ -223,10 +224,16 @@ export const getUserRideDetails = async (userId: string): Promise<UserRideDetail
   return response.data.details
 };
 
-export async function createCallable<D, R>(callable: string, data: D, defaultValue?: R) {
+export async function createCallable<R, D = {}>(callable: string, data?: D, defaultValue?: R) {
   const response = (await southamericaFunctions.httpsCallable(callable)(data));
   if (response.data.success) {
     return response.data as R
   }
   return defaultValue;
 }
+
+export const getFAQs = async (): Promise<FAQItem[]> => {
+  const response = (await southamericaFunctions.httpsCallable('getFAQs')());
+  console.log(response.data)
+  return response.data.faqs;
+};

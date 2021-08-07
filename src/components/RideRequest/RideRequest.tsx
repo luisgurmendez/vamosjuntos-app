@@ -65,7 +65,7 @@ const Container = styled.View`
   flex-direction: column;
   overflow: hidden;
   width: 100%;
-  background-color: white;
+  background-color: ${colors.white};
   padding: 8px;
 `
 

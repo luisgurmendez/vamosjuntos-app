@@ -6,7 +6,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 
-
 interface PageSliderPaginationProps {
   active: number;
   onPagePress: (pageIndex: number) => void;

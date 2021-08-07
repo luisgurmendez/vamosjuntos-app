@@ -37,5 +37,5 @@ const OriginPin = styled.View`
   height: 15px;
   background-color: ${colors.success};
   border-width: 2px
-  border-color: white;
+  border-color: ${colors.white};
 `

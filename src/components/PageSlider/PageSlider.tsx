@@ -1,7 +1,5 @@
-import { LargeTitle } from 'components/Typography/Typography';
 import React, { useRef, useState } from 'react';
-import { Dimensions, FlatList, LayoutChangeEvent, ListRenderItem, NativeScrollEvent } from 'react-native';
-import { AnyAction } from 'redux';
+import { FlatList, LayoutChangeEvent, ListRenderItem, NativeScrollEvent } from 'react-native';
 import styled from 'styled-components/native';
 import { DeviceDimensions } from 'utils/device';
 import PageSliderPagination from './PageSliderPagination';
@@ -11,7 +9,7 @@ interface PageSliderProps {
   onDone: () => void;
 }
 
-const PageSlider2: React.FC<PageSliderProps> = ({ pages, onDone }) => {
+const PageSlider: React.FC<PageSliderProps> = ({ pages, onDone }) => {
 
   const [width, setWidth] = useState(DeviceDimensions.width);
   const [height, setHeight] = useState(DeviceDimensions.height);
@@ -79,7 +77,7 @@ const PageSlider2: React.FC<PageSliderProps> = ({ pages, onDone }) => {
 
 }
 
-export default PageSlider2;
+export default PageSlider;
 
 const Container = styled.View`
   flex: 1;

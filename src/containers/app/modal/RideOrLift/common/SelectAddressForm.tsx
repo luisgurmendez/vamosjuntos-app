@@ -12,6 +12,7 @@ import useStorage from 'hooks/useStorage';
 import Geolocation from '@react-native-community/geolocation';
 import { getAddressFromCoords } from 'api/geo';
 import SelectSavedAddressModal from './SelectSavedAddressModal';
+import useLocationPermission from 'hooks/useLocationPermission';
 
 interface SelectAddressFormProps {
   onSelectAddress: (address: Address) => void;
@@ -22,11 +23,8 @@ interface SelectAddressFormProps {
 const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, onSelectAddress, addressContext }) => {
   const [selectAddressOpen, setSelectAddressOpen] = useState(false);
   const [selectSavedAddressOpen, setSelectedSavedAddressOpen] = useState(false);
-
-  const { value: savedAddresses } = useStorage<SavedAddress[]>(
-    Storage.ADDRESSES,
-    []
-  );
+  const isLocationPermissionGranted = useLocationPermission()
+  const { value: savedAddresses } = useStorage<SavedAddress[]>(Storage.ADDRESSES, []);
 
   const handleSelectLocationAsAddress = () => {
     Geolocation.getCurrentPosition(async ({ coords: { latitude, longitude } }) => {
@@ -54,16 +52,20 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
       <Button icon="map" onPress={() => setSelectAddressOpen(true)} type="secondary">
         Elegir en el mapa
       </Button>
-      <Box mt="lg">
-        <Button icon="map-pin" onPress={handleSelectLocationAsAddress} type="secondary">
-          Elegir mi ubicacion
+      {isLocationPermissionGranted && (
+        <Box mt="lg">
+          <Button icon="map-pin" onPress={handleSelectLocationAsAddress} type="secondary">
+            Elegir mi ubicacion
       </Button>
-      </Box>
-      <Box mt="lg" mb="lg">
-        <Button icon="crosshair" disabled={savedAddresses.length === 0} onPress={() => setSelectedSavedAddressOpen(true)} type="secondary">
-          Elegir de mis direcciónes
+        </Box>
+      )}
+      {savedAddresses.length > 0 && (
+        <Box mt="lg" mb="lg">
+          <Button icon="crosshair" onPress={() => setSelectedSavedAddressOpen(true)} type="secondary">
+            Elegir de mis direcciónes
       </Button>
-      </Box>
+        </Box>
+      )}
       <Box mb="lg" mt="lg">
         <Box mb="md">
           <Subtitle>{addressContext}</Subtitle>

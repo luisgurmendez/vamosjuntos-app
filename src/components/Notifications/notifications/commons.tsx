@@ -3,16 +3,13 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { Body, Bold } from 'components/Typography/Typography';
 import { Stylable } from 'components/types';
 import { Notification, User } from 'types/models';
-import Shadow from 'components/Shadow/Shadow';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import { Box } from 'components/Box/Box';
-import PressAnimation from 'components/Animations/PressAnimation';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from 'containers/Screens';
 import moment from 'moment';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import PlainButton from 'components/Button/PlainButton';
 
 export interface BaseNotificationProps extends Stylable {
   notification: Notification;
@@ -72,7 +69,7 @@ export const BaseNotification: React.FC<BaseNotificationProps> = ({ notification
 const Container = styled.View`
   padding: 8px;
   background-color: ${colors.white};
-  border-radius: 4px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;

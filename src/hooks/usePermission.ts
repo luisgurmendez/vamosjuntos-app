@@ -13,7 +13,7 @@ function usePermission(permission: Permission, shouldRequestPermission: boolean 
   useEffect(() => {
     check(permission).then((checkedPerms) => {
       if (checkedPerms !== RESULTS.GRANTED) {
-        shouldRequestPermission && requestPermission();
+        shouldRequestPermission ? requestPermission() : setIsAvailable(false);
       } else {
         setIsAvailable(true);
       }

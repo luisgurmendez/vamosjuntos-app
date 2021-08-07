@@ -110,7 +110,6 @@ const FCMPermissions: React.FC = ({ children }) => {
     // const enabled =
     //   messagingAuthorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
     //   messagingAuthorizationStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
   }
 
   useEffect(() => {

@@ -24,6 +24,8 @@ import { getUser } from 'state/user/selectors';
 import storage from '@react-native-firebase/storage'
 import crashlytics from '@react-native-firebase/crashlytics';
 import useCameraPermission from 'hooks/useCameraPermission';
+import Icon from 'react-native-vector-icons/Feather';
+import RememberToAddPhoneNumberModal from './RememberToAddPhoneNumber';
 
 interface ProfileProps { }
 
@@ -34,13 +36,12 @@ const Profile: React.FC<ProfileProps> = () => {
   const user = useSelector(getUser);
   const rides = useSelector((state: AppState) => state.ride.rides);
   const tmpUserImage = useSelector((state: AppState) => state.camera.tmpImage);
-
   const [editingUser, setEditingUser] = useState<User>(user!);
   const [isUpdatingUser, setIsUpdatingUser] = useState(false);
-
   const isCameraPermissionGranted = useCameraPermission();
-
   const dispatch = useDispatch();
+
+  const [shouldRememberToAddPhone, setShouldRememberToAddPhone] = useState(user?.phone === undefined || user?.phone === '');
 
   useEffect(() => {
 
@@ -133,9 +134,10 @@ const Profile: React.FC<ProfileProps> = () => {
         <Box mt="lg">
           {editing ? <NameInput onChangeText={handleNameChange} value={editingUser.name} /> : <Subtitle>{editingUser.name}</Subtitle>}
         </Box>
-        <Box mt="lg">
-          {editing ? <PhoneInput onChangeText={handlePhoneChange} value={editingUser.phone} /> : <LargeBody>{editingUser.phone}</LargeBody>}
-        </Box>
+        <Row mt="lg">
+          <Icon style={{ marginRight: 8, }} color={colors.black} name="phone" size={20} />
+          {editing ? <PhoneInput autoFocus={true} onChangeText={handlePhoneChange} value={editingUser.phone} /> : <LargeBody>{editingUser.phone ?? '-'}</LargeBody>}
+        </Row>
         <ProfileReviews userId={user?.id!} disabledReviews={editing} score={user?.score!} />
         <RidesAndLifts rides={numOfRides} lifts={numOfLifts} />
         <PreferenceList preferences={editingUser.preferences}>
@@ -149,9 +151,11 @@ const Profile: React.FC<ProfileProps> = () => {
         open={preferenceModalOpen}
         onClose={() => setPreferenceModalOpen(false)}
       />
+      <RememberToAddPhoneNumberModal open={shouldRememberToAddPhone} onClose={() => setShouldRememberToAddPhone(false)} />
     </Container>
   );
 };
+
 export default Profile;
 
 const Container = styled.SafeAreaView`
@@ -181,4 +185,11 @@ const NameInput = styled(PlainInput)`
 const PhoneInput = styled(PlainInput)`
   font-weight: 400;
   font-size: 20px;
+  min-width: 50px;
+`
+
+const Row = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `
