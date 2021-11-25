@@ -41,6 +41,7 @@ const Profile: React.FC<ProfileProps> = () => {
   const isCameraPermissionGranted = useCameraPermission();
   const dispatch = useDispatch();
 
+
   const [shouldRememberToAddPhone, setShouldRememberToAddPhone] = useState(user?.phone === undefined || user?.phone === '');
 
   useEffect(() => {
@@ -66,7 +67,7 @@ const Profile: React.FC<ProfileProps> = () => {
       dispatch(setShowCamera(true));
     } else {
       Toaster.warn({
-        message: 'Tenes que habilitar los permisios de la camara'
+        message: 'Tenes que habilitar los permisos de la cámara'
       })
     }
   }
@@ -85,7 +86,6 @@ const Profile: React.FC<ProfileProps> = () => {
         const imgUrl = await imgRef.getDownloadURL();
         editingUser.img = imgUrl
       }
-      console.log('calling update user')
       const updatedUser = await updateUser(editingUser);
       dispatch(setUser(updatedUser));
       setEditingUser(updatedUser);

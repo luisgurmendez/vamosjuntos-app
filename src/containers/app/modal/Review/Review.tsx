@@ -19,7 +19,7 @@ const Review: React.FC<ReviewProps> = ({ route: { params: { passenger } } }) => 
 
   const handleSubmitReview = (values: ReviewFormValues) => {
     createReview({ ...values, rideId: passenger.ride.id, passengerId: passenger.id, toUserId: passenger.ride.driver.id }); // Silent request
-    Toaster.success('Gracias!')
+    Toaster.success('¡Gracias!')
     navigation.goBack(null);
   }
 

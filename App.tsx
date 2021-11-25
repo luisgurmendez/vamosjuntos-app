@@ -94,7 +94,6 @@ const SetupApp: React.FC = ({ children }) => {
         {!hasInternetConnection && <SafeAreaView><ErrorBanner>No hay conexion a internet</ErrorBanner></SafeAreaView>}
         {children}
       </HideIfLoading>
-
     </Container>
   );
 }

@@ -58,7 +58,7 @@ const EditPreferenceModal: React.FC<EditPreferenceModalProps> = ({ preferences, 
     <Modal isVisible={open} onBackdropPress={onClose} backdropTransitionOutTiming={0}>
       <Content>
         <Subtitle>
-          Edita tus preferencias de viaje
+          Editá tus preferencias de viaje
         </Subtitle>
         <PreferencesContainer mt={"lg"}>
           {allPreferences.map(p => (

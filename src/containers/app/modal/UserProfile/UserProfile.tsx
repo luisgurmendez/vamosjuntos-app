@@ -27,8 +27,6 @@ const UserProfile: React.FC<UserProfileProps> = ({ route: { params: { user } } }
   useEffect(() => {
     console.log(wppUrl);
     Linking.canOpenURL(wppUrl).then((can) => {
-      console.log(wppUrl);
-      console.log(can);
       if (can) {
         setCanGoToWpp(true)
       }

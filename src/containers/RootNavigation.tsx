@@ -17,7 +17,7 @@ const RootNavigation: React.FC = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerBackTitle: 'Atras',
+        headerBackTitle: 'Atrás',
         headerShown: false,
       }}>
       {isLoggedIn ?

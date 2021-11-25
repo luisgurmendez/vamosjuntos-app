@@ -26,7 +26,7 @@ const RideSummary: React.FC = () => {
   return (
     <Wizard action={{ disabled: !isValid, onPress: handleSubmit, label: 'Crear viaje', loading: isSubmitting }} title="¡Ultimo paso!">
       <Subtitle>Estas a punto de crear un viaje.</Subtitle>
-      <Body>Verifica que la informacion sea correcta</Body>
+      <Body>Verifica que la información sea correcta</Body>
       <Content >
         <IconedValue icon="map-pin">
           <WhereFromToWhereTo whereFrom={values.whereFrom!} whereTo={values.whereTo!} />
@@ -39,11 +39,11 @@ const RideSummary: React.FC = () => {
           <Body>Entran {values.capacity} personas</Body>
         </IconedValue>
         <IconedValue icon="dollar-sign">
-          <Body>Pedis una colaboracion de {values.price}$ c/u</Body>
+          <Body>Pedís una colaboración de {values.price}$ c/u</Body>
         </IconedValue>
         <IconedValue icon="zap">
           <InstantApprovalContainer>
-            <ExpandedBody>¿Queres que los pasajeros reserven de forma automática?</ExpandedBody>
+            <ExpandedBody>¿Querés que los pasajeros reserven de forma automática?</ExpandedBody>
             <Switch value={values.instantApproval} onValueChange={handleInstantApprovalChange} trackColor={{ true: colors.main, false: '' }} />
           </InstantApprovalContainer>
         </IconedValue>

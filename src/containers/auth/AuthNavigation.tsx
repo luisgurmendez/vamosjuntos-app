@@ -17,7 +17,7 @@ const AuthNavigation: React.FC = () => {
       <Toaster />
       <Stack.Navigator
         screenOptions={{
-          headerBackTitle: 'Atras',
+          headerBackTitle: 'Atrás',
           headerShown: false
         }}>
         <Stack.Screen name={Screens.LOGIN} component={Login} />

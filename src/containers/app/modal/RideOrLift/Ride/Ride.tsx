@@ -60,7 +60,7 @@ const RideStack: React.FC = () => {
       >
         <Stack.Navigator
           screenOptions={{
-            headerBackTitle: 'Atras',
+            headerBackTitle: 'Atrás',
             headerShown: false
           }}>
           <Stack.Screen name={RideScreens.WHERE_FROM} component={RideWhereFrom} />

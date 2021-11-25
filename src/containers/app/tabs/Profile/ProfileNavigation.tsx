@@ -10,7 +10,7 @@ const ProfileNavigation: React.FC = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerBackTitle: 'Atras',
+        headerBackTitle: 'Atrás',
         headerShown: false
       }}>
       <Stack.Screen name={Screens.PROFILE} component={Profile} />

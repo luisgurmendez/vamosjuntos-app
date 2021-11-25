@@ -10,7 +10,7 @@ const WelcomeSlide: React.FC = () => {
         Hola 👋👋
       </LargeTitle>
       <Title style={{ marginTop: 24, color: 'white' }}>
-        ¿Estas listo para empezar a compartir viajes?
+        ¿Estás listo para empezar a compartir viajes?
       </Title>
     </Container>
 

@@ -11,8 +11,6 @@ interface RideRequestsListProps {
 
 const RideRequestsList: React.FC<RideRequestsListProps> = ({ rideRequests }) => {
 
-  console.log(rideRequests);
-
   return (
     <Container>
       <Box pb="lg">

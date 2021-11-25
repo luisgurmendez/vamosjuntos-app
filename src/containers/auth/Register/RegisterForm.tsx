@@ -13,10 +13,10 @@ const RegisterFormSchema = Yup.object().shape({
   email: Yup.string().required('Email requerido'),
   phone: Yup.string()
     .required('Celular requerido')
-    .matches(/^[0-9]+$/, "Solo numeros")
-    .test('len', 'Numero invalido', val => val ? val.length === 8 : false),
+    .matches(/^[0-9]+$/, "Solo números")
+    .test('len', 'Número inválido', val => val ? val.length === 8 : false),
   name: Yup.string().required('Nombre requerido'),
-  password: Yup.string().min(8, 'La contraseña debe tener mas de 8 caracteres').required('Contraseña requerida'),
+  password: Yup.string().min(8, 'La contraseña debe tener más de 8 caracteres').required('Contraseña requerida'),
   passwordConfirmation: Yup.string()
     .test('passwords-match', 'Las contraseñas deben coincidir', function (value) {
       return this.parent.password === value

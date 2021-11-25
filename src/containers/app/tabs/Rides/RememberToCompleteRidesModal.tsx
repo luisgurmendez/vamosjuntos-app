@@ -1,7 +1,6 @@
 import SimpleModal from 'components/Modal/SimpleModal';
 import { Body } from 'components/Typography/Typography';
 import React from 'react'
-import styled from 'styled-components/native';
 
 interface RememberToCompleteRidesModalProps {
   open: boolean;
@@ -19,7 +18,3 @@ const RememberToCompleteRidesModal: React.FC<RememberToCompleteRidesModalProps> 
 }
 
 export default RememberToCompleteRidesModal;
-
-const Container = styled.View`
-
-`

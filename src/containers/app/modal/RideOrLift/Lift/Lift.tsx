@@ -56,7 +56,7 @@ const LiftStack: React.FC = () => {
       >
         <Stack.Navigator
           screenOptions={{
-            headerBackTitle: 'Atras',
+            headerBackTitle: 'Atrás',
             headerShown: false
           }}>
           <Stack.Screen name={LiftScreens.WHERE_FROM} component={LiftWhereFrom} />

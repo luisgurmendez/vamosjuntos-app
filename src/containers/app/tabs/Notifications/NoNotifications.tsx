@@ -9,7 +9,7 @@ const NoNotifications: React.FC<NoNotificationsProps> = ({ }) => {
 
   return (
     <Container>
-      <Subtitle>No tenes nuevas alertas</Subtitle>
+      <Subtitle>No tenés nuevas alertas</Subtitle>
     </Container>
   )
 

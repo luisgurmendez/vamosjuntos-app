@@ -55,7 +55,7 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
       {isLocationPermissionGranted && (
         <Box mt="lg">
           <Button icon="map-pin" onPress={handleSelectLocationAsAddress} type="secondary">
-            Elegir mi ubicacion
+            Elegir mi ubicación
       </Button>
         </Box>
       )}

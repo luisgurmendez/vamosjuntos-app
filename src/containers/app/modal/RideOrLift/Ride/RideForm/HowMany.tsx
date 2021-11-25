@@ -11,7 +11,7 @@ const HowMany: React.FC = () => {
   const isFieldValid = howManyMeta.error === undefined;
 
   return (
-    <Wizard action={{ disabled: !isFieldValid }} nextScreen={RideScreens.WHEN} title="¿A cuantos llevas?">
+    <Wizard action={{ disabled: !isFieldValid }} nextScreen={RideScreens.WHEN} title="¿A cuántos llevas?">
       <Container>
         <NumberSelect max={8} min={1} count={howMany.value} onChange={howManyHelpers.setValue} />
       </Container>

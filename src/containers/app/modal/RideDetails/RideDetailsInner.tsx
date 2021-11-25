@@ -101,7 +101,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
         <Content>
           <RideDetailsSummary ride={ride} />
           <IconedValue icon="dollar-sign">
-            <Body>Se pide una colaboracion de {ride.price}$</Body>
+            <Body>Se pide una colaboración de {ride.price}$</Body>
           </IconedValue>
           <Subtitle>Conductor</Subtitle>
           <UserCard user={ride.driver} />

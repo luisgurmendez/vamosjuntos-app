@@ -16,7 +16,7 @@ const ConfigurationStack: React.FC<ConfigurationStackProps> = ({ }) => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerBackTitle: 'Atras',
+        headerBackTitle: 'Atrás',
         headerShown: false
       }}>
       <Stack.Screen name={ConfigurationScreens.OPTIONS} component={Configuration} />

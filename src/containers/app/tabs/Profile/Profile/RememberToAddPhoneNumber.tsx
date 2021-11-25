@@ -12,9 +12,9 @@ interface RememberToAddPhoneNumberModalProps {
 const RememberToAddPhoneNumberModal: React.FC<RememberToAddPhoneNumberModalProps> = (props) => {
   return (
     <SimpleModal {...props}>
-      <Body>Para que tus pasajeros o conductor puedan comunicarse contigo, acordate de agregar un numero de telefono.</Body>
+      <Body>Para que tus pasajeros o conductor puedan comunicarse contigo, acordate de agregar un numero de teléfono.</Body>
       <Body></Body>
-      <Body>Anda a tu perfil y apreta en <EditText>Editar</EditText></Body>
+      <Body>Anda a tu perfil y apretá en <EditText>Editar</EditText></Body>
     </SimpleModal>
   )
 }

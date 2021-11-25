@@ -37,7 +37,7 @@ const JoinRide: React.FC<JoinRideProps> = ({ route: { params: { ride } } }) => {
   }, [])
 
   return (
-    <Wizard action={{ disabled: !isValid, loading: isSubmitting, label: 'Unirme', onPress: handleSubmit }} title="¿Te unis?" >
+    <Wizard action={{ disabled: !isValid, loading: isSubmitting, label: 'Unirme', onPress: handleSubmit }} title="¿Te unís?" >
       <Content>
         <IconedValue icon="map-pin">
           <WhereFromToWhereTo whereFrom={ride.whereFrom!} whereTo={ride.whereTo!} />
@@ -47,7 +47,7 @@ const JoinRide: React.FC<JoinRideProps> = ({ route: { params: { ride } } }) => {
           <Body>{getDateTimeText(ride.date)}</Body>
         </IconedValue>
         <IconedValue icon="dollar-sign">
-          <Body>Se pide una colaboracion de {ride.price}$</Body>
+          <Body>Se pide una colaboración de {ride.price}$</Body>
         </IconedValue>
         <IconedValue icon="user">
           <TouchableOpacity onPress={handlePressUser}>

@@ -41,7 +41,7 @@ const AppNavigation: React.FC = () => {
         <Stack.Navigator
           initialRouteName={Screens.TABS}
           screenOptions={{
-            headerBackTitle: 'Atras',
+            headerBackTitle: 'Atrás',
             headerShown: false
           }}>
           <Stack.Screen name={Screens.TABS} component={TabsNavigation} />

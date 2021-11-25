@@ -13,7 +13,6 @@ interface RideRequestDetailsProps {
 const RideRequestDetails: React.FC<RideRequestDetailsProps> = ({ route: { params: { user, rideRequest } } }) => {
   const safeAreaInsets = useSafeAreaInsets();
 
-  console.log(rideRequest);
   return (
     <Container>
       <FloatingHeader style={{ top: safeAreaInsets.top }} showBack title={user.name} />

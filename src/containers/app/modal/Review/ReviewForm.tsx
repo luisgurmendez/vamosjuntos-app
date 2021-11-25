@@ -38,13 +38,13 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ toUser, onSubmit }) => {
         <Content>
           <FieldsContainer>
             <ScoreContainer>
-              <Subtitle>Como estuvo tu viaje con {toUser.name}? <RequiredFieldText>*</RequiredFieldText></Subtitle>
+              <Subtitle>¿Como estuvo tu viaje con {toUser.name}? <RequiredFieldText>*</RequiredFieldText></Subtitle>
               <ScoreInput score={values.score} onChange={(score) => setFieldValue('score', score)} />
             </ScoreContainer>
             <CommentContainer>
               <Subtitle>Deja un comentario</Subtitle>
               <MultilinedTextInput
-                placeholder="ej. Maneja con cuidado"
+                placeholder="ej. Manejá con cuidado"
                 value={values.comment}
                 multiline
                 numberOfLines={4}

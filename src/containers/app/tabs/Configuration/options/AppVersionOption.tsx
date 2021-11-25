@@ -12,7 +12,7 @@ const AppVersionOption: React.FC<AppVersionOptionProps> = ({ }) => {
 
   return (
     <ConfigurationOption>
-      <Body>Version {version}</Body>
+      <Body>Versión {version}</Body>
     </ConfigurationOption>
   )
 

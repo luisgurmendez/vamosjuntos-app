@@ -33,7 +33,7 @@ const Price: React.FC = () => {
   }
 
   return (
-    <Wizard action={{ disabled: !isFieldValid, onPress: handleNextScreen }} title="¿Por cuanto?">
+    <Wizard action={{ disabled: !isFieldValid, onPress: handleNextScreen }} title="¿Por cuánto?">
       <GrayedBody>
         Recuerda que nuestra comunidad se basa en la idea de compartir, no en ganar dinero.
       </GrayedBody>

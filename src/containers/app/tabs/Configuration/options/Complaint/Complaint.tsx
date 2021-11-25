@@ -23,7 +23,7 @@ const Complaint: React.FC<ComplaintProps> = ({ }) => {
     try {
       await sendComplaint(complaint);
       navigation.goBack();
-      Toaster.success('Queja guarada.')
+      Toaster.success('Queja guardada.')
     } catch (e) {
       Toaster.alert('Error guardando tu queja.')
     }

@@ -7,15 +7,12 @@ const TermsAndConditionsSlide: React.FC = () => {
   return (
     <Container>
       <LargeTitle style={{ color: 'white' }}>
-        Terminos y condiciones
+        Términos y condiciones
       </LargeTitle>
 
       <Title style={{ marginTop: 24, color: 'white' }}>
         Condiciones generales de uso:
       </Title>
-      <Body style={{ color: 'white' }}>
-        Acepto no hacer nada estupido
-      </Body>
     </Container>
   )
 }

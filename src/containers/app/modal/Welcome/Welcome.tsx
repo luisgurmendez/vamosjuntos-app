@@ -7,6 +7,7 @@ import WelcomeSlide from './slides/WelcomeSlide';
 import HowItWorksSlide from './slides/HowItWorksSlide';
 import TermsAndConditionsSlide from './slides/TermsAndConditionsSlide';
 import Storage from 'storage/Storage';
+import SafeTravelsSlide from './slides/SafeTravelsSlide';
 
 
 // TODO: Implement Welcome screens.
@@ -30,7 +31,8 @@ const Welcome: React.FC = () => {
   const slides = [
     <WelcomeSlide />,
     <HowItWorksSlide />,
-    <TermsAndConditionsSlide />
+    <SafeTravelsSlide />
+    // <TermsAndConditionsSlide />
   ];
 
   const handleOnDone = async () => {

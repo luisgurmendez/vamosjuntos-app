@@ -29,7 +29,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ }) => {
       await forgotPassword(values.email);
       navigation.goBack();
       Toaster.success({
-        message: 'Te mandamos un mail para que puedas resetear tu contraseña, esta vez no te la olvides 🙂'
+        message: 'Te mandamos un mail para que puedas restaurar tu contraseña, esta vez no te la olvides 🙂'
       })
     } catch (e) {
       Toaster.alert({ message: '¿Escribiste bien el mail?' })

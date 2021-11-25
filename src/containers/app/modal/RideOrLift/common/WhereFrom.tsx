@@ -9,7 +9,7 @@ interface WhereProps {
   title?: string;
 }
 
-const WhereFrom: React.FC<WhereProps> = ({ nextScreen, title = '¿De donde salis?' }) => {
+const WhereFrom: React.FC<WhereProps> = ({ nextScreen, title = '¿De donde salís?' }) => {
   const [whereFrom, whereFromMeta, whereFromHelpers] = useField<Address>('whereFrom');
   const isFieldValid = whereFromMeta.error === undefined
 

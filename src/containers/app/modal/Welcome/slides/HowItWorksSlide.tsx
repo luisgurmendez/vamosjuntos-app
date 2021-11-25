@@ -18,15 +18,15 @@ const HowItWorksSlide: React.FC = () => {
   const asADriver = () => {
     return (
       <>
-        <Step num={1} title={"Crea un viaje"}>
+        <Step num={1} title={"Creá un viaje"}>
         </Step>
         <Step num={2} title={"Aceptá solicitudes de viaje"}>
 
         </Step>
-        <Step num={3} title={"Habla con tus pasajeros"}>
+        <Step num={3} title={"Hablá con tus pasajeros"}>
 
         </Step>
-        <Step num={4} title={"Maneja con cuidado!"}>
+        <Step num={4} title={"Manejá con cuidado!"}>
 
         </Step>
       </>
@@ -36,13 +36,13 @@ const HowItWorksSlide: React.FC = () => {
   const asAPassenger = () => {
     return (
       <>
-        <Step num={1} title={"Busca un viaje"}>
+        <Step num={1} title={"Buscá un viaje"}>
         </Step>
-        <Step num={2} title={"Espera a ser aceptado"}>
+        <Step num={2} title={"Esperá a ser aceptado"}>
         </Step>
-        <Step num={3} title={"Habla con tu conductor"}>
+        <Step num={3} title={"Hablá con tu conductor"}>
         </Step>
-        <Step num={4} title={"Disfruta del viaje!"}>
+        <Step num={4} title={"¡Disfrutá del viaje!"}>
         </Step>
         <Step num={5} title="Dejale un comentario a tu conductor">
 
