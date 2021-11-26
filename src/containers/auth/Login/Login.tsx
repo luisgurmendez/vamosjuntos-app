@@ -41,7 +41,7 @@ const Login: React.FC = () => {
       <KeyboardShift>
         <Header>
           <PlainButton onPress={handleRegister}>
-            Registrate
+            Regístrate
           </PlainButton>
         </Header>
         <Content >

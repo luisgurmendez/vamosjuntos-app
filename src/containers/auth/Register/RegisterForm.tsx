@@ -80,6 +80,7 @@ const RegisterForm: React.FC = () => {
                 textContentType="password"
                 error={errors.password}
                 secureTextEntry
+                blurOnSubmit={false} 
                 onChangeText={handleChange('password')}
                 value={values.password}
               />
@@ -88,13 +89,14 @@ const RegisterForm: React.FC = () => {
                 placeholder="Confirmar contraseña"
                 error={errors.passwordConfirmation}
                 secureTextEntry
+                blurOnSubmit={false} 
                 onChangeText={handleChange('passwordConfirmation')}
                 value={values.passwordConfirmation}
               />
             </MarginedChildren>
 
             <Button disabled={isSubmitting || !isValid} loading={isSubmitting} onPress={handleSubmit}>
-              Registrate
+              Regístrate
             </Button>
           </FormContent>
         )}

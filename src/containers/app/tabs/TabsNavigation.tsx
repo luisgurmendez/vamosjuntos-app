@@ -14,13 +14,16 @@ import { useNavigation } from '@react-navigation/native';
 import { getPendingRides } from 'state/ride/selectors';
 import useStorage from 'hooks/useStorage';
 import Storage from 'storage/Storage';
+import { getUser } from 'state/user/selectors';
 
 const Tab = createBottomTabWithMenuNavigator();
 
 const TabsNavigation: React.FC = () => {
-
+  
+  const user = useSelector(getUser);
   const numOfNotificaitons = useSelector(getNumberOfUnseenNotifications);
   const numOfPendingRides = useSelector(getPendingRides).length;
+  const numOfProfileValuesNeedingFixes = user?.phone === undefined || user?.phone === '' || user?.phone === null ? 1 : 0;
   useRedirectInitialRoute();
 
   return (
@@ -34,7 +37,7 @@ const TabsNavigation: React.FC = () => {
           tabBarOptions={{ showLabel: true }}>
           <Tab.Screen name={Screens.RIDES_TAB} options={RidesTabOptions(numOfPendingRides)} component={RidesNavigation} />
           <Tab.Screen name={Screens.NOTIFICATIONS_TAB} options={NotificationsTabOptions(numOfNotificaitons)} component={Notifications} />
-          <Tab.Screen name={Screens.PROFILE_TAB} options={ProfileTabOptions} component={ProfileNavigation} />
+          <Tab.Screen name={Screens.PROFILE_TAB} options={ProfileTabOptions(numOfProfileValuesNeedingFixes)} component={ProfileNavigation} />
           <Tab.Screen name={Screens.SETTINGS_TAB} options={ConfigurationTabOptions} component={ConfigurationNavigation} />
         </Tab.Navigator>
       </SafeAreaView>

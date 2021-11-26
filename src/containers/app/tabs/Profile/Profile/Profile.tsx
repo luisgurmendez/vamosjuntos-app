@@ -41,8 +41,7 @@ const Profile: React.FC<ProfileProps> = () => {
   const isCameraPermissionGranted = useCameraPermission();
   const dispatch = useDispatch();
 
-
-  const [shouldRememberToAddPhone, setShouldRememberToAddPhone] = useState(user?.phone === undefined || user?.phone === '');
+  const [shouldRememberToAddPhone, setShouldRememberToAddPhone] = useState(user?.phone === undefined || user?.phone === '' || user?.phone === null);
 
   useEffect(() => {
 

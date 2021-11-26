@@ -26,7 +26,7 @@ const FAQs: React.FC = () => {
     <PageWithBack title="Preguntas Frecuentes">
       <HideIfLoading loading={isFetchingFAQs}>
         <ScrollView>
-          {faqs.map((faq, i) => <FAQ faq={faq} open={openFAQ === i} onOpenChange={handleToggleOpen(i)} />)}
+          {faqs.map((faq, i) => <FAQ key={i} faq={faq} open={openFAQ === i} onOpenChange={handleToggleOpen(i)} />)}
         </ScrollView>
       </HideIfLoading>
     </PageWithBack>

@@ -12,7 +12,6 @@ function useNotificationsHandler() {
   const dispatch = useDispatch();
 
   const handleGetNotifications = async (message: RemoteMessage) => {
-    console.log(message);
     const _notifications = await getNotifications();
     dispatch(setNotifications(_notifications))
   }
@@ -29,7 +28,6 @@ function useUpdateUsersNotificationToken() {
     const user = getFirebaseUser();
     if (user) {
       messaging().getToken().then(t => {
-        console.log(t);
         updateUserNotificationToken(t, user.uid);
       })
 
@@ -37,7 +35,6 @@ function useUpdateUsersNotificationToken() {
         updateUserNotificationToken(t, user.uid);
       })
     }
-
   }, [])
 }
 

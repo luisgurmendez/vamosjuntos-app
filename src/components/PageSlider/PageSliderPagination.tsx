@@ -31,7 +31,7 @@ const PageSliderPagination: React.FC<PageSliderPaginationProps> = ({ active, onP
         <DotsContainer>
           {renderDots()}
         </DotsContainer>
-        {isLastPage && <Button type='secondary' onPress={onDone}>Ta</Button>}
+        {isLastPage && <Button type='secondary' onPress={onDone}>👍</Button>}
       </SafeAreaView>
     </Container>
   )

@@ -5,7 +5,7 @@ import PageWithBack from 'components/Page/PageWithBack';
 
 const Register: React.FC = () => {
   return (
-    <PageWithBack title={'Registrate'}>
+    <PageWithBack title={'Regístrate'}>
       <ScrollContent>
         <RegisterForm />
       </ScrollContent>

@@ -9,10 +9,10 @@ import PreferenceIcon from './PreferenceIcon';
 const preferenceTypeToText = {
   'noSmoke': 'No me banco el ciagarro en el auto',
   'smoke': 'No me molesta que fumes',
-  'noPets': '¿Y si mea?',
-  'pet': 'Es tan lindo, ¿lo puedo acariciar?',
-  'music': 'Subi el volumen!',
-  'noMusic': '¿Podes bajar el volumen? Gracias',
+  'noPets': 'Perdon, no me gustan los animales',
+  'pet': '¡Amo los animales!',
+  'music': '¡Subi el volumen!',
+  'noMusic': 'Me molesta la musica',
   'alwaysMask': 'Nos cuidamos entre todos',
   'talk': 'Bla bla bla bla, hablo como loco',
   'noTalk': 'No me hables'
