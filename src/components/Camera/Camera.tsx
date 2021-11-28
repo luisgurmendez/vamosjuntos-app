@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { RNCamera } from 'react-native-camera';
-import { View, Image } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
 import Loading from 'components/Loading/Loading';
@@ -9,9 +9,8 @@ import AbsolutePositioned from 'components/AbsolutePositioned/AbsolutePositioned
 import AnimatedCamera from './AnimatedCamera';
 import ImageResizer from 'react-native-image-resizer';
 import { setShowCamera } from 'state/camera/actions';
-import PlainButton from 'components/Button/PlainButton';
-import { colors } from 'utils/colors';
 import useCameraPermission from 'hooks/useCameraPermission';
+import { DeviceDimensions } from 'utils/device';
 
 interface CameraProps {
   onImageChange?: (img: string) => void;
@@ -24,7 +23,6 @@ const Camera: React.FC<CameraProps> = ({ onImageChange, onCancel }) => {
   const cameraRef = useRef<RNCamera | null>(null);
   const [image, setImage] = useState<string | undefined>(undefined);
   const [takingImage, setTakingImage] = useState(false);
-  const [cameraType, setCameraType] = useState<'front' | 'back'>('front');
   const isCameraPermissionGranted = useCameraPermission()
 
   const handleRetryImage = () => {
@@ -34,20 +32,9 @@ const Camera: React.FC<CameraProps> = ({ onImageChange, onCancel }) => {
     }
   }
 
-  const handleChangeCameraType = () => {
-    setCameraType(t => {
-      if (t === 'front') {
-        return 'back';
-      } else {
-        return 'front'
-      }
-    })
-  }
-
   const handleAcceptImage = async () => {
     if (onImageChange && image) {
       const newImage = await ImageResizer.createResizedImage(image, 800, 800, "JPEG", 20);
-      console.log(newImage.size);
       onImageChange(newImage.uri);
       handleOnCancel();
     }
@@ -82,27 +69,41 @@ const Camera: React.FC<CameraProps> = ({ onImageChange, onCancel }) => {
       <AnimatedCamera>
         <Container>
           {!image ? <BaseCamera
-            type={cameraType}
+            type={'front'}
             captureAudio={false}
             ref={cameraRef}
             useNativeZoom
             autoFocus={RNCamera.Constants.AutoFocus.on}
           >
+            <>
+            <View style={{...StyleSheet.absoluteFillObject, justifyContent:"center", alignItems:"center", alignSelf:"center"}}>
+              <CroppedFinalImageMark/>
+            </View>
             <CloseButtonContainer pointerEvents='box-none'>
               <StyledIcon name="x" size={40} onPress={handleOnCancel} />
             </CloseButtonContainer>
+            </>
           </BaseCamera>
-            : <PreviewImageTaken style={{ transform: [{ scaleX: cameraType === 'back' ? 1 : -1 }] }} resizeMode="cover" source={{ uri: image }} />}
-          <CameraActionsContainer>
-            {image ? <StyledIcon name="check" size={40} onPress={handleAcceptImage} /> : <View style={{ width: 30 }} />}
+            : <PreviewImageTaken style={{ transform: [{ scaleX: -1 }] }} resizeMode="cover" source={{ uri: image }} />}
+            <CameraActionsContainer>
+            <PaddedCameraActionsContainer>
+
+            {image ? 
+              <StyledIcon name="refresh-cw" size={30} onPress={handleRetryImage} />
+              :
+              <View style={{ width: 30 }} />
+            }
+
             {!image && <IconContainer onPress={!takingImage ? takePicture : undefined}>
               {!takingImage ? <StyledIcon size={40} name="camera" /> : <Loading size={40} />}
             </IconContainer>}
+
             {image ?
-              <PlainButton textStyle={{ color: colors.white }} onPress={handleRetryImage} >Cancelar</PlainButton>
+              <StyledIcon name="check" size={40} onPress={handleAcceptImage} /> 
               :
-              <StyledIcon name="refresh-cw" size={30} onPress={handleChangeCameraType} />
+              <View style={{ width: 30 }} />
             }
+            </PaddedCameraActionsContainer>
           </CameraActionsContainer>
         </Container>
       </AnimatedCamera>
@@ -124,21 +125,26 @@ const BaseCamera = styled(RNCamera)`
   flex: 1;
 `
 
-const CameraActionsContainer = styled.View`
-  backgroundColor: transparent;
+const PaddedCameraActionsContainer = styled.View`
+  paddingVertical: 8px;
+  paddingHorizontal: 20px;
+  width: 100%;
   display: flex;
   alignItems: center;
   justifyContent: space-between;
   flex-direction: row;
-  position:absolute;
-  bottom: 30px;
+`
+const CameraActionsContainer = styled.SafeAreaView`
+  backgroundColor: rgba(0,0,0,0.6);
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  paddingHorizontal: 20px;
 `
 
 const StyledIcon = styled(Icon)`
   backgroundColor: transparent;
   color: white;
+  padding:8px;
 `
 
 const IconContainer = styled.TouchableOpacity`
@@ -157,6 +163,15 @@ const CloseButtonContainer = styled.SafeAreaView`
   flexDirection: row;
   display: flex;
   margin-right: 15px;
+`
+
+const CroppedFinalImageMark = styled.View`
+  width: ${DeviceDimensions.width - 20}px;
+  height: ${DeviceDimensions.width - 20}px;
+  position: absolute;
+  borderRadius: ${DeviceDimensions.width/2}px;
+  borderWidth: 2px;
+  borderColor: rgba(255,255,255,0.5);
 `
 
 const PreviewImageTaken = styled.Image`

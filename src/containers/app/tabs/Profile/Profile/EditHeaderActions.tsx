@@ -15,8 +15,8 @@ const EditHeaderActions: React.FC<EditHeaderActionsProps> = ({ editing, saving, 
 
   return (
     <Container>
-      <PlainButton onPress={onToggleEdit}>{!editing ? 'Editar' : 'Cancelar'}</PlainButton>
       {editing && (saving ? <Loading size={30} style={{ marginLeft: 16 }} color={colors.main} /> : <PlainButton onPress={onSave}>Guardar</PlainButton>)}
+      <PlainButton onPress={onToggleEdit}>{!editing ? 'Editar' : 'Cancelar'}</PlainButton>
     </Container>
   )
 }

@@ -1,4 +1,4 @@
-import { Body, Subtitle } from 'components/Typography/Typography';
+import { Body } from 'components/Typography/Typography';
 import Wizard from 'components/Wizard/Wizard';
 import { useFormikContext } from 'formik';
 import React, { useEffect } from 'react';
@@ -25,7 +25,6 @@ const RideSummary: React.FC = () => {
 
   return (
     <Wizard action={{ disabled: !isValid, onPress: handleSubmit, label: 'Crear viaje', loading: isSubmitting }} title="¡Ultimo paso!">
-      <Subtitle>Estas a punto de crear un viaje.</Subtitle>
       <Body>Verifica que la información sea correcta</Body>
       <Content >
         <IconedValue icon="map-pin">
@@ -43,7 +42,7 @@ const RideSummary: React.FC = () => {
         </IconedValue>
         <IconedValue icon="zap">
           <InstantApprovalContainer>
-            <ExpandedBody>¿Querés que los pasajeros reserven de forma automática?</ExpandedBody>
+            <ExpandedBody>Aceptar pasajeros de forma automática</ExpandedBody>
             <Switch value={values.instantApproval} onValueChange={handleInstantApprovalChange} trackColor={{ true: colors.main, false: '' }} />
           </InstantApprovalContainer>
         </IconedValue>
