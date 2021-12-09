@@ -36,7 +36,7 @@ const Complaint: React.FC<ComplaintProps> = ({ }) => {
       <DismissKeyboard>
         <Content>
           <MultilinedTextInput
-            placeholder="Contanos que paso"
+            placeholder="Contanos qué pasó"
             value={complaint}
             multiline
             numberOfLines={6}

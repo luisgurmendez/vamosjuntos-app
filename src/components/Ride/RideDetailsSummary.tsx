@@ -10,9 +10,10 @@ type RideLike = Ride | Pick<Ride, 'whereFrom' | 'whereTo' | 'date' | 'price'>
 
 interface RideSummaryProps {
   ride: RideLike;
+  showPriceTag?: boolean;
 }
 
-const RideDetailsSummary: React.FC<RideSummaryProps> = ({ ride }) => {
+const RideDetailsSummary: React.FC<RideSummaryProps> = ({ ride, showPriceTag=false }) => {
 
   const rideDate = moment(ride.date);
 

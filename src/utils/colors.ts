@@ -8,6 +8,7 @@ export const colors = {
   white: '#fff',
   black: 'rgb(5, 71, 82)',
   gray: '#888',
+  darkGray: '#444',
   yellow: '#FDCC0D',
   notification: '#FF3A30'
 };

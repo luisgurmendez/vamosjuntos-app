@@ -64,7 +64,11 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
   }
 
   const handleGoToRideRequestDetails = () => {
-    navigation.push(Screens.RIDEREQUEST_DETAILS, { user: notification.context.user, rideRequest: notification.context.rideRequest })
+    navigation.push(Screens.WHERE_FROM_WHERE_TO_DETAILS, { 
+      title: notification.context.user!.name,
+      whereFrom: notification.context.rideRequest.whereFrom,
+      whereTo: notification.context.rideRequest.whereTo,
+      })
   }
 
   const isPending = notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.PENDING;

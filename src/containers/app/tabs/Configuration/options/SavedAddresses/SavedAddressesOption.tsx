@@ -12,7 +12,7 @@ interface SavedAddressesProps { }
 const SavedAddresses: React.FC<SavedAddressesProps> = ({ }) => {
 
   return (
-    <ToOtherScreenOption title="Direcciones guardadas" toScreen={ConfigurationScreens.SAVED_ADDRESSES} />
+    <ToOtherScreenOption title="Direcciónes guardadas" toScreen={ConfigurationScreens.SAVED_ADDRESSES} />
   )
 }
 

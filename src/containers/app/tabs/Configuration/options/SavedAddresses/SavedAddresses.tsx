@@ -50,10 +50,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = ({ }) => {
     setSavedAddress(newAddresses);
   };
 
-
   return (
     <PageWithBack secondaryAction={<PlainButton onPress={() => setSelectAddressModalOpen(true)}>Agregar una dirección</PlainButton>}>
-      <HideIfLoading loading={isGettingSavedAddresses} label="Obteniendo tus direcciones">
+      <HideIfLoading loading={isGettingSavedAddresses} label="Obteniendo tus direcciónes">
         <Container>
           <KeyboardShift>
             {

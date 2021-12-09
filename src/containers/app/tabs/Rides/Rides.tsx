@@ -1,98 +1,93 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCompletedRides, getPendingRides, getCanceledRides, getPendingRideRequests } from 'state/ride/selectors';
 import styled from 'styled-components/native';
-import Page from 'components/Page/Page';
-import RidesList from './RidesList';
-import { getRideRequests, getRides } from 'api/callables';
-import { setRideRequests, setRides } from 'state/ride/actions';
 import { RefreshControl } from 'react-native';
-import Toaster from 'components/Toaster/Toaster';
+import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
+import MarginedChildren from 'components/Box/MarginedChildren';
+import RideBubble from 'components/Ride/RideBubble';
+import { getSoonToLeaveRides } from 'api/callables';
 import useStorage from 'hooks/useStorage';
 import Storage from 'storage/Storage';
-import Badge from 'components/Badge/Badge';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { colors } from 'utils/colors';
+import { Address, Ride } from 'types/models';
+import HideIfLoading from 'components/Loading/HideIfLoading';
+import FloatingButton from 'components/FloatingButton/FloatingButton';
 import { useNavigation } from '@react-navigation/native';
-import Screens from './Screens';
-import moment from 'moment';
-import RememberToCompleteRidesModal from './RememberToCompleteRidesModal';
-import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
+import { Screens } from 'containers/Screens';
 
-const noRidesImage = require('../../../../assets/NoRides.png');
+const noSearchedRidesImage = require('../../../../assets/NoSearchedRides.png');
 
 const Rides: React.FC = () => {
-
-  const [refreshing, setRefreshing] = React.useState(false);
-  const { value: showCanceledRides, refreshValue: refreshShowCanceledRides } = useStorage(Storage.SHOW_CANCELED_RIDES, true);
-  const { value: showCompletedRides, refreshValue: refreshShowCompletedRides } = useStorage(Storage.SHOW_COMPLETED_RIDES, true);
-
-  const dispatch = useDispatch();
+  const [isFetchingRides, setIsFetchingRides] = useState(false);
+  const [rides, setRides] = useState<Ride[]>([]);
+  const hasRides = rides.length > 0;
   const navigation = useNavigation<any>();
+  const {isFetching: isFetchingAddresses, value: addresses} = useStorage(Storage.ADDRESSES, []);
 
-  const pendingRides = useSelector(getPendingRides);
-  const completedRides = useSelector(getCompletedRides);
-  const canceledRides = useSelector(getCanceledRides);
-  const isThereAnyPendingRidesWithDueDate = pendingRides.some(r => moment().isAfter(moment(r.date)))
-  const [showRememberMarkRidesAsCompleteModal, setShowRememberModal] = React.useState(isThereAnyPendingRidesWithDueDate);
+  const handleFetchSoonToLeaveRides = useCallback(async () => {
+    setIsFetchingRides(true);
+    let _rides = [];
+    if(addresses.length > 0){
+      _rides = await getSoonToLeaveRides({addresses});  
+    }else{
+      const defaultAddresses = [
+      {department: 'Montevideo', city: 'Montevideo'},
+      {department: 'Maldonado', city: 'Punta del Este'}
+      ] as Address[];
 
-  const rideRequests = useSelector(getPendingRideRequests);
-
-  const _completedRides = showCompletedRides ? completedRides : [];
-  const _canceledRides = showCanceledRides ? canceledRides : [];
-
-  const hasRides = pendingRides.length > 0 || _completedRides.length > 0 || _canceledRides.length > 0;
-
-  const onRefresh = React.useCallback(async () => {
-    setRefreshing(true);
-    refreshShowCompletedRides();
-    refreshShowCanceledRides();
-    try {
-      const _rides = await getRides();
-      const _rideRequests = await getRideRequests();
-      dispatch(setRides(_rides))
-      dispatch(setRideRequests(_rideRequests))
-    } catch (e) {
-      Toaster.alert('Hubo un error')
+      _rides = await getSoonToLeaveRides({addresses:defaultAddresses});  
     }
+    setRides(_rides);
+    setIsFetchingRides(false);
+  }, [addresses])
 
-    setRefreshing(false);
-  }, []);
+  useEffect(() => {
+    if(!isFetchingAddresses){
+      handleFetchSoonToLeaveRides();
+    }
+  }, [isFetchingAddresses, handleFetchSoonToLeaveRides]);
 
-  const handleGoToRideRequests = () => {
-    navigation.push(Screens.RIDE_REQUESTS)
+  const handleSearchForRide = () => {
+    navigation.push(Screens.LIFT);
   }
 
-  const renderAction = () => {
-    return (
-      <Badge badge={rideRequests.length} max={10}>
-        <Icon onPress={handleGoToRideRequests} name="car" size={30} style={{ color: colors.black }} />
-      </Badge>
-    )
+  const handleJoinRide = (ride: Ride) => {
+    navigation.push(Screens.JOIN_RIDE, {ride});
   }
 
   return (
-    <Page title="Mis Viajes" renderAction={renderAction}>
-      <WithBackgroundImage asset={!hasRides ? noRidesImage : undefined}>
-        <Container
-          showsVerticalScrollIndicator={false}
-          scrollEventThrottle={400}
-          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
-        >
-          <RidesList title="Programados" rides={pendingRides} />
-          <RidesList title="Cancelados" rides={_canceledRides} />
-          <RidesList title="Completados" rides={_completedRides} />
-        </Container>
-      </WithBackgroundImage>
-      <RememberToCompleteRidesModal open={showRememberMarkRidesAsCompleteModal} onClose={() => setShowRememberModal(false)} />
-    </Page>
+    <Container>
+        <WithBackgroundImage asset={(!isFetchingRides && !hasRides) ? noSearchedRidesImage : undefined}>
+          <ScrollingContent
+            contentContainerStyle={{paddingBottom: 32}}
+            showsVerticalScrollIndicator={false}
+            scrollEventThrottle={400}
+            refreshControl={<RefreshControl onRefresh={handleFetchSoonToLeaveRides} refreshing={isFetchingRides} />}
+            >
+            <MarginedChildren mt="lg">
+              {rides.map(ride => <RideBubble onPress={() => handleJoinRide(ride)} ride={ride} />)}
+            </MarginedChildren>
+          </ScrollingContent>
+        </WithBackgroundImage>
+      <SearchButtonPositioner>
+        <FloatingButton onPress={handleSearchForRide} size={'lg'} icon={'magnify'} />
+      </SearchButtonPositioner>
+    </Container>
   );
 }
 
-
 export default Rides;
 
-const Container = styled.ScrollView`
+const Container = styled.View`
+  flex: 1;
+`
+
+const ScrollingContent = styled.ScrollView`
   flex: 1;
   padding: 8px;
+`
+
+const SearchButtonPositioner = styled.View`
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
 `

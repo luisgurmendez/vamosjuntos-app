@@ -34,7 +34,7 @@ const RideRequests: React.FC<RideRequestsProps> = ({ }) => {
 
   }, []);
   return (
-    <PageWithBack title="Solicitudes de viajes">
+    <>
       <WithBackgroundImage asset={rideRequests.length === 0 ? noRideRequestsImage : undefined}>
         <Container
           scrollEventThrottle={400}
@@ -44,7 +44,7 @@ const RideRequests: React.FC<RideRequestsProps> = ({ }) => {
           <RideRequestsList rideRequests={rideRequests} />
         </Container>
       </WithBackgroundImage>
-    </PageWithBack>
+    </>
   )
 
 }

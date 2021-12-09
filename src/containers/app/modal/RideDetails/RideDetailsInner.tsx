@@ -87,7 +87,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
   const handleCancelConfirmModal = () => { setIsConfirmCancelModalOpen(false) };
 
   const handleOnPassengerClick = (p: Passenger) => {
-    navigation.push(Screens.PASSENGER_DETAILS, { passenger: p })
+    navigation.push(Screens.WHERE_FROM_WHERE_TO_DETAILS, { title: p.user.name, whereFrom: p.whereFrom, whereTo: p.whereTo })
   }
 
   return (

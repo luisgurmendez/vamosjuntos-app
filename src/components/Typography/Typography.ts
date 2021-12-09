@@ -1,10 +1,14 @@
+import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 
+
 export const Text = styled.Text`
-  font-family: Roboto;
-  color: ${colors.black};
+font-family: Roboto;
+color: ${colors.black};
 `;
+
+export const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export const LargeTitle = styled(Text)`
 font-weight: bold;

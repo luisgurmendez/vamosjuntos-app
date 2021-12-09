@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import { Address } from 'types/models';
 import Map from 'components/Map/Map';
 import RideMarker from 'components/Ride/RideMarker';
+import { Polyline } from 'react-native-maps';
 
 interface WhereFromWhereToStaticMapProps extends Stylable {
   mapId: string;
@@ -24,6 +25,10 @@ const WhereFromWhereToStaticMap: React.FC<WhereFromWhereToStaticMapProps> = ({ m
       <>
         <RideMarker type={'origin'} coordinate={origin} />
         <RideMarker type={'destination'} coordinate={destination} />
+        <Polyline 
+          coordinates={[origin, destination]}
+          strokeColor="#000"
+          strokeWidth={2} />
       </>
     )
   }

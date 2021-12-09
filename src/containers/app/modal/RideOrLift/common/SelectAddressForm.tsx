@@ -10,7 +10,7 @@ import styled from 'styled-components/native';
 import { SavedAddress } from 'types/storage';
 import useStorage from 'hooks/useStorage';
 import Geolocation from '@react-native-community/geolocation';
-import { getAddressFromCoords } from 'api/geo';
+import { getAddressFromCoordsRemote } from 'api/geo';
 import SelectSavedAddressModal from './SelectSavedAddressModal';
 import useLocationPermission from 'hooks/useLocationPermission';
 
@@ -28,10 +28,8 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
 
   const handleSelectLocationAsAddress = () => {
     Geolocation.getCurrentPosition(async ({ coords: { latitude, longitude } }) => {
-      try {
-        const address = await getAddressFromCoords(latitude, longitude);
+        const address = await getAddressFromCoordsRemote(latitude, longitude);
         address !== undefined && onSelectAddress(address);
-      } catch (e) { }
     });
   }
 

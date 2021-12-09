@@ -18,9 +18,9 @@ import useNotificationsHandler from 'hooks/useNotificationsHandler';
 import BannerAd from 'components/Ad/BannerAd';
 import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';
-import RideRequestDetails from './modal/RideRequestDetails/RideRequestDetails';
-import PassengerDetails from './modal/PassengerDetails/PassengerDetails';
+import WhereFromWhereToDetails from './modal/WhereFromWhereToDetails/WhereFromWhereToDetails';
 import Welcome from './modal/Welcome/Welcome';
+import JoinRide from './modal/JoinRide/JoinRide';
 
 const Stack = createStackNavigator();
 
@@ -50,10 +50,10 @@ const AppNavigation: React.FC = () => {
           <Stack.Screen name={Screens.LIFT} component={LiftStack} />
           <Stack.Screen name={Screens.USER_PROFILE} component={UserProfile} />
           <Stack.Screen name={Screens.RIDE_DETAILS} component={RideDetails} />
-          <Stack.Screen name={Screens.RIDEREQUEST_DETAILS} component={RideRequestDetails} />
-          <Stack.Screen name={Screens.PASSENGER_DETAILS} component={PassengerDetails} />
+          <Stack.Screen name={Screens.WHERE_FROM_WHERE_TO_DETAILS} component={WhereFromWhereToDetails} />
           <Stack.Screen name={Screens.WELCOME} component={Welcome} />
           <Stack.Screen name={Screens.COMMENTS} component={Comments} />
+          <Stack.Screen name={Screens.JOIN_RIDE} component={JoinRide} />
         </Stack.Navigator>
       </AppInitialDataFetcher>
 

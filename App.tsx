@@ -24,6 +24,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import useVersion from 'hooks/useVersion';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import remoteConfig from '@react-native-firebase/remote-config';
+import { colors } from 'utils/colors';
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -56,7 +57,6 @@ const App = () => {
 };
 
 export default App;
-
 
 const SetupApp: React.FC = ({ children }) => {
 
@@ -91,7 +91,7 @@ const SetupApp: React.FC = ({ children }) => {
   return (
     <Container>
       <HideIfLoading loading={!initialCheckAuth}>
-        {!hasInternetConnection && <SafeAreaView><ErrorBanner>No hay conexion a internet</ErrorBanner></SafeAreaView>}
+        {!hasInternetConnection && <SafeAreaView><ErrorBanner>No hay conexión a internet</ErrorBanner></SafeAreaView>}
         {children}
       </HideIfLoading>
     </Container>
@@ -100,6 +100,7 @@ const SetupApp: React.FC = ({ children }) => {
 
 const Container = styled.View`
   flex: 1;
+  background-color: ${colors.danger};
 `
 
 const FCMPermissions: React.FC = ({ children }) => {

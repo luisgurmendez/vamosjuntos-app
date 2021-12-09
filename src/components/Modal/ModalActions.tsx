@@ -1,8 +1,6 @@
-import Button from 'components/Button/Button';
 import PlainButton from 'components/Button/PlainButton';
 import React from 'react'
 import styled from 'styled-components/native';
-import { colors } from 'utils/colors';
 
 interface ModalActionsProps {
   primaryLabel?: string;
@@ -20,8 +18,8 @@ const ModalActions: React.FC<ModalActionsProps> = ({
 
   return (
     <Container>
-      {primaryLabel && <PlainButton onPress={onPrimaryPress}>{primaryLabel}</PlainButton>}
       {secondaryLabel && <PlainButton onPress={onSecondaryPress}>{secondaryLabel}</PlainButton>}
+      {primaryLabel && <PlainButton onPress={onPrimaryPress}>{primaryLabel}</PlainButton>}
     </Container>
   )
 

@@ -10,18 +10,17 @@ interface RideMarkerProps extends MarkerProps {
 }
 
 const RideMarker: React.FC<RideMarkerProps> = ({ type, ...rest }) => {
-  const destinationIconSize = 30
   const isDestination = type === 'destination';
-  const markerOffset = isDestination ? { y: -destinationIconSize / 2, x: 0 } : undefined;
+  // const markerOffset = isDestination ? { y: -destinationIconSize / 2, x: 0 } : undefined;
 
   return (
     <Marker
-      centerOffset={markerOffset}
+      // centerOffset={markerOffset}
       {...rest}
     >
       {
         isDestination ?
-          <Icon name="map-marker" color={colors.main} size={destinationIconSize} />
+        <DestinationPin/>
           :
           <OriginPin />
       }
@@ -31,11 +30,20 @@ const RideMarker: React.FC<RideMarkerProps> = ({ type, ...rest }) => {
 
 export default RideMarker;
 
-const OriginPin = styled.View`
+const DestinationPin = styled.View`
   border-radius: 8px;
   width: 15px;
   height: 15px;
-  background-color: ${colors.success};
+  background-color: ${colors.main};
   border-width: 2px
   border-color: ${colors.white};
+`
+
+const OriginPin = styled.View`
+  border-radius: 8px;
+  width: 12px;
+  height: 12px;
+  border-width: 3px
+  background-color: ${colors.white}
+  border-color: ${colors.black};
 `

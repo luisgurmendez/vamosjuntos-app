@@ -13,7 +13,7 @@ import { Address } from 'types/models';
 import useZoomToLocation from 'hooks/useZoomToLocation';
 import Map from 'components/Map/Map';
 import { Region } from 'react-native-maps';
-import { getAddressFromCoords } from 'api/geo';
+import { getAddressFromCoordsRemote } from 'api/geo';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import FloatingButton from 'components/FloatingButton/FloatingButton';
 import { useMap } from 'components/Map/useMap';
@@ -39,12 +39,12 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   const { map } = useMap(mapId);
 
   const handleLocationChange = useCallback(async (region: Region) => {
-    const address = await getAddressFromCoords(region.latitude, region.longitude);
+    const address = await getAddressFromCoordsRemote(region.latitude, region.longitude);
     setPossibleAddress(address);
     setIsFetchingAddress(false);
   }, []);
 
-  const debouncedHandleLocationChange = useCallback(debounce(handleLocationChange, 100), [])
+  const debouncedHandleLocationChange = useCallback(debounce(handleLocationChange, 1000), [])
 
   useZoomToLocation(mapId);
 
@@ -104,7 +104,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
           {isFetchingAddress ? (
             <Loading size={20} color={colors.black} />
           ) : (
-            <DisplayAddress address={possibleAddress!} />
+            <DisplayAddress address={possibleAddress} />
           )}
         </Box>
         <Button disabled={isFetchingAddress || possibleAddress === undefined} onPress={handleSelectAddress}>
