@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 type ErrorCallback = (error?: Error) => void;
 
 class Storage {
+  public static INITED = false;
   public static CREATED = 'created';
   public static ADDRESSES = 'addresses';
   public static SHOULD_WELCOME = 'shouldWelcome';
@@ -11,12 +12,16 @@ class Storage {
   public static SHOW_SEEN_NOTIFICATIONS = 'showSeenNotifications';
 
   static async isInitialized() {
+    if (Storage.INITED) {
+      return true;
+    }
     const created = await AsyncStorage.getItem(this.CREATED);
     return created !== undefined && created !== null;
   }
 
   static async init() {
     const inited = await Storage.isInitialized();
+    Storage.INITED = true;
     if (!inited) {
       await AsyncStorage.setItem(Storage.CREATED, 'true');
       await AsyncStorage.setItem(Storage.ADDRESSES, '[]');

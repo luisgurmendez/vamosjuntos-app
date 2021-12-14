@@ -19,7 +19,7 @@ function useHandleUserAuthentication() {
       console.log('handleHasCheckAuth')
       SplashScreen.hide();
       setHasCheckAuth(true);
-    }, 400)
+    }, 200)
   }
 
   async function onAuthStateChange(firebaseUser: FirebaseAuthTypes.User | null) {

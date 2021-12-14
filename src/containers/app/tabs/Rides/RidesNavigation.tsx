@@ -1,5 +1,5 @@
 import { AnimatedText } from 'components/Typography/Typography';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import MyRides from './MyRides';
@@ -11,34 +11,42 @@ import { colors } from 'utils/colors';
 import { useSelector } from 'react-redux';
 import { useAnimation } from 'react-native-animation-hooks';
 import { Easing } from 'react-native';
+import { TabView, SceneMap } from 'react-native-tab-view';
+import TabBar from './TabBar';
 
-enum RideTabs{
-  Rides,
-  MyRides,
-  RideRequests,
+export enum RideTabs {
+  Rides = 'rides',
+  MyRides = 'my-rides',
+  RideRequests = 'ride-requests',
 }
+
+const RenderedTabs = SceneMap({
+  [RideTabs.Rides]: Rides,
+  [RideTabs.MyRides]: MyRides,
+  [RideTabs.RideRequests]: RideRequests,
+})
 
 const RidesNavigation: React.FC = () => {
 
-  // TODO: Move this so that we can controll tabs from everywhere in the app
-  const [selectedTab, setSelectedTab] = useState(RideTabs.Rides);
-  const rideRequests = useSelector(getPendingRideRequests);
-  const pendingRides = useSelector(getPendingRides);
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
-  const renderSelectedTabContent = () => {
-    switch(selectedTab){
-      case RideTabs.Rides:
-        return <Rides/>;
-        case RideTabs.MyRides:
-        return <MyRides/>;
-        case RideTabs.RideRequests:
-        return <RideRequests />;
-    }
-  }
+  const routes = [
+    { key: RideTabs.Rides, title: 'Viajes', index: 0 },
+    { key: RideTabs.MyRides, title: 'Mis viajes', index: 1 },
+    { key: RideTabs.RideRequests, title: 'Solicitudes', index: 2 },
+  ];
 
-  return(
+  return (
     <Container>
-      <Tabs 
+      <TabView
+        navigationState={{ index: selectedTabIndex, routes }}
+        renderScene={RenderedTabs}
+        onIndexChange={setSelectedTabIndex}
+        renderTabBar={TabBar}
+
+      // initialLayout={{ width: layout.width }}
+      />
+      {/* <Tabs 
       onTabSelected={setSelectedTab}
       selectedTab={selectedTab}
       tabs={[
@@ -48,7 +56,7 @@ const RidesNavigation: React.FC = () => {
         ]} />
       <Content>
         {renderSelectedTabContent()}
-      </Content>
+      </Content> */}
     </Container>
   )
 }
@@ -67,23 +75,23 @@ const Content = styled.View`
   height: 100%;
 `
 
-interface TabOption{
+interface TabOption {
   name: string;
   value: RideTabs;
   badge?: number;
 }
 
-interface TabsProps{
+interface TabsProps {
   selectedTab: number;
   tabs: TabOption[];
   onTabSelected: (tab: RideTabs) => void;
 }
 
-const Tabs: React.FC<TabsProps> = ({tabs, onTabSelected, selectedTab}) => {
+const Tabs: React.FC<TabsProps> = ({ tabs, onTabSelected, selectedTab }) => {
 
-  return(
+  return (
     <TabsContainer>
-      {tabs.map(tab => <Tab 
+      {tabs.map(tab => <Tab
         key={tab.value}
         badge={tab.badge}
         name={tab.name}
@@ -94,7 +102,7 @@ const Tabs: React.FC<TabsProps> = ({tabs, onTabSelected, selectedTab}) => {
   );
 }
 
-interface TabProps{
+interface TabProps {
   badge?: number;
   name: string;
   selected: boolean;
@@ -103,9 +111,9 @@ interface TabProps{
 
 const ANIAMTION_DURATION = 200;
 
-const Tab: React.FC<TabProps> = ({name, onSelected, selected, badge}) => {
+const Tab: React.FC<TabProps> = ({ name, onSelected, selected, badge }) => {
 
-  const _badge = selected? 0 : badge;
+  const _badge = selected ? 0 : badge;
 
   const animation = useAnimation({
     type: 'timing',
@@ -122,13 +130,13 @@ const Tab: React.FC<TabProps> = ({name, onSelected, selected, badge}) => {
     }),
   };
 
-  return(
+  return (
     <TabContainer>
       <TouchableOpacity onPress={onSelected}>
-      <Badge badge={_badge} max={10}>
-        <StyledAnimatedText style={[{color: selected? colors.black : colors.gray, fontWeight: selected? 'bold' : 'normal'}, textAnimatedStyles]}>{name}</StyledAnimatedText>
-      </Badge>
-    </TouchableOpacity>
+        <Badge badge={_badge} max={10}>
+          <StyledAnimatedText style={[{ color: selected ? colors.black : colors.gray, fontWeight: selected ? 'bold' : 'normal' }, textAnimatedStyles]}>{name}</StyledAnimatedText>
+        </Badge>
+      </TouchableOpacity>
     </TabContainer>
   );
 }
