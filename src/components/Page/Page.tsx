@@ -2,7 +2,6 @@ import React from 'react';
 import { Box } from 'components/Box/Box';
 import { Title } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
-import { colors } from 'utils/colors';
 
 interface PageProps {
   title: string;

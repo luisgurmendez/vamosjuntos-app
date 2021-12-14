@@ -3,17 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCompletedRides, getPendingRides, getCanceledRides, getPendingRideRequests } from 'state/ride/selectors';
 import styled from 'styled-components/native';
 import RidesList from './RidesList';
-import { getRideRequests, getRides } from 'api/callables';
-import { setRideRequests, setRides } from 'state/ride/actions';
-import { RefreshControl } from 'react-native';
+import { getRides } from 'api/callables';
+import { setRides } from 'state/ride/actions';
 import Toaster from 'components/Toaster/Toaster';
 import useStorage from 'hooks/useStorage';
 import Storage from 'storage/Storage';
 import moment from 'moment';
 import RememberToCompleteRidesModal from './RememberToCompleteRidesModal';
-import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
+import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 
-const noRidesImage = require('../../../../assets/NoRides.png');
+const noRidesImage = require('../../../../assets/CantSeeAnyRides.png');
 
 const MyRides: React.FC = () => {
 
@@ -41,9 +40,7 @@ const MyRides: React.FC = () => {
     refreshShowCanceledRides();
     try {
       const _rides = await getRides();
-      const _rideRequests = await getRideRequests();
       dispatch(setRides(_rides))
-      dispatch(setRideRequests(_rideRequests))
     } catch (e) {
       Toaster.alert('Hubo un error')
     }
@@ -54,17 +51,17 @@ const MyRides: React.FC = () => {
 
   return (
     <>
-      <WithBackgroundImage asset={!hasRides ? noRidesImage : undefined}>
-        <Container
-          showsVerticalScrollIndicator={false}
-          scrollEventThrottle={400}
-          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
-        >
-          <RidesList title="Programados" rides={pendingRides} />
-          <RidesList title="Cancelados" rides={_canceledRides} />
-          <RidesList title="Completados" rides={_completedRides} />
-        </Container>
-      </WithBackgroundImage>
+      <Container
+        showContent={hasRides}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
+        // noContentHelp={renderHelp()}
+        noContentAsset={noRidesImage}
+      >
+        <RidesList title="Programados" rides={pendingRides} />
+        <RidesList title="Cancelados" rides={_canceledRides} />
+        <RidesList title="Completados" rides={_completedRides} />
+      </Container>
       <RememberToCompleteRidesModal open={showRememberMarkRidesAsCompleteModal} onClose={() => setShowRememberModal(false)} />
     </>
   );
@@ -72,7 +69,6 @@ const MyRides: React.FC = () => {
 
 export default MyRides;
 
-const Container = styled.ScrollView`
-  flex: 1;
+const Container = styled(ScrollableContent)`
   padding: 8px;
 `

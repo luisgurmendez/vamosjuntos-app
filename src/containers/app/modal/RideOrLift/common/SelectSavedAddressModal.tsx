@@ -40,7 +40,7 @@ const SelectSavedAddressModal: React.FC<SelectSavedAddressModalProps> = ({
       {savedAddresses.length > 0 && (
         <Container>
           <Box mb="md">
-            <Subtitle>Direcciónes guardadas</Subtitle>
+            <Subtitle>Direcciones guardadas</Subtitle>
           </Box>
           <SavedAddressList
             savedAddresses={savedAddresses}

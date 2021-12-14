@@ -4,7 +4,7 @@ import MarginedChildren from 'components/Box/MarginedChildren';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import RideBubble from 'components/Ride/RideBubble';
 import { Subtitle } from 'components/Typography/Typography';
-import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
+import NoContent from 'components/NoContent/NoContent';
 import Wizard from 'components/Wizard/Wizard';
 import { useField, useFormikContext } from 'formik';
 import React, { useState } from 'react'
@@ -14,7 +14,7 @@ import { Ride } from 'types/models';
 import { LiftCreationValues } from './LiftForm/formSchema';
 import { LiftScreens } from './LiftScreens';
 
-const noRidesFoundImage = require('../../../../../assets/NoSearchedRides.png');
+const noRidesFoundImage = require('../../../../../assets/NoRidesFound.png');
 
 const PossibleRides: React.FC = () => {
 
@@ -45,7 +45,7 @@ const PossibleRides: React.FC = () => {
   return (
     <Wizard action={{ hideAction: true }} title="Posibles viajes">
       <HideIfLoading loading={rides === undefined} label="Te estamos buscando viajes">
-        <WithBackgroundImage asset={rides && rides.length === 0 ? noRidesFoundImage : undefined}>
+        <NoContent showContent={rides !== undefined && rides.length !==0} asset={noRidesFoundImage}>
           <Container>
             <Content>
               <MarginedChildren mt="lg">
@@ -53,7 +53,7 @@ const PossibleRides: React.FC = () => {
               </MarginedChildren>
             </Content>
           </Container>
-        </WithBackgroundImage>
+        </NoContent>
       </HideIfLoading>
     </Wizard>
   )

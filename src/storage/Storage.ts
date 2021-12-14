@@ -1,19 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { SavedAddress } from 'types/storage';
-import { Tokens } from 'types/tokens';
-
-interface StorageAPI {
-  created: boolean;
-  addresses: SavedAddress[];
-  tokens: Tokens;
-}
 
 type ErrorCallback = (error?: Error) => void;
 
 class Storage {
   public static CREATED = 'created';
   public static ADDRESSES = 'addresses';
-  public static TOKENS = 'tokens';
   public static SHOULD_WELCOME = 'shouldWelcome';
   public static SHOW_CANCELED_RIDES = 'showCanceledRides';
   public static SHOW_COMPLETED_RIDES = 'showCompletedRides';

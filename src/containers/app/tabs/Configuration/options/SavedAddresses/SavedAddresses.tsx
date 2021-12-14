@@ -52,7 +52,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = ({ }) => {
 
   return (
     <PageWithBack secondaryAction={<PlainButton onPress={() => setSelectAddressModalOpen(true)}>Agregar una dirección</PlainButton>}>
-      <HideIfLoading loading={isGettingSavedAddresses} label="Obteniendo tus direcciónes">
+      <HideIfLoading loading={isGettingSavedAddresses} label="Obteniendo tus direcciones">
         <Container>
           <KeyboardShift>
             {
@@ -75,7 +75,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = ({ }) => {
             }
             <SavedAddressesContainer mt="lg">
               <Box mb="md">
-                <Subtitle>Direcciónes guardadas</Subtitle>
+                <Subtitle>Direcciones guardadas</Subtitle>
               </Box>
               <SavedAddressList
                 savedAddresses={savedAddresses}

@@ -3,18 +3,16 @@ import { Box } from 'components/Box/Box';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import NotificationSection from 'components/Notifications/NotificationSection';
 import React, { useEffect } from 'react';
-import { RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotifications } from 'state/notification/actions';
 import styled from 'styled-components/native';
 import Page from 'components/Page/Page';
-import NoNotifications from './NoNotifications';
 import Notification from 'components/Notifications/Notification';
 import { getSeenNotifications, getUnseenNotifications } from 'state/notification/selectors';
 import { NotificationType, RideRequestStatus } from 'types/models';
-import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
 import useStorage from 'hooks/useStorage';
 import Storage from 'storage/Storage';
+import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 
 const noAlertsImage = require('../../../../assets/NoAlerts.png');
 
@@ -57,32 +55,31 @@ const Notifications: React.FC = () => {
 
   return (
     <Page title="Alertas">
-      <WithBackgroundImage asset={hasNoNotifications ? noAlertsImage : undefined}>
-        <Container
-          scrollEventThrottle={400}
-          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-          }
-        >
-          {unSeenNotifications.length > 0 &&
-            <NotificationSection section="Nuevas">
-              <Box pH="md">
-                <MarginedChildren mb="md" applyToLast={false}>
-                  {unSeenNotifications.map(n => <Notification key={n.id} notification={n} />)}
-                </MarginedChildren>
-              </Box>
-            </NotificationSection>
-          }
-          {seenNotifications.length > 0 &&
-            <NotificationSection section="Viejas">
-              <Box pH="md">
-                <MarginedChildren mb="md" applyToLast={false}>
-                  {seenNotifications.map(n => <Notification key={n.id} notification={n} />)}
-                </MarginedChildren>
-              </Box>
-            </NotificationSection>
-          }
-        </Container>
-      </WithBackgroundImage>
+      <Container
+        onRefresh={onRefresh}
+        refreshing={refreshing}
+        showContent={!hasNoNotifications}
+        noContentAsset={noAlertsImage}
+      >
+        {unSeenNotifications.length > 0 &&
+          <NotificationSection section="Nuevas">
+            <Box pH="md">
+              <MarginedChildren mb="md" applyToLast={false}>
+                {unSeenNotifications.map(n => <Notification key={n.id} notification={n} />)}
+              </MarginedChildren>
+            </Box>
+          </NotificationSection>
+        }
+        {seenNotifications.length > 0 &&
+          <NotificationSection section="Viejas">
+            <Box pH="md">
+              <MarginedChildren mb="md" applyToLast={false}>
+                {seenNotifications.map(n => <Notification key={n.id} notification={n} />)}
+              </MarginedChildren>
+            </Box>
+          </NotificationSection>
+        }
+      </Container>
 
     </Page>
   );
@@ -90,7 +87,6 @@ const Notifications: React.FC = () => {
 
 export default Notifications;
 
-const Container = styled.ScrollView`
-  flex:1;
+const Container = styled(ScrollableContent)`
   padding: 8px;
 `

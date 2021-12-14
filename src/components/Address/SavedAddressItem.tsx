@@ -17,18 +17,13 @@ const SavedAddressItem: React.FC<SavedAddressItemProps> = ({ item, onRemove, onP
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <StyledBox pt="md" pb="md">
+      <Box pt="md" pb="md">
         <RemovableItem onRemove={onRemove}>
           <AddressName address={item.address} name={item.name} />
         </RemovableItem>
-      </StyledBox>
+      </Box>
     </TouchableOpacity>
   );
 };
 
 export default SavedAddressItem;
-
-const StyledBox = styled(Box)`
-  border-top-width: 1px;
-  border-top-color: ${colors.border};
-`;

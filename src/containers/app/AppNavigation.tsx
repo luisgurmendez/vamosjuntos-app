@@ -21,6 +21,7 @@ import { FeatureFlags } from 'types/models';
 import WhereFromWhereToDetails from './modal/WhereFromWhereToDetails/WhereFromWhereToDetails';
 import Welcome from './modal/Welcome/Welcome';
 import JoinRide from './modal/JoinRide/JoinRide';
+import SearchForRideNavigation from './modal/SearchForRide/SearchForRideNavigation';
 
 const Stack = createStackNavigator();
 
@@ -48,6 +49,7 @@ const AppNavigation: React.FC = () => {
           <Stack.Screen name={Screens.RIDE} component={RideStack} />
           <Stack.Screen name={Screens.REVIEW} component={Review} />
           <Stack.Screen name={Screens.LIFT} component={LiftStack} />
+          <Stack.Screen name={Screens.SEARCH_FOR_RIDE} component={SearchForRideNavigation} />
           <Stack.Screen name={Screens.USER_PROFILE} component={UserProfile} />
           <Stack.Screen name={Screens.RIDE_DETAILS} component={RideDetails} />
           <Stack.Screen name={Screens.WHERE_FROM_WHERE_TO_DETAILS} component={WhereFromWhereToDetails} />

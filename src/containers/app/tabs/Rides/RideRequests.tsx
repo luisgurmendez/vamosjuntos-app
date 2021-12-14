@@ -1,14 +1,12 @@
 import { getRideRequests } from 'api/callables';
-import PageWithBack from 'components/Page/PageWithBack';
 import Toaster from 'components/Toaster/Toaster';
-import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
 import React from 'react'
-import { RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRideRequests } from 'state/ride/actions';
 import { getPendingRideRequests } from 'state/ride/selectors';
 import styled from 'styled-components/native';
 import RideRequestsList from './RideRequestsList';
+import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 
 const noRideRequestsImage = require('../../../../assets/NoRideRequests.png');
 
@@ -34,17 +32,15 @@ const RideRequests: React.FC<RideRequestsProps> = ({ }) => {
 
   }, []);
   return (
-    <>
-      <WithBackgroundImage asset={rideRequests.length === 0 ? noRideRequestsImage : undefined}>
-        <Container
-          scrollEventThrottle={400}
-          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-          }
-        >
-          <RideRequestsList rideRequests={rideRequests} />
-        </Container>
-      </WithBackgroundImage>
-    </>
+    <Container
+      showContent={rideRequests.length !== 0}
+      onRefresh={onRefresh}
+      refreshing={refreshing}
+      // noContentHelp={renderHelp()}
+      noContentAsset={noRideRequestsImage}
+    >
+      <RideRequestsList rideRequests={rideRequests} />
+    </Container>
   )
 
 }
@@ -52,7 +48,6 @@ const RideRequests: React.FC<RideRequestsProps> = ({ }) => {
 export default RideRequests;
 
 
-const Container = styled.ScrollView`
-  flex: 1;
+const Container = styled(ScrollableContent)`
   padding: 8px;
 `

@@ -5,9 +5,10 @@ import { StackNavigationAPI } from 'types/Navigation';
 
 interface ArrowBackProps {
   onBack?: () => void;
+  color?:string;
 }
 
-const BackArrow: React.FC<ArrowBackProps> = ({ onBack, }) => {
+const BackArrow: React.FC<ArrowBackProps> = ({ onBack, color = "#4285F4" }) => {
   const navigation: StackNavigationAPI = useNavigation<any>();
 
   const handleBack = () => {
@@ -18,7 +19,7 @@ const BackArrow: React.FC<ArrowBackProps> = ({ onBack, }) => {
     }
   };
 
-  return <PressableIcon size={40} color="#4285F4" name={'arrow-left'} onPress={handleBack} />;
+  return <PressableIcon size={40} color={color} name={'arrow-left'} onPress={handleBack} />;
 };
 
 export default BackArrow;

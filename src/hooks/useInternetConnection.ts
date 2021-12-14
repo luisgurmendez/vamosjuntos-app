@@ -9,6 +9,7 @@ function useInternetConnection() {
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((event) => {
       if (typeof event.isInternetReachable === 'boolean') {
+        console.log(event);
         setHasInternetConnection(event.isConnected && event.isInternetReachable);
         setHasCheckedInternetConnection(true);
       }

@@ -60,8 +60,8 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
       {savedAddresses.length > 0 && (
         <Box mt="lg" mb="lg">
           <Button icon="crosshair" onPress={() => setSelectedSavedAddressOpen(true)} type="secondary">
-            Elegir de mis direcciónes
-      </Button>
+            Elegir de mis direcciones
+          </Button>
         </Box>
       )}
       <Box mb="lg" mt="lg">

@@ -7,6 +7,8 @@ import { setNotifications } from 'state/notification/actions';
 
 type RemoteMessage = any;
 
+// TODO(lg): Make notification press open app in specific screen. Check the getInitialNotifications fn as well as the onNotificationOpenedApp fn both from the messaging moduel
+//  NOTE: [issue](https://github.com/invertase/react-native-firebase/issues/3469#issuecomment-660121376)
 function useNotificationsHandler() {
   useUpdateUsersNotificationToken();
   const dispatch = useDispatch();
@@ -18,6 +20,7 @@ function useNotificationsHandler() {
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(handleGetNotifications);
+
     return unsubscribe;
   }, []);
 }

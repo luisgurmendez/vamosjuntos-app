@@ -19,6 +19,8 @@ enum RideTabs{
 }
 
 const RidesNavigation: React.FC = () => {
+
+  // TODO: Move this so that we can controll tabs from everywhere in the app
   const [selectedTab, setSelectedTab] = useState(RideTabs.Rides);
   const rideRequests = useSelector(getPendingRideRequests);
   const pendingRides = useSelector(getPendingRides);
@@ -82,6 +84,7 @@ const Tabs: React.FC<TabsProps> = ({tabs, onTabSelected, selectedTab}) => {
   return(
     <TabsContainer>
       {tabs.map(tab => <Tab 
+        key={tab.value}
         badge={tab.badge}
         name={tab.name}
         selected={selectedTab === tab.value}
@@ -132,7 +135,7 @@ const Tab: React.FC<TabProps> = ({name, onSelected, selected, badge}) => {
 
 const StyledAnimatedText = styled(AnimatedText)`
   text-align: center;
-  font-size: 18;
+  font-size: 18px;
   width: 100%;
 `
 
