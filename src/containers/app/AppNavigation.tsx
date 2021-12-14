@@ -2,14 +2,13 @@ import { Screens } from 'containers/Screens';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabsNavigation from './tabs/TabsNavigation';
-import RideStack from './modal/RideOrLift/Ride/Ride';
+import RideStack from './modal/CreateRide/Ride/Ride';
 import Review from './modal/Review/Review';
 import styled from 'styled-components/native';
 import Toaster from 'components/Toaster/Toaster';
 import Camera from 'components/Camera/Camera';
 import AppInitialDataFetcher from './AppInitialDataFetcher';
 import UserProfile from './modal/UserProfile/UserProfile';
-import LiftStack from './modal/RideOrLift/Lift/Lift';
 import RideDetails from './modal/RideDetails/RideDetails';
 import Comments from 'components/Profile/Comments';
 import { useDispatch } from 'react-redux';
@@ -48,7 +47,6 @@ const AppNavigation: React.FC = () => {
           <Stack.Screen name={Screens.TABS} component={TabsNavigation} />
           <Stack.Screen name={Screens.RIDE} component={RideStack} />
           <Stack.Screen name={Screens.REVIEW} component={Review} />
-          <Stack.Screen name={Screens.LIFT} component={LiftStack} />
           <Stack.Screen name={Screens.SEARCH_FOR_RIDE} component={SearchForRideNavigation} />
           <Stack.Screen name={Screens.USER_PROFILE} component={UserProfile} />
           <Stack.Screen name={Screens.RIDE_DETAILS} component={RideDetails} />

@@ -91,7 +91,7 @@ const SetupApp: React.FC = ({ children }) => {
   return (
     <Container>
       <HideIfLoading loading={!initialCheckAuth}>
-        {!hasInternetConnection && <SafeAreaView><ErrorBanner>No hay conexión a internet</ErrorBanner></SafeAreaView>}
+        {!hasInternetConnection && <ErrorBanner>No hay conexión a internet</ErrorBanner>}
         {children}
       </HideIfLoading>
     </Container>

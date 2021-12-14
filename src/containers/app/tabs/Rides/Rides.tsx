@@ -9,7 +9,7 @@ import { Address, Ride } from 'types/models';
 import FloatingButton from 'components/FloatingButton/FloatingButton';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from 'containers/Screens';
-import { Body } from 'components/Typography/Typography';
+import { Body, LargeBody, Subtitle } from 'components/Typography/Typography';
 import { SavedAddress } from 'types/storage';
 import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 
@@ -73,9 +73,12 @@ const Rides: React.FC = () => {
         noContentHelp={renderHelp()}
         noContentAsset={noRidesFoundImage}
       >
-        <MarginedChildren mt="lg">
-          {rides.map(ride => <RideBubble onPress={() => handleJoinRide(ride)} ride={ride} />)}
-        </MarginedChildren>
+        <>
+          <LargeBody>¿Te sirve algun viaje de estos?</LargeBody>
+          <MarginedChildren mt="lg">
+            {rides.map(ride => <RideBubble key={ride.id} onPress={() => handleJoinRide(ride)} ride={ride} />)}
+          </MarginedChildren>
+        </>
       </PaddedScrollableContent>
 
       <SearchButtonPositioner>
