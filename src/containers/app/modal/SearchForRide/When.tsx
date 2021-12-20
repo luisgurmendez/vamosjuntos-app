@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
@@ -11,32 +11,30 @@ import Button from 'components/Button/Button';
 
 const When: React.FC = () => {
   const [date, setDate] = useDateState();
+  const [innerMomentDate, setInnerDate] = useState<Moment>(moment(date));
   const navigation = useNavigation<any>();
 
   const handleClose = () => {
+    setDate(innerMomentDate.toISOString());
     navigation.goBack();
   }
 
-  const handleDateChange = (mDate: Moment) => {
-    setDate(mDate.toISOString());
-  }
-
   return (
-      <Container>
-        <Header showBack>title</Header>
-        <Content>
-          <WhenCommon date={date} onDateChange={handleDateChange} />
-          <Button onPress={handleClose}>Listo</Button>
-        </Content>
-      </Container>
+    <Container>
+      <Header showBack>title</Header>
+      <Content>
+        <WhenCommon date={innerMomentDate} onDateChange={setInnerDate} />
+        <Button onPress={handleClose}>Listo</Button>
+      </Content>
+    </Container>
   );
 };
 
 export default When;
 
-function useDateState(): [Moment, (d: string)=>void]{
-  const {date, setDate} = useSearchForRide();
-  return [moment(date), setDate];
+function useDateState(): [string, (d: string) => void] {
+  const { date, setDate } = useSearchForRide();
+  return [date, setDate];
 }
 
 

@@ -23,8 +23,9 @@ interface WhereFromWhereToProps {
 
 const WhereFromWhereTo: React.FC<WhereFromWhereToProps> = ({ route: { params: { onSelectAddress } } }) => {
   const [selectAddressOpen, setSelectAddressOpen] = useState(false);
+  const [isFetchingCurrentPositionAddress, setIsFetchingCurrentPositionAddress] = useState(false);
   const isLocationPermissionGranted = useLocationPermission()
-  const { value: savedAddresses } = useStorage<SavedAddress[]>(Storage.ADDRESSES, []);
+  const [savedAddresses] = useStorage<SavedAddress[]>('addresses');
   const navigation = useNavigation<any>();
 
   const handleOpenSelectAddressModal = () => {
@@ -41,43 +42,44 @@ const WhereFromWhereTo: React.FC<WhereFromWhereToProps> = ({ route: { params: { 
   }
 
   const handleSelectLocationAsAddress = () => {
+    setIsFetchingCurrentPositionAddress(true)
     Geolocation.getCurrentPosition(async ({ coords: { latitude, longitude } }) => {
-        const address = await getAddressFromCoordsRemote(latitude, longitude);
-        address !== undefined && handleSelectAddress(address);
-        
+      const address = await getAddressFromCoordsRemote(latitude, longitude);
+      address !== undefined && handleSelectAddress(address);
+      setIsFetchingCurrentPositionAddress(false)
     });
   }
 
   return (
-      <Container>
-        <Header showBack>title</Header>
-        <Content>
-          <Button icon="map" onPress={handleOpenSelectAddressModal} type="secondary">
-            Elegir en el mapa
+    <Container>
+      <Header showBack>title</Header>
+      <Content>
+        <Button icon="map" onPress={handleOpenSelectAddressModal} type="secondary">
+          Elegir en el mapa
           </Button>
-          {isLocationPermissionGranted && (
-            <Box mt="lg">
-              <Button icon="map-pin" onPress={handleSelectLocationAsAddress} type="secondary">
-                Elegir mi ubicación
-              </Button>
-            </Box>
-          )}
-          {savedAddresses.length > 0 && (
-            <Box mt="lg" mb="lg">
-              <LargeBody>Elegir de mis direcciones</LargeBody>
-              <SavedAddressList
-                savedAddresses={savedAddresses}
-                onSelectAddress={(sa:SavedAddress)=>handleSelectAddress(sa.address)}
-              />
-            </Box>
-          )}
-        </Content>
+        {isLocationPermissionGranted && (
+          <Box mt="lg">
+            <Button icon="map-pin" loading={isFetchingCurrentPositionAddress} onPress={handleSelectLocationAsAddress} type="secondary">
+              Elegir mi ubicación
+            </Button>
+          </Box>
+        )}
+        {savedAddresses.length > 0 && (
+          <Box mt="lg" mb="lg">
+            <LargeBody>Elegir de mis direcciones</LargeBody>
+            <SavedAddressList
+              savedAddresses={savedAddresses}
+              onSelectAddress={(sa: SavedAddress) => handleSelectAddress(sa.address)}
+            />
+          </Box>
+        )}
+      </Content>
       <SelectAddressModal
         onSelectAddress={handleSelectAddress}
         onClose={handleCloseAddressModal}
         open={selectAddressOpen}
       />
-      </Container>
+    </Container>
   );
 };
 

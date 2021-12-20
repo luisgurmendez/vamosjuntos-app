@@ -24,14 +24,18 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
   const [selectAddressOpen, setSelectAddressOpen] = useState(false);
   const [selectSavedAddressOpen, setSelectedSavedAddressOpen] = useState(false);
   const isLocationPermissionGranted = useLocationPermission()
-  const { value: savedAddresses } = useStorage<SavedAddress[]>(Storage.ADDRESSES, []);
+  const [isFetchingCurrentPositionAddress, setIsFetchingCurrentPositionAddress] = useState(false);
+  const [savedAddresses] = useStorage<SavedAddress[]>('addresses');
 
   const handleSelectLocationAsAddress = () => {
+    setIsFetchingCurrentPositionAddress(true)
     Geolocation.getCurrentPosition(async ({ coords: { latitude, longitude } }) => {
-        const address = await getAddressFromCoordsRemote(latitude, longitude);
-        address !== undefined && onSelectAddress(address);
+      const address = await getAddressFromCoordsRemote(latitude, longitude);
+      address !== undefined && handleSelectAddress(address);
+      setIsFetchingCurrentPositionAddress(false)
     });
   }
+
 
   const handleCloseAddressModal = () => {
     setSelectAddressOpen(false)
@@ -52,7 +56,7 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
       </Button>
       {isLocationPermissionGranted && (
         <Box mt="lg">
-          <Button icon="map-pin" onPress={handleSelectLocationAsAddress} type="secondary">
+          <Button icon="map-pin" loading={isFetchingCurrentPositionAddress} onPress={handleSelectLocationAsAddress} type="secondary">
             Elegir mi ubicación
       </Button>
         </Box>

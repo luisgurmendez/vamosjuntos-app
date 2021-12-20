@@ -1,7 +1,5 @@
 import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
 import { Size, sizeToPx } from './utils';
-// TODO it's a good idea but needs more thinking...
 
 interface MarginedChildrenProps {
   m?: Size; // margin

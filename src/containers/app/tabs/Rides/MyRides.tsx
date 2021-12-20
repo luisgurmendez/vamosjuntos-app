@@ -11,14 +11,15 @@ import Storage from 'storage/Storage';
 import moment from 'moment';
 import RememberToCompleteRidesModal from './RememberToCompleteRidesModal';
 import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
+import { Body } from 'components/Typography/Typography';
 
 const noRidesImage = require('../../../../assets/CantSeeAnyRides.png');
 
 const MyRides: React.FC = () => {
 
   const [refreshing, setRefreshing] = React.useState(false);
-  const { value: showCanceledRides, refreshValue: refreshShowCanceledRides } = useStorage(Storage.SHOW_CANCELED_RIDES, false);
-  const { value: showCompletedRides, refreshValue: refreshShowCompletedRides } = useStorage(Storage.SHOW_COMPLETED_RIDES, false);
+  const [showCanceledRides] = useStorage<boolean>('showCanceledRides');
+  const [showCompletedRides] = useStorage<boolean>('showCompletedRides');
 
   const dispatch = useDispatch();
 
@@ -36,8 +37,6 @@ const MyRides: React.FC = () => {
 
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
-    refreshShowCompletedRides();
-    refreshShowCanceledRides();
     try {
       const _rides = await getRides();
       dispatch(setRides(_rides))
@@ -48,6 +47,15 @@ const MyRides: React.FC = () => {
     setRefreshing(false);
   }, []);
 
+  const renderNoContentHelp = () => {
+    return (
+      <Body>
+        Aca vas a poder ver todos los viajes en los que participas (ya seas conductor o pasajero). {"\n"}
+        {"\n"}
+        Los viajes ya completados y cancelados estan escondidos por defecto. Para cambiar esto podes ir a <Body bold>Configuración</Body> y habilitar las opciones.
+      </Body>
+    )
+  }
 
   return (
     <>
@@ -55,7 +63,7 @@ const MyRides: React.FC = () => {
         showContent={hasRides}
         onRefresh={onRefresh}
         refreshing={refreshing}
-        // noContentHelp={renderHelp()}
+        noContentHelp={renderNoContentHelp()}
         noContentAsset={noRidesImage}
       >
         <RidesList title="Programados" rides={pendingRides} />

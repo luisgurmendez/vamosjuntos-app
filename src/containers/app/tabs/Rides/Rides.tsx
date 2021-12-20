@@ -15,14 +15,12 @@ import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 
 const noRidesFoundImage = require('../../../../assets/NoRidesFound.png');
 
-
-// TODO: fix double fetch on screen load. (this is because of asyn storage, and isFetchingAddress not true immediately)
 const Rides: React.FC = () => {
   const [isFetchingRides, setIsFetchingRides] = useState(false);
   const [rides, setRides] = useState<Ride[]>([]);
   const hasRides = rides.length > 0;
   const navigation = useNavigation<any>();
-  const { isFetching: isFetchingAddresses, value: savedAddresses } = useStorage<SavedAddress[]>(Storage.ADDRESSES, []);
+  const [savedAddresses] = useStorage<SavedAddress[]>('addresses');
 
   const handleFetchSoonToLeaveRides = useCallback(async () => {
     setIsFetchingRides(true);
@@ -43,10 +41,8 @@ const Rides: React.FC = () => {
   }, [savedAddresses])
 
   useEffect(() => {
-    if (!isFetchingAddresses) {
-      handleFetchSoonToLeaveRides();
-    }
-  }, [isFetchingAddresses, handleFetchSoonToLeaveRides]);
+    handleFetchSoonToLeaveRides();
+  }, [handleFetchSoonToLeaveRides]);
 
   const handleSearchForRide = () => {
     navigation.push(Screens.SEARCH_FOR_RIDE);
@@ -59,7 +55,7 @@ const Rides: React.FC = () => {
   const renderHelp = () => {
     return (
       <Body>
-        En base a tus direcciones guardadas buscamos los viajes que más te puedan servir. Para agregar direcciones, anda a <BoldBody>Configuración {'>'} Direcciones guardadas</BoldBody>
+        En base a tus direcciones guardadas buscamos los viajes que más te puedan servir. Para agregar direcciones, anda a <Body bold>Configuración {'>'} Direcciones guardadas</Body>
       </Body>
     )
   }
@@ -102,8 +98,4 @@ const SearchButtonPositioner = styled.View`
   position: absolute;
   bottom: 16px;
   right: 16px;
-`
-
-const BoldBody = styled(Body)`
-  font-weight: bold;
 `

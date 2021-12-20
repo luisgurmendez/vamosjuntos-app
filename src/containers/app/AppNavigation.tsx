@@ -56,7 +56,6 @@ const AppNavigation: React.FC = () => {
           <Stack.Screen name={Screens.JOIN_RIDE} component={JoinRide} />
         </Stack.Navigator>
       </AppInitialDataFetcher>
-
       {useAds && <BannerAd />}
     </AppContainer>
   );

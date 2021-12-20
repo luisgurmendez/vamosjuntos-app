@@ -13,21 +13,21 @@ export interface SearchForRideState {
 
 export interface SearchForRideApi {
   setOrigin: (origin: Address | null) => void;
-  setDestination: (destination: Address| null) => void;
+  setDestination: (destination: Address | null) => void;
   setDate: (date: string) => void;
 }
 
-export interface SearchForRideContextState extends SearchForRideState, SearchForRideApi {}
+export interface SearchForRideContextState extends SearchForRideState, SearchForRideApi { }
 
 const SearchForRideContext = React.createContext<SearchForRideContextState>({
   origin: null,
   destination: null,
   date: new Date().toISOString(),
-  searchedRides:[],
+  searchedRides: [],
   isFetchingSearchedRides: false,
-  setOrigin: () => {},
-  setDestination: () => {},
-  setDate: () => {}
+  setOrigin: () => { },
+  setDestination: () => { },
+  setDate: () => { }
 });
 
 export default SearchForRideContext;
@@ -38,30 +38,30 @@ export class SearchForRideProvider extends React.Component<{}, SearchForRideStat
     origin: null,
     destination: null,
     date: moment().set({ hours: 12, minutes: 0 }).toISOString(),
-    searchedRides:[],
+    searchedRides: [],
     isFetchingSearchedRides: false,
   };
 
   handleSearchRides = async () => {
-    const {date, origin, destination} = this.state;
-    this.setState({isFetchingSearchedRides: true})
-    if(origin !== null && destination !== null){
-      const rides = await getPossibleRides({date, whereFrom: origin, whereTo: destination});
-      this.setState({searchedRides: rides});
+    const { date, origin, destination } = this.state;
+    this.setState({ isFetchingSearchedRides: true })
+    if (origin !== null && destination !== null) {
+      const rides = await getPossibleRides({ date, whereFrom: origin, whereTo: destination });
+      this.setState({ searchedRides: rides });
     }
-    this.setState({isFetchingSearchedRides: false})
+    this.setState({ isFetchingSearchedRides: false })
   }
 
-  setOrigin = (origin: Address) => {
-    this.setState({origin}, this.handleSearchRides);
+  setOrigin = (origin: Address | null) => {
+    this.setState({ origin }, this.handleSearchRides);
   }
 
-  setDestination =  (destination: Address) => {
-    this.setState({destination},this.handleSearchRides);
+  setDestination = (destination: Address | null) => {
+    this.setState({ destination }, this.handleSearchRides);
   }
 
-  setDate =  (date: string) => {
-    this.setState({date}, this.handleSearchRides);
+  setDate = (date: string) => {
+    this.setState({ date }, this.handleSearchRides);
   }
 
   render() {

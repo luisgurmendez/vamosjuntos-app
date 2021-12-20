@@ -7,7 +7,6 @@ import Storage from 'storage/Storage';
 import useStorage from 'hooks/useStorage';
 import { SavedAddress } from 'types/storage';
 import HideIfLoading from 'components/Loading/HideIfLoading';
-import { colors } from 'utils/colors';
 import { Box } from 'components/Box/Box';
 import SavedAddressList from 'components/Address/SavedAddressList';
 import PlainButton from 'components/Button/PlainButton';
@@ -26,10 +25,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = ({ }) => {
   const [selectAddressModalOpen, setSelectAddressModalOpen] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<Address | undefined>(undefined)
   const [addressName, setAddressName] = useState<string | undefined>(undefined);
-  const { value: savedAddresses, setValue: setSavedAddress, isFetching: isGettingSavedAddresses } = useStorage<SavedAddress[]>(
-    Storage.ADDRESSES,
-    []
-  );
+  const [savedAddresses, setSavedAddress] = useStorage<SavedAddress[]>('addresses');
 
   const handleSaveNewAddress = () => {
     const toSavedAddress: SavedAddress = { id: randomId(), name: addressName!, address: selectedAddress! };
@@ -52,40 +48,38 @@ const SavedAddresses: React.FC<SavedAddressesProps> = ({ }) => {
 
   return (
     <PageWithBack secondaryAction={<PlainButton onPress={() => setSelectAddressModalOpen(true)}>Agregar una dirección</PlainButton>}>
-      <HideIfLoading loading={isGettingSavedAddresses} label="Obteniendo tus direcciones">
-        <Container>
-          <KeyboardShift>
-            {
-              selectedAddress &&
-              <>
-                <Body>Nueva dirección</Body>
-                <Box mt="lg" mb="lg">
-                  <DisplayAddress address={selectedAddress} />
-                </Box>
-                <Box mb="lg">
-                  <TextInput onChangeText={setAddressName} placeholder="Nombre" />
-                </Box>
-                <Button
-                  disabled={addressName === undefined || addressName === ''}
-                  onPress={handleSaveNewAddress}
-                >
-                  Guardar
-              </Button>
-              </>
-            }
-            <SavedAddressesContainer mt="lg">
-              <Box mb="md">
-                <Subtitle>Direcciones guardadas</Subtitle>
-              </Box>
-              <SavedAddressList
-                savedAddresses={savedAddresses}
-                onRemoveAddress={handleRemoveSavedAddress}
-              />
-            </SavedAddressesContainer>
-          </KeyboardShift>
-        </Container>
 
-      </HideIfLoading>
+      <Container>
+        <KeyboardShift>
+          {
+            selectedAddress &&
+            <>
+              <Body>Nueva dirección</Body>
+              <Box mt="lg" mb="lg">
+                <DisplayAddress address={selectedAddress} />
+              </Box>
+              <Box mb="lg">
+                <TextInput onChangeText={setAddressName} placeholder="Nombre" />
+              </Box>
+              <Button
+                disabled={addressName === undefined || addressName === ''}
+                onPress={handleSaveNewAddress}
+              >
+                Guardar
+              </Button>
+            </>
+          }
+          <SavedAddressesContainer mt="lg">
+            <Box mb="md">
+              <Subtitle>Direcciones guardadas</Subtitle>
+            </Box>
+            <SavedAddressList
+              savedAddresses={savedAddresses}
+              onRemoveAddress={handleRemoveSavedAddress}
+            />
+          </SavedAddressesContainer>
+        </KeyboardShift>
+      </Container>
 
       <SelectAddressModal
         onSelectAddress={setSelectedAddress}

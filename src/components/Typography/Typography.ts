@@ -2,10 +2,14 @@ import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 
+interface ExtraTextProps {
+  bold?: boolean;
+}
 
-export const Text = styled.Text`
-font-family: Roboto;
-color: ${colors.black};
+export const Text = styled.Text<ExtraTextProps>`
+  font-family: Roboto;
+  color: ${colors.black};
+  ${props => props.bold ? 'font-weight: bold' : ''};
 `;
 
 export const AnimatedText = Animated.createAnimatedComponent(Text);

@@ -29,7 +29,6 @@ const ModalWithYesNoActions: React.FC<ModalWithYesNoActionsProps> = ({ onConfirm
           onSecondaryPress={onClose}
         />
       </HideIfLoading>
-
     </SimpleModal>
   )
 

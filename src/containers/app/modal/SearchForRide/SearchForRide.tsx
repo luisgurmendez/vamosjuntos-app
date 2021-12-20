@@ -1,9 +1,6 @@
 import React from 'react';
-import { createRideRequest } from 'api/callables';
 import crashlytics from '@react-native-firebase/crashlytics';
-import Toaster from 'components/Toaster/Toaster';
 import { useDispatch } from 'react-redux';
-import { addRideRequest } from 'state/ride/actions';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import SearchForRideHeader from './SearchForRideHeader';
@@ -17,7 +14,7 @@ import HideIfLoading from 'components/Loading/HideIfLoading';
 const SearchForRide: React.FC = () => {
 
   const dispatch = useDispatch();
- 
+
   return (
     <Container>
       <SearchForRideHeader />
@@ -35,7 +32,7 @@ const Container = styled.View`
 const Rides: React.FC = () => {
 
   const navigation = useNavigation<any>();
-  const {searchedRides, isFetchingSearchedRides} = useSearchForRide();
+  const { searchedRides, isFetchingSearchedRides } = useSearchForRide();
 
   const handleJoinRide = (ride: Ride) => {
     navigation.dangerouslyGetParent().push(Screens.JOIN_RIDE, {
@@ -44,15 +41,15 @@ const Rides: React.FC = () => {
     });
   }
 
-  return(
+  return (
     <HideIfLoading loading={isFetchingSearchedRides} label="Te estamos buscando viajes">
       <RidesContainer
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={400}
-        >
-      <MarginedChildren mt="lg">
-        {searchedRides.map(ride => <RideBubble key={ride.id} onPress={() => handleJoinRide(ride)} ride={ride} />)}
-      </MarginedChildren>
+      >
+        <MarginedChildren mt="lg">
+          {searchedRides.map(ride => <RideBubble key={ride.id} onPress={() => handleJoinRide(ride)} ride={ride} />)}
+        </MarginedChildren>
       </RidesContainer>
     </HideIfLoading>
   )

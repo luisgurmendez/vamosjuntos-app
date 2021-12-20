@@ -5,6 +5,7 @@ import { reducer as ride } from './ride/reducer';
 import { reducer as notification } from './notification/reducer';
 import { reducer as general } from './general/reducer';
 import { reducer as featureFlags } from './featureFlags/reducer';
+import { reducer as storage } from './storage/reducer';
 
 const rootReducer = combineReducers({
   camera,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   ride,
   notification,
   general,
-  featureFlags
+  featureFlags,
+  storage
 });
 
 export default rootReducer;

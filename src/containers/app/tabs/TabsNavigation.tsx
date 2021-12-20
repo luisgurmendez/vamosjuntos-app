@@ -56,7 +56,7 @@ export default TabsNavigation;
 function useRedirectInitialRoute() {
   const navigation = useNavigation<any>();
   const passenger = useSelector((state: AppState) => state.user.owesReview);
-  const { value: showWelcomeScreen } = useStorage(Storage.SHOULD_WELCOME, false);
+  const [showWelcomeScreen] = useStorage<boolean>('shouldWelcome');
 
   // Check if user need to make a review
   useEffect(() => {

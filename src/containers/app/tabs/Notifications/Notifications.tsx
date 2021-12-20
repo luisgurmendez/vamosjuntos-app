@@ -20,11 +20,8 @@ const Notifications: React.FC = () => {
   const [refreshing, setRefreshing] = React.useState(false);
   const dispatch = useDispatch();
 
-  const {
-    value: showSeenNotifications,
-    refreshValue: refreshShowSeenNotifications
-  } = useStorage(Storage.SHOW_SEEN_NOTIFICATIONS, true);
-
+  const [showSeenNotifications] = useStorage<boolean>('showSeenNotifications');
+  console.log(showSeenNotifications);
   const unSeenNotifications = useSelector(getUnseenNotifications);
   let seenNotifications = useSelector(getSeenNotifications);
 
@@ -46,7 +43,6 @@ const Notifications: React.FC = () => {
   }, [seenNotifications])
 
   const onRefresh = React.useCallback(async () => {
-    refreshShowSeenNotifications();
     setRefreshing(true);
     const _notificiations = await getNotifications();
     dispatch(setNotifications(_notificiations))

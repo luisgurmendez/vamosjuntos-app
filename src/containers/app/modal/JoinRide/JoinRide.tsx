@@ -10,15 +10,14 @@ import { addRideRequest } from 'state/ride/actions';
 import styled from 'styled-components/native';
 import { Address, Ride } from 'types/models';
 import crashlytics from '@react-native-firebase/crashlytics';
-import Icon from 'react-native-vector-icons/Feather';
-import { colors } from 'utils/colors';
+import useInterstatialAd from 'hooks/useInterstitialAd';
 
 interface JoinRideProps {
   route: {
     params: {
       ride: Ride;
       onJoinedToRide?: () => void;
-      whereFromWhereTo?: [Address,Address];
+      whereFromWhereTo?: [Address, Address];
     }
   }
 }
@@ -29,11 +28,12 @@ const JoinRide: React.FC<JoinRideProps> = ({ route: { params: { ride, whereFromW
   const [isCreatingRideRequest, setIsCreatingRideRequest] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
+  const handleShowAd = useInterstatialAd();
 
   const whereFrom = whereFromWhereTo ? whereFromWhereTo[0] : ride.whereFrom;
   const whereTo = whereFromWhereTo ? whereFromWhereTo[1] : ride.whereTo;
 
-   const handleCreateRideRequest = async () => {
+  const handleCreateRideRequest = async () => {
     try {
       setIsCreatingRideRequest(true);
       const rideRequest = await createRideRequest(ride.id, whereFrom, whereTo!);
@@ -45,13 +45,14 @@ const JoinRide: React.FC<JoinRideProps> = ({ route: { params: { ride, whereFromW
       crashlytics().recordError(e);
     }
     setIsCreatingRideRequest(false);
+    handleShowAd();
   }
 
   return (
     <PageWithBack>
       <Container>
-        <ScrollingContent contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
-          <ToJoinRideDetails ride={ride}/>
+        <ScrollingContent contentContainerStyle={{ flex: 1, justifyContent: 'space-between' }}>
+          <ToJoinRideDetails ride={ride} />
         </ScrollingContent>
         <Button loading={isCreatingRideRequest} onPress={handleCreateRideRequest}>
           Unirme

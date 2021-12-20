@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import moment from 'moment';
 import MonthSelector from './MonthSelector';
 import SelectableCell from './SelectableCell';
+import YearSelector from './YearSelect';
 
 interface CalendarProps {
   selectedDate: moment.Moment;
@@ -12,9 +13,10 @@ interface CalendarProps {
 const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate }) => {
   const today = moment();
   const [month, setMonth] = useState(selectedDate.month());
+  const [year, setYear] = useState(selectedDate.year());
 
   // Go to the last Sunday of previous month
-  const iteratingDay = moment(month + 1, 'MM')
+  const iteratingDay = moment(`${month + 1}-${year}`, 'MM-YYYY')
     .subtract(1, 'month')
     .endOf('month')
 
@@ -23,7 +25,7 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate }) => {
     iteratingDay.subtract(1, 'day');
   }
 
-  const firstSundayOfNextMonth = moment(month + 1, 'MM').endOf('month');
+  const firstSundayOfNextMonth = moment(`${month + 1}-${year}`, 'MM-YYYY').endOf('month');
   const numOfWeeks = firstSundayOfNextMonth.diff(iteratingDay, 'days') / 7;
 
   const renderWeeks = () => {
@@ -35,7 +37,7 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate }) => {
             iteratingDay.add(1, 'day');
             const isInThisMonth = iteratingDay.month() === month;
             const isSelectable = isInThisMonth && iteratingDay.isSameOrAfter(today, 'day');
-            const isSelected = iteratingDay.isSame(selectedDate, 'day') && isInThisMonth;
+            const isSelected = iteratingDay.isSame(selectedDate, 'day') // && isInThisMonth;
             const date = iteratingDay.clone();
             return (
               <SelectableCell
@@ -56,7 +58,10 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate }) => {
 
   return (
     <CalendarContainer>
-      <MonthSelector month={month} onMonthChange={setMonth} />
+      <YearMonthSelectorsContainer>
+        {today.month() === 11 && <YearSelector year={year} onYearChange={setYear} />}
+        <MonthSelector month={month} onMonthChange={setMonth} />
+      </YearMonthSelectorsContainer>
       <HeaderRow>
         <Cell>
           <HeaderLabel>L</HeaderLabel>
@@ -121,3 +126,10 @@ const CenteredText = styled.Text`
 const HeaderLabel = styled(CenteredText)`
   color: rgba(0, 0, 0, 0.54);
 `;
+
+const YearMonthSelectorsContainer = styled.View`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 8px 0px;
+`

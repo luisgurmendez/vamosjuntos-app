@@ -17,7 +17,7 @@ const SimpleModal: React.FC<SimpleModalProps> = ({ open, onClose, title, childre
     <Modal isVisible={open} onBackdropPress={onClose} backdropTransitionOutTiming={0}>
       <Container style={style}>
         {title && <Subtitle>{title}</Subtitle>}
-        <Content pt="lg">
+        <Content p="lg">
           {children}
         </Content>
       </Container>

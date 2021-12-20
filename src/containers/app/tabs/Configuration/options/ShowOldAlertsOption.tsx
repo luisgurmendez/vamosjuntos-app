@@ -1,13 +1,12 @@
 import React from 'react'
 import BooleanConfiguration from './commons/BooleanConfiguration';
-import Storage from 'storage/Storage';
 import useStorage from 'hooks/useStorage';
 
 interface ShowOldAlertsOptionProps { }
 
 const ShowOldAlertsOption: React.FC<ShowOldAlertsOptionProps> = ({ }) => {
 
-  const { value: isEnabled, setValue: setIsEnabled } = useStorage(Storage.SHOW_SEEN_NOTIFICATIONS, false);
+  const [isEnabled, setIsEnabled] = useStorage<boolean>('showSeenNotifications');
 
   return (
     <BooleanConfiguration

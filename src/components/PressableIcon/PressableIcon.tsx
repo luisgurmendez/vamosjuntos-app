@@ -7,12 +7,18 @@ import { colors } from 'utils/colors';
 interface PressableIconProps extends IconProps {
   onPress?: () => void;
   activeOpacity?: number;
+  disabled?: boolean;
 }
 
-const PressableIcon: React.FC<PressableIconProps> = ({ activeOpacity = 0.3, onPress, style, ...iconProps }) => {
+const PressableIcon: React.FC<PressableIconProps> = ({ disabled = false, activeOpacity = 0.3, onPress, style, ...iconProps }) => {
+
+  const handlePress = () => {
+    (!disabled && onPress) && onPress();
+  }
+
   return (
-    <TouchableOpacity activeOpacity={activeOpacity} style={style} onPress={onPress}>
-      <Icon color={colors.black} {...iconProps} />
+    <TouchableOpacity activeOpacity={activeOpacity} style={style} onPress={handlePress}>
+      <Icon color={disabled ? colors.gray : colors.black} {...iconProps} />
     </TouchableOpacity>
   );
 };

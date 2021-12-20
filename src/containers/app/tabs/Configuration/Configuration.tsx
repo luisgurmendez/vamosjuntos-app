@@ -21,10 +21,7 @@ import { Easing } from 'react-native';
 
 interface ConfigurationProps { }
 
-//TODO: Add FAQ option, example https://support.blablacar.com/hc/es
-
 const Configuration: React.FC<ConfigurationProps> = () => {
-
 
   const handleVersionOptionPressed = () => {
     AnimatedCarManager.add();

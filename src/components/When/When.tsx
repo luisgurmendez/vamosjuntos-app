@@ -18,7 +18,7 @@ const When: React.FC<WhenProps> = ({ date = moment(), onDateChange }) => {
 
   const handleDateChange = (value: moment.Moment) => {
     const _date = date.clone();
-    _date.set({ date: value.date(), month: value.month() });
+    _date.set({ date: value.date(), month: value.month(), year: value.year() });
     onDateChange && onDateChange(_date);
   };
 
@@ -26,8 +26,8 @@ const When: React.FC<WhenProps> = ({ date = moment(), onDateChange }) => {
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
       <KeyboardShift>
         <Container>
-            <MarginedSubtitle>{getDateText(date)}</MarginedSubtitle>
-            <Calendar selectedDate={date} onSelectDate={handleDateChange} />
+          <MarginedSubtitle>{getDateText(date)}</MarginedSubtitle>
+          <Calendar selectedDate={date} onSelectDate={handleDateChange} />
           <Box mt="xxlg">
             <MarginedSubtitle>{date.format('[A las] HH:mm')}</MarginedSubtitle>
             <TimePicker onTimeChange={onDateChange} date={date} />
