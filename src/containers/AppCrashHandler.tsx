@@ -4,10 +4,10 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import styled from 'styled-components/native';
 import { Image } from 'react-native';
 import Button from 'components/Button/Button';
+import { WithChildren } from 'components/types';
+import { ERROR_IMG } from 'assets/images';
 
-const errorIlustration = require('../assets/VamosJuntosError.png');
-
-class AppCrashHandler extends React.Component<{}, { hasError: boolean }> {
+class AppCrashHandler extends React.Component<WithChildren, { hasError: boolean }> {
 
   constructor(props: {}) {
     super(props);
@@ -34,7 +34,7 @@ class AppCrashHandler extends React.Component<{}, { hasError: boolean }> {
               width: '100%',
             }}
             resizeMode="contain"
-            source={errorIlustration}
+            source={ERROR_IMG}
           />
           <LargeBody>Perdon! Parece que algo salio mal.</LargeBody>
           <StyledSmallBody>Este error fue guardado y lo vamos a revisar. Si seguis teniendo problemas, porfavor contactate con nosotros.</StyledSmallBody>

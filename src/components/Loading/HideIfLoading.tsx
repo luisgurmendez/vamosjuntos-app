@@ -1,10 +1,11 @@
+import { WithChildren } from 'components/types';
 import { Body } from 'components/Typography/Typography';
 import React from 'react'
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import Loading from './Loading';
 
-interface HideIfLoadingProps {
+interface HideIfLoadingProps extends WithChildren {
   loading: boolean;
   label?: string;
   size?: number;

@@ -3,6 +3,7 @@ import { Box } from 'components/Box/Box';
 import Button from 'components/Button/Button';
 import Header from 'components/Page/Header';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
+import { WithChildren } from 'components/types';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
@@ -17,7 +18,7 @@ export interface ActionProps {
   hideAction?: boolean;
 }
 
-export interface WizardProps {
+export interface WizardProps extends WithChildren {
   title?: string;
   icon?: 'arrow' | 'close'
   showBack?: boolean;

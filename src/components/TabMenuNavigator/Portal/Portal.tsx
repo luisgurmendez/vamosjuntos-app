@@ -1,3 +1,4 @@
+import { WithChildren } from 'components/types';
 import * as React from 'react';
 import PortalConsumer from './PortalConsumer';
 import PortalHost, { PortalContext, PortalMethods } from './PortalHost';
@@ -21,7 +22,7 @@ import PortalHost, { PortalContext, PortalMethods } from './PortalHost';
  * export default MyComponent;
  * ```
  */
-class Portal extends React.Component {
+class Portal extends React.Component<WithChildren, {}> {
   // @component ./PortalHost.tsx
   static Host = PortalHost;
 

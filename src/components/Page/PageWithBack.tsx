@@ -1,8 +1,9 @@
+import { WithChildren } from 'components/types';
 import React from 'react';
 import styled from 'styled-components/native';
 import Header from './Header';
 
-interface PageProps {
+interface PageProps extends WithChildren {
   secondaryAction?: React.ReactNode;
   title?: string;
 }

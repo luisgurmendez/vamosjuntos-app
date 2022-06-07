@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from 'utils/colors';
 import { StyleProp, TextStyle } from 'react-native';
 import Circle from 'components/Circle/Circle';
+import { WithChildren } from 'components/types';
 
 enum HowItWorksTabs {
   asDriver,
@@ -78,7 +79,7 @@ const Container = styled.View`
 
 const Content = styled.ScrollView``
 
-interface StepProps {
+interface StepProps extends WithChildren {
   title: string;
   num: number;
 }

@@ -1,7 +1,8 @@
+import { WithChildren } from 'components/types';
 import React from 'react'
 import { Image, ImageStyle } from 'react-native';
 
-interface WithBackgroundImageProps {
+interface WithBackgroundImageProps extends WithChildren {
   asset: any;
   imageStyles?: ImageStyle;
 }

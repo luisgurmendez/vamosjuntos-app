@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { getPossibleRides } from 'api/callables';
+import { NO_SEARCHED_RIDES_IMG } from 'assets/images';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import RideBubble from 'components/Ride/RideBubble';
-import { Subtitle } from 'components/Typography/Typography';
 import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
 import Wizard from 'components/Wizard/Wizard';
 import { useField, useFormikContext } from 'formik';
@@ -13,8 +13,6 @@ import styled from 'styled-components/native';
 import { Ride } from 'types/models';
 import { LiftCreationValues } from './LiftForm/formSchema';
 import { LiftScreens } from './LiftScreens';
-
-const noRidesFoundImage = require('../../../../../assets/NoSearchedRides.png');
 
 const PossibleRides: React.FC = () => {
 
@@ -45,7 +43,7 @@ const PossibleRides: React.FC = () => {
   return (
     <Wizard action={{ hideAction: true }} title="Posibles viajes">
       <HideIfLoading loading={rides === undefined} label="Te estamos buscando viajes">
-        <WithBackgroundImage asset={rides && rides.length === 0 ? noRidesFoundImage : undefined}>
+        <WithBackgroundImage asset={rides && rides.length === 0 ? NO_SEARCHED_RIDES_IMG : undefined}>
           <Container>
             <Content>
               <MarginedChildren mt="lg">

@@ -18,8 +18,7 @@ import Screens from './Screens';
 import moment from 'moment';
 import RememberToCompleteRidesModal from './RememberToCompleteRidesModal';
 import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
-
-const noRidesImage = require('../../../../assets/NoRides.png');
+import { NO_RIDES_IMG } from 'assets/images';
 
 const Rides: React.FC = () => {
 
@@ -73,7 +72,7 @@ const Rides: React.FC = () => {
 
   return (
     <Page title="Mis Viajes" renderAction={renderAction}>
-      <WithBackgroundImage asset={!hasRides ? noRidesImage : undefined}>
+      <WithBackgroundImage asset={!hasRides ? NO_RIDES_IMG : undefined}>
         <Container
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={400}

@@ -1,7 +1,8 @@
+import { WithChildren } from 'components/types';
 import React, { useState } from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
 
-const TranslatedMenuItem: React.FC = ({ children }) => {
+const TranslatedMenuItem: React.FC<WithChildren> = ({ children }) => {
   const [width, setWidth] = useState(30);
   const [height, setHeight] = useState(30);
 

@@ -1,10 +1,11 @@
 import { Box } from 'components/Box/Box';
+import { WithChildren } from 'components/types';
 import { Subtitle } from 'components/Typography/Typography';
 import React from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 
-interface NotificationSectionProps {
+interface NotificationSectionProps extends WithChildren {
   section: string;
 }
 

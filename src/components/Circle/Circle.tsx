@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { LayoutChangeEvent, StyleProp, View, ViewStyle } from 'react-native';
+import { WithChildren } from 'components/types';
+import React, { useState } from 'react';
+import { LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
 
-interface CircleProps {
+interface CircleProps extends WithChildren {
   w?: boolean;
 }
 

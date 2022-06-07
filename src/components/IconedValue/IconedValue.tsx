@@ -2,8 +2,9 @@ import React from 'react';
 import styled from "styled-components/native";
 import { colors } from "utils/colors";
 import Icon from 'react-native-vector-icons/Feather';
+import { WithChildren } from 'components/types';
 
-interface IconedValueProps {
+interface IconedValueProps extends WithChildren {
   icon: string;
 }
 

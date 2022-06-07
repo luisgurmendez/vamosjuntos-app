@@ -1,9 +1,10 @@
 import PressableIcon from 'components/PressableIcon/PressableIcon';
+import { WithChildren } from 'components/types';
 import React from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 
-interface RemovableItemProps {
+interface RemovableItemProps extends WithChildren {
   onRemove?: () => void;
 }
 

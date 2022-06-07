@@ -2,8 +2,9 @@ import MapContext, { IdsToMaps, MapState } from './MapContext';
 
 import React from 'react';
 import MapView from 'react-native-maps';
+import { WithChildren } from 'components/types';
 
-export class MapProvider extends React.Component<{}, MapState> {
+export class MapProvider extends React.Component<WithChildren, MapState> {
   state: MapState = {
     maps: {}
   };

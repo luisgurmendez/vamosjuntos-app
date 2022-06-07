@@ -1,9 +1,9 @@
+import { WithChildren } from 'components/types';
 import React from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
-import { TouchableOpacity, View } from 'react-native';
 
-interface SelectableCellProps {
+interface SelectableCellProps extends WithChildren {
   date: moment.Moment;
   onSelect?: (date: moment.Moment) => void;
   selected?: boolean;

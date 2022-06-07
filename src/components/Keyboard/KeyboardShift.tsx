@@ -1,3 +1,4 @@
+import { WithChildren } from 'components/types';
 import { usePlatform } from 'hooks/usePlatform';
 import React, { useEffect, useRef } from 'react';
 import { Animated, Dimensions, Keyboard, StyleSheet, TextInput } from 'react-native';
@@ -7,7 +8,7 @@ const { State: TextInputState } = TextInput;
 
 const ANIMATION_SPEED = 300;
 
-const KeyboardShift: React.FC = ({ children }) => {
+const KeyboardShift: React.FC<WithChildren> = ({ children }) => {
   const shift = useRef(new Animated.Value(0)).current;
   const { isAndroid } = usePlatform();
 

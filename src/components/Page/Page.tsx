@@ -2,9 +2,9 @@ import React from 'react';
 import { Box } from 'components/Box/Box';
 import { Title } from 'components/Typography/Typography';
 import styled from 'styled-components/native';
-import { colors } from 'utils/colors';
+import { WithChildren } from 'components/types';
 
-interface PageProps {
+interface PageProps extends WithChildren {
   title: string;
   renderAction?: () => React.ReactNode;
 }

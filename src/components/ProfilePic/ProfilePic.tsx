@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, ImageErrorEventData, NativeSyntheticEvent } from 'react-native';
 import styled from 'styled-components/native';
 import crashlytics from '@react-native-firebase/crashlytics'
+import { PROFILE_PLACEHOLDER_IMG } from 'assets/images';
 
 interface Props {
   size?: number;
@@ -20,7 +21,7 @@ const ProfilePic: React.FC<Props> = ({ img, size = 60 }) => {
         onError={handleDownloadImageError}
         style={{ flex: 1, width: '100%' }}
         resizeMode="cover"
-        source={img ? { uri: img, cache: 'force-cache' } : require('../../assets/profilePlaceholder.jpg')}
+        source={img ? { uri: img, cache: 'force-cache' } : PROFILE_PLACEHOLDER_IMG}
       />
     </ProfilePicBase>
   )

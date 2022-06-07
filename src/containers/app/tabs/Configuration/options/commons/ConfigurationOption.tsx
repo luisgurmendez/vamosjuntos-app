@@ -1,8 +1,8 @@
-import { Stylable } from 'components/types';
+import { Stylable, WithChildren } from 'components/types';
 import React from 'react'
 import styled from 'styled-components/native';
 
-interface ConfigurationOptionProps extends Stylable { }
+interface ConfigurationOptionProps extends Stylable, WithChildren { }
 
 const ConfigurationOption: React.FC<ConfigurationOptionProps> = ({ children, style }) => {
 

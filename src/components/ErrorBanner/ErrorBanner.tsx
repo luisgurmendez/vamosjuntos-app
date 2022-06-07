@@ -1,9 +1,10 @@
+import { WithChildren } from 'components/types';
 import { Body } from 'components/Typography/Typography';
 import React from 'react'
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 
-interface ErrorBannerProps { }
+interface ErrorBannerProps extends WithChildren { }
 
 const ErrorBanner: React.FC<ErrorBannerProps> = ({ children }) => {
 

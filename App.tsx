@@ -24,6 +24,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import useVersion from 'hooks/useVersion';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import remoteConfig from '@react-native-firebase/remote-config';
+import { WithChildren } from 'components/types';
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -58,7 +59,7 @@ const App = () => {
 export default App;
 
 
-const SetupApp: React.FC = ({ children }) => {
+const SetupApp: React.FC<WithChildren> = ({ children }) => {
 
   const [hasInternetConnection, hasCheckedInternetConnection] = useInternetConnection();
   const initialCheckAuth = useHandleUserAuthentication();
@@ -102,7 +103,7 @@ const Container = styled.View`
   flex: 1;
 `
 
-const FCMPermissions: React.FC = ({ children }) => {
+const FCMPermissions: React.FC<WithChildren> = ({ children }) => {
 
   const requestUserPermission = async () => {
     const messagingAuthorizationStatus = await messaging().requestPermission();

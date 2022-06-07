@@ -1,3 +1,4 @@
+import { WithChildren } from 'components/types';
 import React, { useEffect, useState } from 'react';
 import { Animated } from 'react-native';
 import { useAnimation } from 'react-native-animation-hooks';
@@ -7,7 +8,7 @@ import { DeviceDimensions } from 'utils/device';
 
 const ANIAMTION_DURATION = 400;
 
-const AnimatedCamera: React.FC = ({ children }) => {
+const AnimatedCamera: React.FC<WithChildren> = ({ children }) => {
 
   const [showingCamera, setShowingCamera] = useState(false);
   const showCamera = useSelector((state: AppState) => state.camera.showCamera);

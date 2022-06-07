@@ -1,10 +1,11 @@
+import { WithChildren } from 'components/types';
 import React, { useState } from 'react';
 import { Animated, TouchableOpacity } from 'react-native';
 import { useAnimation } from 'react-native-animation-hooks';
 
 const ANIAMTION_DURATION = 200;
 
-interface PressAnimationProps {
+interface PressAnimationProps extends WithChildren {
   disabled?: boolean;
   onPress?: () => void;
 }

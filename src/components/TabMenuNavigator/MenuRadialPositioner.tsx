@@ -1,11 +1,11 @@
-import { Stylable } from 'components/types';
+import { Stylable, WithChildren } from 'components/types';
 import React, { useEffect, useState } from 'react';
 import { ViewStyle } from 'react-native';
 import styled from 'styled-components/native';
 import { FAST_ANIMATION_DURATION } from 'utils/animation';
 import AnimatedEntranceAndPositioner from './items/AnimatedEntranceAndPositioner';
 
-interface MenuRadialPositionerProps extends Stylable<ViewStyle> {
+interface MenuRadialPositionerProps extends Stylable<ViewStyle>, WithChildren {
   radius?: number;
   elipsis?: { a: number; b: number };
   show?: boolean; // To make in & out animation

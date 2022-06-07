@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { Body, Bold } from 'components/Typography/Typography';
-import { Stylable } from 'components/types';
+import { Stylable, WithChildren } from 'components/types';
 import { Notification, User } from 'types/models';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
@@ -11,7 +11,7 @@ import { Screens } from 'containers/Screens';
 import moment from 'moment';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export interface BaseNotificationProps extends Stylable {
+export interface BaseNotificationProps extends Stylable, WithChildren {
   notification: Notification;
   label: string;
   onNotificationPress?: () => void;

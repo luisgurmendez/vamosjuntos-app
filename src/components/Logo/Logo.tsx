@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/native';
 import { Image } from 'react-native';
+import { TRANSPARENT_LOGO_IMG } from 'assets/images';
 
 interface LogoProps {
   size?: number;
@@ -13,7 +14,7 @@ const Logo: React.FC<LogoProps> = ({ size = 50 }) => {
       <Image
         style={{ flex: 1, width: '100%' }}
         resizeMode="cover"
-        source={require('../../assets/vamosjuntosLogo.png')}
+        source={TRANSPARENT_LOGO_IMG}
       />
     </Container>
   )

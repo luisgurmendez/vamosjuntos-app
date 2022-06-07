@@ -1,9 +1,9 @@
+import { WithChildren } from 'components/types';
 import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
 import { Size, sizeToPx } from './utils';
 // TODO it's a good idea but needs more thinking...
 
-interface MarginedChildrenProps {
+interface MarginedChildrenProps extends WithChildren {
   m?: Size; // margin
   mt?: Size; // margin-top
   mb?: Size; // margin-bottom

@@ -3,8 +3,7 @@ import Comment from './Comment';
 import { Review } from 'types/models';
 import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
 import styled from 'styled-components/native';
-
-const noReviewsImage = require('../../assets/NoReviews.png')
+import { NO_REVIEWS_IMG } from 'assets/images';
 
 interface CommentListProps {
   reviews: Review[];
@@ -13,7 +12,7 @@ interface CommentListProps {
 const CommentList: React.FC<CommentListProps> = ({ reviews }) => {
 
   return (
-    <WithBackgroundImage asset={reviews.length === 0 ? noReviewsImage : undefined}>
+    <WithBackgroundImage asset={reviews.length === 0 ? NO_REVIEWS_IMG : undefined}>
       <Container
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={400}

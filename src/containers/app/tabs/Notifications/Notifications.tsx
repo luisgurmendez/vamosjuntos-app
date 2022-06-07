@@ -8,15 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setNotifications } from 'state/notification/actions';
 import styled from 'styled-components/native';
 import Page from 'components/Page/Page';
-import NoNotifications from './NoNotifications';
 import Notification from 'components/Notifications/Notification';
 import { getSeenNotifications, getUnseenNotifications } from 'state/notification/selectors';
 import { NotificationType, RideRequestStatus } from 'types/models';
 import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
 import useStorage from 'hooks/useStorage';
 import Storage from 'storage/Storage';
-
-const noAlertsImage = require('../../../../assets/NoAlerts.png');
+import { NO_ALERTS_IMG } from 'assets/images';
 
 const Notifications: React.FC = () => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -57,7 +55,7 @@ const Notifications: React.FC = () => {
 
   return (
     <Page title="Alertas">
-      <WithBackgroundImage asset={hasNoNotifications ? noAlertsImage : undefined}>
+      <WithBackgroundImage asset={hasNoNotifications ? NO_ALERTS_IMG : undefined}>
         <Container
           scrollEventThrottle={400}
           refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />

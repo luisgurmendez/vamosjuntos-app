@@ -7,6 +7,7 @@ interface BadgeProps {
   badge?: number;
   max?: number;
   size?: number;
+  children?: React.ReactNode
 }
 
 const Badge: React.FC<BadgeProps> = ({ size = 18, max = 100, badge, children }) => {

@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components/native';
 import Modal from 'react-native-modal';
 import { Subtitle } from 'components/Typography/Typography';
-import { Stylable } from 'components/types';
+import { Stylable, WithChildren } from 'components/types';
 import { Box } from 'components/Box/Box';
 
-export interface SimpleModalProps extends Stylable {
+export interface SimpleModalProps extends Stylable, WithChildren {
   open: boolean;
   onClose: () => void;
   title?: string;
