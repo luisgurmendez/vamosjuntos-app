@@ -1,4 +1,5 @@
 import { getPossibleRides } from 'api/callables';
+import { WithChildren } from 'components/types';
 import moment from 'moment';
 import React from 'react';
 import { Address, Ride } from 'types/models';
@@ -9,6 +10,7 @@ export interface SearchForRideState {
   date: string;
   searchedRides: Ride[];
   isFetchingSearchedRides: boolean;
+  hasAlreadyMadeASearch: boolean;
 }
 
 export interface SearchForRideApi {
@@ -24,6 +26,7 @@ const SearchForRideContext = React.createContext<SearchForRideContextState>({
   destination: null,
   date: new Date().toISOString(),
   searchedRides: [],
+  hasAlreadyMadeASearch: false,
   isFetchingSearchedRides: false,
   setOrigin: () => { },
   setDestination: () => { },
@@ -33,18 +36,20 @@ const SearchForRideContext = React.createContext<SearchForRideContextState>({
 export default SearchForRideContext;
 
 
-export class SearchForRideProvider extends React.Component<{}, SearchForRideState> {
+export class SearchForRideProvider extends React.Component<WithChildren, SearchForRideState> {
   state: SearchForRideState = {
     origin: null,
     destination: null,
     date: moment().set({ hours: 12, minutes: 0 }).toISOString(),
     searchedRides: [],
     isFetchingSearchedRides: false,
+    hasAlreadyMadeASearch: false,
   };
 
   handleSearchRides = async () => {
     const { date, origin, destination } = this.state;
-    this.setState({ isFetchingSearchedRides: true })
+
+    this.setState({ isFetchingSearchedRides: true, hasAlreadyMadeASearch: true })
     if (origin !== null && destination !== null) {
       const rides = await getPossibleRides({ date, whereFrom: origin, whereTo: destination });
       this.setState({ searchedRides: rides });
@@ -73,6 +78,7 @@ export class SearchForRideProvider extends React.Component<{}, SearchForRideStat
           date: this.state.date,
           searchedRides: this.state.searchedRides,
           isFetchingSearchedRides: this.state.isFetchingSearchedRides,
+          hasAlreadyMadeASearch: this.state.hasAlreadyMadeASearch,
           setOrigin: this.setOrigin,
           setDestination: this.setDestination,
           setDate: this.setDate,
