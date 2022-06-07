@@ -1,10 +1,10 @@
 import styled from 'styled-components/native';
 
 interface AbsolutePositionedProps {
-  top?: string;
-  bottom?: string;
-  left?: string;
-  right?: string;
+  top?: string | number;
+  bottom?: string | number;
+  left?: string | number;
+  right?: string | number;
 }
 
 const AbsolutePositioned = styled.View<AbsolutePositionedProps>`

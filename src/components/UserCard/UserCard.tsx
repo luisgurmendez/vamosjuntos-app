@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import Shadow from 'components/Shadow/Shadow';
 import { Screens } from 'containers/Screens';
 import React from 'react'
 import { TouchableOpacity } from 'react-native';
@@ -42,4 +41,3 @@ const Container = styled.View`
   margin-top: 10px;
   flex-direction: row;
 `
-

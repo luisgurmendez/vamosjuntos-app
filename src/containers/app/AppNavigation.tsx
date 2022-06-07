@@ -47,7 +47,10 @@ const AppNavigation: React.FC = () => {
           <Stack.Screen name={Screens.TABS} component={TabsNavigation} />
           <Stack.Screen name={Screens.RIDE} component={RideStack} />
           <Stack.Screen name={Screens.REVIEW} component={Review} />
-          <Stack.Screen name={Screens.SEARCH_FOR_RIDE} component={SearchForRideNavigation} />
+          <Stack.Screen
+            name={Screens.SEARCH_FOR_RIDE}
+            component={SearchForRideNavigation}
+          />
           <Stack.Screen name={Screens.USER_PROFILE} component={UserProfile} />
           <Stack.Screen name={Screens.RIDE_DETAILS} component={RideDetails} />
           <Stack.Screen name={Screens.WHERE_FROM_WHERE_TO_DETAILS} component={WhereFromWhereToDetails} />

@@ -11,6 +11,7 @@ import styled from 'styled-components/native';
 import { Address, Ride } from 'types/models';
 import crashlytics from '@react-native-firebase/crashlytics';
 import useInterstatialAd from 'hooks/useInterstitialAd';
+import { getAddressWithoutId } from 'components/Address/utils';
 
 interface JoinRideProps {
   route: {
@@ -30,8 +31,9 @@ const JoinRide: React.FC<JoinRideProps> = ({ route: { params: { ride, whereFromW
   const navigation = useNavigation<any>();
   const handleShowAd = useInterstatialAd();
 
-  const whereFrom = whereFromWhereTo ? whereFromWhereTo[0] : ride.whereFrom;
-  const whereTo = whereFromWhereTo ? whereFromWhereTo[1] : ride.whereTo;
+
+  const whereFrom = getAddressWithoutId(whereFromWhereTo ? whereFromWhereTo[0] : ride.whereFrom);
+  const whereTo = getAddressWithoutId(whereFromWhereTo ? whereFromWhereTo[1] : ride.whereTo);
 
   const handleCreateRideRequest = async () => {
     try {

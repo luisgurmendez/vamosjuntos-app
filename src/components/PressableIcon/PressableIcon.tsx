@@ -1,4 +1,5 @@
 import React from 'react';
+import { TextStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
 import { IconProps } from 'react-native-vector-icons/Icon';
@@ -8,9 +9,10 @@ interface PressableIconProps extends IconProps {
   onPress?: () => void;
   activeOpacity?: number;
   disabled?: boolean;
+  iconStyle?: TextStyle;
 }
 
-const PressableIcon: React.FC<PressableIconProps> = ({ disabled = false, activeOpacity = 0.3, onPress, style, ...iconProps }) => {
+const PressableIcon: React.FC<PressableIconProps> = ({ disabled = false, activeOpacity = 0.3, onPress, style, iconStyle, ...iconProps }) => {
 
   const handlePress = () => {
     (!disabled && onPress) && onPress();
@@ -18,7 +20,7 @@ const PressableIcon: React.FC<PressableIconProps> = ({ disabled = false, activeO
 
   return (
     <TouchableOpacity activeOpacity={activeOpacity} style={style} onPress={handlePress}>
-      <Icon color={disabled ? colors.gray : colors.black} {...iconProps} />
+      <Icon color={disabled ? colors.gray : colors.black} style={iconStyle} {...iconProps} />
     </TouchableOpacity>
   );
 };

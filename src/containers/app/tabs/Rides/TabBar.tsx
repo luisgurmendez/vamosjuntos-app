@@ -18,14 +18,14 @@ const TabBar: React.FC<SceneRendererProps & { navigationState: NavigationState<a
       route.key === RideTabs.MyRides &&
       props.navigationState.index !== (route as any).index
     ) {
-      return <View style={{ marginTop: 3, marginRight: 3 }}><Badge badge={pendingRides.length} /></View>
+      return <View style={{ marginTop: 6, marginRight: 6 }}><Badge badge={pendingRides.length} /></View>
     }
 
     if (
       route.key === RideTabs.RideRequests &&
       props.navigationState.index !== (route as any).index
     ) {
-      return <Badge badge={rideRequests.length} />
+      return <View style={{ marginTop: 6, marginRight: 6 }}><Badge badge={rideRequests.length} /></View>
     }
 
     return null;

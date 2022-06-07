@@ -124,7 +124,7 @@ export const getPossibleRides = async (data: PossibleRidesData): Promise<Ride[]>
   return [];
 };
 
-interface SoonToLeaveRidesData{
+interface SoonToLeaveRidesData {
   addresses: Address[];
 }
 
@@ -250,4 +250,9 @@ export const getFAQs = async (): Promise<FAQItem[]> => {
   const response = (await southamericaFunctions.httpsCallable('getFAQs')());
   console.log(response.data)
   return response.data.faqs;
+};
+
+export const kickPassenger = async (passengerId: string): Promise<boolean> => {
+  const response = (await southamericaFunctions.httpsCallable('passengerKicked')({ passengerId }));
+  return response.data.success;
 };

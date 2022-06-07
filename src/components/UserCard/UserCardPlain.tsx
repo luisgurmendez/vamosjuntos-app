@@ -1,15 +1,9 @@
-import { useNavigation } from '@react-navigation/native';
-import PlainButton from 'components/Button/PlainButton';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import Score from 'components/Score/Score';
-import Shadow from 'components/Shadow/Shadow';
 import { Body } from 'components/Typography/Typography';
-import { Screens } from 'containers/Screens';
 import React from 'react'
-import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { User } from 'types/models';
-import { colors } from 'utils/colors';
 
 interface UserCardPlainProps {
   user: User;
