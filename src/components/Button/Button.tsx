@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import Icon from 'react-native-vector-icons/Feather';
 import Loading from 'components/Loading/Loading';
-import { Animated, Keyboard, TextStyle, ViewStyle } from 'react-native';
+import { Animated, Keyboard, TextStyle, StyleProp, ViewStyle } from 'react-native';
 import { Text } from 'components/Typography/Typography';
 import { useAnimation } from 'react-native-animation-hooks';
 import { BaseButtonProps } from './types';
@@ -27,12 +27,14 @@ const Button: React.FC<ButtonProps> = ({
   icon,
   children,
   style,
+  textStyle,
   type = 'primary',
   disabled = false,
   loading = false
 }) => {
   const [pressing, setPressing] = useState(false);
-  const [silentDisabled, setSilentDisabled] = useSilentDisabled()
+  const [silentDisabled, setSilentDisabled] = useSilentDisabled();
+  const buttonStyles = useButtonStyles(type, disabled);
 
   const animation = useAnimation({
     type: 'timing',
@@ -40,13 +42,6 @@ const Button: React.FC<ButtonProps> = ({
     duration: ANIAMTION_DURATION,
     useNativeDriver: false
   });
-
-  if (style === undefined) {
-    style = {
-      container: {},
-      text: {}
-    };
-  }
 
   const handleOnPress = () => {
     Keyboard.dismiss();
@@ -56,12 +51,10 @@ const Button: React.FC<ButtonProps> = ({
     }
   };
 
-  const buttonStyles = getDisabledStyles(disabled) || getStylesByType(type);
-
   const handlePressIn = () => setPressing(true);
   const handlePressOut = () => setPressing(false);
 
-  const iconColor: string = (buttonStyles?.text?.color as string) || '#fff';
+  const iconColor: string = (buttonStyles.text.color as string) || '#fff';
 
   const iconElement = icon !== undefined ?
     typeof icon === 'string' ? <Icon name={icon} size={25} color={iconColor} /> : icon
@@ -88,7 +81,7 @@ const Button: React.FC<ButtonProps> = ({
             }
           ]
         },
-        style
+        style,
       ]}>
       <TouchableButton
         disabled={disabled}
@@ -100,7 +93,7 @@ const Button: React.FC<ButtonProps> = ({
         ) : (
           <>
             {iconElement}
-            <ButtonText style={buttonStyles.text}>{children}</ButtonText>
+            <ButtonText style={[buttonStyles.text, textStyle]}>{children}</ButtonText>
           </>
         )}
       </TouchableButton>
@@ -135,18 +128,20 @@ const ButtonText = styled(Text)`
   align-items: center;
 `;
 
-const getDisabledStyles = (disabled: boolean): ButtonStyles | undefined => {
-  if (disabled) {
-    return {
-      container: {
-        backgroundColor: colors.invalid
-      },
-      text: {
-        color: colors.white
-      }
-    };
-  }
-  return undefined;
+
+function useButtonStyles(type: ButtonType, isDisabled: boolean) {
+  return isDisabled ? getDisabledStyles() : getStylesByType(type);
+}
+
+const getDisabledStyles = (): ButtonStyles => {
+  return {
+    container: {
+      backgroundColor: colors.invalid
+    },
+    text: {
+      color: colors.white
+    }
+  };
 };
 
 const getStylesByType = (type: ButtonType): ButtonStyles => {

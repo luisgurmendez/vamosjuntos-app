@@ -15,8 +15,6 @@ import { LogBox } from 'react-native';
 import useInternetConnection from 'hooks/useInternetConnection';
 import { setHasInternetConnection } from 'state/general/actions';
 import styled from 'styled-components/native';
-import ErrorBanner from 'components/ErrorBanner/ErrorBanner';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { FeatureFlags } from 'types/models';
 import admob, { MaxAdContentRating } from '@react-native-firebase/admob';
 import messaging from '@react-native-firebase/messaging';
@@ -25,6 +23,7 @@ import useVersion from 'hooks/useVersion';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import remoteConfig from '@react-native-firebase/remote-config';
 import { WithChildren } from 'components/types';
+import SplashScreen from "react-native-splash-screen";
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -32,7 +31,6 @@ moment.updateLocale('es', localization);
 LogBox.ignoreAllLogs();
 
 const App = () => {
-  useInitStorage();
   const appVersion = useVersion();
 
   useEffect(() => {
@@ -64,23 +62,32 @@ const SetupApp: React.FC<WithChildren> = ({ children }) => {
   const [hasInternetConnection, hasCheckedInternetConnection] = useInternetConnection();
   const initialCheckAuth = useHandleUserAuthentication();
   const dispatch = useDispatch();
+  const isStorageInited = useInitStorage(); // return somthing to know if storage was initialized
+
+  const isSafeToShowApp = isStorageInited && initialCheckAuth;
 
   useEffect(() => {
+    isSafeToShowApp && SplashScreen.hide();
+  }, [isSafeToShowApp])
 
-    remoteConfig()
-      .setDefaults({
-        [FeatureFlags.BANNER_ADS]: 'false',
-        [FeatureFlags.FULL_SCREEN_ADS]: 'false',
-      })
-      .then(() => { remoteConfig().fetchAndActivate() });
+  useEffect(() => {
+    if (hasCheckedInternetConnection) {
+      remoteConfig()
+        .setDefaults({
+          [FeatureFlags.BANNER_ADS]: 'false',
+          [FeatureFlags.FULL_SCREEN_ADS]: 'false',
+        })
+        .then(() => { remoteConfig().fetchAndActivate() });
 
-    admob()
-      .setRequestConfiguration({
-        maxAdContentRating: MaxAdContentRating.G,
-        tagForChildDirectedTreatment: true,
-        tagForUnderAgeOfConsent: true,
-      });
-  }, [])
+      admob()
+        .setRequestConfiguration({
+          maxAdContentRating: MaxAdContentRating.G,
+          tagForChildDirectedTreatment: true,
+          tagForUnderAgeOfConsent: true,
+        });
+    }
+
+  }, [hasCheckedInternetConnection])
 
   useEffect(() => {
     if (hasCheckedInternetConnection) {
@@ -92,7 +99,6 @@ const SetupApp: React.FC<WithChildren> = ({ children }) => {
   return (
     <Container>
       <HideIfLoading loading={!initialCheckAuth}>
-        {!hasInternetConnection && <SafeAreaView><ErrorBanner>No hay conexion a internet</ErrorBanner></SafeAreaView>}
         {children}
       </HideIfLoading>
     </Container>

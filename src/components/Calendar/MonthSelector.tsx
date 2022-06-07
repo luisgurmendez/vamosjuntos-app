@@ -38,9 +38,9 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({ month, onMonthChange }) =
 
   return (
     <Container>
-      <StyledPressableIcon onPress={handleDecrementMonth} name="chevron-left" size={16} />
+      <StyledPressableIcon disabled={month === 0} onPress={handleDecrementMonth} name="chevron-left" size={16} />
       <MonthText>{months[month]}</MonthText>
-      <StyledPressableIcon onPress={handleIncrementMonth} name="chevron-right" size={16} />
+      <StyledPressableIcon disabled={month === 11} onPress={handleIncrementMonth} name="chevron-right" size={16} />
     </Container>
   );
 };
@@ -50,8 +50,6 @@ export default MonthSelector;
 const Container = styled.View`
   width: 100%;
   display: flex;
-  margin-top: 16px;
-  margin-bottom: 16px;
   padding-left: 16px;
   padding-right: 16px;
   flex-direction: row;

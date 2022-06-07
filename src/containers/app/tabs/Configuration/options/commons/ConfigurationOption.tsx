@@ -17,7 +17,7 @@ const ConfigurationOption: React.FC<ConfigurationOptionProps> = ({ children, sty
 export default ConfigurationOption;
 
 const Container = styled.View`
-  height: 65px;
+  height: 40px;
   width: 100%;
   padding-vertical: 8px;
   justify-content: center;

@@ -23,20 +23,39 @@ const AppInitialDataFetcher: React.FC<AppInitialDataFetcherProps> = ({ children 
 
   useEffect(() => {
     setFetchingData(true);
-    const _notifications = getNotifications();
-    const _rides = getRides();
-    const _rideRequests = getRideRequests();
-    const _featureFlags = getFeatureFlags();
-    const _owesReview = getOwesReviews();
+
+    const handleSetNotifications = (data: any) => {
+      dispatch(setNotifications(data))
+      return data;
+    }
+    const _notifications = getNotifications().then(handleSetNotifications);
+
+    const handleSetRides = (data: any) => {
+      dispatch(setRides(data))
+      return data;
+    }
+    const _rides = getRides().then(handleSetRides)
+
+    const handleSetRideRequests = (data: any) => {
+      dispatch(setRideRequests(data))
+      return data;
+    }
+    const _rideRequests = getRideRequests().then(handleSetRideRequests)
+
+    const handleSetFeatureFlags = (data: any) => {
+      dispatch(setFeatureFlags(data))
+      return data;
+    }
+    const _featureFlags = getFeatureFlags().then(handleSetFeatureFlags)
+
+    const handleSetOwesReview = (data: any) => {
+      dispatch(setOwesReview(data))
+      return data;
+    }
+    const _owesReview = getOwesReviews().then(handleSetOwesReview)
 
     Promise.all([_notifications, _rides, _rideRequests, _featureFlags, _owesReview])
-      .then(([notifications, rides, rideRequests, featureFlags, owesReview]) => {
-        dispatch(setNotifications(notifications));
-        dispatch(setRides(rides));
-        dispatch(setRideRequests(rideRequests));
-        dispatch(setFeatureFlags(featureFlags));
-        dispatch(setOwesReview(owesReview));
-      }).catch((e) => {
+      .catch((e) => {
         crashlytics().log('Failed app initial data fetcher');
         Toaster.alert('Hubo un error');
         console.log(e);

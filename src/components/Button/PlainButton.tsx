@@ -6,10 +6,9 @@ import { BaseButtonProps } from './types';
 import { useSilentDisabled } from './utils';
 import { Text } from 'components/Typography/Typography';
 import { colors } from 'utils/colors';
-import { Stylable } from 'components/types';
 
 export interface PlainButtonProps extends BaseButtonProps {
-  textStyle?: Stylable<TextStyle>['style'];
+  textStyle?: TextStyle;
 }
 
 const PlainButton: React.FC<PlainButtonProps> = ({
@@ -38,8 +37,8 @@ const PlainButton: React.FC<PlainButtonProps> = ({
       {loading ? (
         <Loading color={colors.main} size={15} />
       ) : (
-          <ButtonText style={[{ color: colors.main }, textStyle]}>{children}</ButtonText>
-        )}
+        <ButtonText style={[{ color: colors.main }, textStyle]}>{children}</ButtonText>
+      )}
     </TouchableButton>
   )
 

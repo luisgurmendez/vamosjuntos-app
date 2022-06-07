@@ -1,10 +1,18 @@
+import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 
-export const Text = styled.Text`
+interface ExtraTextProps {
+  bold?: boolean;
+}
+
+export const Text = styled.Text<ExtraTextProps>`
   font-family: Roboto;
   color: ${colors.black};
+  ${props => props.bold ? 'font-weight: bold' : ''};
 `;
+
+export const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export const LargeTitle = styled(Text)`
 font-weight: bold;

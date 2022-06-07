@@ -1,9 +1,10 @@
 import React from 'react';
 import Comment from './Comment';
 import { Review } from 'types/models';
-import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
 import styled from 'styled-components/native';
 import { NO_REVIEWS_IMG } from 'assets/images';
+import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
+import MarginedChildren from 'components/Box/MarginedChildren';
 
 interface CommentListProps {
   reviews: Review[];
@@ -12,21 +13,20 @@ interface CommentListProps {
 const CommentList: React.FC<CommentListProps> = ({ reviews }) => {
 
   return (
-    <WithBackgroundImage asset={reviews.length === 0 ? NO_REVIEWS_IMG : undefined}>
-      <Container
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={400}
-      >
+    <Container
+      showContent={reviews.length !== 0}
+      noContentAsset={NO_REVIEWS_IMG}
+    >
+      <MarginedChildren mt="lg">
         {reviews.map(review => <Comment review={review} />)}
-      </Container>
-    </WithBackgroundImage>
+      </MarginedChildren>
+
+    </Container>
   )
 }
 
 export default CommentList;
 
-const Container = styled.ScrollView`
-  flex: 1;
-  height: 100%;
+const Container = styled(ScrollableContent)`
   padding: 8px;
 `

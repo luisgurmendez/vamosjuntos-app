@@ -26,7 +26,6 @@ class AppCrashHandler extends React.Component<WithChildren, { hasError: boolean 
 
   render() {
     if (this.state.hasError) {
-      // TODO: hacer una pagina
       return (
         <Container>
           <Image
@@ -36,7 +35,7 @@ class AppCrashHandler extends React.Component<WithChildren, { hasError: boolean 
             resizeMode="contain"
             source={ERROR_IMG}
           />
-          <LargeBody>Perdon! Parece que algo salio mal.</LargeBody>
+          <LargeBody>¡Ups! Parece que algo salio mal.</LargeBody>
           <StyledSmallBody>Este error fue guardado y lo vamos a revisar. Si seguis teniendo problemas, porfavor contactate con nosotros.</StyledSmallBody>
           <Button onPress={this.handleReloadApp} icon={'rotate-cw'} type="secondary">Recargar</Button>
         </Container>

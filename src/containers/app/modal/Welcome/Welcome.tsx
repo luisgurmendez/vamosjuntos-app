@@ -6,8 +6,9 @@ import { Screens } from 'containers/Screens';
 import WelcomeSlide from './slides/WelcomeSlide';
 import HowItWorksSlide from './slides/HowItWorksSlide';
 import TermsAndConditionsSlide from './slides/TermsAndConditionsSlide';
-import Storage from 'storage/Storage';
 import SafeTravelsSlide from './slides/SafeTravelsSlide';
+import { useDispatch } from 'react-redux';
+import { setShouldWelcomeInStorage } from 'state/storage/thunkActions';
 
 
 // TODO: Implement Welcome screens.
@@ -27,6 +28,7 @@ import SafeTravelsSlide from './slides/SafeTravelsSlide';
 
 const Welcome: React.FC = () => {
   const navigation: any = useNavigation();
+  const dispatch = useDispatch();
 
   const slides = [
     <WelcomeSlide />,
@@ -36,7 +38,7 @@ const Welcome: React.FC = () => {
   ];
 
   const handleOnDone = async () => {
-    await Storage.setItem(Storage.SHOULD_WELCOME, false);
+    await dispatch(setShouldWelcomeInStorage(false));
     navigation.replace(Screens.TABS);
   }
 

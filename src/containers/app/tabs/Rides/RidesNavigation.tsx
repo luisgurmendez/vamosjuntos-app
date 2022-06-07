@@ -1,29 +1,50 @@
-import React from 'react'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
+import MyRides from './MyRides';
 import RideRequests from './RideRequests';
 import Rides from './Rides';
-import RidesScreens from './Screens';
+import { TabView, SceneMap } from 'react-native-tab-view';
+import TabBar from './TabBar';
 
-const Stack = createNativeStackNavigator();
-
-interface ConfigurationStackProps { }
-
-const ConfigurationStack: React.FC<ConfigurationStackProps> = ({ }) => {
-
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerBackTitle: 'Atrás',
-        headerShown: false
-      }}>
-      <Stack.Screen name={RidesScreens.RIDES} component={Rides} />
-      <Stack.Screen name={RidesScreens.RIDE_REQUESTS} component={RideRequests} />
-    </Stack.Navigator>
-  )
-
+export enum RideTabs {
+  Rides = 'rides',
+  MyRides = 'my-rides',
+  RideRequests = 'ride-requests',
 }
 
-export default ConfigurationStack;
+const RenderedTabs = SceneMap({
+  [RideTabs.Rides]: Rides,
+  [RideTabs.MyRides]: MyRides,
+  [RideTabs.RideRequests]: RideRequests,
+})
 
-const Container = styled.View``
+const RidesNavigation: React.FC = () => {
+
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+
+  const routes = [
+    { key: RideTabs.Rides, title: 'Viajes', index: 0 },
+    { key: RideTabs.MyRides, title: 'Mis viajes', index: 1 },
+    { key: RideTabs.RideRequests, title: 'Solicitudes', index: 2 },
+  ];
+
+  return (
+    <Container>
+      <TabView
+        navigationState={{ index: selectedTabIndex, routes }}
+        renderScene={RenderedTabs}
+        onIndexChange={setSelectedTabIndex}
+        renderTabBar={TabBar}
+      />
+
+    </Container>
+  )
+}
+export default RidesNavigation;
+
+const Container = styled.SafeAreaView`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;

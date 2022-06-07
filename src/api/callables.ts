@@ -124,6 +124,20 @@ export const getPossibleRides = async (data: PossibleRidesData): Promise<Ride[]>
   return [];
 };
 
+interface SoonToLeaveRidesData {
+  addresses: Address[];
+}
+
+export const getSoonToLeaveRides = async (data: SoonToLeaveRidesData): Promise<Ride[]> => {
+  const response = (await southamericaFunctions.httpsCallable('rideSoonToLeaveRides')(data));
+  console.log(response)
+
+  if (response.data.success) {
+    return response.data.rides;
+  }
+  return [];
+};
+
 export const getRideDetails = async (rideId: string): Promise<Ride | undefined> => {
   const response = (await southamericaFunctions.httpsCallable('rideGet')({ rideId }));
   console.log(response)
@@ -236,4 +250,9 @@ export const getFAQs = async (): Promise<FAQItem[]> => {
   const response = (await southamericaFunctions.httpsCallable('getFAQs')());
   console.log(response.data)
   return response.data.faqs;
+};
+
+export const kickPassenger = async (passengerId: string): Promise<boolean> => {
+  const response = (await southamericaFunctions.httpsCallable('passengerKicked')({ passengerId }));
+  return response.data.success;
 };

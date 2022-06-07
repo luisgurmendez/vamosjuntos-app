@@ -1,41 +1,43 @@
-import { useCallback, useDebugValue, useEffect, useState } from 'react';
-import Storage from 'storage/Storage';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStorage } from 'state/storage/selectors';
+import {
+  setSavedAddressesInStorage,
+  setShouldWelcomeInStorage,
+  setShowCanceledRidesInStorage,
+  setShowCompletedRidesInStorage,
+  setShowSeenNotificationsInStorage
+} from 'state/storage/thunkActions';
+import { StorageKeys } from 'state/storage/types';
+import { SavedAddress } from 'types/storage';
 
-interface UseStorage<T> {
-  value: T;
-  setValue: (v: T) => Promise<void>;
-  isFetching: boolean;
-  refreshValue: () => void;
-}
+type StorageReturn<T> = [T, (i: T) => Promise<void>];
 
-function useStorage<T>(
-  key: string,
-  defaultValue: T
-): UseStorage<T> {
-  const [value, setValue] = useState<T>(defaultValue);
-  const [isGettingValue, setIsGettingValue] = useState(false);
+function useStorage2<T>(key: StorageKeys): StorageReturn<T> {
 
-  const setValueInStorageAsWell = async (newValues: T) => {
-    setValue(newValues);
-    await Storage.setItem(key, newValues)
+  const dispatch = useDispatch();
+  const storageState = useSelector(getStorage);
+
+  const handleSetItem = (item: T) => {
+    switch (key) {
+      case 'addresses':
+        dispatch(setSavedAddressesInStorage((item as unknown as SavedAddress[])));
+        break;
+      case 'shouldWelcome':
+        dispatch(setShouldWelcomeInStorage((item as unknown as boolean)));
+        break;
+      case 'showCanceledRides':
+        dispatch(setShowCanceledRidesInStorage((item as unknown as boolean)));
+        break;
+      case 'showCompletedRides':
+        dispatch(setShowCompletedRidesInStorage((item as unknown as boolean)));
+        break;
+      case 'showSeenNotifications':
+        dispatch(setShowSeenNotificationsInStorage((item as unknown as boolean)));
+        break;
+    }
   }
 
-  const getValue = useCallback(async () => {
-    setIsGettingValue(true);
-    const _value = await Storage.getItem<T>(key);
-    if (_value !== undefined) {
-      setValue(_value);
-    }
-    setIsGettingValue(false);
-  }, [key]);
-
-  useEffect(() => {
-    getValue();
-  }, [getValue]);
-
-  useDebugValue(value);
-
-  return { value, setValue: setValueInStorageAsWell, isFetching: isGettingValue, refreshValue: getValue };
+  return [storageState[key], handleSetItem] as unknown as StorageReturn<T>
 }
 
-export default useStorage;
+export default useStorage2;

@@ -20,7 +20,7 @@ export const getDateText = (date: moment.Moment | string): string => {
 
 export const getTimeText = (date: moment.Moment | string): string => {
   const _date = toMoment(date);
-  return _date.format('[a las ] HH:mm')
+  return _date.format('[a las] HH:mm')
 }
 
 export const getDateTimeText = (date: moment.Moment | string): string => {

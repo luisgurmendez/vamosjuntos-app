@@ -29,12 +29,13 @@ function useFetchUser() {
         }).catch((e) => {
           console.error(e);
           crashlytics().log(`Waiting for user creation atempt: ${fetchCounts.current}`)
-          crashlytics().recordError(e);
           //delay refetch of user
           setTimeout(tryFetchUser, 1000);
         });
       } else {
         setFetchingUser(false);
+        crashlytics().log(`Waiting for user creation atempt: ${fetchCounts.current}`)
+        crashlytics().recordError(new Error('User fetch attempts exceded'));
         Toaster.alert({
           message: 'Hubo un error con tu usuario 😬',
           hideAfter: 7000

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/native';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import { colors } from 'utils/colors';
@@ -7,35 +7,57 @@ import { Body, Subtitle } from 'components/Typography/Typography';
 import { StatusBar } from 'react-native';
 import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
 import { Passenger, Ride, RideStatus } from 'types/models';
-import { cancelRide, dropOutRide, getRides, setRideCompleted } from 'api/callables';
-import PlainButton from 'components/Button/PlainButton';
+import { cancelRide, dropOutRide, getRides, kickPassenger, setRideCompleted } from 'api/callables';
 import { useDispatch, useSelector } from 'react-redux';
 import WhereFromWhereToStaticMap from 'components/Map/WhereFromWhereToStaticMap';
 import { Box } from 'components/Box/Box';
 import Toaster from 'components/Toaster/Toaster';
 import { setRides } from 'state/ride/actions';
 import { getUser } from 'state/user/selectors';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import moment from 'moment';
 import ModalWithYesNoActions from 'components/Modal/ModalWithYesNoActions';
 import UserCard from 'components/UserCard/UserCard';
 import IconedValue from 'components/IconedValue/IconedValue';
 import Screens from '../Screens';
+import PassengerCard from './PassengerCard';
+import RideFooter from './RideDetailsFooter'
+import crashlytics from '@react-native-firebase/crashlytics';
 
 interface RideDetailsProps {
   ride: Ride;
+  fetchRideDetails: () => void;
 }
 
-const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
+const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => {
 
   const [isConfirmCancelModalOpen, setIsConfirmCancelModalOpen] = useState(false);
   const [isConfirmCompleteRideModalOpen, setIsConfirmCompleteRideModalOpen] = useState(false);
+  const [toBeKickedPassenger, setToBeKickedPassenger] = useState<Passenger | null>(null);
+  const isConfirmKickPassengerModalOpen = toBeKickedPassenger !== null;
+  useRedirectBackIfUserNotOnRide(ride);
+
+  const handleCloseKickPassengerModal = () => {
+    setToBeKickedPassenger(null)
+  }
+
+  const handleConfirmKickPassenger = async (passengerId: string) => {
+
+    try {
+      await kickPassenger(passengerId);
+      await updateRides()
+      handleCloseKickPassengerModal();
+      fetchRideDetails();
+    } catch (e) {
+      console.log(e);
+      crashlytics().recordError(e);
+      Toaster.alert('Hubo un error')
+    }
+  }
+
 
   const user = useSelector(getUser);
   const dispatch = useDispatch();
 
-  const isDriver = user && user.id === ride.driver.id;
-  const isPassedDate = moment().diff(moment(ride.date)) > 0;
+  const isDriver = user !== undefined && user.id === ride.driver.id;
 
   const mapId = `RideDetails-${ride.id}-map`
   const navigation: any = useNavigation();
@@ -62,6 +84,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
       handleCancelConfirmModal();
       handleClose();
     } catch (e) {
+      crashlytics().recordError(e);
       Toaster.alert('Hubo un error')
     }
   }
@@ -87,7 +110,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
   const handleCancelConfirmModal = () => { setIsConfirmCancelModalOpen(false) };
 
   const handleOnPassengerClick = (p: Passenger) => {
-    navigation.push(Screens.PASSENGER_DETAILS, { passenger: p })
+    navigation.push(Screens.WHERE_FROM_WHERE_TO_DETAILS, { title: p.user.name, whereFrom: p.whereFrom, whereTo: p.whereTo })
   }
 
   return (
@@ -96,7 +119,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
       <AbsoluteSafeArea mt={'xxlg'}>
         <PositionedPressableIcon onPress={handleClose} name="x" size={30} color={colors.black} />
       </AbsoluteSafeArea>
-      <ScrollContent contentContainerStyle={{ paddingBottom: 32 }}>
+      <ScrollContent contentContainerStyle={{ paddingBottom: 8 }}>
         <WhereFromWhereToStaticMap mapId={mapId} whereFrom={ride.whereFrom} whereTo={ride.whereTo} />
         <Content>
           <RideDetailsSummary ride={ride} />
@@ -109,41 +132,20 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
             <Box mt="lg">
               <Subtitle>Pasajeros</Subtitle>
               {ride.passengers.map(p =>
-                <UserCard
+                <PassengerCard
                   key={`passenger-${p.user.id}`}
-                  user={p.user}
-                  action={isDriver ? () => <PlainButton onPress={() => handleOnPassengerClick(p)}>Ver trayecto</PlainButton> : undefined}
-                />)
+                  passenger={p}
+                  onActionPress={(isDriver && ride.status === RideStatus.PENDING) ? () => setToBeKickedPassenger(p) : undefined}
+                  onTrajectoryPress={isDriver ? () => handleOnPassengerClick(p) : undefined}
+                />
+              )
               }
             </Box>
           }
         </Content>
       </ScrollContent>
 
-      {ride.status === RideStatus.PENDING ?
-        <Footer>
-          <FooterButton
-            textStyle={{ color: colors.danger, fontSize: 20 }}
-            onPress={handleCancelRide}
-          >
-            {isDriver ? 'Cancelar viaje' : 'Bajarme del viaje'}
-          </FooterButton>
-
-          {isPassedDate &&
-            <FooterButton onPress={handleRideCompleted} textStyle={{ fontSize: 20 }}>
-              Completado
-            </FooterButton>
-          }
-        </Footer>
-        :
-        <Footer>
-          {ride.status === RideStatus.CANCELED ?
-            <Body style={{ color: colors.danger }}>Cancelado</Body>
-            :
-            <Body style={{ color: colors.success }}>Completado</Body>
-          }
-        </Footer>
-      }
+      <RideFooter ride={ride} onCancelRide={handleCancelRide} onCompleteRide={handleRideCompleted} />
 
       <ModalWithYesNoActions
         open={isConfirmCompleteRideModalOpen}
@@ -159,11 +161,36 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride }) => {
         title={isDriver ? '¿Estas seguro que queres cancelar el viaje?' : '¿Estas seguro que queres bajarte del viaje?'}
       />
 
-    </Container >
+      <ModalWithYesNoActions
+        open={isConfirmKickPassengerModalOpen}
+        onClose={handleCloseKickPassengerModal}
+        onConfirm={() => handleConfirmKickPassenger(toBeKickedPassenger?.id || '')}
+        title={`¿Estas seguro que queres sacar a ${toBeKickedPassenger?.user.name} del viaje?`}
+      />
+
+    </Container>
   )
 }
 
 export default RideDetails;
+
+function useIsUserOnRide(ride: Ride) {
+  const user = useSelector(getUser);
+  const isPassenger = user !== undefined && ride.passengers.map(p => p.user.id).includes(user!.id);
+  const isDriver = user && user.id === ride.driver.id;
+  return isPassenger || isDriver;
+}
+
+function useRedirectBackIfUserNotOnRide(ride: Ride) {
+  const isUserOnRide = useIsUserOnRide(ride);
+  const navigation = useNavigation<any>();
+  useEffect(() => {
+    if (!isUserOnRide) {
+      navigation.goBack();
+      Toaster.alert('¡No formas parte de este viaje!')
+    }
+  }, [isUserOnRide])
+}
 
 const Container = styled.View`
   flex: 1;
@@ -187,16 +214,4 @@ const ScrollContent = styled.ScrollView`
 
 const Content = styled.View`
   padding: 16px; 
-`
-
-const Footer = styled(SafeAreaView)`
-  display: flex;
-  flex-direction: row;
-  margin-horizontal: 8px;
-  justify-content: center;
-`
-
-const FooterButton = styled(PlainButton)`
-  flex: 1;
-  margin-horizontal: 8px;
 `

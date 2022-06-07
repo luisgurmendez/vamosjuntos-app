@@ -7,11 +7,12 @@ import { Ride } from 'types/models';
 import { colors } from 'utils/colors';
 
 interface RideBubbleProps extends Stylable {
-  onPress?: () => void;
   ride: Ride;
+  showPriceTag?: boolean;
+  onPress?: () => void;
 }
 
-const RideBubble: React.FC<RideBubbleProps> = ({ style, ride, onPress }) => {
+const RideBubble: React.FC<RideBubbleProps> = ({ style, ride, showPriceTag = false, onPress }) => {
 
   return (
     <Container onPress={onPress} disabled={onPress === undefined} style={style}>

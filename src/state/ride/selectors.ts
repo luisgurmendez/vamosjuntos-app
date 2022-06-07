@@ -3,6 +3,8 @@ import moment from "moment";
 import { AppState } from "state/types";
 import { Ride, RideRequest, RideRequestStatus, RideStatus } from "types/models";
 
+export const getAllRides = (state: AppState) => state.ride.rides;
+
 export const getPendingRides = createSelector<AppState, Ride[], Ride[]>(
   state => state.ride.rides,
   rides => {

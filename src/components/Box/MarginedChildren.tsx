@@ -1,7 +1,6 @@
 import { WithChildren } from 'components/types';
 import React from 'react';
 import { Size, sizeToPx } from './utils';
-// TODO it's a good idea but needs more thinking...
 
 interface MarginedChildrenProps extends WithChildren {
   m?: Size; // margin

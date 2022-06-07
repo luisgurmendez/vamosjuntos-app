@@ -1,0 +1,6 @@
+export enum SearchForRideScreens {
+  SEARCH_FOR_RIDE = 'SEARCH_FOR_RIDE',
+  WHERE_FROM_WHERE_TO = 'WHERE_FROM_WHERE_TO',
+  WHEN = 'WHEN',
+  JOIN_RIDE = 'JOIN_RIDE',
+}

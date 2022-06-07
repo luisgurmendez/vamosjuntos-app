@@ -68,7 +68,6 @@ export default Login;
 const Container = styled.SafeAreaView`
   align-items: center;
   justify-content: center;
-  background-color: #f1f1f1;
   flex: 1;
 `;
 

@@ -2,7 +2,7 @@ import Shadow from 'components/Shadow/Shadow';
 import { Stylable } from 'components/types';
 import { Body, Bold, SmallBody } from 'components/Typography/Typography';
 import React from 'react';
-import { View } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
 import ScoreDisplay from 'components/Score/Score'
@@ -11,12 +11,13 @@ import { Review } from 'types/models';
 
 interface CommentProps {
   review: Review;
+  style?: ViewStyle;
 }
 
-const Comment: React.FC<CommentProps> = ({ review }) => {
+const Comment: React.FC<CommentProps> = ({ review, style }) => {
 
   return (
-    <Container>
+    <Container style={style} r>
       <Header>
         <Box mr="md">
           <Body><Bold>{review.fromUser.name}</Bold></Body>

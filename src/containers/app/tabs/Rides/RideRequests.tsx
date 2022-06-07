@@ -1,15 +1,14 @@
 import { getRideRequests } from 'api/callables';
 import { NO_RIDE_REQUESTS_IMG } from 'assets/images';
-import PageWithBack from 'components/Page/PageWithBack';
 import Toaster from 'components/Toaster/Toaster';
-import WithBackgroundImage from 'components/WithBackgroundImage/WithBackgroundImage';
 import React from 'react'
-import { RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRideRequests } from 'state/ride/actions';
 import { getPendingRideRequests } from 'state/ride/selectors';
 import styled from 'styled-components/native';
 import RideRequestsList from './RideRequestsList';
+import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
+import { Body } from 'components/Typography/Typography';
 
 interface RideRequestsProps {
 }
@@ -32,18 +31,28 @@ const RideRequests: React.FC<RideRequestsProps> = ({ }) => {
     setRefreshing(false);
 
   }, []);
+
+
+  const renderNoContentHelp = () => {
+    return (
+      <Body>
+        Cuando te unis a un viaje, tenes que esperar a ser aceptado por el conductor.
+        {"\n"}
+        Tus solicitudes de viajes se mostraran aca, en donde podras cancelarlas si todavia no te aceptaron.
+      </Body>
+    )
+  }
+
   return (
-    <PageWithBack title="Solicitudes de viajes">
-      <WithBackgroundImage asset={rideRequests.length === 0 ? NO_RIDE_REQUESTS_IMG : undefined}>
-        <Container
-          scrollEventThrottle={400}
-          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-          }
-        >
-          <RideRequestsList rideRequests={rideRequests} />
-        </Container>
-      </WithBackgroundImage>
-    </PageWithBack>
+    <Container
+      showContent={rideRequests.length !== 0}
+      onRefresh={onRefresh}
+      refreshing={refreshing}
+      noContentHelp={renderNoContentHelp()}
+      noContentAsset={NO_RIDE_REQUESTS_IMG}
+    >
+      <RideRequestsList rideRequests={rideRequests} />
+    </Container>
   )
 
 }
@@ -51,7 +60,6 @@ const RideRequests: React.FC<RideRequestsProps> = ({ }) => {
 export default RideRequests;
 
 
-const Container = styled.ScrollView`
-  flex: 1;
+const Container = styled(ScrollableContent)`
   padding: 8px;
 `

@@ -1,8 +1,10 @@
+import { TextStyle, ViewStyle } from "react-native";
 
 export interface BaseButtonProps {
   onPress?: () => void;
   children: React.ReactNode;
   loading?: boolean;
   disabled?: boolean;
-  style?: any;
+  textStyle?: TextStyle;
+  style?: ViewStyle;
 }

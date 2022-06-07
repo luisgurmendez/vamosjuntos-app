@@ -17,7 +17,7 @@ const SimpleModal: React.FC<SimpleModalProps> = ({ open, onClose, title, childre
     <Modal isVisible={open} onBackdropPress={onClose} backdropTransitionOutTiming={0}>
       <Container style={style}>
         {title && <Subtitle>{title}</Subtitle>}
-        <Content pt="lg">
+        <Content mt="lg">
           {children}
         </Content>
       </Container>
@@ -29,13 +29,14 @@ export default SimpleModal;
 
 const Container = styled.View`
   backgroundColor: white;
-  padding: 22px;
+  padding: 16px;
   justifyContent: center;
   alignItems: center;
   borderRadius: 4px;
-  borderColor: rgba(0, 0, 0, 0.1);
+  borderWidth: 1px;
 `
 
 const Content = styled(Box)`
   width: 100%;
+  min-height: 24px;
 `

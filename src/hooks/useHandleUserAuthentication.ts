@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import SplashScreen from "react-native-splash-screen";
 import { useDispatch } from "react-redux";
 import { setIsLoggedIn, logout as logoutAction } from "state/user/actions";
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
@@ -13,14 +12,6 @@ function useHandleUserAuthentication() {
 
   const [hasCheckAuth, setHasCheckAuth] = useState(false);
   const dispatch = useDispatch();
-
-  const handleHasCheckAuth = () => {
-    setTimeout(() => {
-      console.log('handleHasCheckAuth')
-      SplashScreen.hide();
-      setHasCheckAuth(true);
-    }, 400)
-  }
 
   async function onAuthStateChange(firebaseUser: FirebaseAuthTypes.User | null) {
     console.log('onAuthStateChange');
@@ -39,7 +30,7 @@ function useHandleUserAuthentication() {
       dispatch(logoutAction())
     }
 
-    handleHasCheckAuth()
+    setTimeout(() => setHasCheckAuth(true), 4000);
   }
 
   useEffect(() => {
