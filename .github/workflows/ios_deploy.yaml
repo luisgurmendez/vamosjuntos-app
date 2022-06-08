@@ -41,6 +41,8 @@ jobs:
           key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
+      - name: Check dir
+        run: pwd && ls
       - name: Install Pods
         run: cd ios && pod install --repo-update && cd ..
       - name: Build IOS App
