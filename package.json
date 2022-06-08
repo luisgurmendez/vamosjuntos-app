@@ -15,7 +15,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "check:unused:files": "madge --orphans --extensions tsx,ts --ts-config tsconfig.json .",
     "check:circular:deps": "madge --circular --extensions tsx,ts --ts-config tsconfig.json .",
-    "np": "np --no-publish --any-branch",
+    "np": "np --no-publish --any-branch --passWithNoTests",
     "postversion": "react-native-version"
   },
   "repository": {
