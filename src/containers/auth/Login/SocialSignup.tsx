@@ -3,7 +3,6 @@ import { Text } from 'components/Typography/Typography';
 import React from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
-import FacebookLogin from './FacebookLogin';
 import GoogleLogin from './GoogleLogin';
 import AppleLogin from './AppleLogin';
 import { usePlatform } from 'hooks/usePlatform';
@@ -17,7 +16,6 @@ const SocialSignup: React.FC = () => {
       <MarginedChildren mV='sm'>
         {isIOS && <AppleLogin />}
         <GoogleLogin />
-        {false && <FacebookLogin />}
       </MarginedChildren>
     </Container>
   )

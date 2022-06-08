@@ -1,6 +1,6 @@
 {
   "name": "vamosjuntos",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -14,7 +14,13 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "check:unused:files": "madge --orphans --extensions tsx,ts --ts-config tsconfig.json .",
-    "check:circular:deps": "madge --circular --extensions tsx,ts --ts-config tsconfig.json ."
+    "check:circular:deps": "madge --circular --extensions tsx,ts --ts-config tsconfig.json .",
+    "np": "np --no-publish --any-branch --no-tests",
+    "postversion": "react-native-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luisgurmendez/adedo.git"
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^2.1.2",
@@ -42,7 +48,6 @@
     "react-native": "0.66.0",
     "react-native-animation-hooks": "^1.0.1",
     "react-native-camera": "^3.40.0",
-    "react-native-fbsdk-next": "^4.3.0",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-image-resizer": "^1.4.1",
     "react-native-maps": "0.27.1",
@@ -67,6 +72,9 @@
     "electron": "^11.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/runtime": "^7.12.5",
+    "@react-native-community/eslint-config": "^2.0.0",
     "@types/geojson": "^7946.0.7",
     "@types/jest": "^25.2.3",
     "@types/react-native": "^0.63.2",
@@ -79,23 +87,21 @@
     "@types/yup": "^0.29.9",
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.10.1",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.32.0",
     "geojson": "^0.5.0",
+    "jest": "^26.6.3",
     "madge": "^4.0.2",
+    "metro-react-native-babel-preset": "^0.67.0",
+    "np": "^7.6.1",
     "react-devtools": "^3",
+    "react-native-version": "^4.0.0",
+    "react-test-renderer": "17.0.2",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^5.0.0",
-    "typescript": "^4.0.3",
-
-    "@babel/core": "^7.12.9",
-    "@babel/runtime": "^7.12.5",
-    "@react-native-community/eslint-config": "^2.0.0",
-    "babel-jest": "^26.6.3",
-    "eslint": "^7.32.0",
-    "jest": "^26.6.3",
-    "metro-react-native-babel-preset": "^0.67.0",
-    "react-test-renderer": "17.0.2"
+    "typescript": "^4.0.3"
   },
   "jest": {
     "preset": "react-native",
