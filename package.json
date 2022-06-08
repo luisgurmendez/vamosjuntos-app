@@ -14,7 +14,13 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "check:unused:files": "madge --orphans --extensions tsx,ts --ts-config tsconfig.json .",
-    "check:circular:deps": "madge --circular --extensions tsx,ts --ts-config tsconfig.json ."
+    "check:circular:deps": "madge --circular --extensions tsx,ts --ts-config tsconfig.json .",
+    "np": "np --no-publish --any-branch",
+    "postversion": "react-native-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luisgurmendez/adedo.git"
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^2.1.2",
@@ -87,7 +93,6 @@
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^5.0.0",
     "typescript": "^4.0.3",
-
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
