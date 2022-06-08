@@ -41,7 +41,7 @@ const Rides: React.FC = () => {
   }
 
   const showConSearchedRidesImg = searchedRides.length === 0 && hasAlreadyMadeASearch
-
+  console.log(searchedRides)
   return (
     <HideIfLoading loading={isFetchingSearchedRides} label="Te estamos buscando viajes">
       <RidesContainer

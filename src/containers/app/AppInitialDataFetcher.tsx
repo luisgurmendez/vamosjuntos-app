@@ -10,8 +10,9 @@ import styled from 'styled-components/native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useDispatch } from 'react-redux';
 import useFetchUser from 'hooks/useFetchUser';
+import { WithChildren } from 'components/types';
 
-interface AppInitialDataFetcherProps { }
+interface AppInitialDataFetcherProps extends WithChildren { }
 
 const AppInitialDataFetcher: React.FC<AppInitialDataFetcherProps> = ({ children }) => {
   const [fetchingData, setFetchingData] = useState(false);

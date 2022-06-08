@@ -1,5 +1,5 @@
 import PageWithBack from 'components/Page/PageWithBack';
-import { Body, Subtitle } from 'components/Typography/Typography';
+import { Body, LargeBody, Subtitle } from 'components/Typography/Typography';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import styled from 'styled-components/native';
@@ -65,7 +65,7 @@ const FAQ: React.FC<FAQProps> = ({ faq, open, onOpenChange }) => {
   return (
     <Container>
       <Header onPress={onOpenChange} activeOpacity={0.8}>
-        <Subtitle style={{ flex: 1 }}>{faq.question}</Subtitle>
+        <LargeBody style={{ flex: 1 }}>{faq.question}</LargeBody>
         <Icon size={25} color={colors.black} name={open ? "chevron-up" : "chevron-down"} />
       </Header>
       {open && (

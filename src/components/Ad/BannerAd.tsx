@@ -38,7 +38,7 @@ const AdView: React.FC = () => {
       onAdOpened={dummyFn}
       onAdLeftApplication={dummyFn}
       unitId={adUnitId}
-      size={BannerAdSize.SMART_BANNER}
+      size={BannerAdSize.FULL_BANNER}
       requestOptions={{
         requestNonPersonalizedAdsOnly: true,
       }}

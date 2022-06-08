@@ -7,10 +7,10 @@ import useStorage from 'hooks/useStorage';
 import { Address, Ride } from 'types/models';
 import FloatingButton from 'components/FloatingButton/FloatingButton';
 import { useNavigation } from '@react-navigation/native';
-import { NO_RIDES_IMG } from 'assets/images';
 import { Screens } from 'containers/Screens';
-import { Body, LargeBody, Subtitle } from 'components/Typography/Typography';
+import { Body, LargeBody } from 'components/Typography/Typography';
 import { SavedAddress } from 'types/storage';
+import { NO_SEARCHED_RIDES_IMG } from 'assets/images';
 import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 
 
@@ -66,7 +66,7 @@ const Rides: React.FC = () => {
         onRefresh={handleFetchSoonToLeaveRides}
         refreshing={isFetchingRides}
         noContentHelp={renderHelp()}
-        noContentAsset={NO_RIDES_IMG}
+        noContentAsset={NO_SEARCHED_RIDES_IMG}
       >
         <>
           <LargeBody>¿Te sirve algun viaje de estos?</LargeBody>

@@ -14,8 +14,6 @@ function useHandleUserAuthentication() {
   const dispatch = useDispatch();
 
   async function onAuthStateChange(firebaseUser: FirebaseAuthTypes.User | null) {
-    console.log('onAuthStateChange');
-    console.log(firebaseUser);
     if (firebaseUser != null) {
       try {
         crashlytics().log('User sign in');
