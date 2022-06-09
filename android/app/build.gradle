@@ -138,8 +138,8 @@ android {
         applicationId "com.adedo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.6.0"
+        versionCode 3
+        versionName "1.7.0"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
     }
