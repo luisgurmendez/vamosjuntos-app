@@ -30,7 +30,7 @@ function useFetchUser() {
           console.error(e);
           crashlytics().log(`Waiting for user creation atempt: ${fetchCounts.current}`)
           //delay refetch of user
-          setTimeout(tryFetchUser, 1000);
+          setTimeout(tryFetchUser, 500);
         });
       } else {
         setFetchingUser(false);

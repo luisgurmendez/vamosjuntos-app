@@ -44,7 +44,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ toUser, onSubmit }) => {
             <CommentContainer>
               <Subtitle>Deja un comentario</Subtitle>
               <MultilinedTextInput
-                placeholder="ej. Manejá con cuidado"
+                placeholder="ej. Maneja con cuidado"
                 value={values.comment}
                 multiline
                 numberOfLines={4}

@@ -28,7 +28,7 @@ function useHandleUserAuthentication() {
       dispatch(logoutAction())
     }
 
-    setTimeout(() => setHasCheckAuth(true), 4000);
+    setTimeout(() => setHasCheckAuth(true), 400);
   }
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 export const NO_ALERTS_IMG = require('./NoAlerts.png');
-export const NO_REVIEWS_IMG = require('./NoAlerts.png');
+export const NO_REVIEWS_IMG = require('./NoReviews.png');
 export const NO_RIDE_REQUESTS_IMG = require('./NoRideRequests.png');
 export const NO_RIDES_IMG = require('./CantSeeAnyRides.png');
 export const NO_SEARCHED_RIDES_IMG = require('./NoRidesFound.png');

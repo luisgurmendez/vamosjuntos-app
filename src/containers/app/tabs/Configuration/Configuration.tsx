@@ -18,10 +18,14 @@ import { AnimatedText } from 'components/Typography/Typography';
 import { DeviceDimensions } from 'utils/device';
 import EventManager from 'components/Toaster/EventManager';
 import { Easing } from 'react-native';
+import useFeatureFlag from 'hooks/useFeatureFlag';
+import { FeatureFlags } from 'types/models';
 
 interface ConfigurationProps { }
 
 const Configuration: React.FC<ConfigurationProps> = () => {
+
+  const showWelcome = useFeatureFlag(FeatureFlags.SHOW_WELCOME);
 
   const handleVersionOptionPressed = () => {
     AnimatedCarManager.add();
@@ -31,7 +35,7 @@ const Configuration: React.FC<ConfigurationProps> = () => {
     <Page title="Configuración">
       <Container>
         <SavedAddressesOption />
-        <HelpOption />
+        {showWelcome && <HelpOption />}
         <CrashalyticsEnabledOption />
         <ShowCanceledRidesOption />
         <ShowCompletedRidesOption />

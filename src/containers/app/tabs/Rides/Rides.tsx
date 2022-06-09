@@ -12,7 +12,8 @@ import { Body, LargeBody } from 'components/Typography/Typography';
 import { SavedAddress } from 'types/storage';
 import { NO_SEARCHED_RIDES_IMG } from 'assets/images';
 import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
-
+import crashlytics from '@react-native-firebase/crashlytics';
+import Toaster from 'components/Toaster/Toaster';
 
 const Rides: React.FC = () => {
   const [isFetchingRides, setIsFetchingRides] = useState(false);
@@ -25,16 +26,24 @@ const Rides: React.FC = () => {
     setIsFetchingRides(true);
     let _rides: any = [];
     const addresses = savedAddresses.map(sa => sa.address);
-    if (addresses.length > 0) {
-      _rides = await getSoonToLeaveRides({ addresses });
-    } else {
-      const defaultAddresses = [
-        { department: 'Montevideo', city: 'Montevideo' },
-        { department: 'Maldonado', city: 'Punta del Este' }
-      ] as Address[];
+    try {
 
-      _rides = await getSoonToLeaveRides({ addresses: defaultAddresses });
+
+      if (addresses.length > 0) {
+        _rides = await getSoonToLeaveRides({ addresses });
+      } else {
+        const defaultAddresses = [
+          { department: 'Montevideo', city: 'Montevideo' },
+          { department: 'Maldonado', city: 'Punta del Este' }
+        ] as Address[];
+
+        _rides = await getSoonToLeaveRides({ addresses: defaultAddresses });
+      }
+    } catch (e) {
+      crashlytics().recordError(e)
+      Toaster.alert('Hubo un error');
     }
+
     setRides(_rides);
     setIsFetchingRides(false);
   }, [savedAddresses])

@@ -76,6 +76,7 @@ const SetupApp: React.FC<WithChildren> = ({ children }) => {
         .setDefaults({
           [FeatureFlags.BANNER_ADS]: 'false',
           [FeatureFlags.FULL_SCREEN_ADS]: 'false',
+          [FeatureFlags.SHOW_WELCOME]: 'false'
         })
         .then(() => { remoteConfig().fetchAndActivate() });
 
