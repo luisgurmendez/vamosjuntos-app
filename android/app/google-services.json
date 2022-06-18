@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:257892290311:android:709480aca1f06cba127fa2",
         "android_client_info": {
-          "package_name": "com.adedo"
+          "package_name": "uy.vamosjuntos"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "257892290311-m58p1hh2hl15uh2mb5n2d3i91umhtpv9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.adedo",
+            "package_name": "uy.vamosjuntos",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
