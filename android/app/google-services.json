@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:257892290311:android:709480aca1f06cba127fa2",
+        "mobilesdk_app_id": "1:257892290311:android:1078eea6284e1df1127fa2",
         "android_client_info": {
           "package_name": "uy.vamosjuntos"
         }
       },
       "oauth_client": [
         {
-          "client_id": "257892290311-m58p1hh2hl15uh2mb5n2d3i91umhtpv9.apps.googleusercontent.com",
+          "client_id": "257892290311-s4hp2in3qlumlu5tcvf7hu3scp91crsm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "uy.vamosjuntos",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+            "certificate_hash": "06ac4b4bfe654a49b55dfde7c743b5a0c6e78467"
           }
         },
         {
@@ -38,6 +38,13 @@
             {
               "client_id": "257892290311-9m7cu8asuhsqigqm5bbvvredcu5ivapt.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "257892290311-d5nhdj6v4ee4pa59vl7ooeltj9sldnuf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vamosjuntos"
+              }
             }
           ]
         }
