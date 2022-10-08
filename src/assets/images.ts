@@ -5,4 +5,4 @@ export const NO_RIDES_IMG = require('./CantSeeAnyRides.png');
 export const NO_SEARCHED_RIDES_IMG = require('./NoRidesFound.png');
 export const PROFILE_PLACEHOLDER_IMG = require('./ProfilePlaceholder.jpg');
 export const ERROR_IMG = require('./Error.png');
-export const TRANSPARENT_LOGO_IMG = require('./Logo.png');
+export const TRANSPARENT_LOGO_IMG = require('./TransparentLogo.png');

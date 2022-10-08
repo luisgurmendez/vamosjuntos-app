@@ -1,4 +1,4 @@
-package com.adedo;
+package uy.vamosjuntos;
 
 import android.content.Intent;
 import android.os.Bundle;

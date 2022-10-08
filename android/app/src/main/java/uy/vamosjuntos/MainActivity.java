@@ -1,4 +1,4 @@
-package com.adedo;
+package uy.vamosjuntos;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
@@ -18,7 +18,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "adedo";
+    return "vamosjuntos";
   }
 
 }
