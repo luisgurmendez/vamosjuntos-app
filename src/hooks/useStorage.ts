@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getStorage } from 'state/storage/selectors';
 import {
+  setHasMadeASearchInStorage,
   setSavedAddressesInStorage,
   setShouldWelcomeInStorage,
   setShowCanceledRidesInStorage,
@@ -33,6 +34,9 @@ function useStorage2<T>(key: StorageKeys): StorageReturn<T> {
         break;
       case 'showSeenNotifications':
         dispatch(setShowSeenNotificationsInStorage((item as unknown as boolean)));
+        break;
+      case 'hasMadeASearch':
+        dispatch(setHasMadeASearchInStorage((item as unknown as boolean)));
         break;
     }
   }

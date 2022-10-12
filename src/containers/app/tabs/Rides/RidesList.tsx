@@ -12,9 +12,10 @@ interface RidesListProps {
   rides: Ride[];
   title: string;
   onRidePress?: (r: Ride) => void;
+  showExpiredTag?: boolean;
 }
 
-const RidesList: React.FC<RidesListProps> = ({ onRidePress, rides, title }) => {
+const RidesList: React.FC<RidesListProps> = ({ onRidePress, showExpiredTag = false, rides, title }) => {
 
   const navigation = useNavigation<any>();
 
@@ -39,7 +40,7 @@ const RidesList: React.FC<RidesListProps> = ({ onRidePress, rides, title }) => {
       <Subtitle>{title}</Subtitle>
       <Box pb="lg">
         <MarginedChildren mt="md">
-          {rides.map(r => <RideBubble key={r.id} ride={r} onPress={() => handleRidePress(r)} />)}
+          {rides.map(r => <RideBubble key={r.id} ride={r} onPress={() => handleRidePress(r)} showExpiredTag={showExpiredTag} />)}
         </MarginedChildren>
       </Box>
     </Container>

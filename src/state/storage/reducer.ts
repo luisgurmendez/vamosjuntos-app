@@ -1,5 +1,6 @@
 import {
   setAddresses,
+  setHasMadeASearch,
   setShouldWelcome,
   setShowCanceledRides,
   setShowCompletedRides,
@@ -17,6 +18,7 @@ export const initialState: StorageState = {
   showCanceledRides: false,
   showCompletedRides: false,
   showSeenNotifications: false,
+  hasMadeASearch: false,
 };
 
 export const reducer = createReducer(initialState, builder => {
@@ -46,6 +48,10 @@ export const reducer = createReducer(initialState, builder => {
     })
     .addCase(setShowSeenNotifications, (state, action) => {
       state.showSeenNotifications = action.payload;
+    })
+    .addCase(setHasMadeASearch, (state, action) => {
+      console.log('REDUCER!', action);
+      state.hasMadeASearch = action.payload;
     })
   return builder;
 });

@@ -7,3 +7,4 @@ export const setShouldWelcome = createAction('[STORAGE] setShouldWelcome', withP
 export const setShowCanceledRides = createAction('[STORAGE] setShowCanceledRides', withPayloadType<boolean>())
 export const setShowCompletedRides = createAction('[STORAGE] setShowCompletedRides', withPayloadType<boolean>())
 export const setShowSeenNotifications = createAction('[STORAGE] setShowSeenNotifications', withPayloadType<boolean>())
+export const setHasMadeASearch = createAction('[STORAGE] setHasMadeASearch', withPayloadType<boolean>())

@@ -7,7 +7,8 @@ import {
   setShouldWelcome,
   setShowCanceledRides,
   setShowCompletedRides,
-  setShowSeenNotifications
+  setShowSeenNotifications,
+  setHasMadeASearch,
 } from "./actions";
 
 export const init = createAsyncThunk<any, never, { state: AppState }>(
@@ -29,6 +30,9 @@ export const init = createAsyncThunk<any, never, { state: AppState }>(
 
     const showSeenNotifications = await Storage.getItem<boolean>(Storage.SHOW_SEEN_NOTIFICATIONS);
     showSeenNotifications !== undefined && dispatch(setShowSeenNotifications(showSeenNotifications));
+
+    const hasMadeASearch = await Storage.getItem<boolean>(Storage.HAS_MADE_A_SEARCH);
+    hasMadeASearch !== undefined && dispatch(setHasMadeASearch(hasMadeASearch));
   }
 );
 
@@ -55,4 +59,11 @@ export const setShowCompletedRidesInStorage = createAsyncThunk<any, boolean, { s
 export const setShowSeenNotificationsInStorage = createAsyncThunk<any, boolean, { state: AppState }>('[STORAGE setShowSeenNotificationsInStorage]', async (item, { dispatch }) => {
   await Storage.setItem(Storage.SHOW_SEEN_NOTIFICATIONS, item)
   dispatch(setShowSeenNotifications(item))
+})
+
+
+export const setHasMadeASearchInStorage = createAsyncThunk<any, boolean, { state: AppState }>('[STORAGE setHasMadeASearchInStorage]', async (item, { dispatch }) => {
+  console.log('THUNK ACTION! SHOULD UPDATE STATEE');
+  await Storage.setItem(Storage.HAS_MADE_A_SEARCH, item)
+  dispatch(setHasMadeASearch(item))
 })
