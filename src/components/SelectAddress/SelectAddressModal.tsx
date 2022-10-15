@@ -25,13 +25,15 @@ interface SelectAddressModalProps {
   onClose?: () => void;
   onSelectAddress?: (address: Address) => void;
   mapId?: string;
+  actionButtonText?: string;
 }
 
 const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   open,
   onClose,
   onSelectAddress,
-  mapId = 'SelectAddressMapId'
+  mapId = 'SelectAddressMapId',
+  actionButtonText = 'Elegir'
 }) => {
   const [isMovingMap, setIsMovingMap] = useState(false);
   const [isFetchingAddress, setIsFetchingAddress] = useState(true);
@@ -108,7 +110,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
           )}
         </Box>
         <Button disabled={isFetchingAddress || possibleAddress === undefined} onPress={handleSelectAddress}>
-          Elegir
+          {actionButtonText}
         </Button>
       </SelectedLocationDisplay>
     </Modal>

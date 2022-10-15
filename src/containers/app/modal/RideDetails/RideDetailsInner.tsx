@@ -21,6 +21,7 @@ import Screens from '../Screens';
 import PassengerCard from './PassengerCard';
 import RideFooter from './RideDetailsFooter'
 import crashlytics from '@react-native-firebase/crashlytics';
+import Badge from 'components/Badge/Badge';
 
 interface RideDetailsProps {
   ride: Ride;
@@ -66,6 +67,10 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
 
   const handleClose = () => {
     navigation.goBack();
+  }
+
+  const handleNavigateToConversation = () => {
+    navigation.push(Screens.RIDE_CONVERSATION);
   }
 
   const updateRides = async () => {
@@ -117,7 +122,10 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
     <Container>
       <StatusBar hidden />
       <AbsoluteSafeArea mt={'xxlg'}>
-        <PositionedPressableIcon onPress={handleClose} name="x" size={30} color={colors.black} />
+        <PressableIcon onPress={handleClose} name="x" size={30} color={colors.black} />
+        <Badge badge={3}>
+          <PressableIcon onPress={handleNavigateToConversation} name="message-circle" size={30} color={colors.black} />
+        </Badge>
       </AbsoluteSafeArea>
       <ScrollContent contentContainerStyle={{ paddingBottom: 8 }}>
         <WhereFromWhereToStaticMap mapId={mapId} whereFrom={ride.whereFrom} whereTo={ride.whereTo} />
@@ -200,11 +208,12 @@ const Container = styled.View`
 
 const AbsoluteSafeArea = styled(Box)`
   position: absolute;
+  left:16px;
+  right:16px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
   zIndex: 300;
-`
-
-const PositionedPressableIcon = styled(PressableIcon)`
-  margin-left: 24px;
 `
 
 const ScrollContent = styled.ScrollView`

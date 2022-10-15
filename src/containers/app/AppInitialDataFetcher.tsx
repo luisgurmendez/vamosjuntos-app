@@ -59,6 +59,7 @@ const AppInitialDataFetcher: React.FC<AppInitialDataFetcherProps> = ({ children 
       .catch((e) => {
         crashlytics().log('Failed app initial data fetcher');
         Toaster.alert('Hubo un error');
+        console.log(e.message);
         console.log(e);
         crashlytics().recordError(e)
         setError(true)

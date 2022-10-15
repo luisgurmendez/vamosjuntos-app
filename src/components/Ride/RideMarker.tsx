@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { Marker } from 'react-native-maps';
 import { MarkerProps } from 'react-native-maps';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from 'utils/colors';
 
 interface RideMarkerProps extends MarkerProps {
@@ -20,7 +19,7 @@ const RideMarker: React.FC<RideMarkerProps> = ({ type, ...rest }) => {
     >
       {
         isDestination ?
-        <DestinationPin/>
+          <DestinationPin />
           :
           <OriginPin />
       }

@@ -119,3 +119,24 @@ export interface FeatureFlag {
   name: string;
   enabled: boolean;
 }
+
+export enum MessageType {
+  MESSAGE = 'message',
+  LOCATION = 'location',
+}
+
+export interface MessageLocation {
+  type: MessageType.LOCATION;
+  location: Address;
+  from: User;
+  sentAt: Date;
+}
+
+export interface MessageMessage {
+  type: MessageType.MESSAGE;
+  message: String;
+  from: User;
+  sentAt: Date;
+}
+
+export type Message = MessageLocation | MessageMessage;

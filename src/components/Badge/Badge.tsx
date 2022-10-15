@@ -36,8 +36,7 @@ const Badge: React.FC<BadgeProps> = ({ size = 18, max = 100, badge, children }) 
 
 export default Badge;
 
-const Container = styled.View`
-`
+const Container = styled.View``
 
 const BadgeContainer = styled(Text)`
   background-color: ${colors.notification};

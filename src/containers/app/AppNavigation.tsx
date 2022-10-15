@@ -21,6 +21,7 @@ import WhereFromWhereToDetails from './modal/WhereFromWhereToDetails/WhereFromWh
 import Welcome from './modal/Welcome/Welcome';
 import JoinRide from './modal/JoinRide/JoinRide';
 import SearchForRideNavigation from './modal/SearchForRide/SearchForRideNavigation';
+import RideConversation from './modal/RideConversation/RideConversation';
 
 const Stack = createStackNavigator();
 
@@ -53,6 +54,7 @@ const AppNavigation: React.FC = () => {
           />
           <Stack.Screen name={Screens.USER_PROFILE} component={UserProfile} />
           <Stack.Screen name={Screens.RIDE_DETAILS} component={RideDetails} />
+          <Stack.Screen name={Screens.RIDE_CONVERSATION} component={RideConversation} />
           <Stack.Screen name={Screens.WHERE_FROM_WHERE_TO_DETAILS} component={WhereFromWhereToDetails} />
           <Stack.Screen name={Screens.WELCOME} component={Welcome} />
           <Stack.Screen name={Screens.COMMENTS} component={Comments} />

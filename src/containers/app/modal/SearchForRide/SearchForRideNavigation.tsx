@@ -28,11 +28,9 @@ const SearchForRideNavigation: React.FC = () => {
         <Stack.Screen name={SearchForRideScreens.SEARCH_FOR_RIDE} component={SearchForRide} />
         <Stack.Screen
           name={SearchForRideScreens.WHERE_FROM_WHERE_TO}
-          // options={{cardStyleInterpolator: forFade}}
           component={WhereFromWhereTo} />
         <Stack.Screen
           name={SearchForRideScreens.WHEN}
-          // options={{cardStyleInterpolator: forFade}}
           component={When} />
       </Stack.Navigator>
     </SearchForRideProvider>

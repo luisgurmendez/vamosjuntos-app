@@ -39,7 +39,7 @@ const TabBar: React.FC<SceneRendererProps & { navigationState: NavigationState<a
       labelStyle={{
         textTransform: 'none',
         fontFamily: 'Roboto',
-        fontSize: 18,
+        fontSize: 17,
         fontWeight: 'bold',
       }}
       renderBadge={renderBadge}

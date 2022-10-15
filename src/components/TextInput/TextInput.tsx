@@ -16,7 +16,7 @@ const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(({ error, pr
 
   return (
     <View style={style}>
-      <TextInputContainer error={showError}>
+      <TextInputContainer error={showError} >
         {prefix && <Text>{prefix}</Text>}
         <TextInputBase
           ref={forwardedRef}
