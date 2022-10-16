@@ -5,7 +5,7 @@ import { ScrollView, RefreshControl, ViewStyle } from 'react-native';
 
 interface ScrollableContentProps extends WithChildren {
   showContent: boolean;
-  noContentAsset: string;
+  noContentAsset?: string;
   refreshing?: boolean;
   onRefresh?: () => void;
   noContentHelp?: string | React.ReactNode;

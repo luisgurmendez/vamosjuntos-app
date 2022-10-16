@@ -5,7 +5,7 @@ import { Image, ImageStyle } from 'react-native';
 import styled from 'styled-components/native';
 
 interface NoContentProps extends WithChildren {
-  asset: any;
+  asset?: any;
   showContent: boolean;
   help?: string | React.ReactNode;
   imageStyles?: ImageStyle;
@@ -22,7 +22,7 @@ const NoContent: React.FC<NoContentProps> = ({ children, help, showContent, imag
 
   return (
     <ImageContainer pointerEvents="box-none">
-      <Image
+      {asset !== undefined && <Image
         style={{
           width: '100%',
           maxWidth: '100%',
@@ -32,7 +32,7 @@ const NoContent: React.FC<NoContentProps> = ({ children, help, showContent, imag
         }}
         resizeMode="contain"
         source={asset}
-      />
+      />}
       {showHelpContent && (<HelpContentContainer>
         {isHelpContentText ? <Body>{help}</Body> : <>{help}</>}
       </HelpContentContainer>)

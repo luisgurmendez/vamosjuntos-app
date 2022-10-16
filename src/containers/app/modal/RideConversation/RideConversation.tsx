@@ -1,7 +1,9 @@
 import { createMessage, getMessages, GetMessagesResponse } from 'api/callables';
 import Header from 'components/Page/Header';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
+import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 import SelectAddressModal from 'components/SelectAddress/SelectAddressModal';
+import { Body } from 'components/Typography/Typography';
 import usePagination, { PaginationData } from 'hooks/usePagination';
 import React, { useCallback, useEffect, useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
@@ -18,7 +20,7 @@ interface RideConversationProps {
 const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { rideId } } }) => {
     const [sendAddressModalOpen, setSendAddressModalOpen] = useState(false);
     const [messageText, setMessageText] = useState('');
-    const { messages } = useGetMessages(rideId);
+    const { messages, handleRefreshMessages, fetching } = useGetMessages(rideId);
 
     let prevMessage: Message | null = null;
 
@@ -60,11 +62,19 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
         setSendAddressModalOpen(false);
     };
 
+    const renderNoContentHelp = () => {
+        return <Body style={{ textAlign: 'center' }}>No hay mensajes en el chat</Body>
+    }
+
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
             <Container>
                 <Header showBack title='Chat' />
-                <ScrollContainer style={{ backgroundColor: '#f3f3f3' }}>
+                <ScrollContainer showContent={messages.length > 0}
+                    onRefresh={handleRefreshMessages}
+                    refreshing={fetching}
+                    noContentHelp={renderNoContentHelp()}
+                    style={{ backgroundColor: '#f3f3f3' }}>
                     {messages.map(m => {
                         const showSender = prevMessage === null || prevMessage.from.id !== m.from.id;
                         prevMessage = m;
@@ -91,7 +101,13 @@ const Container = styled(SafeAreaView)`
     background-color: white;
 `;
 
-const ScrollContainer = styled.ScrollView`
+// const ScrollContainer = styled.ScrollView`
+//     padding: 0px 8px;
+//     width: 100%;
+//     flex: 1;
+// `
+
+const ScrollContainer = styled(ScrollableContent)`
     padding: 0px 8px;
     width: 100%;
     flex: 1;
@@ -165,10 +181,13 @@ const RoundedTextInput = styled.TextInput`
 
 function useGetMessages(rideId: string) {
     const [messages, setMessages] = useState<Message[]>([]);
+    const [isFecthing, setIsFecthing] = useState(false);
 
     const handleGetMessages = useCallback(async ({ skip, take }: PaginationData) => {
+        setIsFecthing(true)
         const response = await getMessages(rideId, skip, take)
         setMessages(response?.messages ?? []);
+        setIsFecthing(false)
         return response;
     }, []);
 
@@ -181,5 +200,5 @@ function useGetMessages(rideId: string) {
         handleGetMessagesWithPagination();
     }, [handleGetMessagesWithPagination]);
 
-    return { messages, reload: handleGetMessagesWithPagination };
+    return { messages, handleRefreshMessages: handleGetMessagesWithPagination, fetching: isFecthing };
 }
