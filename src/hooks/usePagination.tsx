@@ -14,7 +14,7 @@ function usePagination<R>(
     callable: (pagination: PaginationData) => Promise<R | undefined>,
     deserializePaginationCounts: (result: R) => PaginationCounts,
     initialSkip: number = 0,
-    take: number = 10
+    take: number = 50
 ) {
     const [skip, setSkip] = useState(initialSkip);
 
@@ -22,9 +22,9 @@ function usePagination<R>(
         const _result = await callable({ skip, take });
         if (_result) {
             const counts = deserializePaginationCounts(_result);
-            setSkip(s => s + counts.fetchedCount);
+            setSkip(skip + counts.fetchedCount);
         }
-    }, [callable])
+    }, [callable, skip, take])
 
     return handleCallable;
 

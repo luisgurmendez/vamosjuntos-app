@@ -1,12 +1,13 @@
 import { createMessage, getMessages, GetMessagesResponse } from 'api/callables';
+import Loading from 'components/Loading/Loading';
 import Header from 'components/Page/Header';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
-import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 import SelectAddressModal from 'components/SelectAddress/SelectAddressModal';
 import { Body } from 'components/Typography/Typography';
 import usePagination, { PaginationData } from 'hooks/usePagination';
-import React, { useCallback, useEffect, useState } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { KeyboardAvoidingView, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import { Address, Message, MessageType } from 'types/models';
@@ -21,6 +22,7 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
     const [sendAddressModalOpen, setSendAddressModalOpen] = useState(false);
     const [messageText, setMessageText] = useState('');
     const { messages, handleRefreshMessages, fetching } = useGetMessages(rideId);
+    const onEndReachedCalledDuringMomentum = useRef(true)
 
     let prevMessage: Message | null = null;
 
@@ -63,23 +65,35 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
     };
 
     const renderNoContentHelp = () => {
-        return <Body style={{ textAlign: 'center' }}>No hay mensajes en el chat</Body>
+        return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}><Body style={{ textAlign: 'center' }}>No hay mensajes en el chat</Body></View>
+    }
+
+    const handleRefreshMessagesWrapped = async () => {
+        if (onEndReachedCalledDuringMomentum.current) {
+            await handleRefreshMessages();
+            onEndReachedCalledDuringMomentum.current = true
+        }
     }
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
             <Container>
                 <Header showBack title='Chat' />
-                <ScrollContainer showContent={messages.length > 0}
-                    onRefresh={handleRefreshMessages}
+                <ScrollContainer contentContainerStyle={{ flexGrow: 1 }}
+                    onEndReached={handleRefreshMessagesWrapped}
+                    onEndReachedThreshold={0.1}
+                    onRefresh={handleRefreshMessagesWrapped}
                     refreshing={fetching}
-                    noContentHelp={renderNoContentHelp()}
-                    style={{ backgroundColor: '#f3f3f3' }}>
-                    {messages.map(m => {
+                    onMomentumScrollBegin={() => { onEndReachedCalledDuringMomentum.current = false }}
+                    data={[...messages].reverse()}
+                    ListEmptyComponent={renderNoContentHelp()}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item: m }) => {
                         const showSender = prevMessage === null || prevMessage.from.id !== m.from.id;
                         prevMessage = m;
-                        return <MessageBubble showSender={showSender} message={m} />
-                    }).reverse()}
+                        return <MessageBubble key={m.id} showSender={showSender} message={m} />
+                    }}
+                    style={{ flexGrow: 1, flex: 1, backgroundColor: '#f3f3f3' }}>
                 </ScrollContainer>
                 <Input message={messageText} onSend={handleSendMessage} onMessageChange={setMessageText} onOpenLocationModal={handleOpenLocationModal} />
             </Container>
@@ -101,16 +115,17 @@ const Container = styled(SafeAreaView)`
     background-color: white;
 `;
 
-// const ScrollContainer = styled.ScrollView`
-//     padding: 0px 8px;
-//     width: 100%;
-//     flex: 1;
-// `
-
-const ScrollContainer = styled(ScrollableContent)`
+const ScrollContainer = styled(FlatList)`
     padding: 0px 8px;
     width: 100%;
     flex: 1;
+`
+
+const LoadingContainer = styled.View`
+    width: 100%;
+    padding: 16px;
+    justify-content:center;
+    flex-direction:row;
 `
 
 interface InputProps {
@@ -181,24 +196,31 @@ const RoundedTextInput = styled.TextInput`
 
 function useGetMessages(rideId: string) {
     const [messages, setMessages] = useState<Message[]>([]);
-    const [isFecthing, setIsFecthing] = useState(false);
+    const [isFetching, setIsFetching] = useState(false);
 
     const handleGetMessages = useCallback(async ({ skip, take }: PaginationData) => {
-        setIsFecthing(true)
-        const response = await getMessages(rideId, skip, take)
-        setMessages(response?.messages ?? []);
-        setIsFecthing(false)
-        return response;
-    }, []);
+        if (!isFetching) {
+            setIsFetching(true)
+            const response = await getMessages(rideId, skip, take)
+            if (response?.messages !== undefined) {
+                const _messages = [...messages, ...response?.messages];
+                _messages.filter((v, i, a) => a.findIndex(v2 => (v2.id === v.id)) === i);
+                setMessages(_messages);
+            }
+            setIsFetching(false)
+            return response;
+        }
 
-    const handleDeserializePaginationCounts = (respose: GetMessagesResponse) => {
-        return { totalCount: 0, fetchedCount: 0 };
-    }
+    }, [isFetching, rideId, messages,]);
+
+    const handleDeserializePaginationCounts = useCallback((respose: GetMessagesResponse) => {
+        return { totalCount: respose.messagesCount, fetchedCount: respose.messages.length };
+    }, [])
     const handleGetMessagesWithPagination = usePagination(handleGetMessages, handleDeserializePaginationCounts);
 
     useEffect(() => {
         handleGetMessagesWithPagination();
-    }, [handleGetMessagesWithPagination]);
+    }, []);
 
-    return { messages, handleRefreshMessages: handleGetMessagesWithPagination, fetching: isFecthing };
+    return { messages, handleRefreshMessages: handleGetMessagesWithPagination, fetching: isFetching };
 }

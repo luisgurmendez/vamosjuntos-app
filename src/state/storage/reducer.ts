@@ -50,7 +50,6 @@ export const reducer = createReducer(initialState, builder => {
       state.showSeenNotifications = action.payload;
     })
     .addCase(setHasMadeASearch, (state, action) => {
-      console.log('REDUCER!', action);
       state.hasMadeASearch = action.payload;
     })
   return builder;

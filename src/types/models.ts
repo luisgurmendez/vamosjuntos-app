@@ -129,14 +129,16 @@ export interface MessageLocation {
   type: MessageType.LOCATION;
   location: Address;
   from: User;
-  createdAt: Date;
+  createdAt: string;
+  id: string;
 }
 
 export interface MessageMessage {
   type: MessageType.MESSAGE;
   message: String;
   from: User;
-  createdAt: Date;
+  createdAt: string;
+  id: string;
 }
 
 export type Message = MessageLocation | MessageMessage;
