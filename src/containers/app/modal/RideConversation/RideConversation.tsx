@@ -23,7 +23,7 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
     const [messageText, setMessageText] = useState('');
     const { messages, handleRefreshMessages, fetching } = useGetMessages(rideId);
     const onEndReachedCalledDuringMomentum = useRef(true)
-
+    const scrollListRef = useRef<FlatList<any> | null>(null);
     let prevMessage: Message | null = null;
 
     const handleOpenLocationModal = () => {
@@ -75,11 +75,19 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
         }
     }
 
+    useEffect(() => {
+        handleRefreshMessagesWrapped().then(() => {
+            setTimeout(() => scrollListRef.current?.scrollToEnd({ animated: true }), 500);
+        });
+
+    }, [])
+
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
             <Container>
                 <Header showBack title='Chat' />
                 <ScrollContainer contentContainerStyle={{ flexGrow: 1 }}
+                    ref={scrollListRef as any}
                     onEndReached={handleRefreshMessagesWrapped}
                     onEndReachedThreshold={0.1}
                     onRefresh={handleRefreshMessagesWrapped}
@@ -215,12 +223,9 @@ function useGetMessages(rideId: string) {
 
     const handleDeserializePaginationCounts = useCallback((respose: GetMessagesResponse) => {
         return { totalCount: respose.messagesCount, fetchedCount: respose.messages.length };
-    }, [])
-    const handleGetMessagesWithPagination = usePagination(handleGetMessages, handleDeserializePaginationCounts);
-
-    useEffect(() => {
-        handleGetMessagesWithPagination();
     }, []);
+
+    const handleGetMessagesWithPagination = usePagination(handleGetMessages, handleDeserializePaginationCounts);
 
     return { messages, handleRefreshMessages: handleGetMessagesWithPagination, fetching: isFetching };
 }
