@@ -199,7 +199,6 @@ export const getOwesReviews = async (): Promise<Passenger | undefined> => {
 
 export const sendComplaint = async (complaint: string): Promise<boolean> => {
   const response = (await southamericaFunctions.httpsCallable('complaintCreate')({ complaint }));
-
   console.log(response)
   return response.data.success;
 };
@@ -272,7 +271,6 @@ export const getMessages = async (rideId: string, skip?: number, take?: number):
   return undefined;
 };
 
-
 interface MessageCreate {
   location?: Address;
   message?: string;
@@ -286,11 +284,8 @@ export const createMessage = async (message: MessageCreate) => {
   return response.data.success;
 }
 
-
-// interface CreateMessageData {
-//   message?: string;
-//   location?: Address;
-//   type: MessageType;
-//   rideId: string;
-// }
-
+export const deleteUserRequest = async (): Promise<boolean> => {
+  const response = (await southamericaFunctions.httpsCallable('userDeletionRequestCreate')());
+  console.log(response)
+  return response.data.success;
+};

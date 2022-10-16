@@ -20,6 +20,7 @@ import EventManager from 'components/Toaster/EventManager';
 import { Easing } from 'react-native';
 import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';
+import DeleteUserOption from './options/DeleteUserOption';
 
 interface ConfigurationProps { }
 
@@ -44,6 +45,8 @@ const Configuration: React.FC<ConfigurationProps> = () => {
         <PermissionsOption />
         <ComplaintOption />
         <AppVersionOption onPress={handleVersionOptionPressed} />
+        <Spacer />
+        <DeleteUserOption />
         <SignoutOption />
       </Container>
       <AnimatedCarManager />
@@ -56,6 +59,13 @@ export default Configuration;
 const Container = styled.ScrollView`
   padding-horizontal: 16px;
   flex: 1;
+`
+
+const Spacer = styled.View`
+  margin: 8px 0px;
+  width: 100%;
+  borderBottomWidth: 0.5px;
+  borderBottomColor: #999;
 `
 
 const eventManager = new EventManager();
