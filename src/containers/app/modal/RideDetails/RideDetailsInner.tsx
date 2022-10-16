@@ -70,7 +70,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
   }
 
   const handleNavigateToConversation = () => {
-    navigation.push(Screens.RIDE_CONVERSATION);
+    navigation.push(Screens.RIDE_CONVERSATION, { rideId: ride.id });
   }
 
   const updateRides = async () => {

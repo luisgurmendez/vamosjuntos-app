@@ -56,11 +56,6 @@ const Rides: React.FC = () => {
   )
 }
 
-// const RidesContainer = styled.ScrollView`
-//   flex: 1;
-//   padding: 8px;
-// `
-
 const RidesContainer = styled(ScrollableContent)`
   padding: 8px;
 `

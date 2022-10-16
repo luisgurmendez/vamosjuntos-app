@@ -1,99 +1,62 @@
+import { createMessage, getMessages, GetMessagesResponse } from 'api/callables';
 import Header from 'components/Page/Header';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import SelectAddressModal from 'components/SelectAddress/SelectAddressModal';
-import React, { useState } from 'react';
+import usePagination, { PaginationData } from 'hooks/usePagination';
+import React, { useCallback, useEffect, useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
-import { getUser } from 'state/user/selectors';
 import styled from 'styled-components/native';
-import { Address, Message, MessageType, User } from 'types/models';
+import { Address, Message, MessageType } from 'types/models';
 import { colors } from 'utils/colors';
 import MessageBubble from './Message';
 
-const RideConversation: React.FC = () => {
-    const self = useSelector(getUser);
+interface RideConversationProps {
+    route: any;
+}
+
+const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { rideId } } }) => {
     const [sendAddressModalOpen, setSendAddressModalOpen] = useState(false);
+    const [messageText, setMessageText] = useState('');
+    const { messages } = useGetMessages(rideId);
 
-    const mateo = { id: 'mateo', name: 'Mateo' } as User;
-    const cata = { id: 'cata', name: 'Catalina' } as User;
-
-    const message: Message = {
-        type: MessageType.MESSAGE,
-        from: cata,
-        message: 'Buenos dias!',
-        sentAt: new Date(),
-    }
-
-    const message2: Message = {
-        type: MessageType.MESSAGE,
-        from: self!,
-        message: 'Hola como andan? Armando el matesito, salgo en 20 a buscar al primero.',
-        sentAt: new Date(),
-    }
-
-    const message3: Message = {
-        type: MessageType.MESSAGE,
-        from: cata,
-        message: 'Perfecto! Quien va a ser el primero?',
-        sentAt: new Date(),
-    }
-
-    const message4: Message = {
-        type: MessageType.MESSAGE,
-        from: self!,
-        message: 'Mario Mateo.',
-        sentAt: new Date(),
-    }
-
-    const message5: Message = {
-        type: MessageType.MESSAGE,
-        from: mateo,
-        message: 'dalee te espero afuera.',
-        sentAt: new Date(),
-    }
-
-    const message6: Message = {
-        type: MessageType.MESSAGE,
-        from: self!,
-        message: 'Buenisimo, mandame bien la ubic de donde estas',
-        sentAt: new Date(),
-    }
-
-    const message7: Message = {
-        type: MessageType.MESSAGE,
-        from: mateo,
-        message: 'Ya te mando',
-        sentAt: new Date(),
-    }
-
-    const message8: Message = {
-        type: MessageType.LOCATION,
-        from: mateo,
-        location: {
-            latitude: 12,
-            longitude: 42
-        } as Address,
-        sentAt: new Date(),
-    }
-
-
-    function generateMessage(): Message[] {
-        return [message, message2, message3, message4, message5, message6, message7, message8];
-    }
-
-    const messages = generateMessage();
     let prevMessage: Message | null = null;
-
-    const handleSelectAddress = () => {
-        setSendAddressModalOpen(false);
-    };
 
     const handleOpenLocationModal = () => {
         setSendAddressModalOpen(true);
     }
 
     const handleCloseAddressModal = () => {
+        setSendAddressModalOpen(false);
+    };
+
+    const handleSendMessage = async () => {
+        console.log('SENGIN MESSAGE!', {
+            type: MessageType.MESSAGE,
+            message: messageText,
+            rideId: rideId,
+        })
+        await createMessage({
+            type: MessageType.MESSAGE,
+            message: messageText,
+            rideId: rideId,
+        });
+        setMessageText('');
+    };
+
+    const handleSendLocationMessage = async (address: Address) => {
+        console.log('SENGIN MESSAGE!', {
+            type: MessageType.LOCATION,
+            location: address,
+            rideId: rideId,
+        })
+
+        await createMessage({
+            type: MessageType.LOCATION,
+            location: address,
+            rideId: rideId,
+        });
+        setMessageText('');
         setSendAddressModalOpen(false);
     };
 
@@ -106,13 +69,13 @@ const RideConversation: React.FC = () => {
                         const showSender = prevMessage === null || prevMessage.from.id !== m.from.id;
                         prevMessage = m;
                         return <MessageBubble showSender={showSender} message={m} />
-                    })}
+                    }).reverse()}
                 </ScrollContainer>
-                <Input onOpenLocationModal={handleOpenLocationModal} />
+                <Input message={messageText} onSend={handleSendMessage} onMessageChange={setMessageText} onOpenLocationModal={handleOpenLocationModal} />
             </Container>
             <SelectAddressModal
                 actionButtonText={'Mandar'}
-                onSelectAddress={handleSelectAddress}
+                onSelectAddress={handleSendLocationMessage}
                 onClose={handleCloseAddressModal}
                 open={sendAddressModalOpen} />
         </KeyboardAvoidingView>
@@ -136,10 +99,13 @@ const ScrollContainer = styled.ScrollView`
 
 interface InputProps {
     onOpenLocationModal: () => void;
+    onSend: () => void;
+    onMessageChange: (m: string) => void;
+    message: string;
 }
 
 
-const Input: React.FC<InputProps> = ({ onOpenLocationModal }) => {
+const Input: React.FC<InputProps> = ({ onOpenLocationModal, onSend, onMessageChange, message }) => {
 
     return (
         <InputContainer>
@@ -150,10 +116,12 @@ const Input: React.FC<InputProps> = ({ onOpenLocationModal }) => {
                     numberOfLines={3}
                     placeholderTextColor={colors.darkGray}
                     underlineColorAndroid='transparent'
+                    value={message}
+                    onChangeText={onMessageChange}
                     placeholder='Mensaje...'
                 />
             </InputContent>
-            <StyledPressableIcon color={colors.main} name={'send'} size={24} />
+            <StyledPressableIcon color={colors.main} name={'send'} size={24} onPress={onSend} />
         </InputContainer>
     )
 }
@@ -193,3 +161,25 @@ const RoundedTextInput = styled.TextInput`
   padding: 0px;
   max-height: ${16 * 4};
 `;
+
+
+function useGetMessages(rideId: string) {
+    const [messages, setMessages] = useState<Message[]>([]);
+
+    const handleGetMessages = useCallback(async ({ skip, take }: PaginationData) => {
+        const response = await getMessages(rideId, skip, take)
+        setMessages(response?.messages ?? []);
+        return response;
+    }, []);
+
+    const handleDeserializePaginationCounts = (respose: GetMessagesResponse) => {
+        return { totalCount: 0, fetchedCount: 0 };
+    }
+    const handleGetMessagesWithPagination = usePagination(handleGetMessages, handleDeserializePaginationCounts);
+
+    useEffect(() => {
+        handleGetMessagesWithPagination();
+    }, [handleGetMessagesWithPagination]);
+
+    return { messages, reload: handleGetMessagesWithPagination };
+}

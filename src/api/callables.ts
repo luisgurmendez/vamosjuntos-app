@@ -1,4 +1,4 @@
-import { Address, Ride, User, Notification, Passenger, RideRequest, FeatureFlag, Review } from 'types/models';
+import { Address, Ride, User, Notification, Passenger, RideRequest, FeatureFlag, Review, Message, MessageType } from 'types/models';
 import {
   UserRideDetails,
 } from './responses';
@@ -256,3 +256,41 @@ export const kickPassenger = async (passengerId: string): Promise<boolean> => {
   const response = (await southamericaFunctions.httpsCallable('passengerKicked')({ passengerId }));
   return response.data.success;
 };
+
+export interface GetMessagesResponse {
+  messages: Message[];
+  messagesCount: number;
+}
+
+export const getMessages = async (rideId: string, skip?: number, take?: number): Promise<GetMessagesResponse | undefined> => {
+  console.log(rideId)
+  const response = (await southamericaFunctions.httpsCallable('messagesGet')({ rideId, skip, take }));
+  console.log(response)
+  if (response.data.success) {
+    return response.data;
+  }
+  return undefined;
+};
+
+
+interface MessageCreate {
+  location?: Address;
+  message?: string;
+  rideId: string;
+  type: MessageType;
+}
+
+export const createMessage = async (message: MessageCreate) => {
+  const response = (await southamericaFunctions.httpsCallable('messagesCreate')(message));
+  console.log(response)
+  return response.data.success;
+}
+
+
+// interface CreateMessageData {
+//   message?: string;
+//   location?: Address;
+//   type: MessageType;
+//   rideId: string;
+// }
+

@@ -16,3 +16,14 @@ function useMapZoomToCoords(mapId: string, coords: LatLng[], padding: number = 1
 }
 
 export default useMapZoomToCoords;
+
+
+export function useMapZoomToCoord(mapId: string, coord: LatLng) {
+  const { map } = useMap(mapId);
+
+  useEffect(() => {
+    if (map) {
+      map.fitToElements(false);
+    }
+  }, [map, coord])
+}

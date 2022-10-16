@@ -1,5 +1,5 @@
 import { Stylable } from 'components/types';
-import useMapZoomToCoords from 'hooks/useMapZoomToCoords';
+import useMapZoomToCoords, { useMapZoomToCoord } from 'hooks/useMapZoomToCoords';
 import React from 'react'
 import styled from 'styled-components/native';
 import { Address } from 'types/models';
@@ -12,7 +12,7 @@ interface LocationMessageBubbleContentProps extends Stylable {
 }
 
 const LocationMessageBubbleContent: React.FC<LocationMessageBubbleContentProps> = ({ mapId, location, style }) => {
-    useMapZoomToCoords(mapId, [location], 1000);
+    useMapZoomToCoord(mapId, location);
 
     const renderOriginDestinationMarkers = () => {
         return (
