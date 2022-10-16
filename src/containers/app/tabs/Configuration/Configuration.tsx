@@ -17,7 +17,7 @@ import AbsolutePositioned from 'components/AbsolutePositioned/AbsolutePositioned
 import { AnimatedText } from 'components/Typography/Typography';
 import { DeviceDimensions } from 'utils/device';
 import EventManager from 'components/Toaster/EventManager';
-import { Easing } from 'react-native';
+import { Animated, Easing } from 'react-native';
 import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';
 import DeleteUserOption from './options/DeleteUserOption';

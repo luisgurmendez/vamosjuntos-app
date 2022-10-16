@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StorageKeys } from 'state/storage/types';
 
 type ErrorCallback = (error?: Error) => void;
 
@@ -10,6 +11,7 @@ class Storage {
   public static SHOW_CANCELED_RIDES = 'showCanceledRides';
   public static SHOW_COMPLETED_RIDES = 'showCompletedRides';
   public static SHOW_SEEN_NOTIFICATIONS = 'showSeenNotifications';
+  public static HAS_MADE_A_SEARCH: StorageKeys = 'hasMadeASearch';
 
   static async isInitialized() {
     if (Storage.INITED) {
@@ -29,6 +31,7 @@ class Storage {
       await AsyncStorage.setItem(Storage.SHOW_CANCELED_RIDES, 'true');
       await AsyncStorage.setItem(Storage.SHOW_COMPLETED_RIDES, 'true');
       await AsyncStorage.setItem(Storage.SHOW_SEEN_NOTIFICATIONS, 'false');
+      await AsyncStorage.setItem(Storage.HAS_MADE_A_SEARCH, 'false');
     }
   }
 

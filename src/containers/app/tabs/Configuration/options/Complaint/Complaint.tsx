@@ -1,13 +1,17 @@
 import { useNavigation } from '@react-navigation/native';
 import { sendComplaint } from 'api/callables';
 import Button from 'components/Button/Button';
+import PlainButton from 'components/Button/PlainButton';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import PageWithBack from 'components/Page/PageWithBack';
 import TextInput from 'components/TextInput/TextInput';
 import Toaster from 'components/Toaster/Toaster';
+import { Body } from 'components/Typography/Typography';
 import React from 'react'
 import { useState } from 'react';
+import { Linking } from 'react-native';
 import styled from 'styled-components/native';
+import { colors } from 'utils/colors';
 
 interface ComplaintProps { }
 
@@ -28,15 +32,22 @@ const Complaint: React.FC<ComplaintProps> = ({ }) => {
       Toaster.alert('Error guardando tu queja.')
     }
     setSendingComplaint(false);
+  }
 
+  const handleGoToInstagram = () => {
+    Linking.openURL(`instagram://user?username=vamosjuntos.uy`);
   }
 
   return (
     <PageWithBack title="Quejate">
       <DismissKeyboard>
         <Content>
+          <Body style={{ marginBottom: 8 }}>
+            {`Contános que pasó y si queres dejanos un mail o número de contacto. \n\nTambién nos podés escribir a nuestra cuenta de instagram `}
+            <Body style={{ color: colors.main }} onPress={handleGoToInstagram}> @vamosjuntos.uy</Body>
+          </Body>
           <MultilinedTextInput
-            placeholder="Contanos qué pasó"
+            placeholder="No puedo cancelar viajes."
             value={complaint}
             multiline
             numberOfLines={6}

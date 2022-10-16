@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components/native';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import RideBubble from 'components/Ride/RideBubble';
@@ -8,12 +8,16 @@ import { Address, Ride } from 'types/models';
 import FloatingButton from 'components/FloatingButton/FloatingButton';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from 'containers/Screens';
-import { Body, LargeBody } from 'components/Typography/Typography';
 import { SavedAddress } from 'types/storage';
 import { NO_SEARCHED_RIDES_IMG } from 'assets/images';
 import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 import crashlytics from '@react-native-firebase/crashlytics';
 import Toaster from 'components/Toaster/Toaster';
+import Storage from 'storage/Storage';
+import { Animated } from 'react-native';
+import { Body, LargeBody } from 'components/Typography/Typography';
+import { setHasMadeASearchInStorage } from 'state/storage/thunkActions';
+import { useDispatch } from 'react-redux';
 
 const Rides: React.FC = () => {
   const [isFetchingRides, setIsFetchingRides] = useState(false);
@@ -21,6 +25,8 @@ const Rides: React.FC = () => {
   const hasRides = rides.length > 0;
   const navigation = useNavigation<any>();
   const [savedAddresses] = useStorage<SavedAddress[]>('addresses');
+  const dispatch = useDispatch();
+
 
   const handleFetchSoonToLeaveRides = useCallback(async () => {
     setIsFetchingRides(true);
@@ -53,6 +59,7 @@ const Rides: React.FC = () => {
   }, [handleFetchSoonToLeaveRides]);
 
   const handleSearchForRide = () => {
+    dispatch(setHasMadeASearchInStorage(true));
     navigation.push(Screens.SEARCH_FOR_RIDE);
   }
 
@@ -86,8 +93,13 @@ const Rides: React.FC = () => {
       </PaddedScrollableContent>
 
       <SearchButtonPositioner>
+        <PointingDownIndicator />
         <FloatingButton onPress={handleSearchForRide} size={'lg'} icon={'magnify'} />
       </SearchButtonPositioner>
+
+      {/* <AlertsButtonPositioner>
+        <FloatingButton onPress={handleSearchForRide} size={'lg'} icon={"bell"} iconProvider={IconProviders.Feather} />
+      </AlertsButtonPositioner> */}
     </Container>
   );
 }
@@ -106,4 +118,48 @@ const SearchButtonPositioner = styled.View`
   position: absolute;
   bottom: 16px;
   right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `
+
+// const AlertsButtonPositioner = styled.View`
+//   position: absolute;
+//   bottom: 16px;
+//   left: 16px;
+// `
+
+
+const PointingDownIndicator: React.FC = () => {
+  const [hasMadeASearch] = useStorage(Storage.HAS_MADE_A_SEARCH);
+  const animation = useRef(new Animated.Value(0));
+  const animationDuration = 800;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(animation.current, {
+          toValue: -16,
+          duration: animationDuration,
+          useNativeDriver: false,
+
+        }),
+        Animated.timing(animation.current, {
+          toValue: 0,
+          duration: animationDuration,
+          useNativeDriver: false,
+
+        })
+      ]),
+    ).start();
+  }, [animation]);
+
+  if (!hasMadeASearch) {
+    return <Animated.View style={{
+      position: 'relative',
+      transform: [{ translateY: animation.current }],
+    }}><Body style={{ fontSize: 32 }}>👇</Body></Animated.View>
+  }
+  return null;
+}

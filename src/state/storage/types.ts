@@ -6,6 +6,7 @@ interface StorageShape {
   showCanceledRides: boolean;
   showCompletedRides: boolean;
   showSeenNotifications: boolean;
+  hasMadeASearch: boolean;
 }
 
 export type StorageKeys = keyof StorageShape;

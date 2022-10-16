@@ -23,13 +23,7 @@ const AppInitialDataFetcher: React.FC<AppInitialDataFetcherProps> = ({ children 
   const fetching = fetchingData || isFetchingUser;
 
   useEffect(() => {
-    setFetchingData(true);
-
-    const handleSetNotifications = (data: any) => {
-      dispatch(setNotifications(data))
-      return data;
-    }
-    const _notifications = getNotifications().then(handleSetNotifications);
+    // setFetchingData(true);
 
     const handleSetRides = (data: any) => {
       dispatch(setRides(data))
@@ -37,11 +31,6 @@ const AppInitialDataFetcher: React.FC<AppInitialDataFetcherProps> = ({ children 
     }
     const _rides = getRides().then(handleSetRides)
 
-    const handleSetRideRequests = (data: any) => {
-      dispatch(setRideRequests(data))
-      return data;
-    }
-    const _rideRequests = getRideRequests().then(handleSetRideRequests)
 
     const handleSetFeatureFlags = (data: any) => {
       dispatch(setFeatureFlags(data))
@@ -55,7 +44,20 @@ const AppInitialDataFetcher: React.FC<AppInitialDataFetcherProps> = ({ children 
     }
     const _owesReview = getOwesReviews().then(handleSetOwesReview)
 
-    Promise.all([_notifications, _rides, _rideRequests, _featureFlags, _owesReview])
+
+    // const handleSetNotifications = (data: any) => {
+    //   dispatch(setNotifications(data))
+    //   return data;
+    // }
+    // const _notifications = getNotifications().then(handleSetNotifications);
+
+    // const handleSetRideRequests = (data: any) => {
+    //   dispatch(setRideRequests(data))
+    //   return data;
+    // }
+    // const _rideRequests = getRideRequests().then(handleSetRideRequests)
+
+    Promise.all([_rides, _featureFlags, _owesReview,/**   _rideRequests, _notifications*/])
       .catch((e) => {
         crashlytics().log('Failed app initial data fetcher');
         Toaster.alert('Hubo un error');
@@ -66,6 +68,7 @@ const AppInitialDataFetcher: React.FC<AppInitialDataFetcherProps> = ({ children 
       }).finally(() => {
         setFetchingData(false);
       })
+    // setFetchingData(false);
 
   }, [dispatch])
 

@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Loading from 'components/Loading/Loading';
+import { Icon, IconProviders } from 'utils/icons';
 
 type ContentSize = 'sm' | 'md' | 'lg';
 
 interface FloatingButtonProps {
   icon: string;
+  iconProvider?: IconProviders;
   loading?: boolean;
   onPress?: () => void;
   size?: ContentSize;
@@ -20,6 +21,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
   icon,
   loading = false,
   onPress,
+  iconProvider = IconProviders.Material,
   size = 'md',
   backgroundColor = 'white',
   iconColor = '#4285F4'
@@ -37,7 +39,13 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
       size={contentSize.container}
       backgroundColor={backgroundColor}
       onPress={onPress}>
-      {loading ? <Loading color={iconColor} /> : <Icon size={contentSize.icon} name={icon} color={iconColor} />}
+      {loading ? <Loading color={iconColor} /> : <Icon
+        provider={iconProvider}
+        size={contentSize.icon}
+        name={icon}
+        color={iconColor}
+      />
+      }
     </FloatingButtonContainer>
   );
 };

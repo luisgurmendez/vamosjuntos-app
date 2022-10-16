@@ -35,7 +35,7 @@ const TabsNavigation: React.FC = () => {
           tabBarOptions={{ showLabel: true }}
         >
           <Tab.Screen name={Screens.RIDES_TAB} options={RidesTabOptions(numOfPendingRides)} component={RidesNavigation} />
-          <Tab.Screen name={Screens.NOTIFICATIONS_TAB} options={NotificationsTabOptions(numOfNotificaitons.length)} component={Notifications} />
+          <Tab.Screen name={Screens.NOTIFICATIONS_TAB} options={NotificationsTabOptions(numOfNotificaitons)} component={Notifications} />
           <Tab.Screen listeners={{
             tabPress: (e) => {
               // Prevent default action
