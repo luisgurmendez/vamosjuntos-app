@@ -69,7 +69,7 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
 
     const handleRefreshMessagesWrapped = async () => {
         if (onEndReachedCalledDuringMomentum.current) {
-            await handleRefreshMessages({});
+            await handleRefreshMessages();
             onEndReachedCalledDuringMomentum.current = true
         }
     }
