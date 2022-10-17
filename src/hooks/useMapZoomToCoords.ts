@@ -17,13 +17,17 @@ function useMapZoomToCoords(mapId: string, coords: LatLng[], padding: number = 1
 
 export default useMapZoomToCoords;
 
-
 export function useMapZoomToCoord(mapId: string, coord: LatLng) {
   const { map } = useMap(mapId);
 
   useEffect(() => {
     if (map) {
-      map.fitToElements(false);
+      map.animateToRegion({
+        latitude: coord.latitude,
+        longitude: coord.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
     }
   }, [map, coord])
 }

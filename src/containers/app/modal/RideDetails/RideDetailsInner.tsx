@@ -23,6 +23,7 @@ import RideFooter from './RideDetailsFooter'
 import crashlytics from '@react-native-firebase/crashlytics';
 import Badge from 'components/Badge/Badge';
 import FloatingButton from 'components/FloatingButton/FloatingButton';
+import ConversationCard from './ConversationCard';
 
 interface RideDetailsProps {
   ride: Ride;
@@ -124,9 +125,6 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
       <StatusBar hidden />
       <AbsoluteSafeArea mt={'xxlg'}>
         <PressableIcon onPress={handleClose} name="x" size={30} color={colors.black} />
-        <Badge badge={0}>
-          <PressableIcon onPress={handleNavigateToConversation} name="message-circle" size={30} color={colors.black} />
-        </Badge>
       </AbsoluteSafeArea>
 
       <ScrollContent contentContainerStyle={{ paddingBottom: 8 }}>
@@ -151,6 +149,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
               )}
             </Box>
           }
+          <ConversationCard rideId={ride.id} />
         </Content>
       </ScrollContent>
       <RideFooter ride={ride} onCancelRide={handleCancelRide} onCompleteRide={handleRideCompleted} />

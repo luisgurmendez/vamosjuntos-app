@@ -1,10 +1,10 @@
-import { createMessage, getMessages, GetMessagesResponse } from 'api/callables';
+import { createMessage, getMessages } from 'api/callables';
 import Loading from 'components/Loading/Loading';
 import Header from 'components/Page/Header';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import SelectAddressModal from 'components/SelectAddress/SelectAddressModal';
 import { Body } from 'components/Typography/Typography';
-import usePagination, { PaginationData } from 'hooks/usePagination';
+import { usePlatform } from 'hooks/usePlatform';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -21,10 +21,13 @@ interface RideConversationProps {
 const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { rideId } } }) => {
     const [sendAddressModalOpen, setSendAddressModalOpen] = useState(false);
     const [messageText, setMessageText] = useState('');
-    const { messages, handleRefreshMessages, fetching } = useGetMessages(rideId);
+    const { messages, appendMessage, handleRefreshMessages, fetching } = useGetMessages(rideId);
+    const [isSendingMessage, setSendingMessage] = useState(false);
     const onEndReachedCalledDuringMomentum = useRef(true)
     const scrollListRef = useRef<FlatList<any> | null>(null);
+    const { isIOS } = usePlatform();
     let prevMessage: Message | null = null;
+
 
     const handleOpenLocationModal = () => {
         setSendAddressModalOpen(true);
@@ -35,59 +38,56 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
     };
 
     const handleSendMessage = async () => {
-        console.log('SENGIN MESSAGE!', {
+        let m = messageText;
+        setMessageText('');
+        setSendingMessage(true)
+        const message = await createMessage({
             type: MessageType.MESSAGE,
-            message: messageText,
-            rideId: rideId,
-        })
-        await createMessage({
-            type: MessageType.MESSAGE,
-            message: messageText,
+            message: m,
             rideId: rideId,
         });
-        setMessageText('');
+        setSendingMessage(false)
+        appendMessage(message);
     };
 
     const handleSendLocationMessage = async (address: Address) => {
-        console.log('SENGIN MESSAGE!', {
-            type: MessageType.LOCATION,
-            location: address,
-            rideId: rideId,
-        })
-
-        await createMessage({
+        setSendAddressModalOpen(false);
+        const message = await createMessage({
             type: MessageType.LOCATION,
             location: address,
             rideId: rideId,
         });
-        setMessageText('');
-        setSendAddressModalOpen(false);
+        appendMessage(message);
     };
 
     const renderNoContentHelp = () => {
-        return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}><Body style={{ textAlign: 'center' }}>No hay mensajes en el chat</Body></View>
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                {fetching ? <Loading color={colors.main} /> : <Body style={{ textAlign: 'center' }}>No hay mensajes en el chat</Body>}
+            </View>)
     }
 
     const handleRefreshMessagesWrapped = async () => {
         if (onEndReachedCalledDuringMomentum.current) {
-            await handleRefreshMessages();
+            await handleRefreshMessages({});
             onEndReachedCalledDuringMomentum.current = true
         }
     }
 
     useEffect(() => {
-        handleRefreshMessagesWrapped().then(() => {
-            setTimeout(() => scrollListRef.current?.scrollToEnd({ animated: true }), 500);
-        });
-
+        handleRefreshMessagesWrapped();
     }, [])
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
+        <KeyboardAvoidingView style={{ flex: 1, }} behavior={isIOS ? "padding" : "height"} enabled>
             <Container>
                 <Header showBack title='Chat' />
-                <ScrollContainer contentContainerStyle={{ flexGrow: 1 }}
+                <ScrollContainer contentContainerStyle={{ flexGrow: 1, }}
                     ref={scrollListRef as any}
+                    onContentSizeChange={() => {
+                        console.log('content size changed')
+                        scrollListRef.current?.scrollToEnd({ animated: true })
+                    }}
                     onEndReached={handleRefreshMessagesWrapped}
                     onEndReachedThreshold={0.1}
                     onRefresh={handleRefreshMessagesWrapped}
@@ -103,7 +103,13 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
                     }}
                     style={{ flexGrow: 1, flex: 1, backgroundColor: '#f3f3f3' }}>
                 </ScrollContainer>
-                <Input message={messageText} onSend={handleSendMessage} onMessageChange={setMessageText} onOpenLocationModal={handleOpenLocationModal} />
+                <Input
+                    isSendingMessage={isSendingMessage}
+                    message={messageText}
+                    onSend={handleSendMessage}
+                    onMessageChange={setMessageText}
+                    onOpenLocationModal={handleOpenLocationModal}
+                />
             </Container>
             <SelectAddressModal
                 actionButtonText={'Mandar'}
@@ -141,10 +147,11 @@ interface InputProps {
     onSend: () => void;
     onMessageChange: (m: string) => void;
     message: string;
+    isSendingMessage: boolean;
 }
 
 
-const Input: React.FC<InputProps> = ({ onOpenLocationModal, onSend, onMessageChange, message }) => {
+const Input: React.FC<InputProps> = ({ onOpenLocationModal, onSend, onMessageChange, message, isSendingMessage }) => {
 
     return (
         <InputContainer>
@@ -152,7 +159,7 @@ const Input: React.FC<InputProps> = ({ onOpenLocationModal, onSend, onMessageCha
             <InputContent>
                 <RoundedTextInput
                     multiline
-                    numberOfLines={3}
+                    numberOfLines={2}
                     placeholderTextColor={colors.darkGray}
                     underlineColorAndroid='transparent'
                     value={message}
@@ -160,7 +167,7 @@ const Input: React.FC<InputProps> = ({ onOpenLocationModal, onSend, onMessageCha
                     placeholder='Mensaje...'
                 />
             </InputContent>
-            <StyledPressableIcon color={colors.main} name={'send'} size={24} onPress={onSend} />
+            {isSendingMessage ? <Loading style={{ margin: 4, marginHorizontal: 8 }} color={colors.main} size={24} /> : <StyledPressableIcon color={colors.main} name={'send'} size={24} onPress={onSend} />}
         </InputContainer>
     )
 }
@@ -206,7 +213,7 @@ function useGetMessages(rideId: string) {
     const [messages, setMessages] = useState<Message[]>([]);
     const [isFetching, setIsFetching] = useState(false);
 
-    const handleGetMessages = useCallback(async ({ skip, take }: PaginationData) => {
+    const handleGetMessages = useCallback(async (skip: number = 0, take: number = 100) => {
         if (!isFetching) {
             setIsFetching(true)
             const response = await getMessages(rideId, skip, take)
@@ -219,13 +226,11 @@ function useGetMessages(rideId: string) {
             return response;
         }
 
-    }, [isFetching, rideId, messages,]);
+    }, [isFetching, rideId, messages]);
 
-    const handleDeserializePaginationCounts = useCallback((respose: GetMessagesResponse) => {
-        return { totalCount: respose.messagesCount, fetchedCount: respose.messages.length };
-    }, []);
+    const appendMessage = (message: Message) => {
+        setMessages(m => [message, ...m]);
+    }
 
-    const handleGetMessagesWithPagination = usePagination(handleGetMessages, handleDeserializePaginationCounts);
-
-    return { messages, handleRefreshMessages: handleGetMessagesWithPagination, fetching: isFetching };
+    return { messages, handleRefreshMessages: handleGetMessages, fetching: isFetching, appendMessage };
 }

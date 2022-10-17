@@ -281,7 +281,7 @@ interface MessageCreate {
 export const createMessage = async (message: MessageCreate) => {
   const response = (await southamericaFunctions.httpsCallable('messagesCreate')(message));
   console.log(response)
-  return response.data.success;
+  return response.data.message;
 }
 
 export const deleteUserRequest = async (): Promise<boolean> => {

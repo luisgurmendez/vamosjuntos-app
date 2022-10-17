@@ -27,3 +27,8 @@ export const getDateTimeText = (date: moment.Moment | string): string => {
   const _date = toMoment(date);
   return `${getDateText(_date)} ${getTimeText(_date)}`
 }
+
+export const getTimeTextPlain = (date: moment.Moment | string): string => {
+  const _date = toMoment(date);
+  return _date.format('HH:mm')
+}

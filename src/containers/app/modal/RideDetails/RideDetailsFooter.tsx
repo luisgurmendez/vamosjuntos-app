@@ -39,7 +39,7 @@ const RideFooter: React.FC<RideFooterProps> = ({ ride, onCancelRide, onCompleteR
         {isPassedDate &&
           <FooterButton onPress={onCompleteRide} textStyle={footerButtonTextStyle}>
             Completado
-        </FooterButton>
+          </FooterButton>
         }
       </Footer>
     )
@@ -52,7 +52,7 @@ const RideFooter: React.FC<RideFooterProps> = ({ ride, onCancelRide, onCompleteR
   if (ride.status === RideStatus.CANCELED) {
     return (
       <AbsolutePositioned bottom={60} left={20} pointerEvents={"box-none"}>
-        <CancelledTextContainer style={{ transform: [{ rotate: '-15deg' }] }}>
+        <CancelledTextContainer pointerEvents={"box-none"} style={{ transform: [{ rotate: '-15deg' }] }}>
           <CancelledText>CANCELADO</CancelledText>
         </CancelledTextContainer>
       </AbsolutePositioned>

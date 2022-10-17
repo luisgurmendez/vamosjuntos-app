@@ -8,6 +8,8 @@ import { getUser } from 'state/user/selectors';
 import styled from 'styled-components/native';
 import { Message, MessageType } from 'types/models';
 import { colors } from 'utils/colors';
+import { getTimeTextPlain } from 'utils/date';
+import Screens from '../Screens';
 import LocationMessageBubbleContent from './LocationMessageBubbleContent';
 
 interface MessageBubbleProps {
@@ -39,7 +41,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, showSender }) =>
     };
 
     const handleGoToUserProfile = () => {
-        // navigation.push(Screens.USER_PROFILE, { user: message.from });
+        navigation.push(Screens.USER_PROFILE, { user: message.from });
     }
 
     return (
@@ -52,9 +54,9 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, showSender }) =>
                         </TouchableOpacity>
                     )}
                     {message.type === MessageType.MESSAGE && <WrappedBody style={bodyStyle}>{message.message}</WrappedBody>}
-                    {message.type === MessageType.LOCATION && <LocationMessageBubbleContent mapId={`location-message`} location={message.location} />}
+                    {message.type === MessageType.LOCATION && <LocationMessageBubbleContent senderName={message.from.name} mapId={`location-${message.id}`} location={message.location} />}
                     <MessageFooter>
-                        <DateSmallBody style={dateBodyStyle}>18:45</DateSmallBody>
+                        <DateSmallBody style={dateBodyStyle}>{getTimeTextPlain(message.createdAt)}</DateSmallBody>
                     </MessageFooter>
                 </Container>
             </MessageContent>
