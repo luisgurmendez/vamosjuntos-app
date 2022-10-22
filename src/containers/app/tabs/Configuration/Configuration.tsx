@@ -21,6 +21,7 @@ import { Easing } from 'react-native';
 import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';
 import DeleteUserOption from './options/DeleteUserOption';
+import ShowRateAppDialogOption from './options/ShowRateAppDialogOption';
 
 interface ConfigurationProps { }
 
@@ -44,6 +45,7 @@ const Configuration: React.FC<ConfigurationProps> = () => {
         <FAQOption />
         <PermissionsOption />
         <ComplaintOption />
+        <ShowRateAppDialogOption />
         <AppVersionOption onPress={handleVersionOptionPressed} />
         <Spacer />
         <DeleteUserOption />
