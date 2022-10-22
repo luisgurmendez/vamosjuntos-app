@@ -16,7 +16,6 @@ import PreferenceList from 'components/Profile/PreferenceList';
 import RidesAndLifts from 'components/Profile/RidesAndLifts';
 import UserSince from 'components/Profile/UserSince';
 import ProfileReviews from 'components/Profile/ProfileReviews';
-import { updateUser } from 'api/callables';
 import { setUser } from 'state/user/actions';
 import Toaster from 'components/Toaster/Toaster';
 import { Box } from 'components/Box/Box';
@@ -26,6 +25,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import useCameraPermission from 'hooks/useCameraPermission';
 import Icon from 'react-native-vector-icons/Feather';
 import RememberToAddPhoneNumberModal from './RememberToAddPhoneNumber';
+import useCallable from 'hooks/useCallable';
 
 interface ProfileProps { }
 
@@ -40,11 +40,11 @@ const Profile: React.FC<ProfileProps> = () => {
   const [isUpdatingUser, setIsUpdatingUser] = useState(false);
   const isCameraPermissionGranted = useCameraPermission();
   const dispatch = useDispatch();
+  const updateUser = useCallable<User>('/users/update');
 
   const [shouldRememberToAddPhone, setShouldRememberToAddPhone] = useState(user?.phone === undefined || user?.phone === '' || user?.phone === null);
 
   useEffect(() => {
-
     const unsubscribe = navigation.dangerouslyGetParent().addListener('tabPress', (e: any) => {
       dispatch(setTmpImage(undefined))
       if (editing) {
@@ -86,8 +86,8 @@ const Profile: React.FC<ProfileProps> = () => {
         editingUser.img = imgUrl
       }
       const updatedUser = await updateUser(editingUser);
-      dispatch(setUser(updatedUser));
-      setEditingUser(updatedUser);
+      dispatch(setUser(updatedUser.data));
+      setEditingUser(updatedUser.data);
     } catch (e) {
       console.error(e);
       crashlytics().recordError(e);

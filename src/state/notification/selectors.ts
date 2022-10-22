@@ -1,7 +1,7 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 import { AppState } from "state/types";
-import { NotificationStatus } from "types/models";
+import { NotificationStatus, NotificationType } from "types/models";
 
 
 const getAllNotifications = (state: AppState) => state.notification.notifications;
@@ -24,5 +24,12 @@ export const getNumberOfUnseenNotifications = createSelector(
   getUnseenNotifications,
   notis => {
     return notis.length
+  }
+);
+
+export const getNumberOfUnseenNotificationsFilteringNewMessageType = createSelector(
+  getUnseenNotifications,
+  notis => {
+    return notis.filter(n => n.type !== NotificationType.NEW_MESSAGE).length
   }
 );

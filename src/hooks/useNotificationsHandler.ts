@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import messaging from '@react-native-firebase/messaging';
-import { getNotifications, updateUserNotificationToken } from 'api/callables';
 import { getFirebaseUser } from 'api/auth';
 import { useDispatch } from 'react-redux';
 import { setNotifications } from 'state/notification/actions';
+import useCallable from './useCallable';
+import { Notification } from 'types/models';
 
 type RemoteMessage = any;
 
@@ -12,10 +13,12 @@ type RemoteMessage = any;
 function useNotificationsHandler() {
   useUpdateUsersNotificationToken();
   const dispatch = useDispatch();
+  const getNotifications = useCallable<Notification[]>('/notifications/get');
+
 
   const handleGetNotifications = async (message: RemoteMessage) => {
     const _notifications = await getNotifications();
-    dispatch(setNotifications(_notifications))
+    dispatch(setNotifications(_notifications.data))
   }
 
   useEffect(() => {
@@ -25,19 +28,19 @@ function useNotificationsHandler() {
 }
 
 function useUpdateUsersNotificationToken() {
-
+  const updateUserNotificationToken = useCallable('/users/update');
   useEffect(() => {
     const user = getFirebaseUser();
     if (user) {
       messaging().getToken().then(t => {
-        updateUserNotificationToken(t, user.uid);
+        updateUserNotificationToken({ id: user.uid, notificationToken: t });
       })
 
       return messaging().onTokenRefresh(t => {
-        updateUserNotificationToken(t, user.uid);
+        updateUserNotificationToken({ id: user.uid, notificationToken: t });
       })
     }
-  }, [])
+  }, [updateUserNotificationToken])
 }
 
 export default useNotificationsHandler;

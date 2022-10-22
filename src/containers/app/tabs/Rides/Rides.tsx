@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components/native';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import RideBubble from 'components/Ride/RideBubble';
-import { getSoonToLeaveRides } from 'api/callables';
 import useStorage from 'hooks/useStorage';
 import { Address, Ride } from 'types/models';
 import FloatingButton from 'components/FloatingButton/FloatingButton';
@@ -18,6 +17,7 @@ import { Animated } from 'react-native';
 import { Body, LargeBody } from 'components/Typography/Typography';
 import { setHasMadeASearchInStorage } from 'state/storage/thunkActions';
 import { useDispatch } from 'react-redux';
+import useCallable from 'hooks/useCallable';
 
 const Rides: React.FC = () => {
   const [isFetchingRides, setIsFetchingRides] = useState(false);
@@ -26,24 +26,22 @@ const Rides: React.FC = () => {
   const navigation = useNavigation<any>();
   const [savedAddresses] = useStorage<SavedAddress[]>('addresses');
   const dispatch = useDispatch();
-
+  const getSoonToLeaveRides = useCallable<Ride[]>('/rides/get-soon-to-leave');
 
   const handleFetchSoonToLeaveRides = useCallback(async () => {
     setIsFetchingRides(true);
-    let _rides: any = [];
+    let _rides: Ride[] = [];
     const addresses = savedAddresses.map(sa => sa.address);
     try {
-
-
       if (addresses.length > 0) {
-        _rides = await getSoonToLeaveRides({ addresses });
+        _rides = (await getSoonToLeaveRides({ addresses })).data;
       } else {
         const defaultAddresses = [
           { department: 'Montevideo', city: 'Montevideo' },
           { department: 'Maldonado', city: 'Punta del Este' }
         ] as Address[];
 
-        _rides = await getSoonToLeaveRides({ addresses: defaultAddresses });
+        _rides = ((await getSoonToLeaveRides({ addresses: defaultAddresses })).data);
       }
     } catch (e) {
       crashlytics().recordError(e)

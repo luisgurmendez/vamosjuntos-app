@@ -1,8 +1,6 @@
 import firebaseAuth from '@react-native-firebase/auth';
-import { southamericaFunctions } from "./functions";
 
 const auth = firebaseAuth()
-// auth.useEmulator('http://localhost:9099');
 
 export interface UserRegistrationValues {
   email: string;
@@ -20,11 +18,11 @@ export const logout = async () => {
   return auth.signOut();
 };
 
-export const register = async (values: UserRegistrationValues) => {
-  const user = (await southamericaFunctions.httpsCallable('userRegister')(values)).data;
-  await login(values.email, values.password);
-  return user;
-}
+// export const register = async (values: UserRegistrationValues) => {
+//   const user = (await southamericaFunctions.httpsCallable('userRegister')(values)).data;
+//   await login(values.email, values.password);
+//   return user;
+// }
 
 export const forgotPassword = async (email: string): Promise<void> => {
   return auth.sendPasswordResetEmail(email);

@@ -6,8 +6,8 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
 import { colors } from 'utils/colors';
 import { ScrollView } from 'react-native-gesture-handler';
-import { getFAQs } from 'api/callables';
 import HideIfLoading from 'components/Loading/HideIfLoading';
+import useCallable from 'hooks/useCallable';
 
 const FAQs: React.FC = () => {
 
@@ -39,8 +39,9 @@ export default FAQs;
 function useGetFAQs() {
   const [isFetching, setIsFetching] = useState(true);
   const [faqs, setFaqs] = useState<FAQItem[]>([]);
+  const getFAQs = useCallable<FAQItem[]>('/faqs');
   useEffect(() => {
-    getFAQs().then(setFaqs).finally(() => {
+    getFAQs().then(f => f.data).then(setFaqs).finally(() => {
       setIsFetching(false);
     });
   }, []);

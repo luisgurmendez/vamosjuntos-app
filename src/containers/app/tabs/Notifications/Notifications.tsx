@@ -1,4 +1,3 @@
-import { getNotifications, setSeenNotifications } from 'api/callables';
 import { Box } from 'components/Box/Box';
 import MarginedChildren from 'components/Box/MarginedChildren';
 import NotificationSection from 'components/Notifications/NotificationSection';
@@ -9,17 +8,19 @@ import styled from 'styled-components/native';
 import Page from 'components/Page/Page';
 import Notification from 'components/Notifications/Notification';
 import { getSeenNotifications, getUnseenNotifications } from 'state/notification/selectors';
-import { NotificationType, RideRequestStatus } from 'types/models';
+import { Notification as NotificationModel, NotificationType, RideRequestStatus } from 'types/models';
 import useStorage from 'hooks/useStorage';
 import { NO_ALERTS_IMG } from 'assets/images';
 import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
+import useCallable from 'hooks/useCallable';
 
 const Notifications: React.FC = () => {
   const [refreshing, setRefreshing] = React.useState(false);
   const dispatch = useDispatch();
+  const getNotifications = useCallable<NotificationModel[]>('/notifications/get');
+  const setSeenNotifications = useCallable<boolean>('/notifications/seen');
 
   const [showSeenNotifications] = useStorage<boolean>('showSeenNotifications');
-  console.log(showSeenNotifications);
   const unSeenNotifications = useSelector(getUnseenNotifications);
   let seenNotifications = useSelector(getSeenNotifications);
 
@@ -31,19 +32,21 @@ const Notifications: React.FC = () => {
 
   useEffect(() => {
     if (unSeenNotifications.length > 0) {
-      setSeenNotifications(unSeenNotifications.filter(n => {
+      const notifications = unSeenNotifications.filter(n => {
         // Filter the notifications that are waiting for user action in any
         return !(n.type === NotificationType.RIDE_REQUEST &&
           n.context && n.context.rideRequest &&
           n.context.rideRequest.status === RideRequestStatus.PENDING)
-      }).map(n => n.id));
+      }).map(n => n.id);
+
+      setSeenNotifications({ notifications });
     }
   }, [seenNotifications])
 
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
     const _notificiations = await getNotifications();
-    dispatch(setNotifications(_notificiations))
+    dispatch(setNotifications(_notificiations.data))
     setRefreshing(false);
   }, []);
 

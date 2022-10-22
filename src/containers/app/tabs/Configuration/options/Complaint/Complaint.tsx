@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { sendComplaint } from 'api/callables';
 import Button from 'components/Button/Button';
-import PlainButton from 'components/Button/PlainButton';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import PageWithBack from 'components/Page/PageWithBack';
 import TextInput from 'components/TextInput/TextInput';
 import Toaster from 'components/Toaster/Toaster';
 import { Body } from 'components/Typography/Typography';
+import useCallable from 'hooks/useCallable';
 import React from 'react'
 import { useState } from 'react';
 import { Linking } from 'react-native';
@@ -19,15 +18,16 @@ const Complaint: React.FC<ComplaintProps> = ({ }) => {
 
   const [complaint, setComplaint] = useState('');
   const [isSendingComplaint, setSendingComplaint] = useState(false);
+  const sendComplaint = useCallable('/complaint/create');
 
   const navigation: any = useNavigation();
 
   const handleSendComplaint = async () => {
     setSendingComplaint(true);
     try {
-      await sendComplaint(complaint);
+      await sendComplaint({ complaint });
       navigation.goBack();
-      Toaster.success('Queja guardada.')
+      Toaster.success({ title: 'Tu queja se guardo', message: 'Vamos a revisarla y te contactaremos si es necesario.' })
     } catch (e) {
       Toaster.alert('Error guardando tu queja.')
     }

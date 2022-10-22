@@ -4,7 +4,7 @@ import ConfigurationNavigation, { ConfigurationTabOptions } from './Configuratio
 import RidesNavigation, { RidesTabOptions } from './Rides';
 import ProfileNavigation, { ProfileTabOptions } from './Profile';
 import { useSelector } from 'react-redux';
-import { getNumberOfUnseenNotifications } from 'state/notification/selectors';
+import { getNumberOfUnseenNotifications, getNumberOfUnseenNotificationsFilteringNewMessageType } from 'state/notification/selectors';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Screens } from 'containers/Screens';
 import { AppState } from 'state/types';
@@ -22,7 +22,7 @@ const Tab = createBottomTabNavigator();
 const TabsNavigation: React.FC = () => {
 
   const user = useSelector(getUser);
-  const numOfNotificaitons = useSelector(getNumberOfUnseenNotifications);
+  const numOfNotificaitons = useSelector(getNumberOfUnseenNotificationsFilteringNewMessageType);
   const numOfPendingRides = useSelector(getPendingRides).length;
   const numOfProfileValuesNeedingFixes = user?.phone === undefined || user?.phone === '' || user?.phone === null ? 1 : 0;
   useRedirectInitialRoute();

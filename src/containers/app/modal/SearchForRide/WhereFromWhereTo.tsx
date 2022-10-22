@@ -14,8 +14,8 @@ import { Address } from 'types/models';
 import { Box } from 'components/Box/Box';
 import { LargeBody } from 'components/Typography/Typography';
 import Geolocation from '@react-native-community/geolocation';
-import { getAddressFromCoordsRemote } from 'api/geo';
 import SavedAddressList from 'components/Address/SavedAddressList';
+import { useGetAddressFromCoordsRemote } from 'api/geo';
 
 interface WhereFromWhereToProps {
   route: { params: { onSelectAddress?: (add: Address) => void } }
@@ -27,6 +27,7 @@ const WhereFromWhereTo: React.FC<WhereFromWhereToProps> = ({ route: { params: { 
   const isLocationPermissionGranted = useLocationPermission()
   const [savedAddresses] = useStorage<SavedAddress[]>('addresses');
   const navigation = useNavigation<any>();
+  const getAddressFromCoordsRemote = useGetAddressFromCoordsRemote();
 
   const handleOpenSelectAddressModal = () => {
     setSelectAddressOpen(true);
@@ -56,7 +57,7 @@ const WhereFromWhereTo: React.FC<WhereFromWhereToProps> = ({ route: { params: { 
       <Content>
         <Button icon="map" onPress={handleOpenSelectAddressModal} type="secondary">
           Elegir en el mapa
-          </Button>
+        </Button>
         {isLocationPermissionGranted && (
           <Box mt="lg">
             <Button icon="map-pin" loading={isFetchingCurrentPositionAddress} onPress={handleSelectLocationAsAddress} type="secondary">

@@ -1,5 +1,5 @@
-import { getPossibleRides } from 'api/callables';
 import { WithChildren } from 'components/types';
+import useCallable, { CallableResponse } from 'hooks/useCallable';
 import moment from 'moment';
 import React from 'react';
 import { Address, Ride } from 'types/models';
@@ -35,8 +35,9 @@ const SearchForRideContext = React.createContext<SearchForRideContextState>({
 
 export default SearchForRideContext;
 
+interface SearchForRideProviderUnwrappedProps extends WithChildren, WithSearchRidesCallable { }
 
-export class SearchForRideProvider extends React.Component<WithChildren, SearchForRideState> {
+class SearchForRideProviderUnwrapped extends React.Component<SearchForRideProviderUnwrappedProps, SearchForRideState> {
   state: SearchForRideState = {
     origin: null,
     destination: null,
@@ -51,8 +52,8 @@ export class SearchForRideProvider extends React.Component<WithChildren, SearchF
 
     this.setState({ isFetchingSearchedRides: true, hasAlreadyMadeASearch: true })
     if (origin !== null && destination !== null) {
-      const rides = await getPossibleRides({ date, whereFrom: origin, whereTo: destination });
-      this.setState({ searchedRides: rides });
+      const rides = await this.props.searchRides({ date, whereFrom: origin, whereTo: destination });
+      this.setState({ searchedRides: rides.data });
     }
     this.setState({ isFetchingSearchedRides: false })
   }
@@ -87,4 +88,31 @@ export class SearchForRideProvider extends React.Component<WithChildren, SearchF
       </SearchForRideContext.Provider>
     );
   }
+}
+
+export const SearchForRideProvider = withSearchRidesCallable(SearchForRideProviderUnwrapped)
+
+interface WithSearchRidesCallable {
+  searchRides: <B>(body?: B) => Promise<CallableResponse<Ride[]>>;
+}
+
+function withSearchRidesCallable<P extends WithSearchRidesCallable>(
+  WrappedComponent: React.ComponentType<P>,
+): React.ComponentType<WithChildren> {
+
+  const Component: React.FC<WithChildren> = ({ children }) => {
+    const searchRides = useCallable<Ride[]>('/rides/search');
+
+    const wrappedProps = {
+      children,
+      searchRides
+    } as unknown as P
+
+    return (
+      <WrappedComponent {...wrappedProps} />
+    )
+  };
+
+  Component.displayName = `withSearchRidesCallable(${WrappedComponent.displayName})`
+  return Component;
 }

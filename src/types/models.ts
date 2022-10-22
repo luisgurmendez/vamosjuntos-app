@@ -32,6 +32,7 @@ export interface User {
 }
 
 export interface Review {
+  id: string;
   fromUser: User;
   toUser: User;
   ride: Ride;
@@ -54,7 +55,8 @@ export enum NotificationType {
   RIDE_REQUEST_ACCEPTED = 'RIDE_REQUEST_ACCEPTED',
   RIDE_REQUEST_INSTANTLY_ACCEPTED = 'RIDE_REQUEST_INSTANTLY_ACCEPTED',
   RIDE_REQUEST_DECLINED = 'RIDE_REQUEST_DECLINED',
-  RIDE_DROPED_OUT = 'RIDE_DROPED_OUT'
+  RIDE_DROPED_OUT = 'RIDE_DROPED_OUT',
+  NEW_MESSAGE = 'NEW_MESSAGE'
 }
 
 export interface NotificationContext {

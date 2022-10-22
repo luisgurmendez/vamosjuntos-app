@@ -1,5 +1,5 @@
-import { getReviews } from 'api/callables';
 import HideIfLoading from 'components/Loading/HideIfLoading';
+import useCallable from 'hooks/useCallable';
 import React, { useEffect, useState } from 'react';
 import { Review } from 'types/models';
 
@@ -19,11 +19,12 @@ export default function withReviews<P extends WithReviews>(
 
     const [fetching, setFetching] = useState(false);
     const [reviews, setReviews] = useState<Review[]>([]);
+    const getReviews = useCallable<Review[]>('/reviews/get-user-reviews');
 
     useEffect(() => {
       setFetching(true)
-      getReviews(userId).then((rs) => {
-        setReviews(rs);
+      getReviews({ userId }).then((rs) => {
+        setReviews(rs.data);
       }).finally(() => {
         setFetching(false)
       })

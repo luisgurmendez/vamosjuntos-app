@@ -1,13 +1,14 @@
 import Button from 'components/Button/Button';
 import TextInput from 'components/TextInput/TextInput';
 import { Formik } from 'formik';
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components/native';
 import * as Yup from 'yup';
 import MarginedChildren from 'components/Box/MarginedChildren';
-import { register, UserRegistrationValues } from 'api/auth';
+import { login, UserRegistrationValues } from 'api/auth';
 import Toaster from 'components/Toaster/Toaster';
 import crashlytics from '@react-native-firebase/crashlytics';
+import UnAuthedHTTPClient from 'components/HTTPClientContext/UnAuthedHttpClient';
 
 const RegisterFormSchema = Yup.object().shape({
   email: Yup.string().required('Email requerido'),
@@ -32,9 +33,15 @@ const RegisterForm: React.FC = () => {
     passwordConfirmation: ''
   };
 
+  const register = useCallback((values: UserRegistrationValues) => {
+    const client = new UnAuthedHTTPClient();
+    return client.post('/users/register', values);
+  }, [])
+
   const handleRegister = async (values: UserRegistrationValues) => {
     try {
       await register({ ...values, phone: `+598${values.phone}` });
+      await login(values.email, values.password);
     } catch (e) {
       crashlytics().recordError(e);
       console.log(e);
@@ -80,7 +87,7 @@ const RegisterForm: React.FC = () => {
                 textContentType="password"
                 error={errors.password}
                 secureTextEntry
-                blurOnSubmit={false} 
+                blurOnSubmit={false}
                 onChangeText={handleChange('password')}
                 value={values.password}
               />
@@ -89,14 +96,14 @@ const RegisterForm: React.FC = () => {
                 placeholder="Confirmar contraseña"
                 error={errors.passwordConfirmation}
                 secureTextEntry
-                blurOnSubmit={false} 
+                blurOnSubmit={false}
                 onChangeText={handleChange('passwordConfirmation')}
                 value={values.passwordConfirmation}
               />
             </MarginedChildren>
 
             <Button disabled={isSubmitting || !isValid} loading={isSubmitting} onPress={handleSubmit}>
-              Regístrate
+              Registrate
             </Button>
           </FormContent>
         )}

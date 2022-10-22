@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { setUser } from "state/user/actions";
-import { getUser } from "api/callables";
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useDispatch } from 'react-redux';
 import Toaster from 'components/Toaster/Toaster';
 import { logout } from 'api/auth';
 import { logout as logoutAction } from "state/user/actions";
+import useCallable from './useCallable';
+import { User } from 'types/models';
 
 function useFetchUser() {
   const [fetchingUser, setFetchingUser] = useState(true);
   const dispatch = useDispatch();
   const fetchCounts = useRef(0);
+  const getUser = useCallable<User>('/users/me');
 
   useEffect(() => {
     /**
@@ -19,12 +21,11 @@ function useFetchUser() {
      * delay.
      */
     const tryFetchUser = () => {
-      console.log('Trying to fetch user');
       fetchCounts.current += 1;
 
       if (fetchCounts.current < 20) {
-        getUser().then(user => {
-          dispatch(setUser(user));
+        getUser().then(data => {
+          dispatch(setUser(data.data));
           setFetchingUser(false);
         }).catch((e) => {
           console.error(e);
@@ -45,7 +46,7 @@ function useFetchUser() {
       }
     };
     tryFetchUser();
-  }, []);
+  }, [getUser]);
 
   return fetchingUser;
 }

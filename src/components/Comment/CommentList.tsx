@@ -18,7 +18,7 @@ const CommentList: React.FC<CommentListProps> = ({ reviews }) => {
       noContentAsset={NO_REVIEWS_IMG}
     >
       <MarginedChildren mt="lg">
-        {reviews.map(review => <Comment review={review} />)}
+        {reviews.map(review => <Comment key={review.id} review={review} />)}
       </MarginedChildren>
 
     </Container>

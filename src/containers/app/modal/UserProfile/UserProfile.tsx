@@ -12,7 +12,7 @@ import { Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from 'utils/colors';
 import { UserRideDetails } from 'api/responses';
-import { getUserRideDetails } from 'api/callables';
+import useCallable from 'hooks/useCallable';
 
 interface UserProfileProps {
   route: { params: { user: User } }
@@ -22,6 +22,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ route: { params: { user } } }
 
   const [canGoToWpp, setCanGoToWpp] = useState(false);
   const [userRideDetails, setUserRideDetails] = useState<UserRideDetails | undefined>(undefined);
+  const getUserRideDetails = useCallable<UserRideDetails>('/users/ride-details/get');
   const wppUrl = `whatsapp://send?phone=${user?.phone}&text=${'Hola'}`
 
   useEffect(() => {
@@ -33,8 +34,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ route: { params: { user } } }
       console.log(e);
     })
 
-    getUserRideDetails(user.id).then(details => {
-      setUserRideDetails(details);
+    getUserRideDetails({ userId: user.id }).then(details => {
+      setUserRideDetails(details.data);
     })
   }, [wppUrl])
 

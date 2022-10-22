@@ -7,7 +7,6 @@ import { Body, Subtitle } from 'components/Typography/Typography';
 import { StatusBar } from 'react-native';
 import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
 import { Passenger, Ride, RideStatus } from 'types/models';
-import { cancelRide, dropOutRide, getRides, kickPassenger, setRideCompleted } from 'api/callables';
 import { useDispatch, useSelector } from 'react-redux';
 import WhereFromWhereToStaticMap from 'components/Map/WhereFromWhereToStaticMap';
 import { Box } from 'components/Box/Box';
@@ -21,9 +20,8 @@ import Screens from '../Screens';
 import PassengerCard from './PassengerCard';
 import RideFooter from './RideDetailsFooter'
 import crashlytics from '@react-native-firebase/crashlytics';
-import Badge from 'components/Badge/Badge';
-import FloatingButton from 'components/FloatingButton/FloatingButton';
 import ConversationCard from './ConversationCard';
+import useCallable from 'hooks/useCallable';
 
 interface RideDetailsProps {
   ride: Ride;
@@ -37,6 +35,11 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
   const [toBeKickedPassenger, setToBeKickedPassenger] = useState<Passenger | null>(null);
   const isConfirmKickPassengerModalOpen = toBeKickedPassenger !== null;
   useRedirectBackIfUserNotOnRide(ride);
+  const getRides = useCallable<Ride[]>('/rides/get-all');
+  const cancelRide = useCallable<Ride | undefined>('/rides/cancel');
+  const dropOutRide = useCallable<Passenger | undefined>('/passengers/drop-out');
+  const kickPassenger = useCallable<boolean>('/passengers/kicked')
+  const setRideCompleted = useCallable<boolean>('/rides/complete')
 
   const handleCloseKickPassengerModal = () => {
     setToBeKickedPassenger(null)
@@ -45,7 +48,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
   const handleConfirmKickPassenger = async (passengerId: string) => {
 
     try {
-      await kickPassenger(passengerId);
+      await kickPassenger({ passengerId });
       await updateRides()
       handleCloseKickPassengerModal();
       fetchRideDetails();
@@ -71,21 +74,17 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
     navigation.goBack();
   }
 
-  const handleNavigateToConversation = () => {
-    navigation.push(Screens.RIDE_CONVERSATION, { rideId: ride.id });
-  }
-
   const updateRides = async () => {
     const rides = await getRides()
-    dispatch(setRides(rides))
+    dispatch(setRides(rides?.data ?? []))
   }
 
   const handleConfirmCancelRide = async () => {
     try {
       if (isDriver) {
-        await cancelRide(ride.id);
+        await cancelRide({ rideId: ride.id });
       } else {
-        await dropOutRide(ride.id);
+        await dropOutRide({ rideId: ride.id });
       }
       await updateRides()
       handleCancelConfirmModal();
@@ -109,7 +108,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
   }
 
   const handleConfirmCompleteRide = async () => {
-    await setRideCompleted(ride.id);
+    await setRideCompleted({ rideId: ride.id });
     await updateRides();
     handleClose();
   }

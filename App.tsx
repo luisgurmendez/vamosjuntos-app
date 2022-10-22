@@ -24,6 +24,7 @@ import HideIfLoading from 'components/Loading/HideIfLoading';
 import remoteConfig from '@react-native-firebase/remote-config';
 import { WithChildren } from 'components/types';
 import SplashScreen from "react-native-splash-screen";
+import { HTTPClientProvider } from 'components/HTTPClientContext/HTTPClientProvider';
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -42,11 +43,13 @@ const App = () => {
       <Provider store={store}>
         <AppCrashHandler>
           <FCMPermissions>
-            <SetupApp>
-              <MapProvider>
-                <RootNavigation />
-              </MapProvider>
-            </SetupApp>
+            <HTTPClientProvider>
+              <SetupApp>
+                <MapProvider>
+                  <RootNavigation />
+                </MapProvider>
+              </SetupApp>
+            </HTTPClientProvider>
           </FCMPermissions>
         </AppCrashHandler>
       </Provider>

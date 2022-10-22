@@ -1,11 +1,11 @@
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useNavigation } from '@react-navigation/native';
-import { acceptRideRequest, declineRideRequest } from 'api/callables';
 import PlainButton from 'components/Button/PlainButton';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import Toaster from 'components/Toaster/Toaster';
 import { Body } from 'components/Typography/Typography';
 import Screens from 'containers/app/modal/Screens';
+import useCallable from 'hooks/useCallable';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateNotification } from 'state/notification/actions';
@@ -25,6 +25,9 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
   const { rideRequest } = notification.context;
   const dispatch = useDispatch();
 
+  const acceptRideRequest = useCallable<boolean>('/ride-requests/accept');
+  const declineRideRequest = useCallable<boolean>('/ride-requests/decline');
+
   let rideDate = '';
   if (rideRequest?.ride?.date) {
     rideDate = getDateTimeText(rideRequest?.ride?.date).toLowerCase();
@@ -34,7 +37,7 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
     if (rideRequest) {
       setLoading(true);
       try {
-        await declineRideRequest(rideRequest.id)
+        await declineRideRequest({ requestId: rideRequest.id })
         const _noti = { ...notification };
         _noti.context.rideRequest.status = RideRequestStatus.DECLINED;
         dispatch(updateNotification(_noti));
@@ -50,7 +53,7 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
     if (rideRequest) {
       setLoading(true);
       try {
-        await acceptRideRequest(rideRequest.id);
+        await acceptRideRequest({ requestId: rideRequest.id });
         const _noti = { ...notification, context: { ...notification.context, rideRequest: { ...notification.context.rideRequest } } };
         _noti.context.rideRequest.status = RideRequestStatus.ACCEPTED;
         dispatch(updateNotification(_noti));
@@ -64,11 +67,11 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
   }
 
   const handleGoToRideRequestDetails = () => {
-    navigation.push(Screens.WHERE_FROM_WHERE_TO_DETAILS, { 
+    navigation.push(Screens.WHERE_FROM_WHERE_TO_DETAILS, {
       title: notification.context.user!.name,
       whereFrom: notification.context.rideRequest.whereFrom,
       whereTo: notification.context.rideRequest.whereTo,
-      })
+    })
   }
 
   const isPending = notification.context.rideRequest && notification.context.rideRequest.status === RideRequestStatus.PENDING;

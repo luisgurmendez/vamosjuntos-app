@@ -13,7 +13,7 @@ import { Address } from 'types/models';
 import useZoomToLocation from 'hooks/useZoomToLocation';
 import Map from 'components/Map/Map';
 import { Region } from 'react-native-maps';
-import { getAddressFromCoordsRemote } from 'api/geo';
+import { useGetAddressFromCoordsRemote } from 'api/geo';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import FloatingButton from 'components/FloatingButton/FloatingButton';
 import { useMap } from 'components/Map/useMap';
@@ -39,6 +39,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   const [isFetchingAddress, setIsFetchingAddress] = useState(true);
   const [possibleAddress, setPossibleAddress] = useState<Address | undefined>(undefined);
   const { map } = useMap(mapId);
+  const getAddressFromCoordsRemote = useGetAddressFromCoordsRemote();
 
   const handleLocationChange = useCallback(async (region: Region) => {
     const address = await getAddressFromCoordsRemote(region.latitude, region.longitude);

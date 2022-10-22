@@ -1,4 +1,3 @@
-import { getRideRequests } from 'api/callables';
 import { NO_RIDE_REQUESTS_IMG } from 'assets/images';
 import Toaster from 'components/Toaster/Toaster';
 import React from 'react'
@@ -9,6 +8,8 @@ import styled from 'styled-components/native';
 import RideRequestsList from './RideRequestsList';
 import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 import { Body } from 'components/Typography/Typography';
+import useCallable from 'hooks/useCallable';
+import { RideRequest } from 'types/models';
 
 interface RideRequestsProps {
 }
@@ -17,6 +18,7 @@ const RideRequests: React.FC<RideRequestsProps> = ({ }) => {
 
   const [refreshing, setRefreshing] = React.useState(false);
   const rideRequests = useSelector(getPendingRideRequests);
+  const getRideRequests = useCallable<RideRequest[]>('/ride-requests/get-all')
 
   const dispatch = useDispatch();
 
@@ -24,7 +26,7 @@ const RideRequests: React.FC<RideRequestsProps> = ({ }) => {
     setRefreshing(true);
     try {
       const _rideRequests = await getRideRequests();
-      dispatch(setRideRequests(_rideRequests))
+      dispatch(setRideRequests(_rideRequests.data))
     } catch (e) {
       Toaster.alert('Hubo un error')
     }

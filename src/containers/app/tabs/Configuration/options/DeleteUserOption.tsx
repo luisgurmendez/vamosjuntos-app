@@ -4,14 +4,15 @@ import { colors } from 'utils/colors';
 import ConfigurationOption from './commons/ConfigurationOption';
 import { logout } from 'api/auth';
 import styled from 'styled-components/native';
-import { deleteUserRequest } from 'api/callables';
 import ModalWithYesNoActions from 'components/Modal/ModalWithYesNoActions';
+import useCallable from 'hooks/useCallable';
 
 interface DeleteUserOptionProps { }
 
 const DeleteUserOption: React.FC<DeleteUserOptionProps> = ({ }) => {
 
     const [confirmDeletionModalOpen, setConfirmDeletionModalOpen] = useState(false);
+    const deleteUserRequest = useCallable<boolean>('/users/delete-request/create');
 
     const handleConfirmDeletionModalClose = () => {
         setConfirmDeletionModalOpen(false);

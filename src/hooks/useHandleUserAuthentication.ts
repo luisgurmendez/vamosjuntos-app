@@ -4,6 +4,7 @@ import { setIsLoggedIn, logout as logoutAction } from "state/user/actions";
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { logout } from "api/auth";
+import useHTTPClientSetup from "components/HTTPClientContext/useHTTPClientSetup";
 
 /**
  * Solves initial app load auth and hides splashscree,
@@ -12,6 +13,7 @@ function useHandleUserAuthentication() {
 
   const [hasCheckAuth, setHasCheckAuth] = useState(false);
   const dispatch = useDispatch();
+  const { setJwt } = useHTTPClientSetup();
 
   async function onAuthStateChange(firebaseUser: FirebaseAuthTypes.User | null) {
     if (firebaseUser != null) {
@@ -31,11 +33,24 @@ function useHandleUserAuthentication() {
     setTimeout(() => setHasCheckAuth(true), 400);
   }
 
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChange);
-    return subscriber;
+  async function onIdTokenChanged(firebaseUser: FirebaseAuthTypes.User | null) {
+    if (firebaseUser !== null) {
+      const jwt = await firebaseUser.getIdToken();
+      setJwt(jwt);
+    } else {
+      setJwt(null);
+    }
+  }
 
-  }, [setHasCheckAuth, hasCheckAuth, dispatch]);
+  useEffect(() => {
+    const unsubscribeFromAuthStateChange = auth().onAuthStateChanged(onAuthStateChange);
+    const unsubscribeFromIdTokenChange = auth().onIdTokenChanged(onIdTokenChanged);
+    return () => {
+      unsubscribeFromAuthStateChange();
+      unsubscribeFromIdTokenChange();
+    }
+
+  }, [setHasCheckAuth, hasCheckAuth, dispatch, setJwt]);
 
   return hasCheckAuth;
 }

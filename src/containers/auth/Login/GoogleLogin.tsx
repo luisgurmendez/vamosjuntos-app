@@ -11,7 +11,6 @@ GoogleSignin.configure({
 const GoogleLogin: React.FC<{ style?: any }> = ({ style }) => {
   const handleLogin = async () => {
     try {
-
       const { idToken } = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
@@ -19,7 +18,6 @@ const GoogleLogin: React.FC<{ style?: any }> = ({ style }) => {
       console.error(e);
       crashlytics().recordError(e);
     }
-
   }
 
   return (

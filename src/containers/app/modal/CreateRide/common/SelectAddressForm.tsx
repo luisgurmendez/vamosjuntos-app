@@ -5,12 +5,11 @@ import { Address } from 'types/models';
 import DisplayAddress from 'components/Address/Address';
 import { Box } from 'components/Box/Box';
 import { Subtitle } from 'components/Typography/Typography';
-import Storage from 'storage/Storage';
 import styled from 'styled-components/native';
 import { SavedAddress } from 'types/storage';
 import useStorage from 'hooks/useStorage';
 import Geolocation from '@react-native-community/geolocation';
-import { getAddressFromCoordsRemote } from 'api/geo';
+import { useGetAddressFromCoordsRemote } from 'api/geo';
 import SelectSavedAddressModal from './SelectSavedAddressModal';
 import useLocationPermission from 'hooks/useLocationPermission';
 
@@ -26,6 +25,7 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
   const isLocationPermissionGranted = useLocationPermission()
   const [isFetchingCurrentPositionAddress, setIsFetchingCurrentPositionAddress] = useState(false);
   const [savedAddresses] = useStorage<SavedAddress[]>('addresses');
+  const getAddressFromCoordsRemote = useGetAddressFromCoordsRemote();
 
   const handleSelectLocationAsAddress = () => {
     setIsFetchingCurrentPositionAddress(true)
@@ -58,7 +58,7 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
         <Box mt="lg">
           <Button icon="map-pin" loading={isFetchingCurrentPositionAddress} onPress={handleSelectLocationAsAddress} type="secondary">
             Elegir mi ubicación
-      </Button>
+          </Button>
         </Box>
       )}
       {savedAddresses.length > 0 && (

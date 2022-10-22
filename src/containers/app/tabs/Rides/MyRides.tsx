@@ -1,9 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCompletedRides, getPendingRides, getCanceledRides, getPendingRideRequests } from 'state/ride/selectors';
+import { getCompletedRides, getPendingRides, getCanceledRides } from 'state/ride/selectors';
 import styled from 'styled-components/native';
 import RidesList from './RidesList';
-import { getRides } from 'api/callables';
 import { setRides } from 'state/ride/actions';
 import Toaster from 'components/Toaster/Toaster';
 import useStorage from 'hooks/useStorage';
@@ -12,6 +11,8 @@ import RememberToCompleteRidesModal from './RememberToCompleteRidesModal';
 import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 import { Body } from 'components/Typography/Typography';
 import { NO_RIDES_IMG } from 'assets/images';
+import useCallable from 'hooks/useCallable';
+import { Ride } from 'types/models';
 
 const MyRides: React.FC = () => {
 
@@ -26,7 +27,7 @@ const MyRides: React.FC = () => {
   const canceledRides = useSelector(getCanceledRides);
   const isThereAnyPendingRidesWithDueDate = pendingRides.some(r => moment().isAfter(moment(r.date)))
   const [showRememberMarkRidesAsCompleteModal, setShowRememberModal] = React.useState(isThereAnyPendingRidesWithDueDate);
-
+  const getRides = useCallable<Ride[]>('/rides/get-all');
 
   const _completedRides = showCompletedRides ? completedRides : [];
   const _canceledRides = showCanceledRides ? canceledRides : [];
@@ -37,7 +38,7 @@ const MyRides: React.FC = () => {
     setRefreshing(true);
     try {
       const _rides = await getRides();
-      dispatch(setRides(_rides))
+      dispatch(setRides(_rides?.data ?? []))
     } catch (e) {
       Toaster.alert('Hubo un error')
     }

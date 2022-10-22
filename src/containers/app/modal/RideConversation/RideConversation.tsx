@@ -1,9 +1,10 @@
-import { createMessage, getMessages } from 'api/callables';
+import { GetMessagesResponse } from 'api/callables';
 import Loading from 'components/Loading/Loading';
 import Header from 'components/Page/Header';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import SelectAddressModal from 'components/SelectAddress/SelectAddressModal';
 import { Body } from 'components/Typography/Typography';
+import useCallable from 'hooks/useCallable';
 import { usePlatform } from 'hooks/usePlatform';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, View } from 'react-native';
@@ -25,6 +26,7 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
     const [isSendingMessage, setSendingMessage] = useState(false);
     const onEndReachedCalledDuringMomentum = useRef(true)
     const scrollListRef = useRef<FlatList<any> | null>(null);
+    const createMessage = useCallable<Message>('/messages/create');
     const { isIOS } = usePlatform();
     let prevMessage: Message | null = null;
 
@@ -47,7 +49,7 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
             rideId: rideId,
         });
         setSendingMessage(false)
-        appendMessage(message);
+        appendMessage(message.data);
     };
 
     const handleSendLocationMessage = async (address: Address) => {
@@ -57,7 +59,7 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
             location: address,
             rideId: rideId,
         });
-        appendMessage(message);
+        appendMessage(message.data);
     };
 
     const renderNoContentHelp = () => {
@@ -85,10 +87,9 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
                 <ScrollContainer contentContainerStyle={{ flexGrow: 1, }}
                     ref={scrollListRef as any}
                     onContentSizeChange={() => {
-                        console.log('content size changed')
                         scrollListRef.current?.scrollToEnd({ animated: true })
                     }}
-                    onEndReached={handleRefreshMessagesWrapped}
+                    // onEndReached={handleRefreshMessagesWrapped}
                     onEndReachedThreshold={0.1}
                     onRefresh={handleRefreshMessagesWrapped}
                     refreshing={fetching}
@@ -133,13 +134,6 @@ const ScrollContainer = styled(FlatList)`
     padding: 0px 8px;
     width: 100%;
     flex: 1;
-`
-
-const LoadingContainer = styled.View`
-    width: 100%;
-    padding: 16px;
-    justify-content:center;
-    flex-direction:row;
 `
 
 interface InputProps {
@@ -212,13 +206,15 @@ const RoundedTextInput = styled.TextInput`
 function useGetMessages(rideId: string) {
     const [messages, setMessages] = useState<Message[]>([]);
     const [isFetching, setIsFetching] = useState(false);
+    const getMessages = useCallable<GetMessagesResponse>('/messages/get')
 
     const handleGetMessages = useCallback(async (skip: number = 0, take: number = 100) => {
         if (!isFetching) {
             setIsFetching(true)
-            const response = await getMessages(rideId, skip, take)
-            if (response?.messages !== undefined) {
-                const _messages = [...messages, ...response?.messages];
+            const response = await getMessages({ rideId, skip, take })
+            const data = response.data;
+            if (data.messages !== undefined) {
+                const _messages = [...messages, ...data.messages];
                 _messages.filter((v, i, a) => a.findIndex(v2 => (v2.id === v.id)) === i);
                 setMessages(_messages);
             }

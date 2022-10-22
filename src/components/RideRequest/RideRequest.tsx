@@ -7,10 +7,10 @@ import RideDetailsSummary from 'components/Ride/RideDetailsSummary';
 import { Stylable } from 'components/types';
 import PlainButton from 'components/Button/PlainButton';
 import { useDispatch } from 'react-redux';
-import { cancelRideRequest } from 'api/callables';
 import { removeRideRequest } from 'state/ride/actions';
 import Toaster from 'components/Toaster/Toaster';
 import crashlytics from '@react-native-firebase/crashlytics'
+import useCallable from 'hooks/useCallable';
 
 interface RideRequestProps extends Stylable {
   rideRequest: RideRequestModel;
@@ -20,12 +20,13 @@ const RideRequest: React.FC<RideRequestProps> = ({ style, rideRequest }) => {
 
   const [isCanceling, setIsCanceling] = useState(false);
   const dispatch = useDispatch();
+  const cancelRideRequest = useCallable<boolean>('/ride-requests/cancel')
 
   const statusLabel = rideRequest.status === RideRequestStatus.PENDING ? 'Esperando respuesta' : rideRequest.status === RideRequestStatus.ACCEPTED ? 'Aceptado' : 'Rechazado';
 
   const handleCancelRideRequest = () => {
     setIsCanceling(true)
-    cancelRideRequest(rideRequest.id).then(() => {
+    cancelRideRequest({ rideRequestId: rideRequest.id }).then(() => {
       dispatch(removeRideRequest(rideRequest.id))
     }).catch((e) => {
       crashlytics().recordError(e)
@@ -49,7 +50,7 @@ const RideRequest: React.FC<RideRequestProps> = ({ style, rideRequest }) => {
             onPress={handleCancelRideRequest}
           >
             Cancelar
-        </PlainButton>
+          </PlainButton>
         </CancelContainer>
       }
     </Container>

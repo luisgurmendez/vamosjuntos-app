@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { createRideRequest } from 'api/callables';
 import Button from 'components/Button/Button';
 import PageWithBack from 'components/Page/PageWithBack';
 import Toaster from 'components/Toaster/Toaster';
@@ -8,10 +7,11 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { addRideRequest } from 'state/ride/actions';
 import styled from 'styled-components/native';
-import { Address, Ride } from 'types/models';
+import { Address, Ride, RideRequest } from 'types/models';
 import crashlytics from '@react-native-firebase/crashlytics';
 import useInterstatialAd from 'hooks/useInterstitialAd';
 import { getAddressWithoutId } from 'components/Address/utils';
+import useCallable from 'hooks/useCallable';
 
 interface JoinRideProps {
   route: {
@@ -30,7 +30,7 @@ const JoinRide: React.FC<JoinRideProps> = ({ route: { params: { ride, whereFromW
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
   const handleShowAd = useInterstatialAd();
-
+  const createRideRequest = useCallable<RideRequest>('/ride-requests/create')
 
   const whereFrom = getAddressWithoutId(whereFromWhereTo ? whereFromWhereTo[0] : ride.whereFrom);
   const whereTo = getAddressWithoutId(whereFromWhereTo ? whereFromWhereTo[1] : ride.whereTo);
@@ -38,8 +38,8 @@ const JoinRide: React.FC<JoinRideProps> = ({ route: { params: { ride, whereFromW
   const handleCreateRideRequest = async () => {
     try {
       setIsCreatingRideRequest(true);
-      const rideRequest = await createRideRequest(ride.id, whereFrom, whereTo!);
-      rideRequest && dispatch(addRideRequest(rideRequest));
+      const rideRequest = await createRideRequest({ rideId: ride.id, whereFrom, whereTo: whereTo! });
+      rideRequest && dispatch(addRideRequest(rideRequest.data));
       navigation.goBack();
       onJoinedToRide && onJoinedToRide();
     } catch (e) {

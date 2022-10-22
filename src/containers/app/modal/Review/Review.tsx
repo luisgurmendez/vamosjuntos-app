@@ -5,8 +5,8 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { useNavigation } from '@react-navigation/native';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import { Passenger, User } from 'types/models';
-import { createReview } from 'api/callables';
 import Toaster from 'components/Toaster/Toaster';
+import useCallable from 'hooks/useCallable';
 
 interface ReviewProps {
   route: { params: { passenger: Passenger; } }
@@ -15,10 +15,16 @@ interface ReviewProps {
 const Review: React.FC<ReviewProps> = ({ route: { params: { passenger } } }) => {
 
   const navigation: any = useNavigation();
+  const createReview = useCallable<boolean>('/reviews/create');
   const toUser = passenger.ride.driver;
 
   const handleSubmitReview = (values: ReviewFormValues) => {
-    createReview({ ...values, rideId: passenger.ride.id, passengerId: passenger.id, toUserId: passenger.ride.driver.id }); // Silent request
+    createReview({
+      ...values,
+      rideId: passenger.ride.id,
+      passengerId: passenger.id,
+      toUserId: passenger.ride.driver.id
+    }); // Silent request
     Toaster.success('¡Gracias!')
     navigation.goBack(null);
   }
