@@ -23,7 +23,6 @@ interface JoinRideProps {
   }
 }
 
-
 const JoinRide: React.FC<JoinRideProps> = ({ route: { params: { ride, whereFromWhereTo, onJoinedToRide } } }) => {
 
   const [isCreatingRideRequest, setIsCreatingRideRequest] = useState(false);

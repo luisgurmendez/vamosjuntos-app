@@ -31,17 +31,17 @@ const Container = styled.View`
 const Rides: React.FC = () => {
 
   const navigation = useNavigation<any>();
-  const { searchedRides, isFetchingSearchedRides, hasAlreadyMadeASearch } = useSearchForRide();
+  const { searchedRides, isFetchingSearchedRides, hasAlreadyMadeASearch, origin, destination } = useSearchForRide();
 
   const handleJoinRide = (ride: Ride) => {
     navigation.dangerouslyGetParent().push(Screens.JOIN_RIDE, {
       ride,
+      whereFromWhereTo: [origin, destination],
       onJoinedToRide: () => navigation.goBack()
     });
   }
 
   const showConSearchedRidesImg = searchedRides.length === 0 && hasAlreadyMadeASearch
-  console.log(searchedRides)
   return (
     <HideIfLoading loading={isFetchingSearchedRides} label="Te estamos buscando viajes">
       <RidesContainer
