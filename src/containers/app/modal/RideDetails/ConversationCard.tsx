@@ -4,19 +4,20 @@ import { Screens } from 'containers/Screens';
 import React from 'react'
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
+import { Ride } from 'types/models';
 import { colors } from 'utils/colors';
 import { Icon, IconProviders } from 'utils/icons';
 
 interface ConversationCardProps {
-  rideId: string;
+  ride: Ride;
 }
 
-const ConversationCard: React.FC<ConversationCardProps> = ({ rideId }) => {
+const ConversationCard: React.FC<ConversationCardProps> = ({ ride }) => {
 
   const navigation = useNavigation<any>();
 
   const handleNavigateToConversation = () => {
-    navigation.push(Screens.RIDE_CONVERSATION, { rideId });
+    navigation.push(Screens.RIDE_CONVERSATION, { ride });
   }
 
 

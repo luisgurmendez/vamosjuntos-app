@@ -148,7 +148,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
               )}
             </Box>
           }
-          <ConversationCard rideId={ride.id} />
+          <ConversationCard ride={ride} />
         </Content>
       </ScrollContent>
       <RideFooter ride={ride} onCancelRide={handleCancelRide} onCompleteRide={handleRideCompleted} />

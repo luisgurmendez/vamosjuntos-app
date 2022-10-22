@@ -11,7 +11,7 @@ import { KeyboardAvoidingView, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
-import { Address, Message, MessageType } from 'types/models';
+import { Address, Message, MessageType, RideStatus } from 'types/models';
 import { colors } from 'utils/colors';
 import MessageBubble from './Message';
 
@@ -19,7 +19,8 @@ interface RideConversationProps {
     route: any;
 }
 
-const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { rideId } } }) => {
+const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { ride } } }) => {
+    const rideId = ride.id;
     const [sendAddressModalOpen, setSendAddressModalOpen] = useState(false);
     const [messageText, setMessageText] = useState('');
     const { messages, appendMessage, handleRefreshMessages, fetching } = useGetMessages(rideId);
@@ -80,11 +81,13 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
         handleRefreshMessagesWrapped();
     }, [])
 
+    const showInput = ride.status !== RideStatus.PENDING;
+
     return (
         <KeyboardAvoidingView style={{ flex: 1, }} behavior={isIOS ? "padding" : "height"} enabled>
             <Container>
                 <Header showBack title='Chat' />
-                <ScrollContainer contentContainerStyle={{ flexGrow: 1, }}
+                <ScrollContainer contentContainerStyle={{ flexGrow: 1, paddingTop: 8 }}
                     ref={scrollListRef as any}
                     onContentSizeChange={() => {
                         scrollListRef.current?.scrollToEnd({ animated: true })
@@ -104,13 +107,13 @@ const RideConversation: React.FC<RideConversationProps> = ({ route: { params: { 
                     }}
                     style={{ flexGrow: 1, flex: 1, backgroundColor: '#f3f3f3' }}>
                 </ScrollContainer>
-                <Input
+                {!showInput ? <Input
                     isSendingMessage={isSendingMessage}
                     message={messageText}
                     onSend={handleSendMessage}
                     onMessageChange={setMessageText}
                     onOpenLocationModal={handleOpenLocationModal}
-                />
+                /> : <Body style={{ fontStyle: 'italic', color: colors.gray, textAlign: 'center', paddingTop: 8 }}>Ya no podes mandar mensajes a este chat</Body>}
             </Container>
             <SelectAddressModal
                 actionButtonText={'Mandar'}
@@ -145,7 +148,13 @@ interface InputProps {
 }
 
 
-const Input: React.FC<InputProps> = ({ onOpenLocationModal, onSend, onMessageChange, message, isSendingMessage }) => {
+const Input: React.FC<InputProps> = ({
+    onOpenLocationModal,
+    onSend,
+    onMessageChange,
+    message,
+    isSendingMessage,
+}) => {
 
     return (
         <InputContainer>
