@@ -1299,6 +1299,11 @@
   resolved "https://registry.npmjs.org/@react-native-firebase/admob/-/admob-10.8.1.tgz"
   integrity sha512-CL6MFBdcThgjqVnwyNRigs7c/UjJrdNgMHoMPP3mOPje8BOGJM0HAu5t/k3BjPRWJE/OigzxziNim2oJGF3FrQ==
 
+"@react-native-firebase/analytics@^10.3.1":
+  version "10.8.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-10.8.1.tgz#293c3e483fbb77a181803e9b5a766c87e0d466d8"
+  integrity sha512-6fw3TwV7PbdelLND0yBqrnneHxGzqaXtCMLUYaklO55iCBi8dzX2eT3ouyI3IvtS/qYrF7ruEpvMeM4gUVcdqw==
+
 "@react-native-firebase/app@^10.3.0":
   version "10.8.1"
   resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-10.8.1.tgz"

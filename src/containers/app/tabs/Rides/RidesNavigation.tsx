@@ -5,6 +5,7 @@ import RideRequests from './RideRequests';
 import Rides from './Rides';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import TabBar from './TabBar';
+import analytics from 'utils/analytics';
 
 export enum RideTabs {
   Rides = 'rides',
@@ -28,12 +29,20 @@ const RidesNavigation: React.FC = () => {
     { key: RideTabs.RideRequests, title: 'Solicitudes', index: 2 },
   ];
 
+  const handlePageChange = (pageIndex: number) => {
+    setSelectedTabIndex(pageIndex);
+    analytics.logScreenView({
+      screen_class: `Rides-TabView-${routes[pageIndex]}`,
+      screen_name: `Rides-TabView-${routes[pageIndex]}`
+    });
+  }
+
   return (
     <Container>
       <TabView
         navigationState={{ index: selectedTabIndex, routes }}
         renderScene={RenderedTabs}
-        onIndexChange={setSelectedTabIndex}
+        onIndexChange={handlePageChange}
         renderTabBar={TabBar}
       />
 

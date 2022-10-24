@@ -47,7 +47,7 @@ const CodeConfirmation: React.FC<CodeConfirmationProps> = ({ phone, onConfirmed 
   return (
     <Container>
       <TextInput value={code} onChangeText={text => setCode(text)} />
-      <Button loading={confirm === undefined} onPress={confirmCode}>Confirmar código</Button>
+      <Button analyticsKey={'auth_code_confirmation'} loading={confirm === undefined} onPress={confirmCode}>Confirmar código</Button>
       <PlainButton>Mandar devuelta</PlainButton>
     </Container>
   )

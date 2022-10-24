@@ -22,6 +22,7 @@ import useFeatureFlag from 'hooks/useFeatureFlag';
 import { FeatureFlags } from 'types/models';
 import DeleteUserOption from './options/DeleteUserOption';
 import ShowRateAppDialogOption from './options/ShowRateAppDialogOption';
+import analytics from 'utils/analytics';
 
 interface ConfigurationProps { }
 
@@ -30,6 +31,7 @@ const Configuration: React.FC<ConfigurationProps> = () => {
   const showWelcome = useFeatureFlag(FeatureFlags.SHOW_WELCOME);
 
   const handleVersionOptionPressed = () => {
+    analytics.logEvent('autitos')
     AnimatedCarManager.add();
   }
 

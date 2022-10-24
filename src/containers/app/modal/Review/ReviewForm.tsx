@@ -52,7 +52,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ toUser, onSubmit }) => {
               />
             </CommentContainer>
           </FieldsContainer>
-          <Button disabled={!isValid} loading={isSubmitting} onPress={handleSubmit} >Commentar</Button>
+          <Button analyticsKey={'review_user'} disabled={!isValid} loading={isSubmitting} onPress={handleSubmit} >Commentar</Button>
         </Content>
       )}
     </Formik>

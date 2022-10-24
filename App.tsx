@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useCallback, useEffect } from 'react';
+import { NavigationContainer, NavigationState } from '@react-navigation/native';
 import { MapProvider } from 'components/Map/MapProvider';
 import useInitStorage from 'hooks/useInitStorage';
 import moment from 'moment';
@@ -25,6 +25,7 @@ import remoteConfig from '@react-native-firebase/remote-config';
 import { WithChildren } from 'components/types';
 import SplashScreen from "react-native-splash-screen";
 import { HTTPClientProvider } from 'components/HTTPClientContext/HTTPClientProvider';
+import analytics from 'utils/analytics';
 
 enableScreens();
 moment.updateLocale('es', localization);
@@ -38,8 +39,15 @@ const App = () => {
     crashlytics().log(`Using app version: ${appVersion}`);
   }, [appVersion])
 
+  const handleNavigationStateChange = useCallback(async (state: NavigationState | undefined) => {
+    await analytics.logScreenView({
+      screen_name: state?.routeNames[state?.index],
+      screen_class: state?.routeNames[state?.index],
+    });
+  }, [])
+
   return (
-    <NavigationContainer>
+    <NavigationContainer onStateChange={handleNavigationStateChange}>
       <Provider store={store}>
         <AppCrashHandler>
           <FCMPermissions>

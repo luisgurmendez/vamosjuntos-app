@@ -153,6 +153,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
       </ScrollContent>
       <RideFooter ride={ride} onCancelRide={handleCancelRide} onCompleteRide={handleRideCompleted} />
       <ModalWithYesNoActions
+        analyticsKey='complete_ride_confirmation'
         open={isConfirmCompleteRideModalOpen}
         onClose={handleConfirmCompleteRideModal}
         onConfirm={handleConfirmCompleteRide}
@@ -160,6 +161,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
       />
 
       <ModalWithYesNoActions
+        analyticsKey='cancel_ride_confirmation'
         open={isConfirmCancelModalOpen}
         onClose={handleCancelConfirmModal}
         onConfirm={handleConfirmCancelRide}
@@ -167,6 +169,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
       />
 
       <ModalWithYesNoActions
+        analyticsKey='kick_passenger_confirmation'
         open={isConfirmKickPassengerModalOpen}
         onClose={handleCloseKickPassengerModal}
         onConfirm={() => handleConfirmKickPassenger(toBeKickedPassenger?.id || '')}

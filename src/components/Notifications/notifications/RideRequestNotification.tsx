@@ -81,7 +81,7 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
   return (
     <BaseNotification notification={notification} style={style} label={`quiere irse contigo en el viaje de ${rideDate}`}>
       <Container>
-        {isPending && <PlainButton onPress={handleGoToRideRequestDetails}>Ver trayecto</PlainButton>}
+        {isPending && <PlainButton analyticsKey={'see_user_trajectory'} onPress={handleGoToRideRequestDetails}>Ver trayecto</PlainButton>}
         <ActionContainer>
           {isPending &&
             <HideIfLoading size={32} loading={loading}>

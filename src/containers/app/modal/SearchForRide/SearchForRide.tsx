@@ -11,6 +11,7 @@ import Screens from '../Screens';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 import { NO_SEARCHED_RIDES_IMG } from 'assets/images';
+import analytics from 'utils/analytics';
 
 const SearchForRide: React.FC = () => {
 
@@ -37,7 +38,10 @@ const Rides: React.FC = () => {
     navigation.dangerouslyGetParent().push(Screens.JOIN_RIDE, {
       ride,
       whereFromWhereTo: [origin, destination],
-      onJoinedToRide: () => navigation.goBack()
+      onJoinedToRide: () => {
+        navigation.goBack();
+        analytics.logEvent('join_ride_through_search');
+      }
     });
   }
 

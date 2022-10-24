@@ -51,19 +51,19 @@ const SelectAddressForm: React.FC<SelectAddressFormProps> = ({ selectedAddress, 
 
   return (
     <Container>
-      <Button icon="map" onPress={() => setSelectAddressOpen(true)} type="secondary">
+      <Button analyticsKey={'select_address_through_map'} icon="map" onPress={() => setSelectAddressOpen(true)} type="secondary">
         Elegir en el mapa
       </Button>
       {isLocationPermissionGranted && (
         <Box mt="lg">
-          <Button icon="map-pin" loading={isFetchingCurrentPositionAddress} onPress={handleSelectLocationAsAddress} type="secondary">
+          <Button analyticsKey={'select_address_through_location'} icon="map-pin" loading={isFetchingCurrentPositionAddress} onPress={handleSelectLocationAsAddress} type="secondary">
             Elegir mi ubicación
           </Button>
         </Box>
       )}
       {savedAddresses.length > 0 && (
         <Box mt="lg" mb="lg">
-          <Button icon="crosshair" onPress={() => setSelectedSavedAddressOpen(true)} type="secondary">
+          <Button analyticsKey={'select_address_through_saved_addresses'} icon="crosshair" onPress={() => setSelectedSavedAddressOpen(true)} type="secondary">
             Elegir de mis direcciones
           </Button>
         </Box>

@@ -102,7 +102,7 @@ const RegisterForm: React.FC = () => {
               />
             </MarginedChildren>
 
-            <Button disabled={isSubmitting || !isValid} loading={isSubmitting} onPress={handleSubmit}>
+            <Button analyticsKey={'register'} disabled={isSubmitting || !isValid} loading={isSubmitting} onPress={handleSubmit}>
               Registrate
             </Button>
           </FormContent>

@@ -8,6 +8,7 @@ import { Text } from 'components/Typography/Typography';
 import { useAnimation } from 'react-native-animation-hooks';
 import { BaseButtonProps } from './types';
 import { useSilentDisabled } from './utils';
+import analytics from 'utils/analytics';
 
 const ANIAMTION_DURATION = 200;
 export type ButtonType = 'primary' | 'secondary' | 'danger';
@@ -20,6 +21,7 @@ interface ButtonStyles {
 interface ButtonProps extends BaseButtonProps {
   type?: ButtonType;
   icon?: string | JSX.Element;
+  analyticsKey?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -30,7 +32,8 @@ const Button: React.FC<ButtonProps> = ({
   textStyle,
   type = 'primary',
   disabled = false,
-  loading = false
+  loading = false,
+  analyticsKey
 }) => {
   const [pressing, setPressing] = useState(false);
   const [silentDisabled, setSilentDisabled] = useSilentDisabled();
@@ -48,6 +51,9 @@ const Button: React.FC<ButtonProps> = ({
     if (!loading && !silentDisabled && onPress) {
       onPress();
       setSilentDisabled(true);
+      if (analyticsKey) {
+        analytics.logEvent(`${analyticsKey}_btn_pressed`)
+      }
     }
   };
 

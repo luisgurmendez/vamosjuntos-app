@@ -18,6 +18,7 @@ import { Body, LargeBody } from 'components/Typography/Typography';
 import { setHasMadeASearchInStorage } from 'state/storage/thunkActions';
 import { useDispatch } from 'react-redux';
 import useCallable from 'hooks/useCallable';
+import analytics from 'utils/analytics';
 
 const Rides: React.FC = () => {
   const [isFetchingRides, setIsFetchingRides] = useState(false);
@@ -62,7 +63,7 @@ const Rides: React.FC = () => {
   }
 
   const handleJoinRide = (ride: Ride) => {
-    navigation.push(Screens.JOIN_RIDE, { ride });
+    navigation.push(Screens.JOIN_RIDE, { ride, onJoinedToRide: () => { analytics.logEvent('join_ride_directly') } });
   }
 
   const renderHelp = () => {

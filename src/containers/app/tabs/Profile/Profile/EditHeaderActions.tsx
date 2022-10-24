@@ -2,6 +2,7 @@ import PlainButton from 'components/Button/PlainButton';
 import Loading from 'components/Loading/Loading';
 import React from 'react'
 import styled from 'styled-components/native';
+import analytics from 'utils/analytics';
 import { colors } from 'utils/colors';
 
 interface EditHeaderActionsProps {
@@ -13,10 +14,18 @@ interface EditHeaderActionsProps {
 
 const EditHeaderActions: React.FC<EditHeaderActionsProps> = ({ editing, saving, onSave, onToggleEdit }) => {
 
+  const handleToggleEdit = () => {
+    analytics.logEvent('edit_or_cancel_user_profile', {
+      edit: editing
+    })
+
+    onToggleEdit();
+  }
+
   return (
     <Container>
-      {editing && (saving ? <Loading size={30} style={{ marginLeft: 16 }} color={colors.main} /> : <PlainButton onPress={onSave}>Guardar</PlainButton>)}
-      <PlainButton onPress={onToggleEdit}>{!editing ? 'Editar' : 'Cancelar'}</PlainButton>
+      {editing && (saving ? <Loading size={30} style={{ marginLeft: 16 }} color={colors.main} /> : <PlainButton analyticsKey='save_user_profile_changes' onPress={onSave}>Guardar</PlainButton>)}
+      <PlainButton onPress={handleToggleEdit}>{!editing ? 'Editar' : 'Cancelar'}</PlainButton>
     </Container>
   )
 }

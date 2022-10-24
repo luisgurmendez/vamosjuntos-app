@@ -3,6 +3,7 @@ import React from 'react';
 import auth from '@react-native-firebase/auth';
 import SocialLoginButton from './SocialLoginButton';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
+import analytics from 'utils/analytics';
 
 const AppleLogin: React.FC<{ style?: any }> = ({ style }) => {
   const handleLogin = async () => {
@@ -20,6 +21,8 @@ const AppleLogin: React.FC<{ style?: any }> = ({ style }) => {
     const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
     // Sign the user in with the credential
     await auth().signInWithCredential(appleCredential);
+
+    analytics.logEvent('register_apple');
   }
 
   return (

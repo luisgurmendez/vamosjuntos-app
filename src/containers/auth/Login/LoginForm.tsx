@@ -47,7 +47,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccessfullLogin }) => {
               />
             </MarginedChildren>
 
-            <Button loading={isSubmitting} onPress={handleSubmit}>
+            <Button analyticsKey={'login'} loading={isSubmitting} onPress={handleSubmit}>
               Ingresar
             </Button>
           </FormContent>

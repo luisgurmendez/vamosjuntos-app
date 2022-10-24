@@ -110,7 +110,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
             <DisplayAddress address={possibleAddress} />
           )}
         </Box>
-        <Button disabled={isFetchingAddress || possibleAddress === undefined} onPress={handleSelectAddress}>
+        <Button analyticsKey={'address_selected'} disabled={isFetchingAddress || possibleAddress === undefined} onPress={handleSelectAddress}>
           {actionButtonText}
         </Button>
       </SelectedLocationDisplay>

@@ -55,7 +55,7 @@ const JoinRide: React.FC<JoinRideProps> = ({ route: { params: { ride, whereFromW
         <ScrollingContent contentContainerStyle={{ flex: 1, justifyContent: 'space-between' }}>
           <ToJoinRideDetails ride={ride} />
         </ScrollingContent>
-        <Button loading={isCreatingRideRequest} onPress={handleCreateRideRequest}>
+        <Button analyticsKey={'join_ride'} loading={isCreatingRideRequest} onPress={handleCreateRideRequest}>
           Unirme
           {/* <Icon name="check" color={colors.success} size={24} /> */}
         </Button>

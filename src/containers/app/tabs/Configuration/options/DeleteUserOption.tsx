@@ -33,6 +33,7 @@ const DeleteUserOption: React.FC<DeleteUserOptionProps> = ({ }) => {
                 Borrar usuario
             </UnMarginedButton>
             <ModalWithYesNoActions
+                analyticsKey='delete_confirmation'
                 title={"¿Estas seguro que queres borrar tu usuario?"}
                 open={confirmDeletionModalOpen}
                 onConfirm={handleConfirmUserDeletion}

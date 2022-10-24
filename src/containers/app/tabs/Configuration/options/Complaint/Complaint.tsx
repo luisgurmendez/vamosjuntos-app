@@ -53,7 +53,7 @@ const Complaint: React.FC<ComplaintProps> = ({ }) => {
             numberOfLines={6}
             onChangeText={setComplaint}
           />
-          <Button loading={isSendingComplaint} onPress={handleSendComplaint}>Mandar</Button>
+          <Button analyticsKey={'complaint'} loading={isSendingComplaint} onPress={handleSendComplaint}>Mandar</Button>
         </Content>
       </DismissKeyboard>
     </PageWithBack>

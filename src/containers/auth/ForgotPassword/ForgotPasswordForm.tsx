@@ -51,7 +51,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ }) => {
                 autoCapitalize="none"
               />
             </Box>
-            <Button loading={isSubmitting} onPress={handleSubmit}>
+            <Button analyticsKey={'forgot_password'} loading={isSubmitting} onPress={handleSubmit}>
               Mandar mail
             </Button>
           </FormContent>

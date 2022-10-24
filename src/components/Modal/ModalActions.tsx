@@ -1,5 +1,4 @@
 import Button from 'components/Button/Button';
-import PlainButton from 'components/Button/PlainButton';
 import React from 'react'
 import styled from 'styled-components/native';
 
@@ -8,19 +7,32 @@ interface ModalActionsProps {
   secondaryLabel?: string;
   onPrimaryPress?: () => void;
   onSecondaryPress?: () => void;
+  primaryAnalyticsKey: string;
+  secondaryAnalyticsKey: string;
 }
 
 const ModalActions: React.FC<ModalActionsProps> = ({
   primaryLabel,
   secondaryLabel,
   onPrimaryPress,
-  onSecondaryPress
+  onSecondaryPress,
+  primaryAnalyticsKey,
+  secondaryAnalyticsKey
 }) => {
 
   return (
     <Container>
-      {secondaryLabel && <Button style={{ flexGrow: 1, margin: 16, width: 0 }} type='danger' onPress={onSecondaryPress}>{secondaryLabel}</Button>}
-      {primaryLabel && <Button style={{ flexGrow: 1, margin: 16, width: 0 }} onPress={onPrimaryPress}>{primaryLabel}</Button>}
+      {secondaryLabel &&
+        <Button
+          style={{ flexGrow: 1, margin: 16, width: 0 }}
+          type='danger'
+          onPress={onSecondaryPress}
+          analyticsKey={secondaryAnalyticsKey}
+        >
+          {secondaryLabel}
+        </Button>
+      }
+      {primaryLabel && <Button style={{ flexGrow: 1, margin: 16, width: 0 }} analyticsKey={primaryAnalyticsKey} onPress={onPrimaryPress}>{primaryLabel}</Button>}
     </Container>
   )
 

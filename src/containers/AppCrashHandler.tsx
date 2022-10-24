@@ -37,7 +37,7 @@ class AppCrashHandler extends React.Component<WithChildren, { hasError: boolean 
           />
           <LargeBody>¡Ups! Parece que algo salio mal.</LargeBody>
           <StyledSmallBody>Este error fue guardado y lo vamos a revisar. Si seguis teniendo problemas, porfavor contactate con nosotros.</StyledSmallBody>
-          <Button onPress={this.handleReloadApp} icon={'rotate-cw'} type="secondary">Recargar</Button>
+          <Button analyticsKey={'error_screen_reload'} onPress={this.handleReloadApp} icon={'rotate-cw'} type="secondary">Recargar</Button>
         </Container>
       );
 

@@ -16,6 +16,7 @@ import TextInput from 'components/TextInput/TextInput';
 import Button from 'components/Button/Button';
 import { randomId } from 'utils/factory';
 import KeyboardShift from 'components/Keyboard/KeyboardShift';
+import analytics from 'utils/analytics';
 
 interface SavedAddressesProps {
 }
@@ -33,9 +34,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = ({ }) => {
     newVals.push(toSavedAddress);
     // Set in Storage
     setSavedAddress(newVals)
-
     setAddressName(undefined);
     setSelectedAddress(undefined);
+
   }
 
 
@@ -62,6 +63,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = ({ }) => {
                 <TextInput onChangeText={setAddressName} placeholder="Nombre" />
               </Box>
               <Button
+                analyticsKey='address_saved'
                 disabled={addressName === undefined || addressName === ''}
                 onPress={handleSaveNewAddress}
               >

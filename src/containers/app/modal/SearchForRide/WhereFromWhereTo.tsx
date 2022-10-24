@@ -53,14 +53,14 @@ const WhereFromWhereTo: React.FC<WhereFromWhereToProps> = ({ route: { params: { 
 
   return (
     <Container>
-      <Header showBack>title</Header>
+      <Header showBack />
       <Content>
-        <Button icon="map" onPress={handleOpenSelectAddressModal} type="secondary">
+        <Button analyticsKey={'search_ride_select_address_through_map'} icon="map" onPress={handleOpenSelectAddressModal} type="secondary">
           Elegir en el mapa
         </Button>
         {isLocationPermissionGranted && (
           <Box mt="lg">
-            <Button icon="map-pin" loading={isFetchingCurrentPositionAddress} onPress={handleSelectLocationAsAddress} type="secondary">
+            <Button analyticsKey={'search_ride_select_address_through_location'} icon="map-pin" loading={isFetchingCurrentPositionAddress} onPress={handleSelectLocationAsAddress} type="secondary">
               Elegir mi ubicación
             </Button>
           </Box>

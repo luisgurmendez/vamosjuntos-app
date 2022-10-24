@@ -6,9 +6,11 @@ import { BaseButtonProps } from './types';
 import { useSilentDisabled } from './utils';
 import { Text } from 'components/Typography/Typography';
 import { colors } from 'utils/colors';
+import analytics from 'utils/analytics';
 
 export interface PlainButtonProps extends BaseButtonProps {
   textStyle?: TextStyle;
+  analyticsKey?: string;
 }
 
 const PlainButton: React.FC<PlainButtonProps> = ({
@@ -17,7 +19,8 @@ const PlainButton: React.FC<PlainButtonProps> = ({
   onPress,
   children,
   textStyle,
-  style
+  style,
+  analyticsKey
 }) => {
   const [silentDisabled, setSilentDisabled] = useSilentDisabled()
 
@@ -26,6 +29,9 @@ const PlainButton: React.FC<PlainButtonProps> = ({
     if (!loading && !silentDisabled && onPress) {
       onPress();
       setSilentDisabled(true);
+      if (analyticsKey) {
+        analytics.logEvent(`${analyticsKey}_btn_pressed`)
+      }
     }
   };
 

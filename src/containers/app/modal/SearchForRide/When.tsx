@@ -21,10 +21,10 @@ const When: React.FC = () => {
 
   return (
     <Container>
-      <Header showBack>title</Header>
+      <Header showBack />
       <Content>
         <WhenCommon date={innerMomentDate} onDateChange={setInnerDate} />
-        <Button onPress={handleClose}>Listo</Button>
+        <Button analyticsKey={'search_ride_select_date'} onPress={handleClose}>Listo</Button>
       </Content>
     </Container>
   );
