@@ -30,7 +30,7 @@ const PlainButton: React.FC<PlainButtonProps> = ({
       onPress();
       setSilentDisabled(true);
       if (analyticsKey) {
-        analytics.logEvent(`${analyticsKey}_btn_pressed`)
+        analytics.logEvent(`${analyticsKey}_btn_p`)
       }
     }
   };

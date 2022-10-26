@@ -29,8 +29,8 @@ const ModalWithYesNoActions: React.FC<ModalWithYesNoActionsProps> = ({
     <SimpleModal {...modalProps} onClose={onClose}>
       <HideIfLoading size={30} loading={loading}>
         <ModalActions
-          primaryAnalyticsKey={`modal_yes_no_${analyticsKey}_action_yes`}
-          secondaryAnalyticsKey={`modal_yes_no_${analyticsKey}_action_no`}
+          primaryAnalyticsKey={`mdl_y_n_${analyticsKey}_yes`}
+          secondaryAnalyticsKey={`mdl_y_n_${analyticsKey}_no`}
           primaryLabel="Si"
           secondaryLabel="No"
           onPrimaryPress={onConfirmWrapper}

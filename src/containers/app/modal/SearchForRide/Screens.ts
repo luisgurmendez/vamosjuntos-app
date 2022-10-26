@@ -3,4 +3,5 @@ export enum SearchForRideScreens {
   WHERE_FROM_WHERE_TO = 'WHERE_FROM_WHERE_TO',
   WHEN = 'WHEN',
   JOIN_RIDE = 'JOIN_RIDE',
+  SAVED_SEARCH_RIDE = 'SAVED_SEARCH_RIDE'
 }

@@ -27,7 +27,7 @@ const RideBubble: React.FC<RideBubbleProps> = ({
   return (
     <Container onPress={onPress} disabled={onPress === undefined} style={style}>
       {hasExpired && <ExpiredContainer><Icon name={'clock'} size={16} color={colors.danger} /></ExpiredContainer>}
-      <RideDetailsSummary ride={ride} />
+      <RideDetailsSummary whereFrom={ride.whereFrom} whereTo={ride.whereTo} date={ride.date} />
     </Container>
   );
 }

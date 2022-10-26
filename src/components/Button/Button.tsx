@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
-import Icon from 'react-native-vector-icons/Feather';
 import Loading from 'components/Loading/Loading';
 import { Animated, Keyboard, TextStyle, StyleProp, ViewStyle } from 'react-native';
 import { Text } from 'components/Typography/Typography';
@@ -9,6 +8,7 @@ import { useAnimation } from 'react-native-animation-hooks';
 import { BaseButtonProps } from './types';
 import { useSilentDisabled } from './utils';
 import analytics from 'utils/analytics';
+import Icon from 'react-native-vector-icons/Feather';
 
 const ANIAMTION_DURATION = 200;
 export type ButtonType = 'primary' | 'secondary' | 'danger';
@@ -52,7 +52,7 @@ const Button: React.FC<ButtonProps> = ({
       onPress();
       setSilentDisabled(true);
       if (analyticsKey) {
-        analytics.logEvent(`${analyticsKey}_btn_pressed`)
+        analytics.logEvent(`${analyticsKey}_btn_p`)
       }
     }
   };

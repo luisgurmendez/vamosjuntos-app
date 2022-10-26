@@ -5,6 +5,7 @@ import SearchForRide from './SearchForRide';
 import WhereFromWhereTo from './WhereFromWhereTo';
 import { SearchForRideProvider } from './SearchForRideContext';
 import When from './When';
+import SavedSearchRide from './SavedSearchRide';
 
 const forFade = ({ current }: any) => ({
   cardStyle: {
@@ -32,6 +33,10 @@ const SearchForRideNavigation: React.FC = () => {
         <Stack.Screen
           name={SearchForRideScreens.WHEN}
           component={When} />
+        <Stack.Screen
+          name={SearchForRideScreens.SAVED_SEARCH_RIDE}
+          component={SavedSearchRide} />
+
       </Stack.Navigator>
     </SearchForRideProvider>
 

@@ -2,12 +2,14 @@ import React from 'react'
 import { NotificationType } from 'types/models';
 import { NotificationProps } from './notifications/commons';
 import KickOutOfRideNotification from './notifications/KickedOutOfRideNotification';
+import NewMessageNotification from './notifications/NewMessageNotification';
 import PassengerDroppedOutRideNotification from './notifications/PassengerDroppedOutRideNotification';
 import RideCanceledNotification from './notifications/RideCanceledNotification';
 import RideRequestAcceptedNotification from './notifications/RideRequestAcceptedNotification';
 import RideRequestDeclinedNotification from './notifications/RideRequestDeclinedNotification';
 import RideRequestInstantlyAcceptedNotification from './notifications/RideRequestInstantlyAcceptedNotification';
 import RideRequestNotification from './notifications/RideRequestNotification';
+import SavedSearchRideAlertNotification from './notifications/SavedSearchRideAlertNotification';
 
 
 const Notification: React.FC<NotificationProps> = ({ style, notification }) => {
@@ -42,6 +44,15 @@ const Notification: React.FC<NotificationProps> = ({ style, notification }) => {
     case NotificationType.RIDE_DROPED_OUT:
       NotificationComp = PassengerDroppedOutRideNotification;
       break;
+
+    case NotificationType.NEW_MESSAGE:
+      NotificationComp = NewMessageNotification;
+      break;
+
+    case NotificationType.SAVED_SEARCH_RIDE_ALERT:
+      NotificationComp = SavedSearchRideAlertNotification;
+      break;
+
 
     default:
       NotificationComp = DefaultDummyNotification;

@@ -41,7 +41,7 @@ const RideRequest: React.FC<RideRequestProps> = ({ style, rideRequest }) => {
       <StatusText status={rideRequest.status}>
         <Text>{statusLabel}</Text>
       </StatusText>
-      <RideDetailsSummary ride={rideRequest.ride} />
+      <RideDetailsSummary whereFrom={rideRequest.ride.whereFrom} whereTo={rideRequest.ride.whereTo} date={rideRequest.ride.date} />
       {rideRequest.status === RideRequestStatus.PENDING &&
         <CancelContainer>
           <PlainButton

@@ -38,10 +38,7 @@ const EditPreferenceModal: React.FC<EditPreferenceModalProps> = ({ preferences, 
 
     let _preferences = preferences ? [...preferences] : [];
     if (_preferences.includes(p)) {
-      // remove it
-      if (p !== UserPreference.ALWAYS_MASK) {
-        _preferences = removeItem(_preferences, p);
-      }
+      _preferences = removeItem(_preferences, p);
     } else {
       _preferences.push(p);
       // Remove the negative of this preferences, eg. clicked on smoke -> remove noSmoke.

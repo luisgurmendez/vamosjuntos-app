@@ -9,12 +9,13 @@ export interface SimpleModalProps extends Stylable, WithChildren {
   open: boolean;
   onClose: () => void;
   title?: string;
+  backdropPressEnabled?: boolean
 }
 
-const SimpleModal: React.FC<SimpleModalProps> = ({ open, onClose, title, children, style }) => {
+const SimpleModal: React.FC<SimpleModalProps> = ({ open, backdropPressEnabled = true, onClose, title, children, style }) => {
 
   return (
-    <Modal isVisible={open} onBackdropPress={onClose} backdropTransitionOutTiming={0}>
+    <Modal isVisible={open} onBackdropPress={() => backdropPressEnabled && onClose()} backdropTransitionOutTiming={0}>
       <Container style={style}>
         {title && <Subtitle>{title}</Subtitle>}
         <Content mt="lg">

@@ -2,20 +2,23 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { TextInput as NativeTextInput, TextInputProps as NativeTextInputProps } from 'react-native';
 import { colors } from 'utils/colors';
-import { Text, SmallBody } from 'components/Typography/Typography';
+import { Text, SmallBody, Body } from 'components/Typography/Typography';
 import { View } from 'react-native';
 
 interface TextInputProps extends NativeTextInputProps {
   error?: string;
   prefix?: string;
+  label?: string;
+  required?: boolean;
 
 }
 
-const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(({ error, prefix, style, ...textInputProps }, forwardedRef) => {
+const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(({ error, label, prefix, required = false, style, ...textInputProps }, forwardedRef) => {
   const showError = error !== undefined;
 
   return (
     <View style={style}>
+      {label && <Body>{required ? <Body style={{ color: colors.danger }}>* </Body> : null}{label}:</Body>}
       <TextInputContainer error={showError} >
         {prefix && <Text>{prefix}</Text>}
         <TextInputBase
@@ -63,3 +66,4 @@ const TextInputBase = styled.TextInput`
 const ErrorText = styled(SmallBody)`
   color: ${colors.danger};
 `;
+

@@ -1,17 +1,25 @@
+import { useNavigation } from '@react-navigation/native';
 import BackArrow from 'components/Back/BackArrow';
+import PressableIcon from 'components/PressableIcon/PressableIcon';
 import { LargeBody } from 'components/Typography/Typography';
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { Animated, SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from 'utils/colors';
+import { IconProviders } from 'utils/icons';
+import { SearchForRideScreens } from './Screens';
 import SearchForRideHeaderForm from './SearchForRideHeaderForm';
 
-const SearchForRideHeader: React.FC = () => {
+interface Props {
+  bellRingingAnimation: Animated.Value;
+}
 
-  return(
+const SearchForRideHeader: React.FC<Props> = ({ bellRingingAnimation }) => {
+
+  return (
     <Container>
       <SafeAreaView>
-        <_Header />
+        <_Header bellRingingAnimation={bellRingingAnimation} />
         <SearchForRideHeaderForm />
       </SafeAreaView>
     </Container>
@@ -25,13 +33,33 @@ const Container = styled.View`
   padding: 0px 16px 8px 16px;
 `
 
-const _Header: React.FC = () => {
+const _Header: React.FC<Props> = ({ bellRingingAnimation }) => {
+
+  const navigation = useNavigation<any>();
+
+  const handleSavedSearchRidePress = () => {
+    navigation.push(SearchForRideScreens.SAVED_SEARCH_RIDE);
+  }
+
+  const rotation = bellRingingAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['-20deg', '20deg']
+  })
 
   return (
     <HeaderContainer>
-      <BackArrow color={colors.white}/>
+      <BackArrow color={colors.white} />
       <ExpandedTitle>Busca un viaje</ExpandedTitle>
-      <Placeholder />
+      <Animated.View style={{ transform: [{ rotate: rotation }] }}>
+        <PressableIcon
+
+          iconProvider={IconProviders.Material}
+          size={32}
+          color={colors.white}
+          name='bell-ring-outline'
+          onPress={handleSavedSearchRidePress}
+        />
+      </Animated.View>
     </HeaderContainer>
   )
 }

@@ -38,11 +38,12 @@ const RideRequestNotification: React.FC<RideRequestNotification> = ({ style, not
       setLoading(true);
       try {
         await declineRideRequest({ requestId: rideRequest.id })
-        const _noti = { ...notification };
+        const _noti = { ...notification, context: { ...notification.context, rideRequest: { ...notification.context.rideRequest } } };
         _noti.context.rideRequest.status = RideRequestStatus.DECLINED;
         dispatch(updateNotification(_noti));
       } catch (e) {
         crashlytics().recordError(e)
+        console.log(e);
         Toaster.alert('Hubo un error');
       }
       setLoading(false);

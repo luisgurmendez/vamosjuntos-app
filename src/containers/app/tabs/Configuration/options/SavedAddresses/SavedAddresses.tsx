@@ -16,7 +16,6 @@ import TextInput from 'components/TextInput/TextInput';
 import Button from 'components/Button/Button';
 import { randomId } from 'utils/factory';
 import KeyboardShift from 'components/Keyboard/KeyboardShift';
-import analytics from 'utils/analytics';
 
 interface SavedAddressesProps {
 }

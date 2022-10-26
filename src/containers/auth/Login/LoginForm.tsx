@@ -30,9 +30,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccessfullLogin }) => {
           <FormContent>
             <MarginedChildren mV="md">
               <TextInput
-                placeholder="Usuario"
+                placeholder="Email"
                 error={errors.username}
-                textContentType="username"
+                textContentType="emailAddress"
                 autoCapitalize="none"
                 onChangeText={handleChange('username')}
                 value={values.username}

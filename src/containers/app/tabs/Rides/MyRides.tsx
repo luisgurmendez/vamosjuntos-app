@@ -63,7 +63,7 @@ const MyRides: React.FC = () => {
         onRefresh={onRefresh}
         refreshing={refreshing}
         noContentHelp={renderNoContentHelp()}
-        noContentAsset={NO_RIDES_IMG}
+        noContentAsset={NO_RIDES_IMG}//
       >
         <RidesList title="Programados" rides={pendingRides} showExpiredTag />
         <RidesList title="Cancelados" rides={_canceledRides} />

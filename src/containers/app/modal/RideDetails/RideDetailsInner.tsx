@@ -129,7 +129,7 @@ const RideDetails: React.FC<RideDetailsProps> = ({ ride, fetchRideDetails }) => 
       <ScrollContent contentContainerStyle={{ paddingBottom: 8 }}>
         <WhereFromWhereToStaticMap mapId={mapId} whereFrom={ride.whereFrom} whereTo={ride.whereTo} />
         <Content>
-          <RideDetailsSummary ride={ride} />
+          <RideDetailsSummary whereFrom={ride.whereFrom} whereTo={ride.whereTo} date={ride.date} />
           <IconedValue icon="dollar-sign">
             <Body>Se pide una colaboración de {ride.price}$</Body>
           </IconedValue>

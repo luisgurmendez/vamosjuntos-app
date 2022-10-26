@@ -16,9 +16,12 @@ import Storage from 'storage/Storage';
 import { Animated } from 'react-native';
 import { Body, LargeBody } from 'components/Typography/Typography';
 import { setHasMadeASearchInStorage } from 'state/storage/thunkActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useCallable from 'hooks/useCallable';
 import analytics from 'utils/analytics';
+import ReadTermsAndConditionsModal from './ReadTermsAndConditionsModal';
+import { getUser } from 'state/user/selectors';
+import remoteConfig from '@react-native-firebase/remote-config';
 
 const Rides: React.FC = () => {
   const [isFetchingRides, setIsFetchingRides] = useState(false);
@@ -28,6 +31,8 @@ const Rides: React.FC = () => {
   const [savedAddresses] = useStorage<SavedAddress[]>('addresses');
   const dispatch = useDispatch();
   const getSoonToLeaveRides = useCallable<Ride[]>('/rides/get-soon-to-leave');
+
+  const [showTermsAndConditions, setShowTermsAndConditions] = useTermsAndConditionsModalProps();
 
   const handleFetchSoonToLeaveRides = useCallback(async () => {
     setIsFetchingRides(true);
@@ -74,6 +79,10 @@ const Rides: React.FC = () => {
     )
   }
 
+  const handleCloseTermsAndConditionsModal = () => {
+    setShowTermsAndConditions(false);
+  }
+
   return (
     <Container>
       <PaddedScrollableContent
@@ -95,10 +104,7 @@ const Rides: React.FC = () => {
         <PointingDownIndicator />
         <FloatingButton onPress={handleSearchForRide} size={'lg'} icon={'magnify'} />
       </SearchButtonPositioner>
-
-      {/* <AlertsButtonPositioner>
-        <FloatingButton onPress={handleSearchForRide} size={'lg'} icon={"bell"} iconProvider={IconProviders.Feather} />
-      </AlertsButtonPositioner> */}
+      <ReadTermsAndConditionsModal open={showTermsAndConditions} onClose={handleCloseTermsAndConditionsModal} />
     </Container>
   );
 }
@@ -122,13 +128,6 @@ const SearchButtonPositioner = styled.View`
   align-items: center;
   justify-content: center;
 `
-
-// const AlertsButtonPositioner = styled.View`
-//   position: absolute;
-//   bottom: 16px;
-//   left: 16px;
-// `
-
 
 const PointingDownIndicator: React.FC = () => {
   const [hasMadeASearch] = useStorage(Storage.HAS_MADE_A_SEARCH);
@@ -161,4 +160,22 @@ const PointingDownIndicator: React.FC = () => {
     }}><Body style={{ fontSize: 32 }}>👇</Body></Animated.View>
   }
   return null;
+}
+
+function useTermsAndConditionsModalProps(): [boolean, (b: boolean) => void] {
+  const user = useSelector(getUser);
+  const [showTermsAndConditions, setShowTermsAndConditions] = useState(false)
+
+  useEffect(() => {
+    if (user) {
+      const configs = remoteConfig().getAll();
+      const termsLastUpdateDate = new Date(configs['TERMS_AND_CONDITIONS_LAST_UPDATED_DATE'].asString());
+      setShowTermsAndConditions(
+        user.termsAndConditions === null ||
+        new Date(user!.termsAndConditions) < termsLastUpdateDate
+      )
+    }
+  }, [user])
+
+  return [showTermsAndConditions, setShowTermsAndConditions]
 }

@@ -29,6 +29,7 @@ export interface User {
   preferences: UserPreference[];
   reviews: Review[];
   createdAt: string;
+  termsAndConditions: string | null;
 }
 
 export interface Review {
@@ -56,13 +57,15 @@ export enum NotificationType {
   RIDE_REQUEST_INSTANTLY_ACCEPTED = 'RIDE_REQUEST_INSTANTLY_ACCEPTED',
   RIDE_REQUEST_DECLINED = 'RIDE_REQUEST_DECLINED',
   RIDE_DROPED_OUT = 'RIDE_DROPED_OUT',
-  NEW_MESSAGE = 'NEW_MESSAGE'
+  NEW_MESSAGE = 'NEW_MESSAGE',
+  SAVED_SEARCH_RIDE_ALERT = 'SAVED_SEARCH_RIDE_ALERT'
 }
 
 export interface NotificationContext {
   user?: User; // The user that has triggered this notification. 
   ride?: Ride;
   rideRequest: RideRequest
+  savedSearchRide?: SavedSearchRide;
 }
 
 export enum NotificationStatus {
@@ -144,3 +147,11 @@ export interface MessageMessage {
 }
 
 export type Message = MessageLocation | MessageMessage;
+
+
+export interface SavedSearchRide {
+  id: string;
+  whereFrom: Address;
+  whereTo: Address;
+  date: string;
+}

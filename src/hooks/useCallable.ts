@@ -20,7 +20,7 @@ class CallableError extends Error {
 }
 
 export interface CallableResponse<R> {
-    status: boolean;
+    success: boolean;
     data: R
 }
 

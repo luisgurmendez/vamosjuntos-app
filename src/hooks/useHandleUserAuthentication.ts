@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setIsLoggedIn, logout as logoutAction } from "state/user/actions";
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
@@ -12,6 +12,7 @@ import useHTTPClientSetup from "components/HTTPClientContext/useHTTPClientSetup"
 function useHandleUserAuthentication() {
 
   const [hasCheckAuth, setHasCheckAuth] = useState(false);
+  const refreshTokenInterval = useRef<number | null>()
   const dispatch = useDispatch();
   const { setJwt } = useHTTPClientSetup();
 
@@ -45,9 +46,15 @@ function useHandleUserAuthentication() {
   useEffect(() => {
     const unsubscribeFromAuthStateChange = auth().onAuthStateChanged(onAuthStateChange);
     const unsubscribeFromIdTokenChange = auth().onIdTokenChanged(onIdTokenChanged);
+
+    refreshTokenInterval.current = setInterval(() => {
+      auth().currentUser?.getIdToken(true);
+    }, 1000 * 60 * 50) as unknown as number;
+
     return () => {
       unsubscribeFromAuthStateChange();
       unsubscribeFromIdTokenChange();
+      clearInterval(refreshTokenInterval.current!);
     }
 
   }, [setHasCheckAuth, hasCheckAuth, dispatch, setJwt]);

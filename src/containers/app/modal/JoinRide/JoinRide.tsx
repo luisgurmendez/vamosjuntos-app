@@ -39,8 +39,10 @@ const JoinRide: React.FC<JoinRideProps> = ({ route: { params: { ride, whereFromW
       setIsCreatingRideRequest(true);
       const rideRequest = await createRideRequest({ rideId: ride.id, whereFrom, whereTo: whereTo! });
       rideRequest && dispatch(addRideRequest(rideRequest.data));
+      Toaster.success({ title: 'Ahora a esperar', message: 'Solicitaste una plaza en un viaje, espera a que el conductor te acepte. Tambien podes cancelar tu solictud en Viajes > Solicitudes' })
       navigation.goBack();
       onJoinedToRide && onJoinedToRide();
+
     } catch (e) {
       Toaster.alert('Hubo un error al intentar unirte al viaje')
       crashlytics().recordError(e);

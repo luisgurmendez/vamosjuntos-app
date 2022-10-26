@@ -3,23 +3,22 @@ import { Body } from 'components/Typography/Typography';
 import moment from 'moment';
 import React from 'react'
 import styled from 'styled-components/native';
-import { Ride } from 'types/models';
+import { Address, Ride } from 'types/models';
 import { getDateText, getTimeText } from 'utils/date';
 
-type RideLike = Ride | Pick<Ride, 'whereFrom' | 'whereTo' | 'date' | 'price'>
-
 interface RideSummaryProps {
-  ride: RideLike;
-  showPriceTag?: boolean;
+  whereTo: Address;
+  whereFrom: Address;
+  date: string;
 }
 
-const RideDetailsSummary: React.FC<RideSummaryProps> = ({ ride, showPriceTag=false }) => {
+const RideDetailsSummary: React.FC<RideSummaryProps> = ({ whereTo, whereFrom, date }) => {
 
-  const rideDate = moment(ride.date);
+  const rideDate = moment(date);
 
   return (
     <Container>
-      <WhereFromToWhereTo whereFrom={ride.whereFrom} whereTo={ride.whereTo} />
+      <WhereFromToWhereTo whereFrom={whereFrom} whereTo={whereTo} />
       <Body>{getDateText(rideDate)} {getTimeText(rideDate)}</Body>
     </Container>
   )

@@ -1,4 +1,3 @@
-import { GetMessagesResponse } from 'api/callables';
 import Loading from 'components/Loading/Loading';
 import Header from 'components/Page/Header';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
@@ -14,6 +13,11 @@ import styled from 'styled-components/native';
 import { Address, Message, MessageType, RideStatus } from 'types/models';
 import { colors } from 'utils/colors';
 import MessageBubble from './Message';
+
+interface GetMessagesResponse {
+    messages: Message[];
+    messagesCount: number;
+}
 
 interface RideConversationProps {
     route: any;
