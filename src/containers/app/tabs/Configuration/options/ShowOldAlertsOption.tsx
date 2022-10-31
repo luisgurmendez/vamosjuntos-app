@@ -10,7 +10,7 @@ const ShowOldAlertsOption: React.FC<ShowOldAlertsOptionProps> = ({ }) => {
 
   return (
     <BooleanConfiguration
-      config={'Mostrar alertas viejas'}
+      config={'Mostrar notificaciones viejas'}
       value={isEnabled}
       onConfigChange={setIsEnabled}
     />

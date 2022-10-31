@@ -51,7 +51,7 @@ const Notifications: React.FC = () => {
   }, []);
 
   return (
-    <Page title="Alertas">
+    <Page title="Notificaciones">
       <Container
         onRefresh={onRefresh}
         refreshing={refreshing}

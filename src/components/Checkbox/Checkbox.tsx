@@ -4,14 +4,13 @@ import { colors } from 'utils/colors';
 import { Body } from 'components/Typography/Typography';
 
 import { Icon, IconProviders } from 'utils/icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Stylable } from 'components/types';
+import { TouchableOpacity } from 'react-native';
 
 interface CheckboxProps extends Stylable {
     value: boolean;
     onValueChange: (b: boolean) => void;
     label?: string | React.ReactNode;
-
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({ style, label, value, onValueChange }) => {

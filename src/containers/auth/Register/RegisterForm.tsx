@@ -120,6 +120,7 @@ const RegisterForm: React.FC = () => {
               />
 
               <TextInput
+                label='Numero de telefono'
                 prefix={'+598'}
                 placeholder="12345678"
                 textContentType="telephoneNumber"
