@@ -9,6 +9,7 @@
     "install:ios": "react-native run-ios --variant=release",
     "log:ios": "react-native log-ios",
     "clean:android": "cd android && ./gradlew clean && cd ../",
+    "build:android": "cd android && ./gradlew bundleRelease && cd ../",
     "clean:ios": "cd ios && xcodebuild clean && cd ../",
     "start": "react-native start",
     "test": "jest",
