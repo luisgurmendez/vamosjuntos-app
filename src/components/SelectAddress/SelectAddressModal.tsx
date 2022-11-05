@@ -14,7 +14,7 @@ import { Address } from 'types/models';
 import useZoomToLocation from 'hooks/useZoomToLocation';
 import Map from 'components/Map/Map';
 import { Region } from 'react-native-maps';
-import { useGetAddressFromCoordsRemote2 } from 'api/geo';
+import { useGetAddressFromCoordsRemote } from 'api/geo';
 import PressableIcon from 'components/PressableIcon/PressableIcon';
 import FloatingButton from 'components/FloatingButton/FloatingButton';
 import { useMap } from 'components/Map/useMap';
@@ -24,7 +24,6 @@ import TextInput from 'components/TextInput/TextInput';
 import Icon from 'react-native-vector-icons/Feather';
 import DismissKeyboard from 'components/Keyboard/DismissKeyboardView';
 import MarginedChildren from 'components/Box/MarginedChildren';
-import ScrollableContent from 'components/ScrollableContent/ScrollableContent';
 import useCallable from 'hooks/useCallable';
 import HideIfLoading from 'components/Loading/HideIfLoading';
 
@@ -51,7 +50,7 @@ const SelectAddressModal: React.FC<SelectAddressModalProps> = ({
   const [possibleAddress, setPossibleAddress] = useState<Address | undefined>(undefined);
   const [showSearchAddressScreenContent, setShowSearchAddressScreenContent] = useState(false);
   const { map } = useMap(mapId);
-  const getAddressFromCoordsRemote = useGetAddressFromCoordsRemote2();
+  const getAddressFromCoordsRemote = useGetAddressFromCoordsRemote();
 
   const handleLocationChange = useCallback(async (region: Region) => {
     const address = await getAddressFromCoordsRemote(region.latitude, region.longitude);
@@ -219,14 +218,14 @@ interface SearchBarButtonProps {
 const SearchBarButton: React.FC<SearchBarButtonProps> = ({ onPress }) => {
 
   return (
-    <SearchBarButtonContainer>
-      <TouchableOpacity style={{ flex: 1 }} onPress={onPress}>
+    <TouchableOpacity style={{ flex: 1 }} onPress={onPress}>
+      <SearchBarButtonContainer>
         <SearchBarRow>
           <Icon name={'search'} size={16} color={colors.black} />
           <PlaceholderText>{searchAddressPlaceholder}</PlaceholderText>
         </SearchBarRow>
-      </TouchableOpacity>
-    </SearchBarButtonContainer>
+      </SearchBarButtonContainer>
+    </TouchableOpacity>
   )
 
 }

@@ -4,7 +4,6 @@ export interface Address {
   address?: string;
   city?: string;
   department?: string;
-  district?: string;
 }
 
 export enum UserPreference {

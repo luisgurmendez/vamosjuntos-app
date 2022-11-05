@@ -1,5 +1,5 @@
 
-const apiUrl = 'https://dev.api.vamosjuntos.es';
+const apiUrl = 'https://api.vamosjuntos.es';
 
 class HTTPClient {
     jwt: string;
@@ -7,7 +7,6 @@ class HTTPClient {
 
     constructor(_jwt: string, _baseUrl?: string) {
         this.jwt = _jwt;
-        console.log(_jwt);
         this.baseUrl = _baseUrl ?? apiUrl
     }
 

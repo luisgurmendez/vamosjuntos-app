@@ -6,7 +6,6 @@ class UnAuthedHTTPClient {
 
     constructor(_baseUrl?: string) {
         this.baseUrl = _baseUrl ?? apiUrl
-        console.log(this.baseUrl);
     }
 
     async post<B>(path: string, body?: B) {

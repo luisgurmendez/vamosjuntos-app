@@ -8,7 +8,6 @@ import Button from 'components/Button/Button';
 import useLocationPermission from 'hooks/useLocationPermission';
 import { SavedAddress } from 'types/storage';
 import useStorage from 'hooks/useStorage';
-import Storage from 'storage/Storage';
 import SelectAddressModal from 'components/SelectAddress/SelectAddressModal';
 import { Address } from 'types/models';
 import { Box } from 'components/Box/Box';
