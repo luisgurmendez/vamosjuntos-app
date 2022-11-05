@@ -44,7 +44,7 @@ const Login: React.FC = () => {
             Registrate
           </PlainButton>
         </Header>
-        <Content >
+        <Content>
           <DismissKeyboard>
             <CenteredContentBox mb="xlg">
               {/* TODO: Make Logo animation for login, where the car starts smaller and and passes right next to the thumb while the thumb makes the "lift me" sign (moving up and down) */}

@@ -6,6 +6,7 @@ class UnAuthedHTTPClient {
 
     constructor(_baseUrl?: string) {
         this.baseUrl = _baseUrl ?? apiUrl
+        console.log(this.baseUrl);
     }
 
     async post<B>(path: string, body?: B) {
@@ -14,13 +15,25 @@ class UnAuthedHTTPClient {
         return await fetch(url, request);
     }
 
-    async get(path: string) {
+    async get(path: string, query?: object | string) {
         const url = this._buildUrl(path);
-        return fetch(url, this._buildRequest('GET'));
+        const urlWithQueryParams = `${url}?${this._buildQueryParams(query)}`
+        return fetch(urlWithQueryParams, this._buildRequest('GET'));
+    }
+
+    _buildQueryParams(obj: any) {
+        if (typeof obj === 'string') {
+            return obj;
+        }
+        const keyValuePairs = [];
+        for (const key in obj) {
+            keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+        }
+        return keyValuePairs.join('&');
     }
 
     _buildUrl(path: string) {
-        return `${apiUrl}${path}`
+        return `${this.baseUrl}${path}`
     }
 
     _buildRequest<B>(method: 'POST' | 'GET' | 'PUT', body?: B): RequestInit {

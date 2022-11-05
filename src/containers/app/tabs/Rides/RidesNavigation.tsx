@@ -32,8 +32,8 @@ const RidesNavigation: React.FC = () => {
   const handlePageChange = (pageIndex: number) => {
     setSelectedTabIndex(pageIndex);
     analytics.logScreenView({
-      screen_class: `RidesTab-${routes[pageIndex]}`,
-      screen_name: `RidesTab-${routes[pageIndex]}`
+      screen_class: `RidesTab-${routes[pageIndex].title}`,
+      screen_name: `RidesTab-${routes[pageIndex].title}`
     });
   }
 

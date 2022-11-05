@@ -40,7 +40,7 @@ const RideRequests: React.FC<RideRequestsProps> = ({ }) => {
       <Body>
         Cuando te unis a un viaje, tenes que esperar a ser aceptado por el conductor.
         {"\n"}
-        Tus solicitudes de viajes se mostraran aca, en donde podras cancelarlas si todavia no te aceptaron.
+        Tus solicitudes de viajes se mostraran acá, en donde podrás cancelarlas si todavía no te aceptaron.
       </Body>
     )
   }

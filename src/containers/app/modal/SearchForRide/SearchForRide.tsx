@@ -47,6 +47,7 @@ const Rides: React.FC<{ onSearchAlarmCreated: () => void }> = ({ onSearchAlarmCr
   const navigation = useNavigation<any>();
   const { searchedRides, isFetchingSearchedRides, origin, destination, date } = useSearchForRide();
   const createAlarm = useCallable('/users/search-ride/create');
+  const [isCreatingAlarm, setIsCreatingAlarm] = useState(false);
 
   const handleJoinRide = (ride: Ride) => {
     navigation.dangerouslyGetParent().push(Screens.JOIN_RIDE, {
@@ -61,12 +62,18 @@ const Rides: React.FC<{ onSearchAlarmCreated: () => void }> = ({ onSearchAlarmCr
 
   const handleCreateSearchAlarm = async () => {
     if (origin !== null && destination !== null) {
-      await createAlarm<CreateSearchAlarmBody>({
-        whereFrom: origin,
-        whereTo: destination,
-        date: date
-      })
-      onSearchAlarmCreated();
+      setIsCreatingAlarm(true);
+      try {
+        await createAlarm<CreateSearchAlarmBody>({
+          whereFrom: origin,
+          whereTo: destination,
+          date: date
+        })
+        onSearchAlarmCreated();
+      } finally {
+        setIsCreatingAlarm(false);
+      }
+
     }
   }
 
@@ -74,7 +81,18 @@ const Rides: React.FC<{ onSearchAlarmCreated: () => void }> = ({ onSearchAlarmCr
     const hasSetOriginAndDestination = origin !== null && destination !== null;
     return (
       <>
-        <Button disabled={!hasSetOriginAndDestination} onPress={handleCreateSearchAlarm} type={'secondary'} icon={<Icon style={{ marginRight: 8 }} provider={IconProviders.Material} name="bell-ring-outline" color={!hasSetOriginAndDestination ? colors.white : colors.black} size={24} />}>
+        <Button
+          disabled={!hasSetOriginAndDestination}
+          onPress={handleCreateSearchAlarm}
+          type={'secondary'}
+          loading={isCreatingAlarm}
+          icon={<Icon style={{ marginRight: 8 }}
+            provider={IconProviders.Material}
+            name="bell-ring-outline"
+            color={!hasSetOriginAndDestination ? colors.white : colors.black}
+            size={24}
+          />}
+        >
           Crear alerta de viaje
         </Button>
         {!hasSetOriginAndDestination && <Body style={{ textAlign: 'center', marginTop: 4 }}>Especificá un origen y un destino</Body>}

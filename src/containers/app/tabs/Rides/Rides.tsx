@@ -93,7 +93,7 @@ const Rides: React.FC = () => {
         noContentAsset={NO_SEARCHED_RIDES_IMG}
       >
         <>
-          <LargeBody>¿Te sirve algun viaje de estos?</LargeBody>
+          <LargeBody>¿Te sirve algún viaje de estos?</LargeBody>
           <MarginedChildren mt="lg">
             {rides.map(ride => <RideBubble key={ride.id} onPress={() => handleJoinRide(ride)} ride={ride} />)}
           </MarginedChildren>

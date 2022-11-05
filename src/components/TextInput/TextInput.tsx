@@ -7,25 +7,42 @@ import { View } from 'react-native';
 
 interface TextInputProps extends NativeTextInputProps {
   error?: string;
-  prefix?: string;
+  prefix?: React.ReactNode | string;
   label?: string;
   required?: boolean;
+  textInputStyle?: any;
+  textInputContainerStyle?: any;
 
 }
 
-const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(({ error, label, prefix, required = false, style, ...textInputProps }, forwardedRef) => {
+const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(({
+  error,
+  label,
+  prefix,
+  required = false,
+  style,
+  textInputStyle,
+  textInputContainerStyle,
+  ...textInputProps
+}, forwardedRef) => {
   const showError = error !== undefined;
+  const color = textInputStyle?.backgroundColor ?? '#e3e3e3';
+  let Prefix = null;
+  if (prefix !== undefined) {
+    Prefix = typeof prefix === 'string' ? <Text>{prefix}</Text> : prefix;
+  }
 
   return (
     <View style={style}>
       {label && <Body>{required ? <Body style={{ color: colors.danger }}>* </Body> : null}{label}:</Body>}
-      <TextInputContainer error={showError} >
-        {prefix && <Text>{prefix}</Text>}
+      <TextInputContainer style={[{ backgroundColor: color }, textInputContainerStyle]} error={showError} >
+        {Prefix !== null && Prefix}
         <TextInputBase
           ref={forwardedRef}
           autoCorrect={false}
           placeholderTextColor="#888"
           clearButtonMode="while-editing"
+          style={[{ backgroundColor: color }, textInputStyle]}
           {...textInputProps}
         />
       </TextInputContainer>
@@ -41,7 +58,6 @@ interface TextInputBaseProps {
 }
 
 const TextInputContainer = styled.View<TextInputBaseProps>`
-  background-color: #e3e3e3;
   padding: 10px 8px;
   border-radius: 4px;
   font-size: 16px;
@@ -54,7 +70,6 @@ const TextInputContainer = styled.View<TextInputBaseProps>`
 `
 
 const TextInputBase = styled.TextInput`
-  background-color: #e3e3e3;
   font-size: 16px;
   font-family: Roboto;
   flex: 1;

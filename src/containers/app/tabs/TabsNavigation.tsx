@@ -73,7 +73,8 @@ function useRedirectInitialRoute() {
 
   useEffect(() => {
     if (showWelcomeScreen) {
-      navigation.replace(Screens.WELCOME)
+      let show = false;
+      if (show) navigation.replace(Screens.WELCOME)
     }
   }, [showWelcomeScreen, navigation]);
 }

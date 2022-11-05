@@ -49,9 +49,9 @@ const MyRides: React.FC = () => {
   const renderNoContentHelp = () => {
     return (
       <Body>
-        Aca vas a poder ver todos los viajes en los que participas (ya seas conductor o pasajero). {"\n"}
+        Acá vas a poder ver todos los viajes en los que participás (ya seas conductor o pasajero). {"\n"}
         {"\n"}
-        Los viajes ya completados y cancelados estan escondidos por defecto. Para cambiar esto podes ir a <Body bold>Configuración</Body> y habilitar las opciones.
+        Los viajes realizados y/o cancelados estan escondidos por defecto. Para cambiarlo podes ir a <Body bold>Configuración</Body> y habilitar las opciones.
       </Body>
     )
   }
@@ -67,7 +67,7 @@ const MyRides: React.FC = () => {
       >
         <RidesList title="Programados" rides={pendingRides} showExpiredTag />
         <RidesList title="Cancelados" rides={_canceledRides} />
-        <RidesList title="Completados" rides={_completedRides} />
+        <RidesList title="Realizado" rides={_completedRides} />
       </Container>
       <RememberToCompleteRidesModal open={showRememberMarkRidesAsCompleteModal} onClose={() => setShowRememberModal(false)} />
     </>

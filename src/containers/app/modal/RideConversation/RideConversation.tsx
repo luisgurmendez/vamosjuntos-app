@@ -241,5 +241,11 @@ function useGetMessages(rideId: string) {
         setMessages(m => [message, ...m]);
     }
 
+    // useEffect(() => {
+    //     setInterval(() => {
+    //         handleGetMessages();
+    //     }, 10 * 1000)
+    // }, [])
+
     return { messages, handleRefreshMessages: handleGetMessages, fetching: isFetching, appendMessage };
 }
